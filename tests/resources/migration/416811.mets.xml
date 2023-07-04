@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:vls="http://semantics.de/vls" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:epicur="urn:nbn:de:1111-2004033116" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:marcxml="http://www.loc.gov/MARC21/slim" xmlns="http://www.openarchives.org/OAI/2.0/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd" OBJID="2" LABEL="Inhouse-Digitalisierung">
+  <mets:metsHdr CREATEDATE="2020-10-12T09:38:18">
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>vls/2.12.1</mets:name>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="INSTANCE">
+      <mets:name>ulbhal-hspe</mets:name>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="REPOSITORY">
+      <mets:name>digital.bibliothek.uni-halle.de/hd</mets:name>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="BUILDER">
+      <mets:name>periodical</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="md424336">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/104375205">
+            <mods:namePart>Schulze, Rudolph Friedrich</mods:namePart>
+            <mods:namePart type="given">Rudolph Friedrich</mods:namePart>
+            <mods:namePart type="family">Schulze</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">Verf.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gbv" authorityURI="http://gbv.de/" valueURI="http://gso.gbv.de/DB=2.1/PPNSET?PPN=221297901">
+            <mods:namePart>Hessenland, Johann Valentin</mods:namePart>
+            <mods:namePart type="given">Johann Valentin</mods:namePart>
+            <mods:namePart type="family">Hessenland</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Magdeburg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Hessenland</mods:publisher>
+            <mods:place>
+              <mods:placeTerm type="code" authority="iso3166">XG-DR</mods:placeTerm>
+            </mods:place>
+            <mods:dateIssued keyDate="yes" encoding="w3cdtf">1784</mods:dateIssued>
+            <mods:dateIssued>1783 [erschienen] 1784</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2009</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[4] Bl., 425 S., [2] Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Magdeburg, gedruckt bey Johann Valentin Hessenland. In Commission des Intelligenz-Comtoirs in Leipzig</mods:note>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Zuschriften ans Volk im Tone desselben über reine Lehre und wahre Gottseligkeit</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal">
+              <mods:namePart>Schulze, Rudolph Friedrich</mods:namePart>
+              <mods:namePart type="date">um 1783/1785</mods:namePart>
+              <mods:namePart type="given">Rudolph Friedrich</mods:namePart>
+              <mods:namePart type="family">Schulze</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">Verf.</mods:roleTerm>
+              </mods:role>
+            </mods:name>
+            <mods:name type="personal">
+              <mods:namePart>Hessenland, Johann Valentin. - Magdeburg</mods:namePart>
+              <mods:description>ca. 1770-ca. 1810</mods:description>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Magdeburg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Hessenland</mods:publisher>
+              <mods:place>
+                <mods:placeTerm type="code" authority="iso3166">DR</mods:placeTerm>
+              </mods:place>
+              <mods:dateIssued point="start">1783</mods:dateIssued>
+              <mods:dateIssued point="end">1785</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2010</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">[Rud. Friedr. Schulze, Pred. zu St. Petri]</mods:note>
+            <mods:note>Magdeburg, gedruckt bey Johann Valentin Hessenland</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-13021</mods:identifier>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">21-01-97</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">22-09-09</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">222556900</mods:recordIdentifier>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>416811</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>1</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:part type="host" order="1">
+            <mods:detail>
+              <mods:number>[Bd. 1], Monat 1/12</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-13273</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">21-01-97</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-09-09</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">222557133</mods:recordIdentifier>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md416811">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.3" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd">
+          <mods:titleInfo>
+            <mods:title>Zuschriften ans Volk im Tone desselben über reine Lehre und wahre Gottseligkeit</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal">
+            <mods:namePart>Schulze, Rudolph Friedrich</mods:namePart>
+            <mods:namePart type="date">um 1783/1785</mods:namePart>
+            <mods:namePart type="given">Rudolph Friedrich</mods:namePart>
+            <mods:namePart type="family">Schulze</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">Verf.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal">
+            <mods:namePart>Hessenland, Johann Valentin. - Magdeburg</mods:namePart>
+            <mods:description>ca. 1770-ca. 1810</mods:description>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Magdeburg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Hessenland</mods:publisher>
+            <mods:place>
+              <mods:placeTerm type="code" authority="iso3166">DR</mods:placeTerm>
+            </mods:place>
+            <mods:dateIssued point="start">1783</mods:dateIssued>
+            <mods:dateIssued point="end">1785</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2010</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note type="statement of responsibility">[Rud. Friedr. Schulze, Pred. zu St. Petri]</mods:note>
+          <mods:note>Magdeburg, gedruckt bey Johann Valentin Hessenland</mods:note>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-13021</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">21-01-97</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-09-09</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">222556900</mods:recordIdentifier>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md415691">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/104375205">
+            <mods:namePart>Schulze, Rudolph Friedrich</mods:namePart>
+            <mods:namePart type="given">Rudolph Friedrich</mods:namePart>
+            <mods:namePart type="family">Schulze</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">Verf.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gbv" authorityURI="http://gbv.de/" valueURI="http://gso.gbv.de/DB=2.1/PPNSET?PPN=221297901">
+            <mods:namePart>Hessenland, Johann Valentin</mods:namePart>
+            <mods:namePart type="given">Johann Valentin</mods:namePart>
+            <mods:namePart type="family">Hessenland</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Magdeburg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Hessenland</mods:publisher>
+            <mods:place>
+              <mods:placeTerm type="code" authority="iso3166">XG-DR</mods:placeTerm>
+            </mods:place>
+            <mods:dateIssued keyDate="yes" encoding="w3cdtf">1785</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2009</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[4] Bl., 379 S. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Magdeburg, gedruckt bey Johann Valentin Hessenland. In Commission des Intelligenz-Comtoirs in Leipzig</mods:note>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Zuschriften ans Volk im Tone desselben über reine Lehre und wahre Gottseligkeit</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal">
+              <mods:namePart>Schulze, Rudolph Friedrich</mods:namePart>
+              <mods:namePart type="date">um 1783/1785</mods:namePart>
+              <mods:namePart type="given">Rudolph Friedrich</mods:namePart>
+              <mods:namePart type="family">Schulze</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">Verf.</mods:roleTerm>
+              </mods:role>
+            </mods:name>
+            <mods:name type="personal">
+              <mods:namePart>Hessenland, Johann Valentin. - Magdeburg</mods:namePart>
+              <mods:description>ca. 1770-ca. 1810</mods:description>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Magdeburg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Hessenland</mods:publisher>
+              <mods:place>
+                <mods:placeTerm type="code" authority="iso3166">DR</mods:placeTerm>
+              </mods:place>
+              <mods:dateIssued point="start">1783</mods:dateIssued>
+              <mods:dateIssued point="end">1785</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2010</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">[Rud. Friedr. Schulze, Pred. zu St. Petri]</mods:note>
+            <mods:note>Magdeburg, gedruckt bey Johann Valentin Hessenland</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-13021</mods:identifier>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">21-01-97</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">22-09-09</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">222556900</mods:recordIdentifier>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>416811</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>1</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:part type="host" order="3">
+            <mods:detail>
+              <mods:number>Bd. 3, Stück 1/11</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-13003</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">21-01-97</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-09-09</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">222557346</mods:recordIdentifier>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="amd424336">
+    <mets:rightsMD ID="rights424336">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov424336">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=222557133</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/424336</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd416811">
+    <mets:rightsMD ID="rights416811">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov416811">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=222556900</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/416811</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd415691">
+    <mets:rightsMD ID="rights415691">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov415691">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=222557346</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/415691</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="DOWNLOAD">
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="7a159eedb62a5c598ebef1cfcf8ec92050d6f121" SIZE="136162143" CHECKSUMTYPE="SHA-1" CREATED="2013-05-24T08:30:42" ID="PDF_424336">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/pdf/424336" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="8bd88f19dee1314f7daf5d1962046b7554fe8824" SIZE="164143363" CHECKSUMTYPE="SHA-1" CREATED="2013-05-24T08:22:51" ID="PDF_415691">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/pdf/415691" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ID="log416811" DMDID="md416811" ADMID="amd416811" LABEL="Zuschriften ans Volk im Tone desselben über reine Lehre und wahre Gottseligkeit" TYPE="monograph" ORDER="1" CONTENTIDS="urn:nbn:de:gbv:3:3-13021">
+      <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=416811"/>
+      <mets:div ID="log424336" DMDID="md424336" ADMID="amd424336" LABEL="[Bd. 1], Monat 1/12" TYPE="monograph" ORDER="1">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=424336"/>
+        <mets:fptr FILEID="PDF_424336"/>
+      </mets:div>
+      <mets:div ID="log415691" DMDID="md415691" ADMID="amd415691" LABEL="Bd. 3, Stück 1/11" TYPE="monograph" ORDER="2">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=415691"/>
+        <mets:fptr FILEID="PDF_415691"/>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+</mets:mets>

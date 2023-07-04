@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:dv="http://dfg-viewer.de/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version112/mets.xsd" OBJID="11" LABEL="Inhouse-Zeitungen">
+  <mets:metsHdr CREATEDATE="2023-06-02T11:31:49">
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>vls/2203</mets:name>
+      <mets:note>legacy vlid: oai:digital.bibliothek.uni-halle.de/ulbhaldodzd:3014754</mets:note>
+      <mets:note>legacy date: 2022-07-26T06:50:58Z</mets:note>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="INSTANCE">
+      <mets:name>ulbhal-hspe</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="REPOSITORY">
+      <mets:name>digital.bibliothek.uni-halle.de</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="BUILDER">
+      <mets:name>periodicalissuez</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="md3014754">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:dateIssued encoding="iso8601">1903-04-23</mods:dateIssued>
+          </mods:originInfo>
+          <mods:originInfo eventType="digitization">
+            <mods:place>
+              <mods:placeTerm>Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateCaptured encoding="iso8601">2020-01-07</mods:dateCaptured>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm type="code" authority="iso639-2b">ger</mods:languageTerm>
+          </mods:language>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Derenburger Nachrichten. 1903-1903</mods:title>
+            </mods:titleInfo>
+            <mods:identifier type="zdb">3001296-X</mods:identifier>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhaldodzd">1683540425</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:identifier type="purl">https://digital.bibliothek.uni-halle.de/3014754</mods:identifier>
+          <mods:part order="19030423">
+            <mods:detail type="issue">
+              <mods:number>2</mods:number>
+              <mods:title>No. 2. Derenburg, Donnerstag, den 23. April 1903.</mods:title>
+            </mods:detail>
+            <mods:detail type="volume">
+              <mods:number>1</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:recordInfo>
+            <mods:recordIdentifier source="ulbhaldodzd">ulbhal-hspe:3014754</mods:recordIdentifier>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="amd3014754">
+    <mets:rightsMD ID="rights3014754">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights>
+            <dv:ownerLogo>https://digital.bibliothek.uni-halle.de/ulbhaldodzd//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov3014754">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links>
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=ulbhal-hspe%3A3014754</dv:reference>
+            <dv:presentation>https://digital.bibliothek.uni-halle.de/ulbhaldodzd/id/3014754</dv:presentation>
+            <dv:iiif>https://digital.bibliothek.uni-halle.de/ulbhaldodzd/i3f/v20/3014754/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="DOWNLOAD">
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="ac5dd6e9899bc19a54b4cb20ce5439a15aad3b48" CREATED="2020-01-14T17:07:23.462500Z" CHECKSUMTYPE="SHA-1" SIZE="61259352" ID="PDF_3009398">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/pdf/3009398" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="bfa7fe6f8a0f3e47fd55ada38e8fe2a9e1ce5239" CREATED="2020-01-21T12:49:26.926500Z" CHECKSUMTYPE="SHA-1" SIZE="204475293" ID="PDF_3014986">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/pdf/3014986" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="a4d5798290dd9766eb3fb53624222a8c5abe9012" CREATED="2020-01-15T07:08:31.490500Z" CHECKSUMTYPE="SHA-1" SIZE="4918148" ID="PDF_3014754">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/pdf/3014754" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="DEFAULT">
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_3014755">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/1000/3014755" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_3014756">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/1000/3014756" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_3014757">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/1000/3014757" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_3014758">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/1000/3014758" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="THUMBS">
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_3014755">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/128/3014755" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_3014756">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/128/3014756" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_3014757">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/128/3014757" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_3014758">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/128/3014758" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="MIN">
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_3014755">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/600/3014755" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_3014756">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/600/3014756" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_3014757">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/600/3014757" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_3014758">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/600/3014758" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="MAX">
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_3014755">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/0/3014755" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_3014756">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/0/3014756" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_3014757">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/0/3014757" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_3014758">
+        <mets:FLocat xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/download/webcache/0/3014758" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div TYPE="physSequence" ID="physroot">
+      <mets:div ID="phys3014755" TYPE="page" LABEL="[Seite 15]" CONTENTIDS="urn:nbn:de:gbv:3:3-62299-p0005-5" ORDER="1">
+        <mets:fptr FILEID="IMG_DEFAULT_3014755"/>
+        <mets:fptr FILEID="IMG_THUMBS_3014755"/>
+        <mets:fptr FILEID="IMG_MIN_3014755"/>
+        <mets:fptr FILEID="IMG_MAX_3014755"/>
+      </mets:div>
+      <mets:div ID="phys3014756" TYPE="page" LABEL="[Seite 16]" CONTENTIDS="urn:nbn:de:gbv:3:3-62299-p0006-1" ORDER="2">
+        <mets:fptr FILEID="IMG_DEFAULT_3014756"/>
+        <mets:fptr FILEID="IMG_THUMBS_3014756"/>
+        <mets:fptr FILEID="IMG_MIN_3014756"/>
+        <mets:fptr FILEID="IMG_MAX_3014756"/>
+      </mets:div>
+      <mets:div ID="phys3014757" TYPE="page" LABEL="[Seite 17]" CONTENTIDS="urn:nbn:de:gbv:3:3-62299-p0007-6" ORDER="3">
+        <mets:fptr FILEID="IMG_DEFAULT_3014757"/>
+        <mets:fptr FILEID="IMG_THUMBS_3014757"/>
+        <mets:fptr FILEID="IMG_MIN_3014757"/>
+        <mets:fptr FILEID="IMG_MAX_3014757"/>
+      </mets:div>
+      <mets:div ID="phys3014758" TYPE="page" LABEL="[Seite 18]" CONTENTIDS="urn:nbn:de:gbv:3:3-62299-p0008-2" ORDER="4">
+        <mets:fptr FILEID="IMG_DEFAULT_3014758"/>
+        <mets:fptr FILEID="IMG_THUMBS_3014758"/>
+        <mets:fptr FILEID="IMG_MIN_3014758"/>
+        <mets:fptr FILEID="IMG_MAX_3014758"/>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ID="log3009398" TYPE="newspaper" LABEL="Derenburger Nachrichten. 1903-1903" ORDER="1">
+      <mets:mptr LOCTYPE="URL" xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/oai/?verb=GetRecord&amp;metadataPrefix=zmets&amp;identifier=3009398"/>
+      <mets:fptr FILEID="PDF_3009398"/>
+      <mets:div ID="log3014986" TYPE="year" LABEL="1903" ORDER="1" ORDERLABEL="1903">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digital.bibliothek.uni-halle.de/ulbhaldodzd/oai/?verb=GetRecord&amp;metadataPrefix=zmets&amp;identifier=3014986"/>
+        <mets:fptr FILEID="PDF_3014986"/>
+        <mets:div TYPE="month" ID="month04" LABEL="04" ORDERLABEL="1903-04">
+          <mets:div TYPE="day" ID="day0423" LABEL="23" ORDERLABEL="1903-04-23">
+            <mets:div ID="log3014754" DMDID="md3014754" ADMID="amd3014754" TYPE="issue" LABEL="2 (23.4.1903) No. 2. Derenburg, Donnerstag, den 23. April 1903." ORDER="1">
+              <mets:fptr FILEID="PDF_3014754"/>
+            </mets:div>
+          </mets:div>
+        </mets:div>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:from="log3014754" xlink:to="physroot"/>
+    <mets:smLink xlink:from="log3014754" xlink:to="phys3014755"/>
+    <mets:smLink xlink:from="log3014754" xlink:to="phys3014756"/>
+    <mets:smLink xlink:from="log3014754" xlink:to="phys3014757"/>
+    <mets:smLink xlink:from="log3014754" xlink:to="phys3014758"/>
+  </mets:structLink>
+</mets:mets>

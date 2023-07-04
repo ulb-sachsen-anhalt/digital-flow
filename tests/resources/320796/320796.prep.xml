@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:vls="http://semantics.de/vls" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:epicur="urn:nbn:de:1111-2004033116" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:marcxml="http://www.loc.gov/MARC21/slim" xmlns="http://www.openarchives.org/OAI/2.0/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd">
+  <mets:metsHdr CREATEDATE="2020-09-03T21:11:56">
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>vls/2.12.1</mets:name>
+      <mets:note>created vlid: 320796</mets:note>
+      <mets:note>created date: 2009-09-23T14:04:16Z</mets:note>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>VD Migration Pilot Preprocessing</mets:name>
+      <mets:note>2020-09-03 21:11:56</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="DMD_0000">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Neue Friedens-Vorschläge welche von Seiten Seiner Käyserlichen Majestät und Dero Hohen Alliirten, Denenjenigen, So die Cron Franckreich auf dem Friedens-Congress in Utrecht gethan, entgegengesetzet worden</mods:title>
+            <mods:subTitle>Gedruckt den 9. Mart. Anno 1712</mods:subTitle>
+          </mods:titleInfo>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">[S.l.]</mods:placeTerm>
+            </mods:place>
+            <mods:place>
+              <mods:placeTerm type="code" authority="iso3166">XG-DR</mods:placeTerm>
+            </mods:place>
+            <mods:dateIssued keyDate="yes" encoding="w3cdtf">1712</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo eventType="digitization">
+            <mods:place>
+              <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:dateCaptured encoding="iso8601">2009</mods:dateCaptured>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[4] Bl. ; 4°</mods:extent>
+            <mods:extent>Autopsie nach dem Exemplar der ULB Halle</mods:extent>
+          </mods:physicalDescription>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-10504</mods:identifier>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Kaiserlichen Alliierten Krone Frankreich Friedenskongreß</zvdd:titleWord>
+            </zvdd:zvddWrap>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">25-04-94</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">03-02-13</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">148811035</mods:recordIdentifier>
+          </mods:recordInfo>
+          <mods:location>
+            <mods:physicalLocation>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:physicalLocation>
+            <mods:shelfLocator>Nd 1277 (1)</mods:shelfLocator>
+          </mods:location>
+          <mods:accessCondition type="use and reproduction" href="https://creativecommons.org/licenses/by-sa/3.0/de/">CC-BY-SA 3.0 DE</mods:accessCondition>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="AMD_0000">
+    <mets:rightsMD ID="RIGHTS">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>Share_it</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="DIGIPROV">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=148811035</dv:reference>
+            <dv:presentation>Share_it</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="MAX">
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:51" ID="IMG_0001">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320799" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:51" ID="IMG_0002">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320800" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:51" ID="IMG_0003">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320801" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:52" ID="IMG_0004">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320802" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:52" ID="IMG_0005">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320805" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:52" ID="IMG_0006">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320806" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:52" ID="IMG_0007">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320808" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:53" ID="IMG_0008">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320809" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:53" ID="IMG_0009">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320810" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:53" ID="IMG_0010">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320811" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:53" ID="IMG_0011">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320812" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:54" ID="IMG_0012">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320813" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:54" ID="IMG_0013">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320814" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:54" ID="IMG_0014">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320816" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:55" ID="IMG_0015">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320817" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2009-09-21T15:02:55" ID="IMG_0016">
+        <mets:FLocat xlink:href="http://digital.bibliothek.uni-halle.de/hd/download/webcache/0/320804" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div TYPE="physSequence" ID="PHYS_0000">
+      <mets:div ID="PHYS_0001" TYPE="page" ORDER="1" ORDERLABEL="[Seite 1]">
+        <mets:fptr FILEID="IMG_0001"/>
+      </mets:div>
+      <mets:div ID="PHYS_0002" TYPE="page" ORDER="2" ORDERLABEL="[Seite 2]">
+        <mets:fptr FILEID="IMG_0002"/>
+      </mets:div>
+      <mets:div ID="PHYS_0003" TYPE="page" ORDER="3" ORDERLABEL="[Seite 3]">
+        <mets:fptr FILEID="IMG_0003"/>
+      </mets:div>
+      <mets:div ID="PHYS_0004" TYPE="page" ORDER="4" ORDERLABEL="[Seite 4]">
+        <mets:fptr FILEID="IMG_0004"/>
+      </mets:div>
+      <mets:div ID="PHYS_0005" TYPE="page" ORDER="5" ORDERLABEL="[Seite 6]">
+        <mets:fptr FILEID="IMG_0005"/>
+      </mets:div>
+      <mets:div ID="PHYS_0006" TYPE="page" ORDER="6" ORDERLABEL="[Seite 7]">
+        <mets:fptr FILEID="IMG_0006"/>
+      </mets:div>
+      <mets:div ID="PHYS_0007" TYPE="page" ORDER="7" ORDERLABEL="[Seite 8]">
+        <mets:fptr FILEID="IMG_0007"/>
+      </mets:div>
+      <mets:div ID="PHYS_0008" TYPE="page" ORDER="8" ORDERLABEL="[Seite 9]">
+        <mets:fptr FILEID="IMG_0008"/>
+      </mets:div>
+      <mets:div ID="PHYS_0009" TYPE="page" ORDER="9" ORDERLABEL="[Seite 10]">
+        <mets:fptr FILEID="IMG_0009"/>
+      </mets:div>
+      <mets:div ID="PHYS_0010" TYPE="page" ORDER="10" ORDERLABEL="[Seite 11]">
+        <mets:fptr FILEID="IMG_0010"/>
+      </mets:div>
+      <mets:div ID="PHYS_0011" TYPE="page" ORDER="11" ORDERLABEL="[Seite 12]">
+        <mets:fptr FILEID="IMG_0011"/>
+      </mets:div>
+      <mets:div ID="PHYS_0012" TYPE="page" ORDER="12" ORDERLABEL="[Seite 13]">
+        <mets:fptr FILEID="IMG_0012"/>
+      </mets:div>
+      <mets:div ID="PHYS_0013" TYPE="page" ORDER="13" ORDERLABEL="[Seite 14]">
+        <mets:fptr FILEID="IMG_0013"/>
+      </mets:div>
+      <mets:div ID="PHYS_0014" TYPE="page" ORDER="14" ORDERLABEL="[Seite 15]">
+        <mets:fptr FILEID="IMG_0014"/>
+      </mets:div>
+      <mets:div ID="PHYS_0015" TYPE="page" ORDER="15" ORDERLABEL="[Seite 16]">
+        <mets:fptr FILEID="IMG_0015"/>
+      </mets:div>
+      <mets:div ID="PHYS_0016" TYPE="page" ORDER="16" ORDERLABEL="[Colorchecker]">
+        <mets:fptr FILEID="IMG_0016"/>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ID="LOG_0000" DMDID="DMD_0000" ADMID="AMD_0000" TYPE="monograph" LABEL="Neue Friedens-Vorschläge welche von Seiten Seiner Käyserlichen Majestät und Dero Hohen Alliirten, Denenjenigen, So die Cron Franckreich auf dem Friedens-Congress in Utrecht gethan, entgegengesetzet w" ORDER="1">
+      <mets:div ID="LOG_0001" TYPE="cover_front" LABEL="Vorderdeckel" ORDER="1"/>
+      <mets:div ID="LOG_0002" TYPE="title_page" LABEL="Titelblatt" ORDER="2"/>
+      <mets:div ID="LOG_0003" TYPE="section" LABEL="Abschnitt [ohne Titel]" ORDER="3"/>
+      <mets:div ID="LOG_0004" TYPE="cover_back" LABEL="Rückdeckel" ORDER="4"/>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:from="LOG_0001" xlink:to="PHYS_0001"/>
+    <mets:smLink xlink:from="LOG_0001" xlink:to="PHYS_0002"/>
+    <mets:smLink xlink:from="LOG_0001" xlink:to="PHYS_0003"/>
+    <mets:smLink xlink:from="LOG_0001" xlink:to="PHYS_0004"/>
+    <mets:smLink xlink:from="LOG_0002" xlink:to="PHYS_0005"/>
+    <mets:smLink xlink:from="LOG_0002" xlink:to="PHYS_0006"/>
+    <mets:smLink xlink:from="LOG_0003" xlink:to="PHYS_0007"/>
+    <mets:smLink xlink:from="LOG_0003" xlink:to="PHYS_0008"/>
+    <mets:smLink xlink:from="LOG_0003" xlink:to="PHYS_0009"/>
+    <mets:smLink xlink:from="LOG_0003" xlink:to="PHYS_0010"/>
+    <mets:smLink xlink:from="LOG_0003" xlink:to="PHYS_0011"/>
+    <mets:smLink xlink:from="LOG_0003" xlink:to="PHYS_0012"/>
+    <mets:smLink xlink:from="LOG_0003" xlink:to="PHYS_0013"/>
+    <mets:smLink xlink:from="LOG_0004" xlink:to="PHYS_0014"/>
+    <mets:smLink xlink:from="LOG_0004" xlink:to="PHYS_0015"/>
+    <mets:smLink xlink:from="LOG_0004" xlink:to="PHYS_0016"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0001"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0002"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0003"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0004"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0005"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0006"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0007"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0008"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0009"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0010"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0011"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0012"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0013"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0014"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0015"/>
+    <mets:smLink xlink:from="LOG_0000" xlink:to="PHYS_0016"/>
+  </mets:structLink>
+</mets:mets>

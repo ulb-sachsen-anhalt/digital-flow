@@ -1,0 +1,3371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:vls="http://semantics.de/vls" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:epicur="urn:nbn:de:1111-2004033116" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:marcxml="http://www.loc.gov/MARC21/slim" xmlns="http://www.openarchives.org/OAI/2.0/" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd" OBJID="2" LABEL="Inhouse-Digitalisierung">
+  <mets:metsHdr CREATEDATE="2021-06-24T16:01:35">
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>vls/2.12.1</mets:name>
+      <mets:note>legacy vlid: 2910519</mets:note>
+      <mets:note>legacy date: 2018-11-22T09:28:30Z</mets:note>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="INSTANCE">
+      <mets:name>ulbhal-hspe</mets:name>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="REPOSITORY">
+      <mets:name>digital.bibliothek.uni-halle.de/hd</mets:name>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="BUILDER">
+      <mets:name>periodical</mets:name>
+    </mets:agent>
+    <mets:agent TYPE="OTHER" ROLE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>Migration</mets:name>
+      <mets:note>2021-06-24 16:03:11</mets:note>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="md2910560">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1837</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>2, 2, 2, 4 S., 1, 1, 2, 4 Bl. ; 8°</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 13 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>8 farb. Ill..</mods:extent>
+            <mods:extent>Gleichzeitig H. 10 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 7 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 4 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 1 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig Heft 15 des Gesamtwerkes. - Für Abt. 6 kein H. 1 vhd., wahrsch. hier [H. 1]</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 8 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 9 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 6 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 3 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 17 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 14 des Gesamtwerks</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 11 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 5 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 2 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 12 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+            <mods:extent>8 farb. Ill.</mods:extent>
+            <mods:extent>Gleichzeitig H. 16 des Gesamtwerkes</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>Nebent.: Ornithologischer Atlas der aussereuropäischen Vögel</mods:extent>
+            <mods:extent>Vorlageform der Veröffentlichungsangabe: Nürnberg, C. H. Zeh'sche Buchhandlung</mods:extent>
+            <mods:extent>digitized copy</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:info version="1"/>
+              <ulb:externalType xmlns:ulb="https://bibliothek.uni-halle.de" recordSyntax="pica">Ac</ulb:externalType>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61256</mods:identifier>
+          <mods:part type="host" order="13">
+            <mods:detail>
+              <mods:number>H. 13  = [Abt. 5], [H.] 1</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603435</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+          <mods:location>
+            <mods:physicalLocation>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:physicalLocation>
+            <mods:shelfLocator>RAR A 202 (13)</mods:shelfLocator>
+          </mods:location>
+          <mods:accessCondition type="use and reproduction" xlink:href="https://creativecommons.org/licenses/by-sa/3.0/de">CC-BY-SA 3.0 DE</mods:accessCondition>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910593">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1837</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>12 S., 7, 1 Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61287</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (10)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="10">
+            <mods:detail>
+              <mods:number>H. 10 = [Abt. 3], [H.] 1</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">24060329X</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910626">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1836</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. [65] - 76, Bl. 49 - 56 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61319</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (7)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="7">
+            <mods:detail>
+              <mods:number>H. 7  = Abt. 1, H. 7</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603117</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910659">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+            <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+            <mods:namePart type="family">Hahn</mods:namePart>
+            <mods:namePart type="date">1786-1835</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1835</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 41 - 48, Bl. 25 - 32 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61349</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (4)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="4">
+            <mods:detail>
+              <mods:number>H. 4 = Abt. 1, H. 4</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240602870</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910692">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+            <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+            <mods:namePart type="family">Hahn</mods:namePart>
+            <mods:namePart type="date">1786-1835</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>20 S.,  8 Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61372</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (1)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="1">
+            <mods:detail>
+              <mods:number>H. 1 = Abt.1, [1] </mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240602692</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910538">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1838</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>4, 8 S., 8 Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61235</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (15)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="15">
+            <mods:detail>
+              <mods:number>H. 15 = [Abt. 6], [H.] 2</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603516</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910615">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1836</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>6, 4 S., 3, 3 b Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61309</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (8)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="8">
+            <mods:detail>
+              <mods:number>H. 8  = [Abt.2],[ H.] 1</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603168</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910604">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1836</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 77 - 84, Bl. 57 - 63 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61291</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (9)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="9">
+            <mods:detail>
+              <mods:number>H. 9 = [Abt. 1], [H.] 8</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603206</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910637">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+            <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+            <mods:namePart type="family">Hahn</mods:namePart>
+            <mods:namePart type="date">1786-1835</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1836</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 57 - 64, Bl. 41 - 48 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61326</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (6)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="6">
+            <mods:detail>
+              <mods:number>H. 6  = Abt. 1, H. 6</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240602994</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910670">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+            <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+            <mods:namePart type="family">Hahn</mods:namePart>
+            <mods:namePart type="date">1786-1835</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 33 - 40, Bl. 17 - 24 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61353</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (3)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="3">
+            <mods:detail>
+              <mods:number>H. 3  = Abt. 1, H. 3</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240602854</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910515">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1841</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>6, 2, 2 S., 5, 2, 1 Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61200</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (17)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="17">
+            <mods:detail>
+              <mods:number>H. 17 = [Abt. 7], [H.] 1</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603605</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910549">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1838</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 13 - 20, Bl. 8 - 15 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61242</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (14)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="14">
+            <mods:detail>
+              <mods:number>H. 14 = [Abt. 3], [H.] 2</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603486</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910582">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1837</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 85 - 92, Bl. 64 - 71 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61277</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (11)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="11">
+            <mods:detail>
+              <mods:number>H. 11 = [Abt. 1], [H.] 9</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603362</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910519">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+          </mods:titleInfo>
+          <mods:titleInfo type="alternative">
+            <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+            <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+            <mods:namePart type="family">Hahn</mods:namePart>
+            <mods:namePart type="date">1786-1835</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+            <mods:dateIssued>1834-</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+          <mods:extension>
+            <vlz:externalType recordSyntax="pica" code="Ac"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910648">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+            <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+            <mods:namePart type="family">Hahn</mods:namePart>
+            <mods:namePart type="date">1786-1835</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1835</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 49 - 56, Bl. 33 - 40 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61334</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (5)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="5">
+            <mods:detail>
+              <mods:number>H. 5  = Abt. 1, H. 5</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240602943</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910681">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+            <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+            <mods:namePart type="family">Hahn</mods:namePart>
+            <mods:namePart type="date">1786-1835</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. [21] - 32, Bl. 9 - 16 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61364</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (2)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="2">
+            <mods:detail>
+              <mods:number>H. 2 = Abt. 1, H. 2</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240602773</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910571">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1837</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>2, 2, 2, 4 S., 2, 1, 2, 3 Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61268</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (12)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="12">
+            <mods:detail>
+              <mods:number>H. 12  = [Abt. 4], [H.] 1</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603400</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2910527">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+          <mods:titleInfo>
+            <mods:title>Mit acht fein colorirten Tafeln</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+            <mods:namePart type="given">Heinrich Carl</mods:namePart>
+            <mods:namePart type="family">Küster</mods:namePart>
+            <mods:namePart type="date">1807-1876</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+            <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+            <mods:namePart type="family">Zeh</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+            <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Zeh</mods:publisher>
+            <mods:dateIssued encoding="iso8601" keyDate="yes">1840</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2018</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>S. 93 - 100, Bl. 72 - 79 ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Ornithologischer Atlas der aussereuropäischen Vögel</mods:title>
+            </mods:titleInfo>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118854194">
+              <mods:namePart type="given">Carl Wilhelm</mods:namePart>
+              <mods:namePart type="family">Hahn</mods:namePart>
+              <mods:namePart type="date">1786-1835</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Hahn, Carl Wilhelm</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/116592621">
+              <mods:namePart type="given">Heinrich Carl</mods:namePart>
+              <mods:namePart type="family">Küster</mods:namePart>
+              <mods:namePart type="date">1807-1876</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Küster, Heinrich Carl</mods:displayForm>
+            </mods:name>
+            <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037576500">
+              <mods:namePart type="given">Conrad Heinrich</mods:namePart>
+              <mods:namePart type="family">Zeh</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                <mods:roleTerm type="text">Verl.</mods:roleTerm>
+              </mods:role>
+              <mods:displayForm>Zeh, Conrad Heinrich</mods:displayForm>
+            </mods:name>
+            <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Nürnberg</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Zeh</mods:publisher>
+              <mods:dateIssued encoding="iso8601" keyDate="yes">1834</mods:dateIssued>
+              <mods:dateIssued>1834-</mods:dateIssued>
+              <mods:issuance>monographic</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:dateIssued>2018</mods:dateIssued>
+              <mods:edition>[Electronic ed.]</mods:edition>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:physicalDescription>
+              <mods:extent>8°</mods:extent>
+            </mods:physicalDescription>
+            <mods:note type="statement of responsibility">von Dr. C. W. Hahn</mods:note>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61210</mods:identifier>
+            <mods:extension>
+              <vlz:externalType recordSyntax="pica" code="Ac"/>
+              <vlz:info version="1"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">30-08-17</mods:recordChangeDate>
+              <mods:recordIdentifier source="ulbhaldod">240602560</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension xmlns:vl="http://visuallibrary.net/vl">
+              <vl:id>2910519</vl:id>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>19</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:3-61223</mods:identifier>
+          <mods:location>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>RAR A 202 (16)</mods:shelfLocator>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="16">
+            <mods:detail>
+              <mods:number>H. 16 = [Abt. 1], [H.] 10</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>colorierten</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType recordSyntax="pica" code="Af"/>
+            <vlz:info version="1"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">26-02-98</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">22-11-18</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhaldod">240603575</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="amd2910560">
+    <mets:rightsMD ID="rights2910560">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>Share_it</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910560">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603435</dv:reference>
+            <dv:presentation>Share_it</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910593">
+    <mets:rightsMD ID="rights2910593">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910593">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=24060329X</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910593</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910626">
+    <mets:rightsMD ID="rights2910626">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910626">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603117</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910626</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910659">
+    <mets:rightsMD ID="rights2910659">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910659">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240602870</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910659</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910692">
+    <mets:rightsMD ID="rights2910692">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910692">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240602692</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910692</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910538">
+    <mets:rightsMD ID="rights2910538">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910538">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603516</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910538</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910615">
+    <mets:rightsMD ID="rights2910615">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910615">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603168</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910615</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910604">
+    <mets:rightsMD ID="rights2910604">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910604">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603206</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910604</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910637">
+    <mets:rightsMD ID="rights2910637">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910637">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240602994</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910637</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910670">
+    <mets:rightsMD ID="rights2910670">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910670">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240602854</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910670</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910515">
+    <mets:rightsMD ID="rights2910515">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910515">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603605</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910515</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910549">
+    <mets:rightsMD ID="rights2910549">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910549">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603486</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910549</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910582">
+    <mets:rightsMD ID="rights2910582">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910582">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603362</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910582</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910519">
+    <mets:rightsMD ID="rights2910519">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910519">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240602560</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910519</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910648">
+    <mets:rightsMD ID="rights2910648">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910648">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240602943</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910648</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910681">
+    <mets:rightsMD ID="rights2910681">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910681">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240602773</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910681</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910571">
+    <mets:rightsMD ID="rights2910571">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910571">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603400</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910571</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2910527">
+    <mets:rightsMD ID="rights2910527">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://digital.bibliothek.uni-halle.de/hd/domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2910527">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=240603575</dv:reference>
+            <dv:presentation>http://digital.bibliothek.uni-halle.de/hd/id/2910527</dv:presentation>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ID="log2910519" DMDID="md2910519" ADMID="amd2910519" LABEL="Ornithologischer Atlas oder naturgetreue Abbildung und Beschreibung der aussereuropäischen Vögel" TYPE="multivolume_work" ORDER="1" CONTENTIDS="urn:nbn:de:gbv:3:3-61210">
+      <mets:div ID="log2910692" DMDID="md2910692" ADMID="amd2910692" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="1">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910692"/>
+      </mets:div>
+      <mets:div ID="log2910681" DMDID="md2910681" ADMID="amd2910681" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="2">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910681"/>
+      </mets:div>
+      <mets:div ID="log2910670" DMDID="md2910670" ADMID="amd2910670" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="3">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910670"/>
+      </mets:div>
+      <mets:div ID="log2910659" DMDID="md2910659" ADMID="amd2910659" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="4">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910659"/>
+      </mets:div>
+      <mets:div ID="log2910648" DMDID="md2910648" ADMID="amd2910648" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="5">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910648"/>
+      </mets:div>
+      <mets:div ID="log2910637" DMDID="md2910637" ADMID="amd2910637" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="6">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910637"/>
+      </mets:div>
+      <mets:div ID="log2910626" DMDID="md2910626" ADMID="amd2910626" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="7">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910626"/>
+      </mets:div>
+      <mets:div ID="log2910615" DMDID="md2910615" ADMID="amd2910615" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="8">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910615"/>
+      </mets:div>
+      <mets:div ID="log2910604" DMDID="md2910604" ADMID="amd2910604" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="9">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910604"/>
+      </mets:div>
+      <mets:div ID="log2910593" DMDID="md2910593" ADMID="amd2910593" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="10">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910593"/>
+      </mets:div>
+      <mets:div ID="log2910582" DMDID="md2910582" ADMID="amd2910582" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="11">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910582"/>
+      </mets:div>
+      <mets:div ID="log2910571" DMDID="md2910571" ADMID="amd2910571" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="12">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910571"/>
+      </mets:div>
+      <mets:div ID="log2910560" DMDID="md2910560" ADMID="amd2910560" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="13">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910560"/>
+      </mets:div>
+      <mets:div ID="log2910549" DMDID="md2910549" ADMID="amd2910549" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="14">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910549"/>
+      </mets:div>
+      <mets:div ID="log2910538" DMDID="md2910538" ADMID="amd2910538" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="15">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910538"/>
+      </mets:div>
+      <mets:div ID="log2910527" DMDID="md2910527" ADMID="amd2910527" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="16">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910527"/>
+      </mets:div>
+      <mets:div ID="log2910515" DMDID="md2910515" ADMID="amd2910515" LABEL="Mit acht fein colorirten Tafeln" TYPE="monograph" ORDER="17">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://digital.bibliothek.uni-halle.de/hd/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2910515"/>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+</mets:mets>

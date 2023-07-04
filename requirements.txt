@@ -1,0 +1,5 @@
+lxml
+Pillow
+numpy
+wheel
+requests

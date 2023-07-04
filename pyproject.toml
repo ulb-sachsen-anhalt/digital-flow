@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "digiflow"
+version = "3.0.0"
+description = "Father's Little Digitization Workflow Helper"
+requires-python = ">=3.8"
+authors = [
+	{name = "Universitäts- und Landesbibliothek Sachsen-Anhalt", email = "development@bibliothek.uni-halle.de"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+dependencies = [
+	"lxml",
+	"Pillow",
+	"numpy",
+	"requests"
+]
+
+[project.urls]
+Homepage = "https://github.com/ulb-sachsen-anhalt/digital-flow"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]

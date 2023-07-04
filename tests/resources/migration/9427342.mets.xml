@@ -1,0 +1,1152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:mods="http://www.loc.gov/mods/v3" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version112/mets.xsd" OBJID="5" LABEL="Drucke des 18. Jahrhunderts (VD18)">
+  <mets:metsHdr CREATEDATE="2021-06-29T09:58:54">
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>vls/2012</mets:name>
+      <mets:note>legacy vlid: 9427342</mets:note>
+      <mets:note>legacy date: 2015-02-09T07:21:29Z</mets:note>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="INSTANCE">
+      <mets:name>ulbhalvd</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="REPOSITORY">
+      <mets:name>digitale.bibliothek.uni-halle.de/vd18</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="BUILDER">
+      <mets:name>periodical</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="md9427334">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">Übers.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1769</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[4] Bl., 208 S. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Übersetzer am Ende des Privilegium genannt</mods:note>
+          <mods:note>Autopsie nach Exemplar der ULB Sachsen-Anhalt</mods:note>
+          <mods:note>Vorlageform des Erscheinungsvermerks: Tübingen bey Johann Georg Cotta 1769.</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">90311787</mods:identifier>
+          <mods:identifier type="gbv">211999539</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-636043</mods:identifier>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Sir James Stewarts, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+            </mods:titleInfo>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>Lb 712 a (1)</mods:shelfLocator>
+                <mods:note>digitized copy</mods:note>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="1">
+            <mods:detail>
+              <mods:number>[Buch 1]</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staatswirtschaft bei freien</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Af"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">14-03-21</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">211999539</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md9427335">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">Übers.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1770</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[11] Bl., 464 S. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Autopsie nach Exemplar der ULB Sachsen-Anhalt</mods:note>
+          <mods:note>Vorlageform des Erscheinungsvermerks: Tübingen bey Johann Georg Cotta 1770.</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">90311795</mods:identifier>
+          <mods:identifier type="gbv">211999563</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-635997</mods:identifier>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Sir James Stewarts, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+            </mods:titleInfo>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>Lb 712 a (2)</mods:shelfLocator>
+                <mods:note>digitized copy</mods:note>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="2">
+            <mods:detail>
+              <mods:number>Buch 2</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staatswirtschaft bei freien</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Af"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">14-03-21</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">211999563</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md9427336">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">Übers.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1770</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[2] Bl., 156 S., [1] gef. Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Autopsie nach Exemplar der ULB Sachsen-Anhalt</mods:note>
+          <mods:note>Vorlageform des Erscheinungsvermerks: Tübingen bey Johann Georg Cotta 1770.</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">90311809</mods:identifier>
+          <mods:identifier type="gbv">21199958X</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-636005</mods:identifier>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Sir James Stewarts, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+            </mods:titleInfo>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>Lb 712 a (3,1)</mods:shelfLocator>
+                <mods:note>digitized copy</mods:note>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="3">
+            <mods:detail>
+              <mods:number>Buch 3, Stük 1</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staatswirtschaft bei freien</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Af"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">08-05-20</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">21199958X</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md9427337">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">Übers.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1771</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[2] Bl., 148 S. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Autopsie nach Exemplar der ULB Sachsen-Anhalt</mods:note>
+          <mods:note>Vorlageform des Erscheinungsvermerks: Tübingen bey Johann Georg Cotta 1771.</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">90311817</mods:identifier>
+          <mods:identifier type="gbv">211999628</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-635986</mods:identifier>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Sir James Stewarts, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+            </mods:titleInfo>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>Lb 712 a (3,2)</mods:shelfLocator>
+                <mods:note>digitized copy</mods:note>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="3">
+            <mods:detail>
+              <mods:number>Buch 3, Stük 2</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staatswirtschaft bei freien</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Af"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">08-05-20</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">211999628</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md9427338">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo>
+            <mods:title>Von Credit und Schulden</mods:title>
+            <mods:subTitle>von dem Geld-Interesse. von Bancken</mods:subTitle>
+          </mods:titleInfo>
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">ÜbersetzerIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1771</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[4] Bl., 280 S. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Bd.-Titel dem Zwischentitelblättern entnommen</mods:note>
+          <mods:note>Autopsie nach Exemplar der ULB Sachsen-Anhalt</mods:note>
+          <mods:note>Vorlageform des Erscheinungsvermerks: Tübingen bei Johann Georg Cotta 1771.</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">90311825</mods:identifier>
+          <mods:identifier type="gbv">211999644</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-636013</mods:identifier>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Sir James Stewart, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bei freien Nationen</mods:title>
+            </mods:titleInfo>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>Lb 712 a (4,1/2)</mods:shelfLocator>
+                <mods:note>digitized copy</mods:note>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="4">
+            <mods:detail>
+              <mods:number>Buch 4, Theil 1/2</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staats-Wirtschaft übersetzt Kredit Banken</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="AF"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-05-20</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">211999644</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md9427339">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo>
+            <mods:title>Von Credit und Schulden</mods:title>
+            <mods:subTitle>Vom Wechsel. Vom öffentlichen Credit</mods:subTitle>
+          </mods:titleInfo>
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bei freien Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">Übers.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1772</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[2] Bl., 228 S. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Bd.-Titel dem Zwischentitelblättern entnommen</mods:note>
+          <mods:note>Vorlageform des Erscheinungsvermerks: Tübingen bei Johann Georg Cotta 1772.</mods:note>
+          <mods:note>In Fraktur</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">90311833</mods:identifier>
+          <mods:identifier type="gbv">211999679</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-636037</mods:identifier>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Sir James Stewart, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bei freien Nationen</mods:title>
+            </mods:titleInfo>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>Lb 712 a (4,3/4)</mods:shelfLocator>
+                <mods:note>digitized copy</mods:note>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:shelfLocator>Lb 712 a (4,3/4)</mods:shelfLocator>
+          </mods:location>
+          <mods:part type="host" order="4">
+            <mods:detail>
+              <mods:number>Buch 4, Theil 3/4</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staats-Wirtschaft Kredit</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="AF"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-05-20</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">211999679</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md9427340">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo>
+            <mods:title>Von Anlagen und gehöriger Anwendung ihres Ertrags</mods:title>
+          </mods:titleInfo>
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bei freien Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">Übers.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" keyDate="yes">1772</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:extent>[3] Bl., 225 S., [12] Bl. ; 8°</mods:extent>
+          </mods:physicalDescription>
+          <mods:note>Bd.-Titel Zwischentitelblatt entnommen</mods:note>
+          <mods:note>Autopsie nach Exemplar der ULB Sachsen-Anhalt</mods:note>
+          <mods:note>Vorlageform des Erscheinungsvermerks: Tübingen bei Johann Georg Cotta 1772.</mods:note>
+          <mods:note>In Fraktur</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">90311841</mods:identifier>
+          <mods:identifier type="gbv">211999687</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-636022</mods:identifier>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Sir James Stewart, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bei freien Nationen</mods:title>
+            </mods:titleInfo>
+            <mods:recordInfo>
+              <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            </mods:recordInfo>
+          </mods:relatedItem>
+          <mods:location>
+            <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+            <mods:holdingSimple>
+              <mods:copyInformation>
+                <mods:shelfLocator>Lb 712 a (5)</mods:shelfLocator>
+                <mods:note>digitized copy</mods:note>
+              </mods:copyInformation>
+            </mods:holdingSimple>
+          </mods:location>
+          <mods:part type="host" order="5">
+            <mods:detail>
+              <mods:number>Buch 5</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staats-Wirtschaft Ertrages</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="AF"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">30-05-20</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">211999687</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md9427342">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+          <mods:titleInfo>
+            <mods:title>Sir James Stewarts, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+            <mods:subTitle>aus dem Englischen übersezt</mods:subTitle>
+          </mods:titleInfo>
+          <mods:titleInfo type="uniform">
+            <mods:nonSort>An</mods:nonSort>
+            <mods:title>inquiry into the principles of political economy &lt;dt.&gt;</mods:title>
+          </mods:titleInfo>
+          <mods:titleInfo type="alternative">
+            <mods:title>Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118798774">
+            <mods:namePart>Steuart, James</mods:namePart>
+            <mods:namePart type="given">James</mods:namePart>
+            <mods:namePart type="family">Steuart</mods:namePart>
+            <mods:namePart type="date">1712-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+              <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/136671403">
+            <mods:namePart>Leyser, Johann Gottlieb</mods:namePart>
+            <mods:namePart type="given">Johann Gottlieb</mods:namePart>
+            <mods:namePart type="family">Leyser</mods:namePart>
+            <mods:namePart type="date">1699-1780</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">trl</mods:roleTerm>
+              <mods:roleTerm type="text">Übers.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/5056474-2">
+            <mods:namePart>J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:namePart type="family">J. G. Cotta'sche Buchhandlung</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+              <mods:roleTerm type="text">Verl.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource collection="yes">text</mods:typeOfResource>
+          <mods:genre authority="aad">Handbuch</mods:genre>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm type="text">Tübingen</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Cotta</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" point="start">1769</mods:dateIssued>
+            <mods:dateIssued encoding="w3cdtf" point="end">1772</mods:dateIssued>
+            <mods:issuance>monographic</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:place>
+              <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:dateIssued>2015</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:note type="statement of responsibility">[Übersetzer Johann Gottlieb Leyser]</mods:note>
+          <mods:note>Übersetzer am Ende des Privilegium genannt</mods:note>
+          <mods:subject>
+            <mods:geographic>Tübingen</mods:geographic>
+          </mods:subject>
+          <mods:identifier type="vd18">11228628</mods:identifier>
+          <mods:identifier type="gbv">211999504</mods:identifier>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:1-636051</mods:identifier>
+          <mods:extension>
+            <zvdd:zvddWrap xmlns:zvdd="http://zvdd.gdz-cms.de/">
+              <zvdd:titleWord>Grund-Sätze Staatswirtschaft bei freien</zvdd:titleWord>
+            </zvdd:zvddWrap>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Ac"/>
+            <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">20-06-96</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">08-05-20</mods:recordChangeDate>
+            <mods:recordIdentifier source="ulbhalvd18">211999504</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="amd9427342">
+    <mets:rightsMD ID="rights9427342">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427342">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=211999504</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427342</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427342/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd9427334">
+    <mets:rightsMD ID="rights9427334">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427334">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=211999539</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427334</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427334/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd9427335">
+    <mets:rightsMD ID="rights9427335">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427335">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=211999563</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427335</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427335/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd9427336">
+    <mets:rightsMD ID="rights9427336">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427336">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=21199958X</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427336</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427336/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd9427337">
+    <mets:rightsMD ID="rights9427337">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427337">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=211999628</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427337</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427337/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd9427338">
+    <mets:rightsMD ID="rights9427338">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427338">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=211999644</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427338</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427338/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd9427339">
+    <mets:rightsMD ID="rights9427339">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427339">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=211999679</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427339</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427339/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd9427340">
+    <mets:rightsMD ID="rights9427340">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd18//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+            <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov9427340">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=211999687</dv:reference>
+            <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd18/id/9427340</dv:presentation>
+            <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd18/i3f/v20/9427340/manifest</dv:iiif>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="TEASER">
+      <mets:file MIMETYPE="image/jpeg" CREATED="2014-07-14T19:24:29.942700Z" ID="IMG_TEASER_9498889">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/webcache/304/9498889" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2014-07-15T19:23:24.737200Z" ID="IMG_TEASER_9501987">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/webcache/304/9501987" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2014-07-15T19:25:35.386700Z" ID="IMG_TEASER_9502523">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/webcache/304/9502523" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2014-07-15T19:26:33.089600Z" ID="IMG_TEASER_9502715">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/webcache/304/9502715" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2014-07-15T19:27:14.296800Z" ID="IMG_TEASER_9502890">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/webcache/304/9502890" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2014-07-16T19:30:12.935300Z" ID="IMG_TEASER_9506137">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/webcache/304/9506137" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2014-07-16T19:32:00.341200Z" ID="IMG_TEASER_9506397">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/webcache/304/9506397" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="DOWNLOAD">
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="ecc6dd2a433c099b68f307248626ff2cc0f4dd91" CREATED="2015-02-09T11:01:47.781700Z" CHECKSUMTYPE="SHA-1" SIZE="62994636" ID="PDF_9427334">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/pdf/9427334" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="4c767315dd79528bfb6caf87ffedcb6d94c87184" CREATED="2015-02-09T11:04:37.370600Z" CHECKSUMTYPE="SHA-1" SIZE="141448331" ID="PDF_9427335">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/pdf/9427335" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="806815a4697b3cf6a38510610ae9b775cdca0547" CREATED="2015-02-09T11:05:36.113800Z" CHECKSUMTYPE="SHA-1" SIZE="46860321" ID="PDF_9427336">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/pdf/9427336" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="15a6a1cf1a3ac82ba923073f0db6fd84c8a350b8" CREATED="2015-02-09T11:06:30.836200Z" CHECKSUMTYPE="SHA-1" SIZE="42579909" ID="PDF_9427337">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/pdf/9427337" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="48ce40ca9d33e2e5ca6f45a737c4d60b8f3fc65e" CREATED="2015-02-09T11:08:09.179900Z" CHECKSUMTYPE="SHA-1" SIZE="78513844" ID="PDF_9427338">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/pdf/9427338" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="1083d8e451efd8ae750278661cb8a853bafdbd92" CREATED="2015-02-09T11:09:26.286400Z" CHECKSUMTYPE="SHA-1" SIZE="59601877" ID="PDF_9427339">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/pdf/9427339" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="application/pdf" CHECKSUM="f4ab79dc78c87c5a68ac4070d66283d549a21a63" CREATED="2015-02-09T11:10:51.829200Z" CHECKSUMTYPE="SHA-1" SIZE="66774411" ID="PDF_9427340">
+        <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/download/pdf/9427340" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ID="log9427342" DMDID="md9427342" ADMID="amd9427342" LABEL="Sir James Stewarts, Baronets, Untersuchung der Grund-Säze von der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen" TYPE="multivolume_work" ORDER="10051" CONTENTIDS="urn:nbn:de:gbv:3:1-636051">
+      <mets:fptr FILEID="IMG_TEASER_9498889"/>
+      <mets:div ID="log9427334" DMDID="md9427334" ADMID="amd9427334" LABEL="Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen" TYPE="volume" ORDER="9999">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=9427334"/>
+        <mets:fptr FILEID="PDF_9427334"/>
+        <mets:fptr FILEID="IMG_TEASER_9498889"/>
+      </mets:div>
+      <mets:div ID="log9427335" DMDID="md9427335" ADMID="amd9427335" LABEL="Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen" TYPE="volume" ORDER="10000">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=9427335"/>
+        <mets:fptr FILEID="PDF_9427335"/>
+        <mets:fptr FILEID="IMG_TEASER_9501987"/>
+      </mets:div>
+      <mets:div ID="log9427336" DMDID="md9427336" ADMID="amd9427336" LABEL="Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen" TYPE="volume" ORDER="10001">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=9427336"/>
+        <mets:fptr FILEID="PDF_9427336"/>
+        <mets:fptr FILEID="IMG_TEASER_9502523"/>
+      </mets:div>
+      <mets:div ID="log9427337" DMDID="md9427337" ADMID="amd9427337" LABEL="Untersuchung der Grund-Säze Der Staats-Wirthschaft als ein Versuch über die Wissenschaft von der Innerlichen Politik bey freyen Nationen" TYPE="volume" ORDER="10002">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=9427337"/>
+        <mets:fptr FILEID="PDF_9427337"/>
+        <mets:fptr FILEID="IMG_TEASER_9502715"/>
+      </mets:div>
+      <mets:div ID="log9427338" DMDID="md9427338" ADMID="amd9427338" LABEL="Von Credit und Schulden" TYPE="volume" ORDER="10008">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=9427338"/>
+        <mets:fptr FILEID="PDF_9427338"/>
+        <mets:fptr FILEID="IMG_TEASER_9502890"/>
+      </mets:div>
+      <mets:div ID="log9427339" DMDID="md9427339" ADMID="amd9427339" LABEL="Von Credit und Schulden" TYPE="volume" ORDER="10009">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=9427339"/>
+        <mets:fptr FILEID="PDF_9427339"/>
+        <mets:fptr FILEID="IMG_TEASER_9506137"/>
+      </mets:div>
+      <mets:div ID="log9427340" DMDID="md9427340" ADMID="amd9427340" LABEL="Von Anlagen und gehöriger Anwendung ihres Ertrags" TYPE="volume" ORDER="10016">
+        <mets:mptr LOCTYPE="URL" xlink:href="https://digitale.bibliothek.uni-halle.de/vd18/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=9427340"/>
+        <mets:fptr FILEID="PDF_9427340"/>
+        <mets:fptr FILEID="IMG_TEASER_9506397"/>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+</mets:mets>

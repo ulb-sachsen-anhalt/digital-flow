@@ -1,0 +1,3263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mets="http://www.loc.gov/METS/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:epicur="urn:nbn:de:1111-2004033116" xmlns:vl="http://visuallibrary.net/vl" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai="http://www.openarchives.org/OAI/2.0/" xmlns:marcxml="http://www.loc.gov/MARC21/slim" xmlns:vls="http://semantics.de/vls" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version18/mets.xsd" OBJID="1" LABEL="Zeitschriften der Deutschen Morgenländischen Gesellschaft">
+  <mets:metsHdr CREATEDATE="2020-12-23T11:28:44">
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+      <mets:name>vls/2.17.3</mets:name>
+      <mets:note>created vlid: 20586</mets:note>
+      <mets:note>created date: 2014-02-19T08:27:24Z</mets:note>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="INSTANCE">
+      <mets:name>ulbhal-menadoc</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="REPOSITORY">
+      <mets:name>menadoc.bibliothek.uni-halle.de/dmg</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="BUILDER">
+      <mets:name>vd</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="md20586">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.5" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
+          <mods:titleInfo>
+            <mods:title>Ein Ausflug von Jerusalem über Jericho an den Jordan, das todte Meer und nach Mar Saba</mods:title>
+            <mods:subTitle>Ende März 1847</mods:subTitle>
+          </mods:titleInfo>
+          <mods:name type="personal">
+            <mods:namePart>Gandow, H.</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Zeitschrift der Deutschen Morgenländischen Gesellschaft</mods:title>
+              <mods:subTitle>ZDMG</mods:subTitle>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Wissenschaftliche Nachrichten</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>ZDMG</mods:title>
+            </mods:titleInfo>
+            <mods:name type="corporate" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/37086-1">
+              <mods:displayForm>Deutsche Morgenländische Gesellschaft</mods:displayForm>
+              <mods:namePart>Deutsche Morgenländische Gesellschaft</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">edt</mods:roleTerm>
+                <mods:roleTerm type="text">Hrsg.</mods:roleTerm>
+              </mods:role>
+            </mods:name>
+            <mods:typeOfResource>text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Wiesbaden</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Harrassowitz</mods:publisher>
+              <mods:dateIssued>1.1847 - 75.1921; N.F. 1=76.1922 - 37=112.1962; 113.1963(1964) -</mods:dateIssued>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Stuttgart</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Steiner</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Mainz</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>DMG</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Leipzig</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Brockhaus</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Wiesbaden</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Steiner</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:edition>[Electronic ed.]</mods:edition>
+              <mods:dateIssued>2008</mods:dateIssued>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:note type="date/sequential designation">1.1847 - 75.1921; N.F. 1=76.1922 - 37=112.1962; 113.1963(1964) -</mods:note>
+            <mods:note>Repr.: Nendeln, Liechtenstein : Kraus</mods:note>
+            <mods:note>Wissenschaftliche Nachrichten</mods:note>
+            <mods:classification authority="ddc">000</mods:classification>
+            <mods:classification authority="ddc">890</mods:classification>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:5-8179</mods:identifier>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zsn 890</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>7973</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>OLS Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zsn 890</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>29 PA 12031</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>29 PA 12031;Ind.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;a&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>OLS Ae 9350</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;a&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;e&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;c&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;c&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;d&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;d&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;c&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;d&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8"@Kart. GfE Z 510</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8"@Kart. GfE Z 510:Reg.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Hbor Or.gen. 43=Neuester Jg. = A.or. 313</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A.or. 313</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 99.568</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bibl.Gram. 1518</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2012.1166</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2011.1643</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>MIO-A/38</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>fc 2352</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>z ori 001 ja/352</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ori 001</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Einzelsignatur</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X/4794</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ÄGY-Z ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>B I e 20</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator> AZ 9316</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>9: AZ 9316</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X 1763</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X 4229</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X 1763</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>za 6950</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>his z z 115</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>CP1670</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>CP1670</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>KS L8011</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>P 1477</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SEM:ZZ:200</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2005 A 10140</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2006 A 5374</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Phil.or.I,67</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>U 890</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zsn 33</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ab 24</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>24 ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT Aa 70</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 8064</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 8064 a</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>J:EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZE 47</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZE 47</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Eb 20</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 211</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 970</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BZT 20</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>55110</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Eph 8° 00021/05</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Eph 8° 00021/05</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 8° 00135</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 8° 00135 (Reg.)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Z LIT 110</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Z LIT 110</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I,203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 40</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 19</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A-III-795</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A 912</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A 912</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 1320</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EAa 5</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EAa 5(Reg)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>XAd 500</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Angebunden an: Z 23:1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zc 2.104</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>M: Lf 173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>11.8° 483</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 2094</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 2094</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>CIa-321</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bb 177</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bb 177</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 8636</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bb 177</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>D Bb 930 (1. Ex.)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>T Zeitschriftenmagazin UG, Theologie</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SZA 1250</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>D Zs 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 4277</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>D Bb 930 (2. Ex.)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>520/Ba 273</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>310/BA 2419</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>310/BA 2419</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>227/Dal A 30</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>(ZA 165)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>(ZA 165)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ci I 46</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ci I 46</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>18/17556</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ma I 125</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2 ZI 109</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2 ZI 109-Beil.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2 ZI 109-Reg.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>E 29</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZSA 1977 B</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>E 29-0</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>inf Zs 234</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>C 2100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>C 2100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZG 1568</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>C 2100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZG 1568</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 4916</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>LS: B</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>H00/OR-III 87</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>H00/OR-III 87 ; H40/Z ant 3=Neue Hefte</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>06IN/A 9720</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>07OR/B 4</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>02JU/IsR/I 498</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>07SI/ZE1-001</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z ori 001 ja ZA 2932</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>S/MISS:M 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>S/SELL:ZZ 001</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>S/THOL:VIII 225</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Acta.acad.0312</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z. 8. 403</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Acta.acad.0312</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>01/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>01/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 8419</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ORI 0150</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>d+1 657</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>d+1 657</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT A 53</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT A 53</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>HS:B-57</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>HS:B-57</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 42</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 42</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SA 7483</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>B 146</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Q 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>I bi 707 [8]</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Mex ge 1643 [8]</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Per ge 865 [8]</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2225</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Allg. 1. 2. 35. /Z 82</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Allg. 1.2.35./Z 82 So.-Sto.: Turfan</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Einzelsign.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 82 - Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 82 - Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 538</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 11074</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT IV 10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 141</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 141</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>MKGH Z D</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 52-508</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ori 2/z24</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ori 2/z24</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2475</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>60 Jb 175</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>60 ZSA 60</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZB 518</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>DZs 1984</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZB 518</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>DZs 1984</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Orient.Lit.899-c</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BA 2173 Magazin: 54-7-10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>54-7-10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 2</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>KHS.2.0548</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Einzelsign.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Per. 806</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1301/Per 215</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Philol. 2261</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Z 73-96</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1216/Zeitschriftenbestand</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0100/ZS 95472</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0311/XXXI 660</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0311/XXXI 660</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0910/LD 4333(M)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1204/O ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1204/O ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1205/Z ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1207/ZZ 4200</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1207/ZZ 4200</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1213/01.5</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1214/ohne Sign.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1301/Per 215</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1302/A III 3</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1302/A III 4</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0910/LD 4333</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 45.197</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>407/IND Zz 45</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>60/Z 45.197</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>11/EQ 3100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>11/EQ 3100/Reg.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>406/Z/ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>208/Ost. A-II-2-18</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>05/z 12609</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>P 10/16 d 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BR 576i</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>77-Zt 68</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>10/.ZT 9270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>15/.ZT 9270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 08/21936</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z - D 2451</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ga III 906</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ga III 906</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>B 830</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 987</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 417</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zn 4</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Per 156</mods:shelfLocator>
+            </mods:location>
+            <mods:extension>
+              <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Ab"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">14-11-93</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">29-04-16</mods:recordChangeDate>
+              <mods:recordIdentifier source="dmg">129465925</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension>
+              <vl:id>2327</vl:id>
+              <vl:odid>1</vl:odid>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>24</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+          <mods:originInfo>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:place>
+              <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+            </mods:place>
+            <mods:dateIssued>2014</mods:dateIssued>
+            <mods:edition>[Electronic ed.]</mods:edition>
+          </mods:originInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="md2327">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.5" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
+          <mods:titleInfo>
+            <mods:title>Zeitschrift der Deutschen Morgenländischen Gesellschaft</mods:title>
+            <mods:subTitle>ZDMG</mods:subTitle>
+          </mods:titleInfo>
+          <mods:titleInfo type="alternative">
+            <mods:title>Wissenschaftliche Nachrichten</mods:title>
+          </mods:titleInfo>
+          <mods:titleInfo type="alternative">
+            <mods:title>ZDMG</mods:title>
+          </mods:titleInfo>
+          <mods:name type="corporate" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/37086-1">
+            <mods:displayForm>Deutsche Morgenländische Gesellschaft</mods:displayForm>
+            <mods:namePart>Deutsche Morgenländische Gesellschaft</mods:namePart>
+            <mods:role>
+              <mods:roleTerm type="code" authority="marcrelator">edt</mods:roleTerm>
+              <mods:roleTerm type="text">Hrsg.</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Wiesbaden</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Harrassowitz</mods:publisher>
+            <mods:dateIssued>1.1847 - 75.1921; N.F. 1=76.1922 - 37=112.1962; 113.1963(1964) -</mods:dateIssued>
+            <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+            <mods:dateIssued>1847-</mods:dateIssued>
+            <mods:issuance>continuing</mods:issuance>
+            <mods:place>
+              <mods:placeTerm type="text">Stuttgart</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Steiner</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+            <mods:dateIssued>1847-</mods:dateIssued>
+            <mods:issuance>continuing</mods:issuance>
+            <mods:place>
+              <mods:placeTerm type="text">Mainz</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>DMG</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+            <mods:dateIssued>1847-</mods:dateIssued>
+            <mods:issuance>continuing</mods:issuance>
+            <mods:place>
+              <mods:placeTerm type="text">Leipzig</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Brockhaus</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+            <mods:dateIssued>1847-</mods:dateIssued>
+            <mods:issuance>continuing</mods:issuance>
+            <mods:place>
+              <mods:placeTerm type="text">Wiesbaden</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Steiner</mods:publisher>
+            <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+            <mods:dateIssued>1847-</mods:dateIssued>
+            <mods:issuance>continuing</mods:issuance>
+          </mods:originInfo>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+            <mods:edition>[Electronic ed.]</mods:edition>
+            <mods:dateIssued>2008</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+          </mods:language>
+          <mods:note type="date/sequential designation">1.1847 - 75.1921; N.F. 1=76.1922 - 37=112.1962; 113.1963(1964) -</mods:note>
+          <mods:note>Repr.: Nendeln, Liechtenstein : Kraus</mods:note>
+          <mods:note>Wissenschaftliche Nachrichten</mods:note>
+          <mods:classification authority="ddc">000</mods:classification>
+          <mods:classification authority="ddc">890</mods:classification>
+          <mods:identifier type="urn">urn:nbn:de:gbv:3:5-8179</mods:identifier>
+          <mods:location>
+            <mods:shelfLocator>Zt 106&lt;b&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zsn 890</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>7973</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;N.F.&lt;b&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>OLS Z 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zsn 890</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;N.F</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>29 PA 12031</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>29 PA 12031;Ind.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;Ind.&lt;a&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;Ind.&lt;b&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>OLS Ae 9350</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;N.F.&lt;a&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106&lt;e&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;N.F.&lt;b&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106&lt;c&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;N.F.&lt;c&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106&lt;d&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;N.F.&lt;d&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;Ind.&lt;c&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;Ind.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zt 106;Ind.&lt;d&gt;</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8"@Kart. GfE Z 510</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8"@Kart. GfE Z 510:Reg.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Hbor Or.gen. 43=Neuester Jg. = A.or. 313</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>A.or. 313</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 99.568</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Bibl.Gram. 1518</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 2012.1166</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 2011.1643</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>MIO-A/38</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>fc 2352</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>z ori 001 ja/352</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ori 001</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Einzelsignatur</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>X/4794</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ÄGY-Z ZDMG</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>B I e 20</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator> AZ 9316</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>9: AZ 9316</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>X 1763</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>X 4229</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>X 1763</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>za 6950</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>his z z 115</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>CP1670</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>CP1670</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>KS L8011</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>P 1477</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>SEM:ZZ:200</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>2005 A 10140</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>2006 A 5374</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 Phil.or.I,67</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>U 890</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zsn 33</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Ab 24</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>24 ZDMG</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>AT Aa 70</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zs 8064</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zs 8064 a</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>J:EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZE 47</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZE 47</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Eb 20</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Aa 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Aa 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Aa 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 211</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 970</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>BZT 20</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>55110</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Eph 8° 00021/05</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Eph 8° 00021/05</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 8° 00135</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 8° 00135 (Reg.)</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 Z LIT 110</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 Z LIT 110</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 H AS I,203</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Aa 40</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 19</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>A-III-795</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>A 912</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>A 912</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 1320</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>EAa 5</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>EAa 5(Reg)</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>XAd 500</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Angebunden an: Z 23:1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>H AS I, 203</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zc 2.104</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>M: Lf 173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>11.8° 483</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZA 2094</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZA 2094</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>CIa-321</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Bb 177</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Bb 177</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZA 8636</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Bb 177</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>D Bb 930 (1. Ex.)</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>T Zeitschriftenmagazin UG, Theologie</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>SZA 1250</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>D Zs 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 4277</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>D Bb 930 (2. Ex.)</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>520/Ba 273</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>310/BA 2419</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>310/BA 2419</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>227/Dal A 30</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>(ZA 165)</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>(ZA 165)</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Ci I 46</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Ci I 46</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zs 266</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zs 266</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zs 266</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>18/17556</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Ma I 125</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>2 ZI 109</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>2 ZI 109-Beil.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>2 ZI 109-Reg.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>E 29</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZSA 1977 B</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>E 29-0</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>inf Zs 234</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>C 2100</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>C 2100</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZG 1568</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>C 2100</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZG 1568</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZA 4916</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>LS: B</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>H00/OR-III 87</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>H00/OR-III 87 ; H40/Z ant 3=Neue Hefte</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>06IN/A 9720</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>07OR/B 4</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>02JU/IsR/I 498</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>07SI/ZE1-001</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z ori 001 ja ZA 2932</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>S/MISS:M 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>S/SELL:ZZ 001</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>S/THOL:VIII 225</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Acta.acad.0312</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z. 8. 403</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Acta.acad.0312</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>01/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>01/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 8419</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ORI 0150</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>d+1 657</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>d+1 657</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>AT A 53</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>AT A 53</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>HS:B-57</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>HS:B-57</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 42</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 42</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>SA 7483</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>B 146</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Q 266</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>I bi 707 [8]</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Mex ge 1643 [8]</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Per ge 865 [8]</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 2225</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Allg. 1. 2. 35. /Z 82</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Allg. 1.2.35./Z 82 So.-Sto.: Turfan</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Einzelsign.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 82 - Z 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 82 - Z 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 538</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 11074</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>AT IV 10</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 141</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 141</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>EL 2270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>MKGH Z D</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 52-508</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ori 2/z24</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ori 2/z24</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 2475</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>60 Jb 175</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>60 ZSA 60</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZB 518</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>DZs 1984</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZB 518</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>DZs 1984</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Orient.Lit.899-c</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>BA 2173 Magazin: 54-7-10</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>54-7-10</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZZ 2</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZZ 10</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>KHS.2.0548</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Einzelsign.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Per. 806</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1301/Per 215</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 Philol. 2261</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>8 Z 73-96</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1216/Zeitschriftenbestand</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>0100/ZS 95472</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>0311/XXXI 660</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>0311/XXXI 660</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>0910/LD 4333(M)</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1204/O ZDMG</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1204/O ZDMG</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1205/Z ZDMG</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1207/ZZ 4200</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1207/ZZ 4200</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1213/01.5</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1214/ohne Sign.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1301/Per 215</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1302/A III 3</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>1302/A III 4</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>0910/LD 4333</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 45.197</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>407/IND Zz 45</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>60/Z 45.197</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>11/EQ 3100</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>11/EQ 3100/Reg.</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>406/Z/ZDMG</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>208/Ost. A-II-2-18</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>05/z 12609</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>P 10/16 d 1</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>BR 576i</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>77-Zt 68</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>10/.ZT 9270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>15/.ZT 9270</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 08/21936</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z - D 2451</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Ga III 906</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Ga III 906</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>B 830</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 987</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Z 417</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Zn 4</mods:shelfLocator>
+          </mods:location>
+          <mods:location>
+            <mods:shelfLocator>Per 156</mods:shelfLocator>
+          </mods:location>
+          <mods:extension>
+            <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Ab"/>
+          </mods:extension>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="marc">14-11-93</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="marc">29-04-16</mods:recordChangeDate>
+            <mods:recordIdentifier source="dmg">129465925</mods:recordIdentifier>
+            <mods:descriptionStandard>rak</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="sd2849">
+    <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+      <mets:xmlData>
+        <mods:mods version="3.5" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
+          <mods:part order="1">
+            <mods:detail type="volume">
+              <mods:number>Bd. 2 (1848)</mods:number>
+            </mods:detail>
+          </mods:part>
+          <mods:relatedItem type="host">
+            <mods:titleInfo>
+              <mods:title>Zeitschrift der Deutschen Morgenländischen Gesellschaft</mods:title>
+              <mods:subTitle>ZDMG</mods:subTitle>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>Wissenschaftliche Nachrichten</mods:title>
+            </mods:titleInfo>
+            <mods:titleInfo type="alternative">
+              <mods:title>ZDMG</mods:title>
+            </mods:titleInfo>
+            <mods:name type="corporate" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/37086-1">
+              <mods:displayForm>Deutsche Morgenländische Gesellschaft</mods:displayForm>
+              <mods:namePart>Deutsche Morgenländische Gesellschaft</mods:namePart>
+              <mods:role>
+                <mods:roleTerm type="code" authority="marcrelator">edt</mods:roleTerm>
+                <mods:roleTerm type="text">Hrsg.</mods:roleTerm>
+              </mods:role>
+            </mods:name>
+            <mods:typeOfResource>text</mods:typeOfResource>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Wiesbaden</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Harrassowitz</mods:publisher>
+              <mods:dateIssued>1.1847 - 75.1921; N.F. 1=76.1922 - 37=112.1962; 113.1963(1964) -</mods:dateIssued>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Stuttgart</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Steiner</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Mainz</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>DMG</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Leipzig</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Brockhaus</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+              <mods:place>
+                <mods:placeTerm type="text">Wiesbaden</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Steiner</mods:publisher>
+              <mods:dateIssued encoding="w3cdtf" point="start">1847</mods:dateIssued>
+              <mods:dateIssued>1847-</mods:dateIssued>
+              <mods:issuance>continuing</mods:issuance>
+            </mods:originInfo>
+            <mods:originInfo>
+              <mods:place>
+                <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+              </mods:place>
+              <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+              <mods:edition>[Electronic ed.]</mods:edition>
+              <mods:dateIssued>2008</mods:dateIssued>
+            </mods:originInfo>
+            <mods:language>
+              <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+            </mods:language>
+            <mods:note type="date/sequential designation">1.1847 - 75.1921; N.F. 1=76.1922 - 37=112.1962; 113.1963(1964) -</mods:note>
+            <mods:note>Repr.: Nendeln, Liechtenstein : Kraus</mods:note>
+            <mods:note>Wissenschaftliche Nachrichten</mods:note>
+            <mods:classification authority="ddc">000</mods:classification>
+            <mods:classification authority="ddc">890</mods:classification>
+            <mods:identifier type="urn">urn:nbn:de:gbv:3:5-8179</mods:identifier>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zsn 890</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>7973</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>OLS Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zsn 890</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>29 PA 12031</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>29 PA 12031;Ind.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;a&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>OLS Ae 9350</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;a&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;e&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;b&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;c&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;c&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106&lt;d&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;N.F.&lt;d&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;c&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zt 106;Ind.&lt;d&gt;</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8"@Kart. GfE Z 510</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8"@Kart. GfE Z 510:Reg.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Hbor Or.gen. 43=Neuester Jg. = A.or. 313</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A.or. 313</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 99.568</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bibl.Gram. 1518</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2012.1166</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2011.1643</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>MIO-A/38</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>fc 2352</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>z ori 001 ja/352</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ori 001</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Einzelsignatur</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X/4794</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ÄGY-Z ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>B I e 20</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator> AZ 9316</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>9: AZ 9316</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X 1763</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X 4229</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>X 1763</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>za 6950</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>his z z 115</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 46/157</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>CP1670</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>CP1670</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>KS L8011</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>P 1477</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SEM:ZZ:200</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2005 A 10140</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2006 A 5374</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Phil.or.I,67</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>013 EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>U 890</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zsn 33</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ab 24</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 100 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>24 ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT Aa 70</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 8064</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 8064 a</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>J:EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 61/72</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZE 47</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZE 47</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Eb 20</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 211</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 970</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BZT 20</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>55110</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Eph 8° 00021/05</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Eph 8° 00021/05</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 8° 00135</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 8° 00135 (Reg.)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Z LIT 110</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Z LIT 110</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I,203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Aa 40</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 19</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A-III-795</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A 912</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>A 912</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 1320</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EAa 5</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EAa 5(Reg)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>XAd 500</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Angebunden an: Z 23:1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>H AS I, 203</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zc 2.104</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>M: Lf 173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>11.8° 483</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 2094</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 2094</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>CIa-321</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bb 177</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bb 177</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 8636</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Bb 177</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>D Bb 930 (1. Ex.)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>T Zeitschriftenmagazin UG, Theologie</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SZA 1250</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>D Zs 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 4277</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>D Bb 930 (2. Ex.)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>520/Ba 273</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>310/BA 2419</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>310/BA 2419</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>227/Dal A 30</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>(ZA 165)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>(ZA 165)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ci I 46</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ci I 46</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zs 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>18/17556</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ma I 125</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2 ZI 109</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2 ZI 109-Beil.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>2 ZI 109-Reg.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>E 29</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZSA 1977 B</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>E 29-0</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>inf Zs 234</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>C 2100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>C 2100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZG 1568</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>C 2100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZG 1568</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZA 4916</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>LS: B</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>H00/OR-III 87</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>H00/OR-III 87 ; H40/Z ant 3=Neue Hefte</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>06IN/A 9720</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>07OR/B 4</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>02JU/IsR/I 498</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>07SI/ZE1-001</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z ori 001 ja ZA 2932</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SPR VII 201</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>S/MISS:M 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>S/SELL:ZZ 001</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>S/THOL:VIII 225</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Acta.acad.0312</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z. 8. 403</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Acta.acad.0312</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>01/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>01/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 8419</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ORI 0150</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>d+1 657</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>d+1 657</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZD 1903</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT A 53</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT A 53</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>HS:B-57</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>HS:B-57</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 42</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 42</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>SA 7483</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>B 146</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Q 266</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>I bi 707 [8]</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Mex ge 1643 [8]</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Per ge 865 [8]</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2225</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Allg. 1. 2. 35. /Z 82</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Allg. 1.2.35./Z 82 So.-Sto.: Turfan</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Einzelsign.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 82 - Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 82 - Z 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 538</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Div.G.oct.1085</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 11074</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>AT IV 10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 141</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 141</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>EL 2270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>MKGH Z D</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 52-508</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ori 2/z24</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ori 2/z24</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 2475</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>60 Jb 175</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>60 ZSA 60</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 17/169</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZB 518</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>DZs 1984</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZB 518</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>DZs 1984</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Orient.Lit.899-c</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BA 2173 Magazin: 54-7-10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>54-7-10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 2</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZZ 10</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>KHS.2.0548</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Einzelsign.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Per. 806</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1301/Per 215</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Philol. 2261</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>8 Z 73-96</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1216/Zeitschriftenbestand</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0100/ZS 95472</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0311/XXXI 660</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0311/XXXI 660</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0910/LD 4333(M)</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1204/O ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1204/O ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1205/Z ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1207/ZZ 4200</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1207/ZZ 4200</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1213/01.5</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1214/ohne Sign.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1301/Per 215</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1302/A III 3</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>1302/A III 4</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>0910/LD 4333</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 45.197</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>407/IND Zz 45</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>60/Z 45.197</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>11/EQ 3100</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>11/EQ 3100/Reg.</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>406/Z/ZDMG</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>208/Ost. A-II-2-18</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>ZGB 224</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>05/z 12609</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>P 10/16 d 1</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>BR 576i</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>77-Zt 68</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>10/.ZT 9270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>15/.ZT 9270</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>75/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>00/BA 2173</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 08/21936</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z - D 2451</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ga III 906</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Ga III 906</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>B 830</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 987</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Z 417</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Zn 4</mods:shelfLocator>
+            </mods:location>
+            <mods:location>
+              <mods:shelfLocator>Per 156</mods:shelfLocator>
+            </mods:location>
+            <mods:extension>
+              <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Ab"/>
+            </mods:extension>
+            <mods:recordInfo>
+              <mods:recordCreationDate encoding="marc">14-11-93</mods:recordCreationDate>
+              <mods:recordChangeDate encoding="marc">29-04-16</mods:recordChangeDate>
+              <mods:recordIdentifier source="dmg">129465925</mods:recordIdentifier>
+              <mods:descriptionStandard>rak</mods:descriptionStandard>
+            </mods:recordInfo>
+            <mods:extension>
+              <vl:id>2327</vl:id>
+              <vl:odid>1</vl:odid>
+              <vl:datatype>1</vl:datatype>
+              <vl:type>24</vl:type>
+              <vl:state>1</vl:state>
+            </mods:extension>
+          </mods:relatedItem>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="amd20586">
+    <mets:rightsMD ID="rights20586">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://menadoc.bibliothek.uni-halle.de/dmg//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov20586">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:presentation>http://menadoc.bibliothek.uni-halle.de/dmg/id/20586</dv:presentation>
+            <dv:sru>http://menadoc.bibliothek.uni-halle.de/dmg/proto_ftsearch/20586</dv:sru>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="amd2327">
+    <mets:rightsMD ID="rights2327">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+        <mets:xmlData>
+          <dv:rights xmlns:dv="http://dfg-viewer.de/">
+            <dv:ownerLogo>http://menadoc.bibliothek.uni-halle.de/dmg//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+            <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+            <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+          </dv:rights>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+    <mets:digiprovMD ID="digiprov2327">
+      <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+        <mets:xmlData>
+          <dv:links xmlns:dv="http://dfg-viewer.de/">
+            <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CMD?ACT=SRCHA&amp;IKT=12&amp;TRM=129465925</dv:reference>
+            <dv:presentation>http://menadoc.bibliothek.uni-halle.de/dmg/id/2327</dv:presentation>
+            <dv:sru>http://menadoc.bibliothek.uni-halle.de/dmg/proto_ftsearch/2327</dv:sru>
+          </dv:links>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="FRONTIMAGE">
+      <mets:file MIMETYPE="image/jpeg" CREATED="2016-12-08T03:00:14Z" ID="IMG_FRONTIMAGE_2538588">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/304/2538588" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_FRONTIMAGE_2909">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/304/2909" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="DOWNLOAD">
+      <mets:file MIMETYPE="application/pdf" CREATED="2009-08-06T08:33:34Z" SIZE="3004687" ID="PDF_20586">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/pdf/20586" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="DEFAULT">
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_DEFAULT_2909">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2909" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_DEFAULT_2910">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2910" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_DEFAULT_2911">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2911" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_DEFAULT_2912">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2912" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_DEFAULT_2913">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2913" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_DEFAULT_2914">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2914" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2915">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2915" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2916">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2916" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2917">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2917" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2918">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2918" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2919">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2919" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2920">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2920" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2921">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2921" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_DEFAULT_2922">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1000/2922" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="THUMBS">
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_THUMBS_2909">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2909" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_THUMBS_2910">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2910" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_THUMBS_2911">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2911" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_THUMBS_2912">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2912" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_THUMBS_2913">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2913" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_THUMBS_2914">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2914" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2915">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2915" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2916">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2916" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2917">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2917" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2918">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2918" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2919">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2919" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2920">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2920" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2921">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2921" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_THUMBS_2922">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/128/2922" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="MIN">
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_MIN_2909">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2909" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_MIN_2910">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2910" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MIN_2911">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2911" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MIN_2912">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2912" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MIN_2913">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2913" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MIN_2914">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2914" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2915">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2915" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2916">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2916" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2917">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2917" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2918">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2918" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2919">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2919" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2920">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2920" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2921">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2921" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MIN_2922">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/600/2922" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="MAX">
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_MAX_2909">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2909" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:43Z" ID="IMG_MAX_2910">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2910" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MAX_2911">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2911" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MAX_2912">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2912" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MAX_2913">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2913" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:44Z" ID="IMG_MAX_2914">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2914" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2915">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2915" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2916">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2916" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2917">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2917" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2918">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2918" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2919">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2919" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2920">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2920" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2921">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2921" LOCTYPE="URL"/>
+      </mets:file>
+      <mets:file MIMETYPE="image/jpeg" CREATED="2008-06-09T12:02:45Z" ID="IMG_MAX_2922">
+        <mets:FLocat xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/download/webcache/1504/2922" LOCTYPE="URL"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div TYPE="physSequence" ID="physroot">
+      <mets:div ID="phys2909" TYPE="page" LABEL="Seite 52" ORDER="1" ORDERLABEL="52">
+        <mets:fptr FILEID="IMG_DEFAULT_2909"/>
+        <mets:fptr FILEID="IMG_THUMBS_2909"/>
+        <mets:fptr FILEID="IMG_MIN_2909"/>
+        <mets:fptr FILEID="IMG_MAX_2909"/>
+      </mets:div>
+      <mets:div ID="phys2910" TYPE="page" LABEL="Seite 53" ORDER="2" ORDERLABEL="53">
+        <mets:fptr FILEID="IMG_DEFAULT_2910"/>
+        <mets:fptr FILEID="IMG_THUMBS_2910"/>
+        <mets:fptr FILEID="IMG_MIN_2910"/>
+        <mets:fptr FILEID="IMG_MAX_2910"/>
+      </mets:div>
+      <mets:div ID="phys2911" TYPE="page" LABEL="Seite 54" ORDER="3" ORDERLABEL="54">
+        <mets:fptr FILEID="IMG_DEFAULT_2911"/>
+        <mets:fptr FILEID="IMG_THUMBS_2911"/>
+        <mets:fptr FILEID="IMG_MIN_2911"/>
+        <mets:fptr FILEID="IMG_MAX_2911"/>
+      </mets:div>
+      <mets:div ID="phys2912" TYPE="page" LABEL="Seite 55" ORDER="4" ORDERLABEL="55">
+        <mets:fptr FILEID="IMG_DEFAULT_2912"/>
+        <mets:fptr FILEID="IMG_THUMBS_2912"/>
+        <mets:fptr FILEID="IMG_MIN_2912"/>
+        <mets:fptr FILEID="IMG_MAX_2912"/>
+      </mets:div>
+      <mets:div ID="phys2913" TYPE="page" LABEL="Seite 56" ORDER="5" ORDERLABEL="56">
+        <mets:fptr FILEID="IMG_DEFAULT_2913"/>
+        <mets:fptr FILEID="IMG_THUMBS_2913"/>
+        <mets:fptr FILEID="IMG_MIN_2913"/>
+        <mets:fptr FILEID="IMG_MAX_2913"/>
+      </mets:div>
+      <mets:div ID="phys2914" TYPE="page" LABEL="Seite 57" ORDER="6" ORDERLABEL="57">
+        <mets:fptr FILEID="IMG_DEFAULT_2914"/>
+        <mets:fptr FILEID="IMG_THUMBS_2914"/>
+        <mets:fptr FILEID="IMG_MIN_2914"/>
+        <mets:fptr FILEID="IMG_MAX_2914"/>
+      </mets:div>
+      <mets:div ID="phys2915" TYPE="page" LABEL="Seite 58" ORDER="7" ORDERLABEL="58">
+        <mets:fptr FILEID="IMG_DEFAULT_2915"/>
+        <mets:fptr FILEID="IMG_THUMBS_2915"/>
+        <mets:fptr FILEID="IMG_MIN_2915"/>
+        <mets:fptr FILEID="IMG_MAX_2915"/>
+      </mets:div>
+      <mets:div ID="phys2916" TYPE="page" LABEL="Seite 59" ORDER="8" ORDERLABEL="59">
+        <mets:fptr FILEID="IMG_DEFAULT_2916"/>
+        <mets:fptr FILEID="IMG_THUMBS_2916"/>
+        <mets:fptr FILEID="IMG_MIN_2916"/>
+        <mets:fptr FILEID="IMG_MAX_2916"/>
+      </mets:div>
+      <mets:div ID="phys2917" TYPE="page" LABEL="Seite 60" ORDER="9" ORDERLABEL="60">
+        <mets:fptr FILEID="IMG_DEFAULT_2917"/>
+        <mets:fptr FILEID="IMG_THUMBS_2917"/>
+        <mets:fptr FILEID="IMG_MIN_2917"/>
+        <mets:fptr FILEID="IMG_MAX_2917"/>
+      </mets:div>
+      <mets:div ID="phys2918" TYPE="page" LABEL="Seite 61" ORDER="10" ORDERLABEL="61">
+        <mets:fptr FILEID="IMG_DEFAULT_2918"/>
+        <mets:fptr FILEID="IMG_THUMBS_2918"/>
+        <mets:fptr FILEID="IMG_MIN_2918"/>
+        <mets:fptr FILEID="IMG_MAX_2918"/>
+      </mets:div>
+      <mets:div ID="phys2919" TYPE="page" LABEL="Seite 62" ORDER="11" ORDERLABEL="62">
+        <mets:fptr FILEID="IMG_DEFAULT_2919"/>
+        <mets:fptr FILEID="IMG_THUMBS_2919"/>
+        <mets:fptr FILEID="IMG_MIN_2919"/>
+        <mets:fptr FILEID="IMG_MAX_2919"/>
+      </mets:div>
+      <mets:div ID="phys2920" TYPE="page" LABEL="Seite 63" ORDER="12" ORDERLABEL="63">
+        <mets:fptr FILEID="IMG_DEFAULT_2920"/>
+        <mets:fptr FILEID="IMG_THUMBS_2920"/>
+        <mets:fptr FILEID="IMG_MIN_2920"/>
+        <mets:fptr FILEID="IMG_MAX_2920"/>
+      </mets:div>
+      <mets:div ID="phys2921" TYPE="page" LABEL="Seite 64" ORDER="13" ORDERLABEL="64">
+        <mets:fptr FILEID="IMG_DEFAULT_2921"/>
+        <mets:fptr FILEID="IMG_THUMBS_2921"/>
+        <mets:fptr FILEID="IMG_MIN_2921"/>
+        <mets:fptr FILEID="IMG_MAX_2921"/>
+      </mets:div>
+      <mets:div ID="phys2922" TYPE="page" LABEL="Seite 65" ORDER="14" ORDERLABEL="65">
+        <mets:fptr FILEID="IMG_DEFAULT_2922"/>
+        <mets:fptr FILEID="IMG_THUMBS_2922"/>
+        <mets:fptr FILEID="IMG_MIN_2922"/>
+        <mets:fptr FILEID="IMG_MAX_2922"/>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ID="log2327" DMDID="md2327" ADMID="amd2327" TYPE="periodical" LABEL="Zeitschrift der Deutschen Morgenländischen Gesellschaft" ORDER="1">
+      <mets:mptr LOCTYPE="URL" xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2327"/>
+      <mets:fptr FILEID="IMG_FRONTIMAGE_2538588"/>
+      <mets:div ID="log2849" TYPE="volume" LABEL="Bd. 2 (1848)" ORDER="1" DMDID="sd2849">
+        <mets:mptr LOCTYPE="URL" xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=2849"/>
+        <mets:div ID="log20586" DMDID="md20586" ADMID="amd20586" TYPE="section" LABEL="Ein Ausflug von Jerusalem über Jericho an den Jordan, das todte Meer und nach Mar Saba" ORDER="1">
+          <mets:mptr LOCTYPE="URL" xlink:href="http://menadoc.bibliothek.uni-halle.de/dmg/oai/?verb=GetRecord&amp;metadataPrefix=mets&amp;identifier=20586"/>
+          <mets:fptr FILEID="PDF_20586"/>
+          <mets:fptr FILEID="IMG_FRONTIMAGE_2909"/>
+        </mets:div>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2909"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2910"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2911"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2912"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2913"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2914"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2915"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2916"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2917"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2918"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2919"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2920"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2921"/>
+    <mets:smLink xlink:from="log20586" xlink:to="phys2922"/>
+  </mets:structLink>
+</mets:mets>

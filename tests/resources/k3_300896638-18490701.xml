@@ -1,0 +1,211 @@
+<mets:mets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:kitodo="http://meta.kitodo.org/v1/"
+           xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:dv="http://dfg-viewer.de/"
+           xmlns:mods="http://www.loc.gov/mods/v3">
+   <mets:metsHdr CREATEDATE="2023-03-13T07:40:15.798+01:00"
+                 LASTMODDATE="2023-03-22T16:17:28.765+01:00">
+      <mets:metsDocumentID>25687</mets:metsDocumentID>
+   </mets:metsHdr>
+   <mets:dmdSec ID="uuid-e07b94b5-78ca-39bc-a148-b1f80b4f3c1d">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+               <mods:typeOfResource>text</mods:typeOfResource>
+               <mods:originInfo eventType="publication">
+                  <mods:dateIssued encoding="iso8601">1849-07-01</mods:dateIssued>
+               </mods:originInfo>
+               <mods:originInfo eventType="digitization">
+                  <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+                  <mods:place>
+                     <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+                  </mods:place>
+                  <mods:dateCaptured encoding="iso8601">2023</mods:dateCaptured>
+               </mods:originInfo>
+               <mods:identifier type="urn">urn:nbn:de:gbv:3:3-171133730-30089663818490701-14</mods:identifier>
+               <mods:recordInfo>
+                  <mods:recordIdentifier source="kxp-ppn">30089663818490701</mods:recordIdentifier>
+                  <mods:recordCreationDate encoding="marc">04-08-99</mods:recordCreationDate>
+                  <mods:recordChangeDate encoding="marc">06-02-23</mods:recordChangeDate>
+               </mods:recordInfo>
+               <mods:titleInfo>
+                  <mods:title>Der Reichs-Adler</mods:title>
+               </mods:titleInfo>
+               <mods:relatedItem type="host">
+                  <mods:recordInfo>
+                     <mods:recordIdentifier source="kxp-ppn">1833078861</mods:recordIdentifier>
+                  </mods:recordInfo>
+                  <mods:identifier type="zdb">3146978-4</mods:identifier>
+                  <mods:relatedItem type="original">
+                     <mods:identifier type="zdb">1483453-4</mods:identifier>
+                     <mods:recordInfo>
+                        <mods:recordIdentifier source="kxp-ppn">300896638</mods:recordIdentifier>
+                     </mods:recordInfo>
+                  </mods:relatedItem>
+                  <mods:titleInfo>
+                     <mods:title>Der Reichs-Adler</mods:title>
+                  </mods:titleInfo>
+               </mods:relatedItem>
+               <mods:language>
+                  <mods:languageTerm type="code" authority="iso639-2b">ger</mods:languageTerm>
+                  <mods:scriptTerm type="code" authority="iso15924">Latf</mods:scriptTerm>
+               </mods:language>
+               <mods:extension>
+                  <ulb:externalType recordSyntax="pica">AZ</ulb:externalType>
+                  <ulb:collection>123456789/33579</ulb:collection>
+               </mods:extension>
+               <mods:location>
+                  <mods:physicalLocation>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:physicalLocation>
+                  <mods:shelfLocator>84 B 711</mods:shelfLocator>
+               </mods:location>
+               <mods:part order="18490701">
+                  <mods:detail type="volume">
+                     <mods:number>1849</mods:number>
+                  </mods:detail>
+                  <mods:detail type="issue">
+                     <mods:number>No 1.</mods:number>
+                  </mods:detail>
+               </mods:part>
+               <mods:accessCondition type="use and reproduction"
+                                     xlink:href="https://creativecommons.org/publicdomain/mark/1.0/">Public Domain Mark 1.0</mods:accessCondition>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:amdSec ID="admd1">
+      <mets:rightsMD ID="uuid-e3cb7744-aa94-3f8d-9e2e-f2f9f32de46e">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+            <mets:xmlData>
+               <dv:rights xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+                  <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+                  <dv:ownerLogo>Share_it</dv:ownerLogo>
+                  <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+                  <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+               </dv:rights>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:rightsMD>
+      <mets:digiprovMD ID="uuid-bb74a2e1-9cc6-3ed1-93da-3d67cd9b85a7">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+            <mets:xmlData>
+               <dv:links xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+                  <dv:reference>https://lhhal.gbv.de/DB=1/XMLPRS=N/PPN?PPN=300896638</dv:reference>
+                  <dv:presentation>https://opendata.uni-halle.de/simple-search?query=30089663818490701</dv:presentation>
+               </dv:links>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:digiprovMD>
+   </mets:amdSec>
+   <mets:fileSec>
+      <mets:fileGrp USE="DEFAULT">
+         <mets:file ID="uuid-ed638de3-5065-41d2-b7ed-b0394e893669" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000001.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-aae906ae-4629-422b-a2aa-7b0599069efc" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000002.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-d899cae3-6bf3-4186-b35f-9578d72fc975" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000003.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-996fee80-15d8-4862-bfb4-2f92bab87950" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000004.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-d0e63c6a-0ac2-4356-ab04-bfef66367c39" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000005.jpg"/>
+         </mets:file>
+      </mets:fileGrp>
+      <mets:fileGrp USE="MAX">
+         <mets:file ID="uuid-391f9975-e7ab-4db3-b4fd-01af95fd3a89" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000001.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-75129994-3a53-4f18-b1b7-89de96ae64f3" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000002.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-ad518819-64cc-4b7c-bd69-22cfdf618a7d" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000003.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-e7715c04-8c98-4bf8-b450-9b0ce9a90444" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000004.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-a4cf5460-126d-4eb2-8e09-b2c9bd3bbec1" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000005.tif"/>
+         </mets:file>
+      </mets:fileGrp>
+   </mets:fileSec>
+   <mets:structMap TYPE="PHYSICAL">
+      <mets:div TYPE="physSequence" ID="uuid-830a1064-0b03-4f1a-b38a-afd73632724f">
+         <mets:div ID="uuid-44571d73-f7fc-4c9d-b1ff-d4ebc0ad52ac"
+                   TYPE="page"
+                   ORDER="1"
+                   ORDERLABEL="[Seite 1]">
+            <mets:fptr FILEID="uuid-75129994-3a53-4f18-b1b7-89de96ae64f3"/>
+            <mets:fptr FILEID="uuid-aae906ae-4629-422b-a2aa-7b0599069efc"/>
+         </mets:div>
+         <mets:div ID="uuid-9f222e96-1c27-4b7e-a7b3-54ddc0401fd8"
+                   TYPE="page"
+                   ORDER="2"
+                   ORDERLABEL="[Seite 2]">
+            <mets:fptr FILEID="uuid-ad518819-64cc-4b7c-bd69-22cfdf618a7d"/>
+            <mets:fptr FILEID="uuid-d899cae3-6bf3-4186-b35f-9578d72fc975"/>
+         </mets:div>
+         <mets:div ID="uuid-e474f9c4-2864-4278-b340-35315639f005"
+                   TYPE="page"
+                   ORDER="3"
+                   ORDERLABEL="[Seite 3]">
+            <mets:fptr FILEID="uuid-e7715c04-8c98-4bf8-b450-9b0ce9a90444"/>
+            <mets:fptr FILEID="uuid-996fee80-15d8-4862-bfb4-2f92bab87950"/>
+         </mets:div>
+         <mets:div ID="uuid-5b611202-b739-4cf4-9903-8aa181a54b33"
+                   TYPE="page"
+                   ORDER="4"
+                   ORDERLABEL="[Seite 4]">
+            <mets:fptr FILEID="uuid-a4cf5460-126d-4eb2-8e09-b2c9bd3bbec1"/>
+            <mets:fptr FILEID="uuid-d0e63c6a-0ac2-4356-ab04-bfef66367c39"/>
+         </mets:div>
+         <mets:div ID="uuid-9520240a-2406-4866-8821-4c81af0a9c67"
+                   TYPE="page"
+                   ORDER="5"
+                   ORDERLABEL="[Colorchecker]">
+            <mets:fptr FILEID="uuid-391f9975-e7ab-4db3-b4fd-01af95fd3a89"/>
+            <mets:fptr FILEID="uuid-ed638de3-5065-41d2-b7ed-b0394e893669"/>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+   <mets:structMap TYPE="LOGICAL">
+      <mets:div ID="uuid-9fd95681-68ef-46bd-845a-8ca34188bfc8" TYPE="newspaper">
+         <mets:mptr xlink:href="300896638" LOCTYPE="URL"/>
+         <mets:div ID="uuid-a054c07c-a1be-43af-a68a-f63a28ec2829"
+                   TYPE="year"
+                   ORDERLABEL="1849">
+            <mets:mptr xlink:href="300896638-1849" LOCTYPE="URL"/>
+            <mets:div TYPE="month"
+                      ORDERLABEL="1849-07"
+                      ID="uuid-767cd1d3-62c7-4247-a89b-1c84a3e344ae"
+                      ADMID="uuid-bb74a2e1-9cc6-3ed1-93da-3d67cd9b85a7 uuid-e3cb7744-aa94-3f8d-9e2e-f2f9f32de46e">
+               <mets:div TYPE="day"
+                         ID="uuid-ee9986e1-e1fe-4d6c-b66a-32121bf99a21"
+                         ORDERLABEL="1849-07-01">
+                  <mets:div ID="uuid-ea261d67-7f78-4146-8e91-c41d85d8f0c9"
+                            DMDID="uuid-e07b94b5-78ca-39bc-a148-b1f80b4f3c1d"
+                            TYPE="issue"
+                            ORDER="1"
+                            LABEL="18490701"/>
+               </mets:div>
+            </mets:div>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+   <mets:structLink>
+      <mets:smLink xlink:to="uuid-44571d73-f7fc-4c9d-b1ff-d4ebc0ad52ac"
+                   xlink:from="uuid-ea261d67-7f78-4146-8e91-c41d85d8f0c9"/>
+      <mets:smLink xlink:to="uuid-9f222e96-1c27-4b7e-a7b3-54ddc0401fd8"
+                   xlink:from="uuid-ea261d67-7f78-4146-8e91-c41d85d8f0c9"/>
+      <mets:smLink xlink:to="uuid-e474f9c4-2864-4278-b340-35315639f005"
+                   xlink:from="uuid-ea261d67-7f78-4146-8e91-c41d85d8f0c9"/>
+      <mets:smLink xlink:to="uuid-5b611202-b739-4cf4-9903-8aa181a54b33"
+                   xlink:from="uuid-ea261d67-7f78-4146-8e91-c41d85d8f0c9"/>
+      <mets:smLink xlink:to="uuid-9520240a-2406-4866-8821-4c81af0a9c67"
+                   xlink:from="uuid-ea261d67-7f78-4146-8e91-c41d85d8f0c9"/>
+   </mets:structLink>
+</mets:mets>

@@ -1,0 +1,415 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+    <responseDate>2021-10-13T19:26:30Z</responseDate>
+    <request verb="GetRecord" metadataPrefix="mets" identifier="997508">https://digitale.bibliothek.uni-halle.de/vd16/oai/</request>
+    <GetRecord>
+        <record>
+            <header>
+                <identifier>oai:digitale.bibliothek.uni-halle.de/vd16:997508</identifier>
+                <datestamp>2009-07-09T07:34:31Z</datestamp>
+                <setSpec>ulbhalvd16</setSpec>
+                <setSpec>book</setSpec>
+            </header>
+            <metadata>
+                <mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version112/mets.xsd" OBJID="0" LABEL="Drucke des 16. Jahrhunderts (VD16)">
+                    <mets:metsHdr CREATEDATE="2021-10-13T21:26:30">
+                        <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="SOFTWARE">
+                            <mets:name>vls/2012</mets:name>
+                        </mets:agent>
+                        <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="INSTANCE">
+                            <mets:name>ulbhalvd</mets:name>
+                        </mets:agent>
+                        <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="REPOSITORY">
+                            <mets:name>digitale.bibliothek.uni-halle.de/vd16</mets:name>
+                        </mets:agent>
+                        <mets:agent ROLE="OTHER" TYPE="OTHER" OTHERTYPE="BUILDER">
+                            <mets:name>vd</mets:name>
+                        </mets:agent>
+                    </mets:metsHdr>
+                    <mets:dmdSec ID="md997508">
+                        <mets:mdWrap MIMETYPE="text/xml" MDTYPE="MODS">
+                            <mets:xmlData>
+                                <mods:mods version="3.7" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-7.xsd">
+                                    <mods:titleInfo>
+                                        <mods:title>Elegia || PRO ILLVSTRISSI=||MO ELECTORE SA=||XONIAE, DVCE CHRI-||STIANO; &amp;c.|| Conscripta || A || IOHANNE MAIORE D.||</mods:title>
+                                    </mods:titleInfo>
+                                    <mods:titleInfo type="alternative">
+                                        <mods:title>Elegia PRO ILLVSTRISSIMO ELECTORE SAXONIAE, DVCE CHRISTIANO; &amp;c. Conscripta A IOHANNE MAIORE D.</mods:title>
+                                    </mods:titleInfo>
+                                    <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/11668982X">
+                                        <mods:namePart>Major, Johann</mods:namePart>
+                                        <mods:namePart type="given">Johann</mods:namePart>
+                                        <mods:namePart type="family">Major</mods:namePart>
+                                        <mods:namePart type="date">1533-1600</mods:namePart>
+                                        <mods:role>
+                                            <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                                            <mods:roleTerm type="text">VerfasserIn</mods:roleTerm>
+                                        </mods:role>
+                                    </mods:name>
+                                    <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/118676075">
+                                        <mods:namePart>Christian &lt;I., Sachsen, Kurfürst&gt;</mods:namePart>
+                                        <mods:namePart type="date">1560-1591</mods:namePart>
+                                        <mods:role>
+                                            <mods:roleTerm type="code" authority="marcrelator">asn</mods:roleTerm>
+                                            <mods:roleTerm type="text">Verstorb.</mods:roleTerm>
+                                        </mods:role>
+                                    </mods:name>
+                                    <mods:name type="personal" authority="gnd" authorityURI="http://d-nb.info/gnd/" valueURI="http://d-nb.info/gnd/1037530721">
+                                        <mods:namePart>Lehmann, Zacharias</mods:namePart>
+                                        <mods:namePart type="given">Zacharias</mods:namePart>
+                                        <mods:namePart type="family">Lehmann</mods:namePart>
+                                        <mods:role>
+                                            <mods:roleTerm type="code" authority="marcrelator">pbl</mods:roleTerm>
+                                            <mods:roleTerm type="text">Verl.</mods:roleTerm>
+                                        </mods:role>
+                                    </mods:name>
+                                    <mods:typeOfResource>text</mods:typeOfResource>
+                                    <mods:genre authority="aad">Gelegenheitsschrift:Tod</mods:genre>
+                                    <mods:genre authority="aad">Lyrik</mods:genre>
+                                    <mods:originInfo eventType="publication">
+                                        <mods:place>
+                                            <mods:placeTerm type="text">Wittenberg</mods:placeTerm>
+                                        </mods:place>
+                                        <mods:publisher>Lehmann, Zacharias</mods:publisher>
+                                        <mods:dateIssued encoding="w3cdtf" keyDate="yes">1591</mods:dateIssued>
+                                        <mods:dateIssued>1591</mods:dateIssued>
+                                        <mods:issuance>monographic</mods:issuance>
+                                    </mods:originInfo>
+                                    <mods:originInfo>
+                                        <mods:edition>[Electronic ed.]</mods:edition>
+                                        <mods:place>
+                                            <mods:placeTerm type="text">Halle, Saale</mods:placeTerm>
+                                        </mods:place>
+                                        <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+                                        <mods:dateIssued>2009</mods:dateIssued>
+                                    </mods:originInfo>
+                                    <mods:language>
+                                        <mods:languageTerm authority="iso639-2b" type="code">lat</mods:languageTerm>
+                                    </mods:language>
+                                    <mods:physicalDescription>
+                                        <mods:extent>[3] Bl. ; 4</mods:extent>
+                                    </mods:physicalDescription>
+                                    <mods:note>Vorlageform des Erscheinungsvermerks: VVITEBERGAE,|| Typis Zachariae Lehmanni.|| M.D.XCI.||</mods:note>
+                                    <mods:subject>
+                                        <mods:geographic>Wittenberg</mods:geographic>
+                                    </mods:subject>
+                                    <mods:identifier type="bvb">VD0042824</mods:identifier>
+                                    <mods:identifier type="urn">urn:nbn:de:gbv:3:1-101917</mods:identifier>
+                                    <mods:identifier type="vd16">ZV 10303</mods:identifier>
+                                    <mods:location>
+                                        <mods:physicalLocation authority="local library code">65</mods:physicalLocation>
+                                        <mods:holdingSimple>
+                                            <mods:copyInformation>
+                                                <mods:shelfLocator>Pon Vc 3045, QK</mods:shelfLocator>
+                                                <mods:note>digitized copy</mods:note>
+                                            </mods:copyInformation>
+                                        </mods:holdingSimple>
+                                    </mods:location>
+                                    <mods:extension>
+                                        <vlz:externalType xmlns:vlz="http://visuallibrary.net/vlz/1.0/" recordSyntax="pica" code="Aa" />
+                                        <vlz:info xmlns:vlz="http://visuallibrary.net/vlz/1.0/" version="2" />
+                                    </mods:extension>
+                                    <mods:recordInfo>
+                                        <mods:recordCreationDate encoding="marc">30-05-08</mods:recordCreationDate>
+                                        <mods:recordChangeDate encoding="marc">26-08-21</mods:recordChangeDate>
+                                        <mods:recordIdentifier source="ulbhalvd16">567610926</mods:recordIdentifier>
+                                        <mods:descriptionStandard>rak</mods:descriptionStandard>
+                                    </mods:recordInfo>
+                                </mods:mods>
+                            </mets:xmlData>
+                        </mets:mdWrap>
+                    </mets:dmdSec>
+                    <mets:amdSec ID="amd997508">
+                        <mets:rightsMD ID="rights997508">
+                            <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVRIGHTS">
+                                <mets:xmlData>
+                                    <dv:rights xmlns:dv="http://dfg-viewer.de/">
+                                        <dv:ownerLogo>https://digitale.bibliothek.uni-halle.de/vd16//domainresource/static/graphics/connectors/viewerLogo.gif</dv:ownerLogo>
+                                        <dv:owner>Halle, Saale : Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+                                        <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+                                        <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+                                    </dv:rights>
+                                </mets:xmlData>
+                            </mets:mdWrap>
+                        </mets:rightsMD>
+                        <mets:digiprovMD ID="digiprov997508">
+                            <mets:mdWrap MIMETYPE="text/xml" MDTYPE="OTHER" OTHERMDTYPE="DVLINKS">
+                                <mets:xmlData>
+                                    <dv:links xmlns:dv="http://dfg-viewer.de/">
+                                        <dv:reference>http://www.gateway-bayern.de/opensearch?res_id=VD16&amp;rfr_id=bibliothek.uni-halle.de&amp;rft_id=info%3Avd16%2FZV%2010303</dv:reference>
+                                        <dv:presentation>https://digitale.bibliothek.uni-halle.de/vd16/id/997508</dv:presentation>
+                                        <dv:iiif>https://digitale.bibliothek.uni-halle.de/vd16/i3f/v20/997508/manifest</dv:iiif>
+                                    </dv:links>
+                                </mets:xmlData>
+                            </mets:mdWrap>
+                        </mets:digiprovMD>
+                    </mets:amdSec>
+                    <mets:fileSec>
+                        <mets:fileGrp USE="DOWNLOAD">
+                            <mets:file MIMETYPE="application/pdf" CREATED="2010-02-27T06:44:37.722100Z" SIZE="2205100" ID="PDF_997508">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/pdf/997508" LOCTYPE="URL" />
+                            </mets:file>
+                        </mets:fileGrp>
+                        <mets:fileGrp USE="TEASER">
+                            <mets:file MIMETYPE="image/jpeg" CREATED="2009-07-03T15:38:23.192700Z" ID="IMG_TEASER_1019932">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/304/1019932" LOCTYPE="URL" />
+                            </mets:file>
+                        </mets:fileGrp>
+                        <mets:fileGrp USE="DEFAULT">
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019932">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019932" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019933">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019933" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019935">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019935" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019936">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019936" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019938">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019938" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019939">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019939" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019940">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019940" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019941">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019941" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019942">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019942" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019943">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019943" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019945">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019945" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_DEFAULT_1019946">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/1000/1019946" LOCTYPE="URL" />
+                            </mets:file>
+                        </mets:fileGrp>
+                        <mets:fileGrp USE="THUMBS">
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019932">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019932" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019933">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019933" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019935">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019935" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019936">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019936" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019938">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019938" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019939">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019939" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019940">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019940" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019941">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019941" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019942">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019942" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019943">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019943" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019945">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019945" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_THUMBS_1019946">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/128/1019946" LOCTYPE="URL" />
+                            </mets:file>
+                        </mets:fileGrp>
+                        <mets:fileGrp USE="MIN">
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019932">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019932" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019933">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019933" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019935">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019935" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019936">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019936" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019938">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019938" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019939">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019939" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019940">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019940" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019941">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019941" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019942">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019942" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019943">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019943" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019945">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019945" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MIN_1019946">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/600/1019946" LOCTYPE="URL" />
+                            </mets:file>
+                        </mets:fileGrp>
+                        <mets:fileGrp USE="MAX">
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019932">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019932" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019933">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019933" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019935">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019935" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019936">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019936" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019938">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019938" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019939">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019939" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019940">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019940" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019941">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019941" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019942">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019942" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019943">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019943" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019945">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019945" LOCTYPE="URL" />
+                            </mets:file>
+                            <mets:file MIMETYPE="image/jpeg" ID="IMG_MAX_1019946">
+                                <mets:FLocat xlink:href="https://digitale.bibliothek.uni-halle.de/vd16/download/webcache/0/1019946" LOCTYPE="URL" />
+                            </mets:file>
+                        </mets:fileGrp>
+                    </mets:fileSec>
+                    <mets:structMap TYPE="PHYSICAL">
+                        <mets:div TYPE="physSequence" ID="physroot">
+                            <mets:div ID="phys1019932" TYPE="page" LABEL="[Seite 3]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0001-5" ORDER="1">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019932" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019932" />
+                                <mets:fptr FILEID="IMG_MIN_1019932" />
+                                <mets:fptr FILEID="IMG_MAX_1019932" />
+                            </mets:div>
+                            <mets:div ID="phys1019933" TYPE="page" LABEL="[Leerseite]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0002-1" ORDER="2">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019933" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019933" />
+                                <mets:fptr FILEID="IMG_MIN_1019933" />
+                                <mets:fptr FILEID="IMG_MAX_1019933" />
+                            </mets:div>
+                            <mets:div ID="phys1019935" TYPE="page" LABEL="[Seite 5]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0003-7" ORDER="3">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019935" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019935" />
+                                <mets:fptr FILEID="IMG_MIN_1019935" />
+                                <mets:fptr FILEID="IMG_MAX_1019935" />
+                            </mets:div>
+                            <mets:div ID="phys1019936" TYPE="page" LABEL="[Seite 6]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0004-2" ORDER="4">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019936" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019936" />
+                                <mets:fptr FILEID="IMG_MIN_1019936" />
+                                <mets:fptr FILEID="IMG_MAX_1019936" />
+                            </mets:div>
+                            <mets:div ID="phys1019938" TYPE="page" LABEL="[Seite 7]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0005-8" ORDER="5">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019938" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019938" />
+                                <mets:fptr FILEID="IMG_MIN_1019938" />
+                                <mets:fptr FILEID="IMG_MAX_1019938" />
+                            </mets:div>
+                            <mets:div ID="phys1019939" TYPE="page" LABEL="[Seite 8]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0006-4" ORDER="6">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019939" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019939" />
+                                <mets:fptr FILEID="IMG_MIN_1019939" />
+                                <mets:fptr FILEID="IMG_MAX_1019939" />
+                            </mets:div>
+                            <mets:div ID="phys1019940" TYPE="page" LABEL="[Seite 9]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0007-9" ORDER="7">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019940" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019940" />
+                                <mets:fptr FILEID="IMG_MIN_1019940" />
+                                <mets:fptr FILEID="IMG_MAX_1019940" />
+                            </mets:div>
+                            <mets:div ID="phys1019941" TYPE="page" LABEL="[Seite 10]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0008-5" ORDER="8">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019941" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019941" />
+                                <mets:fptr FILEID="IMG_MIN_1019941" />
+                                <mets:fptr FILEID="IMG_MAX_1019941" />
+                            </mets:div>
+                            <mets:div ID="phys1019942" TYPE="page" LABEL="[Leerseite]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0009-4" ORDER="9">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019942" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019942" />
+                                <mets:fptr FILEID="IMG_MIN_1019942" />
+                                <mets:fptr FILEID="IMG_MAX_1019942" />
+                            </mets:div>
+                            <mets:div ID="phys1019943" TYPE="page" LABEL="[Seite 12]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0010-5" ORDER="10">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019943" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019943" />
+                                <mets:fptr FILEID="IMG_MIN_1019943" />
+                                <mets:fptr FILEID="IMG_MAX_1019943" />
+                            </mets:div>
+                            <mets:div ID="phys1019945" TYPE="page" LABEL="[Seite 13]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0011-1" ORDER="11">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019945" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019945" />
+                                <mets:fptr FILEID="IMG_MIN_1019945" />
+                                <mets:fptr FILEID="IMG_MAX_1019945" />
+                            </mets:div>
+                            <mets:div ID="phys1019946" TYPE="page" LABEL="[Seite 14]" CONTENTIDS="urn:nbn:de:gbv:3:1-101917-p0012-7" ORDER="12">
+                                <mets:fptr FILEID="IMG_DEFAULT_1019946" />
+                                <mets:fptr FILEID="IMG_THUMBS_1019946" />
+                                <mets:fptr FILEID="IMG_MIN_1019946" />
+                                <mets:fptr FILEID="IMG_MAX_1019946" />
+                            </mets:div>
+                        </mets:div>
+                    </mets:structMap>
+                    <mets:structMap TYPE="LOGICAL">
+                        <mets:div ID="log997508" DMDID="md997508" ADMID="amd997508" TYPE="monograph" LABEL="Elegia || PRO ILLVSTRISSI=||MO ELECTORE SA=||XONIAE, DVCE CHRI-||STIANO; &amp;c.|| Conscripta || A || IOHANNE MAIORE D.||" ORDER="1" CONTENTIDS="urn:nbn:de:gbv:3:1-101917">
+                            <mets:fptr FILEID="PDF_997508" />
+                            <mets:fptr FILEID="IMG_TEASER_1019932" />
+                            <mets:div ID="log1019931" TYPE="cover_front" LABEL="Vorderdeckel" ORDER="1" />
+                            <mets:div ID="log1019934" TYPE="title_page" LABEL="Titelblatt" ORDER="2" />
+                            <mets:div ID="log1019937" TYPE="section" LABEL="Abschnitt" ORDER="3" />
+                            <mets:div ID="log1019944" TYPE="cover_back" LABEL="Rückdeckel" ORDER="4" />
+                        </mets:div>
+                    </mets:structMap>
+                    <mets:structLink>
+                        <mets:smLink xlink:from="log997508" xlink:to="physroot" />
+                        <mets:smLink xlink:from="log1019931" xlink:to="phys1019932" />
+                        <mets:smLink xlink:from="log1019931" xlink:to="phys1019933" />
+                        <mets:smLink xlink:from="log1019934" xlink:to="phys1019935" />
+                        <mets:smLink xlink:from="log1019934" xlink:to="phys1019936" />
+                        <mets:smLink xlink:from="log1019937" xlink:to="phys1019938" />
+                        <mets:smLink xlink:from="log1019937" xlink:to="phys1019939" />
+                        <mets:smLink xlink:from="log1019937" xlink:to="phys1019940" />
+                        <mets:smLink xlink:from="log1019937" xlink:to="phys1019941" />
+                        <mets:smLink xlink:from="log1019937" xlink:to="phys1019942" />
+                        <mets:smLink xlink:from="log1019937" xlink:to="phys1019943" />
+                        <mets:smLink xlink:from="log1019944" xlink:to="phys1019945" />
+                        <mets:smLink xlink:from="log1019944" xlink:to="phys1019946" />
+                    </mets:structLink>
+                </mets:mets>
+            </metadata>
+        </record>
+    </GetRecord>
+</OAI-PMH>

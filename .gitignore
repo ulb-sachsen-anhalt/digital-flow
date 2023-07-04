@@ -1,0 +1,11 @@
+venv
+.vscode
+.pytest_cache
+**/__pycache__/**
+**/*.egg-info/**
+.coverage
+coverage.xml
+.scannerwork
+
+# setup artifacts
+dist

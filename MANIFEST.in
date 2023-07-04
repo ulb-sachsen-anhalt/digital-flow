@@ -1,0 +1,5 @@
+include src/digiflow/resources/digilife.ini
+include src/digiflow/resources/sch/*.sch
+include src/digiflow/resources/xsd/*.xsd
+include src/digiflow/resources/xsd/*.xsl
+include src/digiflow/schematron/*.jar
