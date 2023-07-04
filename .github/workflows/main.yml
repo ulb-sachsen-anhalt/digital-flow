@@ -1,10 +1,13 @@
 name: Python CI with Tox
-
 on:
   push:
-    branches:    
-      - main
-  runs:
-    using: 'docker'
-    image: 'Dockerfile.tox'
-    entrypoint: 'tox
+    branches: [ main ]    
+jobs:
+  toxic-test-job:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: build toxic image
+      run:  docker build --tag toxic -f Dockerfile.tox .
+    - name: run toxic image
+      run:  docker run --rm toxic tox
