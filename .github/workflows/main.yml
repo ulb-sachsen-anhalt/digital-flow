@@ -1,0 +1,10 @@
+name: Python CI with Tox
+
+on:
+  push:
+    branches:    
+      - main
+  runs:
+    using: 'docker'
+    image: 'Dockerfile.tox'
+    entrypoint: 'tox
