@@ -1,11 +1,15 @@
 # digital flow
 
-[![pipeline status](https://git.itz.uni-halle.de/ulb/ulb-digiflow/badges/master/pipeline.svg)](https://git.itz.uni-halle.de/ulb/ulb-digiflow/badges/master/pipeline.svg)
-[![coverage report](https://git.itz.uni-halle.de/ulb/ulb-digiflow/badges/master/coverage.svg)](https://git.itz.uni-halle.de/ulb/ulb-digiflow/commits/master)
+![Python CI](https://github.com/ulb-sachsen-anhalt/digital-flow/actions/workflows/main-app.yml/badge.svg)
+[![PyPi version](https://badgen.net/pypi/v/digital-flow/)](https://pypi.org/project/digiflow) ![PyPI - Downloads](https://img.shields.io/pypi/dm/digiflow) ![PyPI - License](https://img.shields.io/pypi/l/digiflow) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/digiflow)
 
 Father's little helper for internal library digitalization workflows running on Linux-Systems.
 
-## Local tests using Tox on Ubuntu 20.04 LTS
+## Testing
+
+Testing with tox uses different Python versions.
+
+### Local tests using Tox on Ubuntu 20.04 LTS
 
 For running tox locally for different Python Versions, it is required to have them installed
 
@@ -30,4 +34,4 @@ docker build --tag <your-test-image> --build-arg BASE_IMAGE=<your-python-tox-ima
 docker run --rm <your-test-image> tox
 ```
 
-This executes `tox` in a closed container without creating distributions.
+This executes `tox` in a closed container without distributioning.
