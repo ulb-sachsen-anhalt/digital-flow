@@ -736,7 +736,7 @@ class OAILoader:
         mets_reader = MetsReader(self.path_mets, mets_digital_object_identifier)
 
         # get linked resources
-        for k in self.groups.keys():
+        for k in self.groups:
             self.groups[k] = mets_reader.get_filegrp_links(group=k)
 
         # if exist, download them too
