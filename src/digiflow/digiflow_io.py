@@ -741,13 +741,13 @@ class OAILoader:
 
         # if exist, download them too
         post_func = None
-        for k, vals in self.groups.items():
+        for k, linked_res_urls in self.groups.items():
             if k == self.key_ocr:
                 post_func = post_oai_store_ocr
-            for res_url in vals:
-                res_end = res_url.split('/')[-1]
-                res_path = self._calculate_path(k, res_end)
-                if self._handle_load(res_url, res_path, post_func):
+            for linked_res_url in linked_res_urls:
+                res_val_end = linked_res_url.split('/')[-1]
+                res_val_path = self._calculate_path(k, res_val_end)
+                if self._handle_load(linked_res_url, res_val_path, post_func):
                     loaded += 1
         return loaded
 
