@@ -3,3 +3,4 @@ Pillow
 numpy
 wheel
 requests
+docker

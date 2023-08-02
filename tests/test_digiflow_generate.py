@@ -16,7 +16,7 @@ from digiflow import (
     DerivansManager,
     generate_structure,
     run_profiled,
-    id_generator
+    id_generator, ContainerDerivansManager
 )
 
 
@@ -71,7 +71,6 @@ def test_generate_archivierung_layout(tmp_path):
 
 
 def test_generate_invalid_startdir():
-
     with pytest.raises(RuntimeError) as exc:
         generate_structure('foo/bar')
 
@@ -168,8 +167,20 @@ def test_utils_profile_args_return():
 def test_utils_profile_class_context():
     my_stuff = MyClass()
     assert my_stuff.my_func_args(3, 5) == (0.25, 'MyClass.my_func_args', 17)
-    assert\
+    assert \
         MyClass.my_func_static(3, 5) == (0.25, 'MyClass.my_func_static', 15)
+
+
+def test_derivans_manager_with_container(tmp_path):
+    test_project_root = tmp_path / 'migrationtest'
+    test_project_root.mkdir()
+    mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
+    with open(mets_file, 'w') as fh:
+        fh.write('<xml/>')
+    dmanager = ContainerDerivansManager(
+        mets_file,
+    )
+    dmanager.init()
 
 
 def test_derivans_manager_with_path_bin_jar(tmp_path):
@@ -210,7 +221,7 @@ def test_derivans_manager_with_path_bin_dir(tmp_path):
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
         path_mvn_project=path_mvn_project)
-    cwd = os.getcwd()    
+    cwd = os.getcwd()
     with pytest.raises(subprocess.CalledProcessError) as err:
         dmanager.init()
     os.chdir(cwd)  # subprocess is changing the cwd, so lets go back
@@ -243,7 +254,6 @@ def _forward_derivans_call(*args):
 @mock.patch('digiflow.DerivansManager._execute_derivans')
 @mock.patch('digiflow.DerivansManager._identify_derivans_bin')
 def test_derivans_start_set_exec(mock_check, mock_call, tmp_path):
-
     # arrange
     test_project_root = tmp_path / 'migrationtest'
     the_derivans = test_project_root / 'digital-derivans' / 'target'
@@ -277,7 +287,6 @@ def test_derivans_start_set_exec(mock_check, mock_call, tmp_path):
 @mock.patch('digiflow.DerivansManager._execute_derivans')
 @mock.patch('digiflow.DerivansManager._identify_derivans_bin')
 def test_derivans_start_default(mock_check, mock_call, tmp_path):
-
     # arrange
     test_project_root = tmp_path / 'migrationtest'
     the_derivans = test_project_root / 'digital-derivans' / 'target'

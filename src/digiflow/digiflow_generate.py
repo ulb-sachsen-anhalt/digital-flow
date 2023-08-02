@@ -8,23 +8,27 @@ import re
 import shutil
 import subprocess
 import time
+from abc import abstractmethod, ABC
 
+import docker
 import numpy as np
 from pathlib import Path
 
 from typing import (
-    List
+    List, Union
 )
 
 from PIL import (
     Image
 )
-
+from docker import DockerClient
+from docker.types import Mount
 
 # default sub dir for structure creation
 DEFAULT_STRUCTURE_DIR = 'MAX'
 
 # derivates
+DEFAULT_DERIVANS_IMAGE = "ghcr.io/ulb-sachsen-anhalt/digital-derivans:latest"
 DEFAULT_DERIVANS_TIMEOUT = 10800
 DERIVANS_LABEL = 'derivans'
 
@@ -227,40 +231,33 @@ def run_command(cmd, timeout) -> subprocess.CompletedProcess:
         timeout=timeout)
 
 
-class DerivansManager:
+class BaseDerivansManager(ABC):
     """Manage Derivans (build, recreate, start, error)
        needs: Java, Maven, GIT
     """
 
-    def __init__(self,
-                 path_mets_file,
-                 path_binary,
-                 path_configuration=None,
-                 path_mvn_project=None):
-        if path_binary is None or\
-                not(Path(path_binary).is_dir() or Path(path_binary).is_file()):
-            raise RuntimeError(
-                "[DerivansManager] provide path_binary "
-                "pointing to file(jar) or a folder containing jar "
-                "not ({})".format(path_binary))
-        if path_mvn_project is not None\
-                and not Path(str(path_mvn_project)).is_dir():
-            raise RuntimeError(
-                "[DerivansManager] path_mvn_project ({}) "
-                "is invalid".format(path_mvn_project))
+    def __init__(
+            self,
+            path_mets_file,
+            path_configuration=None,
+    ):
         if path_configuration and not Path(str(path_configuration)).is_file():
             raise RuntimeError(
                 "[DerivansManager] Configuration file not found: {}"
                 .format(path_configuration))
-
         self.path_mets_file = path_mets_file
-        self.path_binary = path_binary
         self.path_configuration = path_configuration
-        self.path_mvn_project = path_mvn_project
-        self.path_exec = None
         self._timeout = DEFAULT_DERIVANS_TIMEOUT
         self._label = DERIVANS_LABEL
         self.xargs = ''
+
+    @abstractmethod
+    def init(self):
+        pass
+
+    @abstractmethod
+    def start(self):
+        pass
 
     @property
     def timeout(self):
@@ -278,6 +275,38 @@ class DerivansManager:
     def label(self, label):
         self._label = label
 
+    def _execute_derivans(self, command) -> subprocess.CompletedProcess:
+        return run_command(command, self.timeout)
+
+
+class DerivansManager(BaseDerivansManager):
+
+    def __init__(
+            self,
+            path_mets_file: str,
+            path_binary: str,
+            path_mvn_project: str = None,
+            path_configuration: str = None,
+    ):
+        if path_binary is None or \
+                not (Path(path_binary).is_dir() or Path(path_binary).is_file()):
+            raise RuntimeError(
+                "[DerivansManager] provide path_binary "
+                "pointing to file(jar) or a folder containing jar "
+                "not ({})".format(path_binary))
+        if path_mvn_project is not None \
+                and not Path(str(path_mvn_project)).is_dir():
+            raise RuntimeError(
+                "[DerivansManager] path_mvn_project ({}) "
+                "is invalid".format(path_mvn_project))
+        super().__init__(
+            path_mets_file=path_mets_file,
+            path_configuration=path_configuration,
+        )
+        self.path_binary = path_binary
+        self.path_mvn_project = path_mvn_project
+        self.path_exec = None
+
     def init(self):
         """Setup Application"""
 
@@ -292,6 +321,34 @@ class DerivansManager:
         # fallback to default 'java' if no need to worry about
         if not self.path_exec:
             self.path_exec = 'java'
+
+    def start(self):
+        """Create Derivates with provided configuration
+
+        * step into derivans root dir first
+        * respect actual operation system due executable path
+          wich might contain spaces on windows
+        * execute
+        * return to previous directory
+
+        """
+        derivans_root = os.path.dirname(self.path_binary)
+        prev_dir = os.path.abspath(os.curdir)
+        os.chdir(derivans_root)
+        path_exec = self.path_exec
+        if platform.system() not in ['Linux']:
+            path_exec = '"{}"'.format(path_exec)
+        if self.xargs and not self.xargs.startswith(' '):
+            self.xargs = ' ' + self.xargs
+        cmd = '{}{} -jar {} {}'.format(path_exec,
+                                       self.xargs, self.path_binary, self.path_mets_file)
+        if self.path_configuration:
+            cmd += ' -c {}'.format(self.path_configuration)
+        # disable pylint due it is not able to recognize
+        # output being created by decorator
+        time_duration, label, result = self._execute_derivans(cmd)  # pylint: disable=unpacking-non-sequence
+        os.chdir(prev_dir)
+        return cmd, label, time_duration, result
 
     def _identify_derivans_bin(self, the_dir=None):
         if not the_dir:
@@ -332,35 +389,43 @@ class DerivansManager:
         self.path_binary = os.path.join(
             target_dir, os.path.basename(the_derivans))
 
-    def start(self):
-        """Create Derivates with provided configuration
 
-        * step into derivans root dir first
-        * respect actual operation system due executable path
-          wich might contain spaces on windows
-        * execute
-        * return to previous directory
-        
-        """
+class ContainerDerivansManager(BaseDerivansManager):
 
-        derivans_root = os.path.dirname(self.path_binary)
-        prev_dir = os.path.abspath(os.curdir)
-        os.chdir(derivans_root)
-        path_exec = self.path_exec
-        if platform.system() not in ['Linux']:
-            path_exec = '"{}"'.format(path_exec)
-        if self.xargs and not self.xargs.startswith(' '):
-            self.xargs = ' ' + self.xargs
-        cmd = '{}{} -jar {} {}'.format(path_exec,
-            self.xargs, self.path_binary, self.path_mets_file)
-        if self.path_configuration:
-            cmd += ' -c {}'.format(self.path_configuration)
-        # disable pylint due it is not able to recognize
-        # output being created by decorator
-        time_duration, label, result = self._execute_derivans(cmd)   # pylint: disable=unpacking-non-sequence
-        os.chdir(prev_dir)
-        return (cmd, label, time_duration, result)
+    def __init__(
+            self,
+            path_mets_file: str,
+            container_image: str = DEFAULT_DERIVANS_IMAGE,
+            path_configuration: str = None,
+    ):
+        super().__init__(
+            path_mets_file=path_mets_file,
+            path_configuration=path_configuration
+        )
+        self._container_image: str = container_image
+        self._client: DockerClient = docker.from_env()
 
+    def init(self) -> None:
+        repo, tag = self._container_image.split(':')
+        self._client.images.pull(repo, tag)
 
-    def _execute_derivans(self, command) -> subprocess.CompletedProcess:
-        return run_command(command, self.timeout)
+    def start(self) -> None:
+        mounts: List[Mount] = []
+
+        command: str = ''
+        data_path: Path = Path(self.path_mets_file).absolute()
+        if data_path.is_file():
+            command += str(data_path)
+            data_dir = str(data_path.parent.absolute())
+            mounts.append(Mount(source=data_dir, target='/data'))
+        config_file: Union[Path, None] = None
+        if config_file.exists() and config_file.is_file():
+            mounts.append(Mount(source=str(config_file.parent.absolute()), target='/data_cfg'))
+
+        pass
+        # self._client.containers.run(
+        #     image=self._container_image,
+        #     command=command,
+        #     remove=True,
+        #     mounts=mounts
+        # )

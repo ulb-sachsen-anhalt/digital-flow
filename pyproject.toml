@@ -19,6 +19,7 @@ dependencies = [
 	"lxml",
 	"Pillow",
 	"numpy",
+	"docker",
 	"requests"
 ]
 
