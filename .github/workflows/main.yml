@@ -1,7 +1,10 @@
 name: Python CI with Tox
 on:
   push:
-    branches: [ main ]    
+    branches:
+      - main
+      - develop
+
 jobs:
   toxic-test-job:
     runs-on: ubuntu-latest

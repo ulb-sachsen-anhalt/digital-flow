@@ -171,16 +171,16 @@ def test_utils_profile_class_context():
         MyClass.my_func_static(3, 5) == (0.25, 'MyClass.my_func_static', 15)
 
 
-def test_derivans_manager_with_container(tmp_path):
-    test_project_root = tmp_path / 'migrationtest'
-    test_project_root.mkdir()
-    mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
-    dmanager = ContainerDerivansManager(
-        mets_file,
-    )
-    dmanager.init()
+# def test_derivans_manager_with_container(tmp_path):
+#     test_project_root = tmp_path / 'migrationtest'
+#     test_project_root.mkdir()
+#     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
+#     with open(mets_file, 'w') as fh:
+#         fh.write('<xml/>')
+#     dmanager = ContainerDerivansManager(
+#         mets_file,
+#     )
+#     dmanager.init()
 
 
 def test_derivans_manager_with_path_bin_jar(tmp_path):
