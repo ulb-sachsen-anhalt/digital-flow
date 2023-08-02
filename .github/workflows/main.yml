@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - develop
+      - temp
 
 jobs:
   toxic-test-job:
@@ -13,4 +14,4 @@ jobs:
     - name: build toxic image
       run:  docker build --tag toxic -f Dockerfile.tox .
     - name: run toxic image
-      run:  docker run --rm toxic tox
+      run:  docker run --rm  -v /var/run/docker.sock:/var/run/docker.sock toxic tox

@@ -13,17 +13,17 @@ RUN apt-get update && apt-get -y install python \
     openjdk-11-jre \
 	zip
 
-# docker for digital-derivans
-#RUN apt-get update && apt-get -y install ca-certificates curl gnupg \
-#   && install -m 0755 -d /etc/apt/keyrings \
-#    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
-#    && chmod a+r /etc/apt/keyrings/docker.gpg
-#RUN echo \
-#  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-#  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-#  tee /etc/apt/sources.list.d/docker.list > /dev/null
-#RUN apt-get update && apt-get -y install docker-ce docker-ce-cli containerd.io
-#RUN service docker enable && service docker start
+# # docker for digital-derivans
+RUN apt-get update && apt-get -y install ca-certificates curl gnupg \
+   && install -m 0755 -d /etc/apt/keyrings \
+    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
+    && chmod a+r /etc/apt/keyrings/docker.gpg
+RUN echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  tee /etc/apt/sources.list.d/docker.list > /dev/null
+RUN apt-get update && apt-get -y install docker-ce docker-ce-cli
+RUN systemctl enable docker.service
 
 FROM toxic_base AS toxic
 RUN pip install pip tox 
