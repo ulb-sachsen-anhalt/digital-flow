@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
 
 import itertools
 import os
@@ -15,7 +16,7 @@ import numpy as np
 from pathlib import Path
 
 from typing import (
-    List, Union
+    List, Union, Final
 )
 
 from PIL import (
@@ -232,6 +233,28 @@ def run_command(cmd, timeout) -> subprocess.CompletedProcess:
 
 
 class BaseDerivansManager(ABC):
+
+    @staticmethod
+    def create(
+            path_mets_file: str,
+            container_image_name: str = None,
+            path_binary: str = None,
+            path_mvn_project: str = None,
+            path_configuration: str = None,
+    ) -> BaseDerivansManager:
+        if container_image_name is not None:
+            return ContainerDerivansManager(
+                path_mets_file=path_mets_file,
+                container_image=container_image_name,
+                path_configuration=path_configuration,
+            )
+        return DerivansManager(
+            path_mets_file=path_mets_file,
+            path_binary=path_binary,
+            path_mvn_project=path_mvn_project,
+            path_configuration=path_configuration,
+        )
+
     """Manage Derivans (build, recreate, start, error)
        needs: Java, Maven, GIT
     """
@@ -391,6 +414,8 @@ class DerivansManager(BaseDerivansManager):
 
 
 class ContainerDerivansManager(BaseDerivansManager):
+    TARGET_METS_DIR: Final[str] = "/data_mets"
+    TARGET_CFG_DIR: Final[str] = "/data_cfg"
 
     def __init__(
             self,
@@ -410,22 +435,33 @@ class ContainerDerivansManager(BaseDerivansManager):
         self._client.images.pull(repo, tag)
 
     def start(self) -> None:
+
         mounts: List[Mount] = []
+        command: List[str] = []
 
-        command: str = ''
-        data_path: Path = Path(self.path_mets_file).absolute()
-        if data_path.is_file():
-            command += str(data_path)
-            data_dir = str(data_path.parent.absolute())
-            mounts.append(Mount(source=data_dir, target='/data'))
-        config_file: Union[Path, None] = None
-        if config_file.exists() and config_file.is_file():
-            mounts.append(Mount(source=str(config_file.parent.absolute()), target='/data_cfg'))
+        mets_path: Path = Path(self.path_mets_file).absolute()
+        if mets_path.is_dir():
+            command.append(self.TARGET_METS_DIR)
+            mounts.append(Mount(source=str(mets_path), target=self.TARGET_METS_DIR, type='bind'))
+        if mets_path.is_file():
+            mets_file_name: str = mets_path.name
+            mets_dir: str = str(mets_path.parent.absolute())
+            target_mets_file: str = str(Path(self.TARGET_METS_DIR).joinpath(mets_file_name))
+            command.append(target_mets_file)
+            mounts.append(Mount(source=mets_dir, target=self.TARGET_METS_DIR, type='bind'))
 
-        pass
-        # self._client.containers.run(
-        #     image=self._container_image,
-        #     command=command,
-        #     remove=True,
-        #     mounts=mounts
-        # )
+        config_path: Union[Path, None] = Path(self.path_configuration)
+        if config_path.exists() and config_path.is_file():
+            config_file_name: str = config_path.name
+            config_dir: str = str(config_path.parent.absolute())
+            target_config_file: str = str(Path(self.TARGET_CFG_DIR).joinpath(config_file_name))
+            mounts.append(Mount(source=config_dir, target=self.TARGET_CFG_DIR, type='bind'))
+            command.append('-c')
+            command.append(target_config_file)
+
+        self._client.containers.run(
+            image=self._container_image,
+            command=command,
+            remove=True,
+            mounts=mounts
+        )
