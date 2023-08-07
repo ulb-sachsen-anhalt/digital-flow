@@ -11,18 +11,25 @@ import subprocess
 import time
 from abc import abstractmethod, ABC
 
-import docker
-import numpy as np
 from pathlib import Path
 
 from typing import (
-    List, Union, Final
+    List,
+    Tuple,
+    Union,
+    Final,
 )
 
 from PIL import (
     Image
 )
-from docker import DockerClient
+
+import numpy as np
+
+from docker import (
+    DockerClient,
+    from_env
+)
 from docker.types import Mount
 
 # default sub dir for structure creation
@@ -233,6 +240,9 @@ def run_command(cmd, timeout) -> subprocess.CompletedProcess:
 
 
 class BaseDerivansManager(ABC):
+    """Manage Derivans component calls
+    from within python modules
+    """
 
     @staticmethod
     def create(
@@ -242,6 +252,9 @@ class BaseDerivansManager(ABC):
             path_mvn_project: str = None,
             path_configuration: str = None,
     ) -> BaseDerivansManager:
+        """Create actual DerivansManager instance
+        depending on provided parameters"""
+
         if container_image_name is not None:
             return ContainerDerivansManager(
                 path_mets_file=path_mets_file,
@@ -255,19 +268,13 @@ class BaseDerivansManager(ABC):
             path_configuration=path_configuration,
         )
 
-    """Manage Derivans (build, recreate, start, error)
-       needs: Java, Maven, GIT
-    """
-
     def __init__(
             self,
             path_mets_file,
             path_configuration=None,
     ):
         if path_configuration and not Path(str(path_configuration)).is_file():
-            raise RuntimeError(
-                "[DerivansManager] Configuration file not found: {}"
-                .format(path_configuration))
+            raise RuntimeError(f"[DerivansManager] config missing: {path_configuration}!")
         self.path_mets_file = path_mets_file
         self.path_configuration = path_configuration
         self._timeout = DEFAULT_DERIVANS_TIMEOUT
@@ -276,14 +283,16 @@ class BaseDerivansManager(ABC):
 
     @abstractmethod
     def init(self):
-        pass
+        """Setup application"""
 
     @abstractmethod
-    def start(self):
-        pass
+    def start(self) -> Tuple:
+        """Issue actual derivans instance
+        and communicate outcome"""
 
     @property
     def timeout(self):
+        """Timeout for derivans workflows"""
         return self._timeout
 
     @timeout.setter
@@ -303,6 +312,10 @@ class BaseDerivansManager(ABC):
 
 
 class DerivansManager(BaseDerivansManager):
+    """Local Derivans instance.
+    Requires at least recent Java at
+    runtime, additionally Maven if
+    Derivans must be built at init stage"""
 
     def __init__(
             self,
@@ -313,15 +326,10 @@ class DerivansManager(BaseDerivansManager):
     ):
         if path_binary is None or \
                 not (Path(path_binary).is_dir() or Path(path_binary).is_file()):
-            raise RuntimeError(
-                "[DerivansManager] provide path_binary "
-                "pointing to file(jar) or a folder containing jar "
-                "not ({})".format(path_binary))
+            raise RuntimeError(f"[DerivansManager] invalid path_binary: {path_binary}!")
         if path_mvn_project is not None \
                 and not Path(str(path_mvn_project)).is_dir():
-            raise RuntimeError(
-                "[DerivansManager] path_mvn_project ({}) "
-                "is invalid".format(path_mvn_project))
+            raise RuntimeError(f"[DerivansManager] invalid path_mvn_project: {path_mvn_project}!")
         super().__init__(
             path_mets_file=path_mets_file,
             path_configuration=path_configuration,
@@ -331,8 +339,6 @@ class DerivansManager(BaseDerivansManager):
         self.path_exec = None
 
     def init(self):
-        """Setup Application"""
-
         _path_derivans = self.path_binary
 
         if Path(self.path_binary).is_dir():
@@ -345,7 +351,7 @@ class DerivansManager(BaseDerivansManager):
         if not self.path_exec:
             self.path_exec = 'java'
 
-    def start(self):
+    def start(self) -> Tuple:
         """Create Derivates with provided configuration
 
         * step into derivans root dir first
@@ -360,18 +366,17 @@ class DerivansManager(BaseDerivansManager):
         os.chdir(derivans_root)
         path_exec = self.path_exec
         if platform.system() not in ['Linux']:
-            path_exec = '"{}"'.format(path_exec)
+            path_exec = f'"{path_exec}"'
         if self.xargs and not self.xargs.startswith(' '):
             self.xargs = ' ' + self.xargs
-        cmd = '{}{} -jar {} {}'.format(path_exec,
-                                       self.xargs, self.path_binary, self.path_mets_file)
+        cmd = f'{path_exec}{ self.xargs} -jar {self.path_binary} { self.path_mets_file}'
         if self.path_configuration:
-            cmd += ' -c {}'.format(self.path_configuration)
+            cmd += f' -c {self.path_configuration}'
         # disable pylint due it is not able to recognize
         # output being created by decorator
         time_duration, label, result = self._execute_derivans(cmd)  # pylint: disable=unpacking-non-sequence
         os.chdir(prev_dir)
-        return cmd, label, time_duration, result
+        return (cmd, label, time_duration, result)
 
     def _identify_derivans_bin(self, the_dir=None):
         if not the_dir:
@@ -380,13 +385,14 @@ class DerivansManager(BaseDerivansManager):
         derivantis = sorted([f for f in all_files if self._label in str(f)])
         if len(derivantis) > 0:
             return os.path.join(the_dir, derivantis[0])
+        return None
 
     def _recreate_app(self, target_dir):
         dir_derivans = self.path_mvn_project
         if not dir_derivans:
             raise RuntimeError("Derivans project dir unset!")
         if not os.path.isdir(dir_derivans):
-            raise RuntimeError("Invalid derivans project dir '{}'!".format(dir_derivans))
+            raise RuntimeError(f"Invalid derivans project dir: '{dir_derivans}'!")
 
         derivans_build_dir = os.path.join(dir_derivans, 'target')
         the_derivans = None
@@ -413,9 +419,12 @@ class DerivansManager(BaseDerivansManager):
             target_dir, os.path.basename(the_derivans))
 
 
+DERIVANS_CNT_DATA_DIR: Final[str] = "/data_mets"
+DERIVANS_CNT_CONF_DIR: Final[str] = "/data_cfg"
 class ContainerDerivansManager(BaseDerivansManager):
-    TARGET_METS_DIR: Final[str] = "/data_mets"
-    TARGET_CFG_DIR: Final[str] = "/data_cfg"
+    """Containered Derivans instance.
+    Required local container runtime.
+    """
 
     def __init__(
             self,
@@ -428,40 +437,37 @@ class ContainerDerivansManager(BaseDerivansManager):
             path_configuration=path_configuration
         )
         self._container_image: str = container_image
-        self._client: DockerClient = docker.from_env()
+        self._client: DockerClient = from_env()
 
     def init(self) -> None:
         repo, tag = self._container_image.split(':')
         self._client.images.pull(repo, tag)
 
-    def start(self) -> None:
-
+    def start(self):
         mounts: List[Mount] = []
         command: List[str] = []
-
         mets_path: Path = Path(self.path_mets_file).absolute()
         if mets_path.is_dir():
-            command.append(self.TARGET_METS_DIR)
-            mounts.append(Mount(source=str(mets_path), target=self.TARGET_METS_DIR, type='bind'))
+            command.append(DERIVANS_CNT_DATA_DIR)
+            mounts.append(Mount(source=str(mets_path), target=DERIVANS_CNT_DATA_DIR, type='bind'))
         if mets_path.is_file():
             mets_file_name: str = mets_path.name
             mets_dir: str = str(mets_path.parent.absolute())
-            target_mets_file: str = str(Path(self.TARGET_METS_DIR).joinpath(mets_file_name))
+            target_mets_file: str = str(Path(DERIVANS_CNT_DATA_DIR).joinpath(mets_file_name))
             command.append(target_mets_file)
-            mounts.append(Mount(source=mets_dir, target=self.TARGET_METS_DIR, type='bind'))
-
+            mounts.append(Mount(source=mets_dir, target=DERIVANS_CNT_DATA_DIR, type='bind'))
         config_path: Union[Path, None] = Path(self.path_configuration)
         if config_path.exists() and config_path.is_file():
             config_file_name: str = config_path.name
             config_dir: str = str(config_path.parent.absolute())
-            target_config_file: str = str(Path(self.TARGET_CFG_DIR).joinpath(config_file_name))
-            mounts.append(Mount(source=config_dir, target=self.TARGET_CFG_DIR, type='bind'))
+            target_config_file: str = str(Path(DERIVANS_CNT_CONF_DIR).joinpath(config_file_name))
+            mounts.append(Mount(source=config_dir, target=DERIVANS_CNT_CONF_DIR, type='bind'))
             command.append('-c')
             command.append(target_config_file)
-
-        self._client.containers.run(
+        _outcome = self._client.containers.run(
             image=self._container_image,
             command=command,
             remove=True,
             mounts=mounts
         )
+        return (command)

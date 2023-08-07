@@ -5,7 +5,7 @@ import subprocess
 import time
 
 from unittest import (
-    mock
+    mock,
 )
 
 import pytest
@@ -16,8 +16,13 @@ from digiflow import (
     DerivansManager,
     generate_structure,
     run_profiled,
-    id_generator, ContainerDerivansManager
+    id_generator,
+    ContainerDerivansManager,
+    DEFAULT_DERIVANS_IMAGE,
 )
+
+
+DUMMY_METS = '<xml/>'
 
 
 def test_generate_migration_start_structure_layout(tmp_path):
@@ -171,34 +176,32 @@ def test_utils_profile_class_context():
         MyClass.my_func_static(3, 5) == (0.25, 'MyClass.my_func_static', 15)
 
 
-def test_derivans_manager_with_container(tmp_path):
+@mock.patch('docker.models.images.ImageCollection.pull')
+def test_derivans_manager_with_container(mock_coll, tmp_path):
+    """Check init phase of containerized
+    Derivans execution context tries to
+    pull required default container image"""
+
+    # arrange
     test_project_root = tmp_path / 'migrationtest'
     test_project_root.mkdir()
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
     dmanager = ContainerDerivansManager(
         mets_file,
     )
+
+    # act
     dmanager.init()
 
-
-def test_derivans_manager_with_path_bin_jar(tmp_path):
-    test_project_root = tmp_path / 'migrationtest'
-    test_project_root.mkdir()
-    test_project_bin = test_project_root / 'bin'
-    test_project_bin.mkdir()
-    jar_name = 'digital-derivans-1.2.3.jar'
-    jar_file = os.path.join(str(test_project_bin), jar_name)
-    with open(jar_file, 'wb') as fh:
-        fh.write(b'foofoo')
-    mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
-    dmanager = DerivansManager(
-        mets_file, path_binary=jar_file,
-        path_mvn_project=None)
-    dmanager.init()
+    # assert
+    assert mock_coll.call_count == 1
+    _call_args = mock_coll.call_args.args
+    assert len(_call_args) == 2
+    _image_label = DEFAULT_DERIVANS_IMAGE.split(':', maxsplit=1)[0]
+    assert _call_args[0] == f'{_image_label}'
+    assert _call_args[1] == 'latest'
 
 
 def test_derivans_manager_with_path_bin_dir(tmp_path):
@@ -207,6 +210,7 @@ def test_derivans_manager_with_path_bin_dir(tmp_path):
     Directory exists but required to build Derivans
     """
 
+    # arrange
     test_project_root = tmp_path / 'migrationtest'
     the_derivans = test_project_root / 'digital-derivans' / 'target'
     test_project_root.mkdir()
@@ -214,32 +218,42 @@ def test_derivans_manager_with_path_bin_dir(tmp_path):
     test_project_bin = test_project_root / 'bin'
     test_project_bin.mkdir()
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
 
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
         path_mvn_project=path_mvn_project)
     cwd = os.getcwd()
+
+    # act
     with pytest.raises(subprocess.CalledProcessError) as err:
         dmanager.init()
     os.chdir(cwd)  # subprocess is changing the cwd, so lets go back
+
+    # assert
     assert ("Command 'mvn clean package -DskipTests' "
             "returned non-zero exit status") in str(err.value)
 
 
 def test_derivans_manager_none_path_binary(tmp_path):
-    """Exception must be thrown if METS provided but invalid"""
+    """Exception must be thrown if invalid
+    None-path to local binary provided"""
 
+    # arrange
     test_project_root = tmp_path / 'migrationtest'
     test_project_root.mkdir()
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
+
+    # act
     with pytest.raises(RuntimeError) as exc:
         DerivansManager(mets_file, path_binary=None)
-    assert 'provide path_binary' in str(exc.value)
+
+    # assert
+    assert 'invalid path_binary' in str(exc.value)
 
 
 def _forward_derivans_call(*args):
@@ -264,8 +278,8 @@ def test_derivans_start_set_exec(mock_check, mock_call, tmp_path):
 
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
@@ -297,8 +311,8 @@ def test_derivans_start_default(mock_check, mock_call, tmp_path):
 
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
@@ -332,8 +346,8 @@ def test_derivans_start_with_additional_config(mock_check, mock_call, tmp_path):
 
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
@@ -382,8 +396,8 @@ Exception in thread "main" java.awt.AWTError: Can't connect to X11 window server
 
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
-    with open(mets_file, 'w') as fh:
-        fh.write('<xml/>')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
