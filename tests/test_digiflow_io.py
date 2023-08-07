@@ -641,25 +641,24 @@ def test_migration_sweeper_pdf(migration_sweeper_pdf_fixture):
             assert len(list(item.iterdir())) == 0
 
 
-def mock_get_smtp_server():
-    smtpmock = mock.Mock()
-    return smtpmock
-
-
-def test_send_mail(mocker):
+@mock.patch('digiflow.digiflow_io.get_smtp_server')
+def test_send_mail(mock_smtp):
     """test sending mail"""
 
-    mocker.patch(
-        'digiflow.digiflow_io.get_smtp_server', mock_get_smtp_server)
+    # arrange
     random_message = uuid.uuid4().hex
 
+    # act
     mess = send_mail(
         subject='test',
         message=random_message,
         sender='test@example.com',
         recipients='me@example.de')
+
+    # assert
     assert random_message in mess
     assert 'notification' in mess
+    assert mock_smtp.called
 
 
 def test_record_state_list_set_state_from(oai_record_list):
