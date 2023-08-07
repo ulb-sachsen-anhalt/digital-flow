@@ -168,10 +168,13 @@ class ResourceGenerator:
 
 def generate_structure(
         start_dir,
-        gens=[ResourceGenerator(DEFAULT_STRUCTURE_DIR)],
+        gens=None,
         number=10
 ) -> List[str]:
-    print('sdadasd')
+
+    if gens is None:
+        gens = [ResourceGenerator(DEFAULT_STRUCTURE_DIR)]
+
     """
     Generate test data layouts using a list of Generators for
     * Kitodo2 metadata        (<id>/images/<title>_media/*.tif)
