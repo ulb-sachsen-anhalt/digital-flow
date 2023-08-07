@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import time
 from abc import abstractmethod, ABC
+from dataclasses import dataclass
 
 from pathlib import Path
 
@@ -17,7 +18,7 @@ from typing import (
     List,
     Tuple,
     Union,
-    Final,
+    Final, Callable, Any, TypeVar, Generic,
 )
 
 from PIL import (
@@ -30,6 +31,8 @@ from docker import (
     DockerClient,
     from_env
 )
+from docker.models.containers import Container
+from docker.models.resource import Model
 from docker.types import Mount
 
 # default sub dir for structure creation
@@ -39,6 +42,8 @@ DEFAULT_STRUCTURE_DIR = 'MAX'
 DEFAULT_DERIVANS_IMAGE = "ghcr.io/ulb-sachsen-anhalt/digital-derivans:latest"
 DEFAULT_DERIVANS_TIMEOUT = 10800
 DERIVANS_LABEL = 'derivans'
+DERIVANS_CNT_DATA_DIR: Final[str] = "/data_mets"
+DERIVANS_CNT_CONF_DIR: Final[str] = "/data_cfg"
 
 
 def id_generator(
@@ -161,9 +166,12 @@ class ResourceGenerator:
         return [os.path.join(self.path, n + self.blueprint.ext) for n in names]
 
 
-def generate_structure(start_dir,
-                       gens=[ResourceGenerator(DEFAULT_STRUCTURE_DIR)],
-                       number=10) -> List[str]:
+def generate_structure(
+        start_dir,
+        gens=[ResourceGenerator(DEFAULT_STRUCTURE_DIR)],
+        number=10
+) -> List[str]:
+    print('sdadasd')
     """
     Generate test data layouts using a list of Generators for
     * Kitodo2 metadata        (<id>/images/<title>_media/*.tif)
@@ -193,15 +201,20 @@ def generate_structure(start_dir,
     return generated
 
 
-def run_profiled(func):
+_T = TypeVar('_T')
+_FuncWrapperResult = Tuple[float, str, _T]
+RunProfiledResult = Callable[[], _FuncWrapperResult[_T]]
+
+
+def run_profiled(func: Callable) -> RunProfiledResult:
     """
     Decorator to profile method execution time
     in seconds as float with 2 decimal digits
     """
 
-    def _get_func_name(func):
-        _label = str(func)
-        match = re.match(r'.*function ([\w\.]+) *', _label)
+    def _get_func_name(_func: Callable) -> str:
+        _label = str(_func)
+        match = re.match(r'.*function ([\w.]+) *', _label)
         if match:
             return match.group(1)
         else:
@@ -211,19 +224,18 @@ def run_profiled(func):
                 return match.group(1)
         return 'func'
 
-    def func_wrapper(*args):
+    def func_wrapper(*args) -> _FuncWrapperResult[_T]:
         result = None
-        start = time.time()
+        start: float = time.perf_counter()
         if args:
             result = func(*args)
         else:
             result = func()
-        delta = time.time() - start
+        delta: float = time.perf_counter() - start
 
         # name of callee
-        label = _get_func_name(func)
-
-        return (round(delta, 2), label, result)
+        label: str = _get_func_name(func)
+        return round(delta, 2), label, result
 
     return func_wrapper
 
@@ -233,10 +245,27 @@ def run_command(cmd, timeout) -> subprocess.CompletedProcess:
     """Forward command with given timeout
     """
     return subprocess.run(
-        cmd, shell=True, check=True,
+        cmd,
+        shell=True,
+        check=True,
         capture_output=True,
         encoding='UTF-8',
-        timeout=timeout)
+        timeout=timeout
+    )
+
+
+@dataclass(frozen=True)
+class DerivansResult:
+    command: str
+    duration: float
+    result: str | ContainerProcResult | None
+    label: str = None
+
+
+@dataclass(frozen=True)
+class ContainerProcResult:
+    exit_code: int
+    logs: str
 
 
 class BaseDerivansManager(ABC):
@@ -277,18 +306,22 @@ class BaseDerivansManager(ABC):
             raise RuntimeError(f"[DerivansManager] config missing: {path_configuration}!")
         self.path_mets_file = path_mets_file
         self.path_configuration = path_configuration
-        self._timeout = DEFAULT_DERIVANS_TIMEOUT
-        self._label = DERIVANS_LABEL
-        self.xargs = ''
 
     @abstractmethod
-    def init(self):
+    def init(self) -> None:
         """Setup application"""
 
     @abstractmethod
-    def start(self) -> Tuple:
+    def start(self) -> DerivansResult:
         """Issue actual derivans instance
         and communicate outcome"""
+
+
+class DerivansManager(BaseDerivansManager):
+    """Local Derivans instance.
+    Requires at least recent Java at
+    runtime, additionally Maven if
+    Derivans must be built at init stage"""
 
     @property
     def timeout(self):
@@ -306,16 +339,6 @@ class BaseDerivansManager(ABC):
     @label.setter
     def label(self, label):
         self._label = label
-
-    def _execute_derivans(self, command) -> subprocess.CompletedProcess:
-        return run_command(command, self.timeout)
-
-
-class DerivansManager(BaseDerivansManager):
-    """Local Derivans instance.
-    Requires at least recent Java at
-    runtime, additionally Maven if
-    Derivans must be built at init stage"""
 
     def __init__(
             self,
@@ -336,7 +359,10 @@ class DerivansManager(BaseDerivansManager):
         )
         self.path_binary = path_binary
         self.path_mvn_project = path_mvn_project
+        self._timeout = DEFAULT_DERIVANS_TIMEOUT
+        self._label = DERIVANS_LABEL
         self.path_exec = None
+        self.xargs = ''
 
     def init(self):
         _path_derivans = self.path_binary
@@ -351,7 +377,7 @@ class DerivansManager(BaseDerivansManager):
         if not self.path_exec:
             self.path_exec = 'java'
 
-    def start(self) -> Tuple:
+    def start(self) -> DerivansResult:
         """Create Derivates with provided configuration
 
         * step into derivans root dir first
@@ -369,14 +395,19 @@ class DerivansManager(BaseDerivansManager):
             path_exec = f'"{path_exec}"'
         if self.xargs and not self.xargs.startswith(' '):
             self.xargs = ' ' + self.xargs
-        cmd = f'{path_exec}{ self.xargs} -jar {self.path_binary} { self.path_mets_file}'
+        cmd = f'{path_exec}{self.xargs} -jar {self.path_binary} {self.path_mets_file}'
         if self.path_configuration:
             cmd += f' -c {self.path_configuration}'
         # disable pylint due it is not able to recognize
         # output being created by decorator
         time_duration, label, result = self._execute_derivans(cmd)  # pylint: disable=unpacking-non-sequence
         os.chdir(prev_dir)
-        return (cmd, label, time_duration, result)
+        return DerivansResult(
+            command=cmd,
+            result=result,
+            duration=time_duration,
+            label=label,
+        )
 
     def _identify_derivans_bin(self, the_dir=None):
         if not the_dir:
@@ -418,9 +449,10 @@ class DerivansManager(BaseDerivansManager):
         self.path_binary = os.path.join(
             target_dir, os.path.basename(the_derivans))
 
+    def _execute_derivans(self, command) -> _FuncWrapperResult:
+        return run_command(command, self.timeout)
 
-DERIVANS_CNT_DATA_DIR: Final[str] = "/data_mets"
-DERIVANS_CNT_CONF_DIR: Final[str] = "/data_cfg"
+
 class ContainerDerivansManager(BaseDerivansManager):
     """Containered Derivans instance.
     Required local container runtime.
@@ -443,7 +475,7 @@ class ContainerDerivansManager(BaseDerivansManager):
         repo, tag = self._container_image.split(':')
         self._client.images.pull(repo, tag)
 
-    def start(self):
+    def start(self) -> DerivansResult:
         mounts: List[Mount] = []
         command: List[str] = []
         mets_path: Path = Path(self.path_mets_file).absolute()
@@ -456,18 +488,38 @@ class ContainerDerivansManager(BaseDerivansManager):
             target_mets_file: str = str(Path(DERIVANS_CNT_DATA_DIR).joinpath(mets_file_name))
             command.append(target_mets_file)
             mounts.append(Mount(source=mets_dir, target=DERIVANS_CNT_DATA_DIR, type='bind'))
-        config_path: Union[Path, None] = Path(self.path_configuration)
-        if config_path.exists() and config_path.is_file():
-            config_file_name: str = config_path.name
-            config_dir: str = str(config_path.parent.absolute())
-            target_config_file: str = str(Path(DERIVANS_CNT_CONF_DIR).joinpath(config_file_name))
-            mounts.append(Mount(source=config_dir, target=DERIVANS_CNT_CONF_DIR, type='bind'))
-            command.append('-c')
-            command.append(target_config_file)
-        _outcome = self._client.containers.run(
+        if self.path_configuration is not None:
+            config_path: Union[Path, None] = Path(self.path_configuration)
+            if config_path.exists() and config_path.is_file():
+                config_file_name: str = config_path.name
+                config_dir: str = str(config_path.parent.absolute())
+                target_config_file: str = str(Path(DERIVANS_CNT_CONF_DIR).joinpath(config_file_name))
+                mounts.append(Mount(source=config_dir, target=DERIVANS_CNT_CONF_DIR, type='bind'))
+                command.append('-c')
+                command.append(target_config_file)
+
+        start_time: float = time.perf_counter()
+        container: Container = self._client.containers.run(
             image=self._container_image,
             command=command,
-            remove=True,
-            mounts=mounts
+            user=os.getuid(),
+            mounts=mounts,
+            detach=True
         )
-        return (command)
+        exit_code: int = container.wait()['StatusCode']
+        logs: str = container.logs().decode('utf-8')
+        container.remove()
+
+        full_command_equivalent: List[str] = ['docker run -rm']
+        for mount in mounts:
+            full_command_equivalent.append(
+                f"--mount type={mount['Type']},source={mount['Source']},target={mount['Target']}"
+            )
+        full_command_equivalent.append(self._container_image)
+        full_command_equivalent.append(" ".join(command))
+        dur: float = time.perf_counter() - start_time
+        return DerivansResult(
+            command=" ".join(full_command_equivalent),
+            result=ContainerProcResult(exit_code=exit_code, logs=logs),
+            duration=dur,
+        )

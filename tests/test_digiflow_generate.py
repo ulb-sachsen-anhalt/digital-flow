@@ -295,7 +295,7 @@ def test_derivans_start_set_exec(mock_check, mock_call, tmp_path):
 
     # assert
     assert mock_call.call_count == 1
-    assert result[0].startswith('/usr/lib/jvm/java-11-openjdk-amd64/bin/java -jar')
+    assert result.command.startswith('/usr/lib/jvm/java-11-openjdk-amd64/bin/java -jar')
 
 
 @mock.patch('digiflow.DerivansManager._execute_derivans')
@@ -326,7 +326,7 @@ def test_derivans_start_default(mock_check, mock_call, tmp_path):
 
     # assert
     assert mock_call.call_count == 1
-    assert result[0].startswith('java -jar')
+    assert result.command.startswith('java -jar')
 
 
 @mock.patch('digiflow.DerivansManager._execute_derivans')
@@ -362,8 +362,8 @@ def test_derivans_start_with_additional_config(mock_check, mock_call, tmp_path):
 
     # assert
     assert mock_call.call_count == 1
-    assert result[0].startswith('java -jar')
-    assert result[0].endswith('/path/to/derivans.ini')
+    assert result.command.startswith('java -jar')
+    assert result.command.endswith('/path/to/derivans.ini')
 
 
 @mock.patch('digiflow.DerivansManager._execute_derivans')
@@ -413,4 +413,4 @@ Exception in thread "main" java.awt.AWTError: Can't connect to X11 window server
 
     # assert
     assert mock_call.call_count == 1
-    assert ' -Djava.awt.headless=true ' in result[0]
+    assert ' -Djava.awt.headless=true ' in result.command
