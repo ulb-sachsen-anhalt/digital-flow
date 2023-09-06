@@ -53,6 +53,7 @@ XMLNS = {
     'oai'    : 'http://www.openarchives.org/OAI/2.0/',
     'oai_dc' : 'http://www.openarchives.org/OAI/2.0/oai_dc/',
     'ulb'    : 'https://bibliothek.uni-halle.de',
+    'vl'     : 'http://visuallibrary.net/vl',
     'vlz'    : 'http://visuallibrary.net/vlz/1.0/',
     'xlink'  : 'http://www.w3.org/1999/xlink',
     'zvdd'   : 'http://zvdd.gdz-cms.de/',

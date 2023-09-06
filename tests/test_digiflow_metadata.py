@@ -641,6 +641,28 @@ def test_metsprocessor_remove_elements_and_close_tags(tmp_path):
         assert '</String>' not in _line
 
 
+def test_metsprocessor_remove_elements_no_keyerror(tmp_path):
+    """Ensure legacy namespaces don't cause trouble anymore
+    
+    Test Target: Prevent regression
+    """
+
+    # arrange
+    _a_path = os.path.join(TEST_RES, 'vls_menadoc_99454.mets.xml')
+    dst = tmp_path / '99454.xml'
+    shutil.copyfile(_a_path, str(dst))
+    mets_proc = MetsProcessor(str(dst))
+    assert len(mets_proc.xpath('//vl:sourceinfo')) == 1
+
+    # act
+    mets_proc.remove(['vl:sourceinfo'])
+    path_result = mets_proc.write()
+
+    # assert
+    resl_proc = MetsProcessor(path_result)
+    assert len(resl_proc.xpath('//vl:sourceinfo')) == 0
+
+
 def test_metsreader_logical_hierachy_newspaper_issue():
     """
     Expect the parent hierarchy for single issue
