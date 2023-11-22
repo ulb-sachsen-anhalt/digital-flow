@@ -13,15 +13,17 @@ from unittest import (
 # switch off saxon py if not available
 SAXON_PY_ENABLED = True
 try:
-    import saxonpy
+    import saxonche
 except ModuleNotFoundError: 
     SAXON_PY_ENABLED = False
 
 from digiflow.digiflow_validate import (
-    ddb_xslt_validation,
-    ddb_validation,
     DDB_IGNORE_RULES_MVW,
     TMP_SCH_FILE_NAME,
+    DDB_ERROR,
+    DDB_WARNG,
+    ddb_xslt_validation,
+    ddb_validation,
 )
 
 from .conftest import (
@@ -96,7 +98,7 @@ def test_ddb_schematron_opendata_44046_no_ignores(sch_mock, share_it_monography)
     assert outcome['info'] == [('identifier_01', 'type=gbv')]
 
 
-@pytest.mark.skipif(not SAXON_PY_ENABLED, reason=f'no saxonpy bindings')
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_xslt_opendata_44046(share_it_monography):
     """XSLT validation with common monography (Aa)"""
 
@@ -105,7 +107,8 @@ def test_ddb_xslt_opendata_44046(share_it_monography):
 
     # assert
     assert len(outcome) == 1
-    assert outcome['info'] == [('identifier_01', '265982944')]
+    assert 'identifier_01' in outcome[DDB_WARNG][0]
+    assert '265982944' in outcome[DDB_WARNG][0]
 
 
 @mock.patch('digiflow.digiflow_validate._forward_sch_cli')
@@ -149,7 +152,7 @@ def test_ddb_schematron_opendata_44046_ignorances_as_string(sch_mock, share_it_m
     assert len(outcome) == 0
 
 
-@pytest.mark.skipif(not SAXON_PY_ENABLED, reason=f'no saxonpy bindings')
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_xslt_opendata_44046_plain(share_it_monography):
     """Suppress identifier validation message for 
     simple monography (Aa)"""
@@ -162,7 +165,7 @@ def test_ddb_xslt_opendata_44046_plain(share_it_monography):
     assert len(outcome) == 0
 
 
-@pytest.mark.skipif(not SAXON_PY_ENABLED, reason=f'no saxonpy bindings')
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_xslt_validation_kitodo2_legacy_monography(tmp_path):
     """XSLT validation outcome for out-dated
     print export data from Kitodo2 legacy system"""
@@ -178,11 +181,11 @@ def test_ddb_xslt_validation_kitodo2_legacy_monography(tmp_path):
 
     # assert 
     assert len(result) == 2
-    assert len(result['error']) == 2
-    assert result['error'][0][0] == 'location_02'
-    assert result['error'][1][0] == 'dmdSec_04'
-    assert len(result['warn']) == 1
-    assert result['warn'][0][0] == 'amdSec_13'
+    assert len(result[DDB_ERROR]) == 2
+    assert 'location_02' in result[DDB_ERROR][0]
+    assert 'dmdSec_04' in result[DDB_ERROR][1]
+    assert len(result[DDB_WARNG]) == 1
+    assert 'amdSec_13' in result[DDB_WARNG][0]
 
 
 @pytest.mark.skipif(not os.path.isfile(SCHEMATRON_BIN), 
@@ -232,7 +235,7 @@ def test_ddb_schematron_validation_kitodo2_legacy_monography_curated(tmp_path):
     assert result['warn'][0][0] == 'amdSec_13'
 
 
-@pytest.mark.skipif(not SAXON_PY_ENABLED, reason=f'no saxonpy bindings')
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_xslt_validation_kitodo2_menadoc_44080924x(tmp_path):
     """XSLT validation outcome for rather
     recent digitized object from menadoc retro-digi"""
@@ -248,12 +251,12 @@ def test_ddb_xslt_validation_kitodo2_menadoc_44080924x(tmp_path):
 
     # assert 
     assert len(result) == 2
-    assert len(result['error']) == 3    # 3 errors
-    assert result['error'][0][0] == 'originInfo_06'
-    assert result['error'][1][0] == 'location_02'
-    assert result['error'][2][0] == 'dmdSec_04'
-    assert len(result['warn']) == 3     # 3 warnings
-    assert result['warn'][0][0] == 'titleInfo_08'
+    assert len(result[DDB_ERROR]) == 3    # 3 errors
+    assert 'originInfo_06' in result[DDB_ERROR][0]
+    assert 'location_02' in result[DDB_ERROR][1]
+    assert 'dmdSec_04' in result[DDB_ERROR][2]
+    assert len(result[DDB_WARNG]) == 3     # 3 warnings
+    assert 'titleInfo_08' in result[DDB_WARNG][0]
 
 
 @pytest.mark.skipif(not os.path.isfile(SCHEMATRON_BIN), 
@@ -281,7 +284,7 @@ def test_ddb_schematron_validation_kitodo2_menadoc_44080924x(tmp_path):
     assert result['warn'][0][0] == 'titleInfo_08'
 
 
-@pytest.mark.skipif(not SAXON_PY_ENABLED, reason=f'no saxonpy bindings')
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_xslt_validation_kitodo2_vd18_153142537_raw(tmp_path):
     """XSLT validation outcome for VD18 c-stage
     without default customm ignore rules"""
@@ -297,17 +300,18 @@ def test_ddb_xslt_validation_kitodo2_vd18_153142537_raw(tmp_path):
 
     # assert 
     assert len(result) == 2
-    assert len(result['error']) == 7    # 2 errors
-    assert result['error'][0][0] == 'structMapLogical_17'
-    assert result['error'][1][0] == 'fileSec_02'
-    assert result['error'][2][0] == 'titleInfo_02'
-    assert result['error'][3][0] == 'originInfo_06'
-    assert result['error'][4][0] == 'originInfo_06'
-    assert result['error'][5][0] == 'location_02'
-    assert result['error'][6][0] == 'dmdSec_04'
-    assert 'warn' not in result         # no warning
-    assert len(result['info']) == 1     # 1 info
-    assert result['info'] == [('identifier_01', 'GBV:153142537')]
+    assert len(result[DDB_ERROR]) == 7    # 2 errors
+    assert 'titleInfo_02' in result[DDB_ERROR][0]
+    assert 'originInfo_06' in result[DDB_ERROR][1]
+    assert 'originInfo_06' in result[DDB_ERROR][2] 
+    assert 'location_02' in result[DDB_ERROR][3]
+    assert 'structMapLogical_17' in result[DDB_ERROR][4]
+    assert 'fileSec_02' in result[DDB_ERROR][5]
+    assert 'dmdSec_04' in result[DDB_ERROR][6]
+    assert DDB_WARNG in result         # no warning
+    assert len(result[DDB_WARNG]) == 1     # 1 info
+    assert 'identifier_01' in result[DDB_WARNG][0]
+    assert 'GBV:153142537' in result[DDB_WARNG][0]
 
 
 @pytest.mark.skipif(not os.path.isfile(SCHEMATRON_BIN), 
