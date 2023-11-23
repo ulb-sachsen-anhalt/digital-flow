@@ -18,6 +18,13 @@ from lxml import etree as ET
 from digiflow import (
     run_command
 )
+
+from .digiflow_metadata import (
+    MetsReader,
+    XMLNS,
+)
+
+# trigger saxon API
 SAXON_ENABLED = True
 try:
     from saxonche import (
@@ -26,11 +33,6 @@ try:
     )
 except ModuleNotFoundError:
     SAXON_ENABLED = False
-
-from .digiflow_metadata import (
-    MetsReader,
-    XMLNS,
-)
 
 # add schematron validation language mapping
 XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
@@ -76,7 +78,7 @@ XSL_DIR = Path(__file__).parent / 'resources' / 'xsl'
 PATH_MEDIA_SCH = SCH_DIR / DDB_MEDIA_SCH
 PATH_NEWSP_SCH = SCH_DIR / DDB_NEWSP_SCH
 PATH_MEDIA_XSL = XSL_DIR / DDB_MEDIA_XSL
-PATH_NEWSP_XSL = XSL_DIR / DDB_MEDIA_XSL
+PATH_NEWSP_XSL = XSL_DIR / DDB_NEWSP_XSL
 
 # default schematron cli jar path
 # resides *outside* python package
@@ -85,12 +87,13 @@ CLI_DIR = Path(__file__).parent.parent / 'digiflow' / 'schematron'
 PATH_CLI = str(CLI_DIR / 'schxslt-cli.jar')
 
 # temporary report files
-TMP_SCH_FILE_NAME = 'sch_result.xml'
-TMP_XSL_FILE_NAME = 'xsl_result.xml'
+REPORT_FILE_SCHEMATRON = 'report_schematron.xml'
+REPORT_FILE_XSLT = 'resport_xslt.xml'
 
 # which types require special treatment?
 # if these show up, switch validation logics
-DIGIS_MULTIVOLUME = ['Ac', 'Af', 'AF', 'Hc', 'Hf', 'HF', 'volume', 'periodical', 'periodical_volume']
+DIGIS_MULTIVOLUME = ['Ac', 'Af', 'AF', 'Hc', 'Hf', 'HF',
+                     'volume', 'periodical', 'periodical_volume']
 DIGIS_NEWSPAPER = ['issue', 'additional']
 
 # context text len
@@ -98,7 +101,11 @@ ASSERT_DSCR_MAX_LEN = 32
 ASSERT_TEXT_MAX_LEN = 96
 CRITICAL_VALIDATION_ROLES = ['critical', 'error', 'fatal']
 DDB_ERROR = 'ddb_error'
-DDB_WARNG = 'ddb_warning'
+DDB_OTHER = 'ddb_other'
+
+
+class DigiflowDDBException(Exception):
+    """Mark Validation Errors"""
 
 
 class FailedAssert:
@@ -106,7 +113,6 @@ class FailedAssert:
     for failed assertion"""
 
     def __init__(self, elem: ET.Element):
-        self._element = elem
         self.id = elem.get('id')
         self.role = elem.get('role')
         self.xpath = elem.get('location')
@@ -122,24 +128,27 @@ class FailedAssert:
             _props = '=>'.join(f"{_p.get('id')}:{_p.text}" for _p in self._properties)
             _msg = f'{_msg} {_props}'
         if len(self.context) > 0:
-            _msg = f'{_msg} test:{self.context}'
+            _ctx = self.context
+            if len(_ctx) > ASSERT_DSCR_MAX_LEN:
+                _ctx = _ctx[:ASSERT_DSCR_MAX_LEN]
+            _msg = f'{_msg} test:{_ctx}'
         _add_dscr = ''
         _add_text = ''
         if self._description:
             _dscr = self._description
             if len(_dscr) > ASSERT_DSCR_MAX_LEN:
                 _dscr = _dscr[:ASSERT_DSCR_MAX_LEN]
-            _add_dscr = _dscr
+            _add_dscr = _dscr + ', '
         if self._text:
             _txt = self._text.split('\n', maxsplit=1)[0]
             if len(_txt) > ASSERT_TEXT_MAX_LEN:
                 _txt = _txt[:(ASSERT_TEXT_MAX_LEN-3)] + '...'
             _add_text = _txt
-        if len(_add_dscr)>0 or len(_add_text) > 0:
-            _msg = f'{_msg} ({_add_dscr} {_add_text})'
+        if len(_add_dscr) > 2 or len(_add_text) > 0:
+            _msg = f'{_msg} ({_add_dscr}{_add_text})'
         return _msg
 
-    def add_context(self, ctx:str):
+    def add_context(self, ctx: str):
         """Add even more context on error data"""
         if ctx is not None and len(ctx) > 0:
             self.context = ctx
@@ -149,9 +158,9 @@ class FailedAssert:
         return self.role in CRITICAL_VALIDATION_ROLES
 
 
-
-def ddb_validation(path_mets, path_schematron=PATH_MEDIA_SCH, path_schematron_bin=PATH_CLI,
-                   ignore_rules=None, aggregate_errors=True) -> Dict:
+def ddb_validation_sch(path_mets, path_schematron=PATH_MEDIA_SCH,
+                       path_schematron_bin=PATH_CLI,
+                       ignore_rules=None, aggregate_errors=True) -> Dict:
     """
     Apply DDB METS/MODS Validation from specific schematron template
     to given METS/MODS data
@@ -181,7 +190,7 @@ def ddb_validation(path_mets, path_schematron=PATH_MEDIA_SCH, path_schematron_bi
 
 def _forward_sch_cli(path_mets, path_schematron, path_schematron_bin) -> str:
     path_mets_dir = os.path.dirname(path_mets)
-    path_tmp_output = os.path.join(path_mets_dir, TMP_SCH_FILE_NAME)
+    path_tmp_output = os.path.join(path_mets_dir, REPORT_FILE_SCHEMATRON)
     if not os.path.isfile(path_schematron):
         raise RuntimeError(f"missing {path_schematron}")
     if not os.path.isfile(path_schematron_bin):
@@ -210,7 +219,7 @@ def _curate_ignorances(path_mets, ignore_rules) -> List[str]:
     return _rules
 
 
-def ddb_xslt_validation(path_mets, digi_type='Aa', ignore_rules=None):
+def ddb_validation(path_mets, digi_type='Aa', ignore_rules=None):
     """Process METS/MODS Validation which complies to Deutsche Digitale Bibliothek (DDB)
     plus applying additional set of rules which shall not be taken into account
 
@@ -234,22 +243,22 @@ def ddb_xslt_validation(path_mets, digi_type='Aa', ignore_rules=None):
     # just create saxon processor context once
     # several calls seem to break stuff
     with PySaxonProcessor() as proc:
-        try:
-            _path_tmp_result_file = _validate_and_store_result(path_mets, proc, _path_xslt)
-            if not os.path.isfile(_path_tmp_result_file):
-                raise RuntimeError(f"missing tmp output file {_path_tmp_result_file}")
-            _failures = _get_failures(path_mets, proc, _path_tmp_result_file, ignore_rules)
-            return _aggregate_failures(_failures)
-        except Exception as _exc:
-            raise RuntimeError(_exc) from _exc
-    return {}
+        _path_tmp_result_file = _validate_and_store_result(path_mets, proc, _path_xslt)
+        if not os.path.isfile(_path_tmp_result_file):
+            raise DigiflowDDBException(f"missing tmp output file {_path_tmp_result_file}")
+        _failures = _get_failures(path_mets, proc, _path_tmp_result_file, ignore_rules)
+        _aggregated = _aggregate_failures(_failures)
+        if DDB_ERROR in _aggregated:
+            raise DigiflowDDBException(_aggregated[DDB_ERROR])
+        os.unlink(_path_tmp_result_file)
+        return _aggregated
 
 
-def _aggregate_failures(fails:List[FailedAssert]) -> Dict:
+def _aggregate_failures(fails: List[FailedAssert]) -> Dict:
     _dict = {}
     for _f in fails:
         _xpln = _f.explain()
-        _role = DDB_ERROR if _f.is_error() else DDB_WARNG
+        _role = DDB_ERROR if _f.is_error() else DDB_OTHER
         if _role in _dict:
             _prev = _dict[_role]
             _prev.append(_xpln)
@@ -273,10 +282,12 @@ def _validate_and_store_result(path_mets, proc, path_template):
         xsltproc = proc.new_xslt30_processor()
         _exec = xsltproc.compile_stylesheet(stylesheet_file=path_template)
         _doc_dir = os.path.dirname(path_mets)
-        _path_tmp = os.path.join(_doc_dir, TMP_XSL_FILE_NAME)
+        _path_tmp = os.path.join(_doc_dir, REPORT_FILE_XSLT)
         _doc_dir = os.path.dirname(path_mets)
-        _path_tmp = os.path.join(_doc_dir, TMP_XSL_FILE_NAME)
-        _exec.transform_to_file(source_file=path_mets, stylesheet_file=path_template, output_file=_path_tmp)
+        _path_tmp = os.path.join(_doc_dir, REPORT_FILE_XSLT)
+        _exec.transform_to_file(source_file=path_mets,
+                                stylesheet_file=path_template,
+                                output_file=_path_tmp)
     except Exception as _exc:
         raise RuntimeError(_exc) from _exc
     return _path_tmp
@@ -290,11 +301,10 @@ def _get_failures(path_mets, proc, path_report, ignore_rules) -> List[FailedAsse
     _failures = []
     tmp_root = ET.parse(path_report).getroot()
     reports = tmp_root.findall('svrl:*[@role]', XMLNS)
-    n_reports = len(reports)
-    if n_reports > 0:
+    if len(reports) > 0:
         _fails = [FailedAssert(e)
-                for e in reports
-                if e.attrib['id'] not in ignore_rules]
+                  for e in reports
+                  if e.attrib['id'] not in ignore_rules]
         try:
             _mets_doc = proc.parse_xml(xml_file_name=path_mets)
             _xp_proc = proc.new_xpath_processor()
@@ -352,7 +362,7 @@ def _transform_affecteds(affecteds):
             hits.append(aff.attrib['ID'])
         elif 'type' in aff.attrib or 'source' in aff.attrib:
             attm = ','.join([(v + "=" + k)
-                            for v, k in aff.attrib.items()])
+                             for v, k in aff.attrib.items()])
             hits.append(attm)
         else:
             # get textual content only for *real*
@@ -361,7 +371,7 @@ def _transform_affecteds(affecteds):
             _local_tagname = ET.QName(aff).localname
             _txt = ''
             if _local_tagname != 'mods':
-                _txt = f'='.join([t.strip() for t in aff.itertext()])
+                _txt = '='.join([t.strip() for t in aff.itertext()])
             hits.append(f"{__strip_namespaces(aff.tag)}{_txt}")
     return hits
 
