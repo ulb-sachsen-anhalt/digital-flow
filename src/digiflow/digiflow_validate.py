@@ -300,7 +300,6 @@ def _get_failures(path_mets, proc, path_report, ignore_rules) -> List[FailedAsse
             _xp_proc = proc.new_xpath_processor()
             _xp_proc.set_context(xdm_item=_mets_doc)
             for _fail in _fails:
-                print(f"{_fail.explain()}")
                 _info = _xp_proc.evaluate(_fail.xpath)
                 if isinstance(_info, PyXdmValue) and _info.size > 0:
                     _items = [_info.item_at(i) for i in range(0, _info.size)]
