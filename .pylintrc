@@ -1,0 +1,3 @@
+[MESSAGES CONTROL]
+# W0611: unused-import
+disable=W0611
