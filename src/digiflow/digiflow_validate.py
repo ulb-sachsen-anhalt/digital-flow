@@ -94,7 +94,7 @@ REPORT_FILE_XSLT = 'resport_xslt.xml'
 # if these show up, switch validation logics
 DIGIS_MULTIVOLUME = ['Ac', 'Af', 'AF', 'Hc', 'Hf', 'HF',
                      'volume', 'periodical', 'periodical_volume']
-DIGIS_NEWSPAPER = ['issue', 'additional']
+DIGIS_NEWSPAPER = ['issue', 'additional', 'OZ', 'AZ']
 
 # context text len
 ASSERT_DSCR_MAX_LEN = 32

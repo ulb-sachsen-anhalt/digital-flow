@@ -553,3 +553,21 @@ def test_ddb_validate_newspaper(tmp_path):
     _load = _dexc.value.args[0]
     assert len(_load) == 1
     assert '[amdSec_04]' in _load[0]
+
+
+def test_ddb_validate_newspaper_02(tmp_path):
+    """Test recent DDB-Validation 06/23 for
+    migrated newspaper issue which is quite o.k.
+    """
+
+    # arrange
+    the_name = 'zd1-opendata2-1516514412012-59265.xml'
+    mets_source = Path(TEST_RES) / 'opendata2' / the_name
+    mets_target = Path(str(tmp_path), the_name)
+    shutil.copy(str(mets_source), str(mets_target))
+
+     # act
+    _result = ddb_validation(mets_target, digi_type='OZ')
+
+    # assert
+    assert len(_result) == 0
