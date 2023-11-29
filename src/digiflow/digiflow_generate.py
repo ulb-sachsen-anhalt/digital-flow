@@ -18,7 +18,9 @@ from typing import (
     List,
     Tuple,
     Union,
-    Final, Callable, Any, TypeVar, Generic,
+    Final,
+    Callable,
+    TypeVar,
 )
 
 from PIL import (
@@ -32,7 +34,6 @@ from docker import (
     from_env
 )
 from docker.models.containers import Container
-from docker.models.resource import Model
 from docker.types import Mount
 
 # default sub dir for structure creation
@@ -42,8 +43,9 @@ DEFAULT_STRUCTURE_DIR = 'MAX'
 DEFAULT_DERIVANS_IMAGE = "ghcr.io/ulb-sachsen-anhalt/digital-derivans:latest"
 DEFAULT_DERIVANS_TIMEOUT = 10800
 DERIVANS_LABEL = 'derivans'
-DERIVANS_CNT_DATA_DIR: Final[str] = "/data_mets"
-DERIVANS_CNT_CONF_DIR: Final[str] = "/data_cfg"
+DERIVANS_CNT_DATA_DIR: Final[str] = "/usr/derivans/data"
+DERIVANS_CNT_CONF_DIR: Final[str] = "/usr/derivans/config"
+DERIVANS_CNT_LOGG_DIR: Final[str] = "/usr/derivans/log"
 
 
 def id_generator(
@@ -283,6 +285,7 @@ class BaseDerivansManager(ABC):
             path_binary: str = None,
             path_mvn_project: str = None,
             path_configuration: str = None,
+            path_logging: str = None,
     ) -> BaseDerivansManager:
         """Create actual DerivansManager instance
         depending on provided parameters"""
@@ -292,6 +295,7 @@ class BaseDerivansManager(ABC):
                 path_mets_file=path_mets_file,
                 container_image=container_image_name,
                 path_configuration=path_configuration,
+                path_logging=path_logging,
             )
         return DerivansManager(
             path_mets_file=path_mets_file,
@@ -403,7 +407,8 @@ class DerivansManager(BaseDerivansManager):
             cmd += f' -c {self.path_configuration}'
         # disable pylint due it is not able to recognize
         # output being created by decorator
-        time_duration, label, result = self._execute_derivans(cmd)  # pylint: disable=unpacking-non-sequence
+        time_duration, label, result = self._execute_derivans(
+            cmd)  # pylint: disable=unpacking-non-sequence
         os.chdir(prev_dir)
         return DerivansResult(
             command=cmd,
@@ -466,13 +471,15 @@ class ContainerDerivansManager(BaseDerivansManager):
             path_mets_file: str,
             container_image: str = DEFAULT_DERIVANS_IMAGE,
             path_configuration: str = None,
+            path_logging: str = None,
     ):
         super().__init__(
             path_mets_file=path_mets_file,
-            path_configuration=path_configuration
+            path_configuration=path_configuration,
         )
         self._container_image: str = container_image
         self._client: DockerClient = from_env()
+        self._path_logging = path_logging
 
     def init(self) -> None:
         repo, tag = self._container_image.split(':')
@@ -496,10 +503,14 @@ class ContainerDerivansManager(BaseDerivansManager):
             if config_path.exists() and config_path.is_file():
                 config_file_name: str = config_path.name
                 config_dir: str = str(config_path.parent.absolute())
-                target_config_file: str = str(Path(DERIVANS_CNT_CONF_DIR).joinpath(config_file_name))
+                target_config_file: str = str(
+                    Path(DERIVANS_CNT_CONF_DIR).joinpath(config_file_name))
                 mounts.append(Mount(source=config_dir, target=DERIVANS_CNT_CONF_DIR, type='bind'))
                 command.append('-c')
                 command.append(target_config_file)
+        if self._path_logging:
+            _log_dir = self._path_logging
+            mounts.append(Mount(source=_log_dir, target=DERIVANS_CNT_LOGG_DIR, type='bind'))
 
         start_time: float = time.perf_counter()
         container: Container = self._client.containers.run(
