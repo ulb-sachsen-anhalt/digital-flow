@@ -805,7 +805,7 @@ class OAILoader:
             if post_func and data:
                 # divide METS from XML (OCR-ALTO)
                 # in rather brute force fashion
-                _snippet = data[:200]
+                _snippet = data[:512]
                 # propably sanitize data, as it might originate
                 # from test-data or *real* requests
                 if not isinstance(_snippet, str):
