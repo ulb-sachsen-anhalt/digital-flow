@@ -1003,7 +1003,7 @@ def request_resource(url: str, path_local: Path, **kwargs):
 
             # catch other content types by MIMI sub_type
             # split "<application|image>/<sub_type>"
-            elif content_type.split('/')[-1] in ['image', 'jpeg', 'pdf']:
+            elif content_type.split('/')[-1] in ['jpg', 'jpeg', 'pdf', 'png']:
                 path_local = _sanitize_local_file_extension(
                     path_local, content_type)
                 if not isinstance(path_local, Path):
@@ -1028,6 +1028,8 @@ def _sanitize_local_file_extension(path_local, content_type):
         path_local += '.xml'
     elif 'jpeg' in content_type and not path_local.endswith('.jpg'):
         path_local += '.jpg'
+    elif 'png' in content_type and not path_local.endswith('.png'):
+        path_local += '.png'
     elif 'pdf' in content_type and not path_local.endswith('.pdf'):
         path_local += '.pdf'
     return path_local
