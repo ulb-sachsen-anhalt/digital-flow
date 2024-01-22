@@ -88,7 +88,7 @@ PATH_CLI = str(CLI_DIR / 'schxslt-cli.jar')
 
 # temporary report files
 REPORT_FILE_SCHEMATRON = 'report_schematron.xml'
-REPORT_FILE_XSLT = 'resport_xslt.xml'
+REPORT_FILE_XSLT = 'report_xslt.xml'
 
 # which types require special treatment?
 # if these show up, switch validation logics
@@ -283,10 +283,7 @@ def _validate_and_store_result(path_mets, proc, path_template):
         _exec = xsltproc.compile_stylesheet(stylesheet_file=path_template)
         _doc_dir = os.path.dirname(path_mets)
         _path_tmp = os.path.join(_doc_dir, REPORT_FILE_XSLT)
-        _doc_dir = os.path.dirname(path_mets)
-        _path_tmp = os.path.join(_doc_dir, REPORT_FILE_XSLT)
         _exec.transform_to_file(source_file=path_mets,
-                                stylesheet_file=path_template,
                                 output_file=_path_tmp)
     except Exception as _exc:
         raise RuntimeError(_exc) from _exc

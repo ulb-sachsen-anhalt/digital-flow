@@ -41,22 +41,22 @@ ET.register_namespace('zvdd', 'http://zvdd.gdz-cms.de/')
 
 
 XMLNS = {
-    'alto'   : 'http://www.loc.gov/standards/alto/ns-v4#',
-    'dc'     : 'http://purl.org/dc/elements/1.1/',
-    'dv'     : 'http://dfg-viewer.de/',
-    'epicur' : 'urn:nbn:de:1111-2004033116',
+    'alto': 'http://www.loc.gov/standards/alto/ns-v4#',
+    'dc': 'http://purl.org/dc/elements/1.1/',
+    'dv': 'http://dfg-viewer.de/',
+    'epicur': 'urn:nbn:de:1111-2004033116',
     'marcxml': 'http://www.loc.gov/MARC21/slim',
-    'goobi'  : 'http://meta.goobi.org/v1.5.1/',
-    'mets'   : 'http://www.loc.gov/METS/',
-    'mix'    : 'http://www.loc.gov/mix/v20',
-    'mods'   : 'http://www.loc.gov/mods/v3',
-    'oai'    : 'http://www.openarchives.org/OAI/2.0/',
-    'oai_dc' : 'http://www.openarchives.org/OAI/2.0/oai_dc/',
-    'ulb'    : 'https://bibliothek.uni-halle.de',
-    'vl'     : 'http://visuallibrary.net/vl',
-    'vlz'    : 'http://visuallibrary.net/vlz/1.0/',
-    'xlink'  : 'http://www.w3.org/1999/xlink',
-    'zvdd'   : 'http://zvdd.gdz-cms.de/',
+    'goobi': 'http://meta.goobi.org/v1.5.1/',
+    'mets': 'http://www.loc.gov/METS/',
+    'mix': 'http://www.loc.gov/mix/v20',
+    'mods': 'http://www.loc.gov/mods/v3',
+    'oai': 'http://www.openarchives.org/OAI/2.0/',
+    'oai_dc': 'http://www.openarchives.org/OAI/2.0/oai_dc/',
+    'ulb': 'https://bibliothek.uni-halle.de',
+    'vl': 'http://visuallibrary.net/vl',
+    'vlz': 'http://visuallibrary.net/vlz/1.0/',
+    'xlink': 'http://www.w3.org/1999/xlink',
+    'zvdd': 'http://zvdd.gdz-cms.de/',
 }
 
 #
@@ -88,22 +88,21 @@ CONTENT_FILE_GROUPS = [
 ]
 
 # well grounded script root
-DIGIFLOW_METADATA_ROOT = os.path.dirname(os.path.abspath(__file__))
+SRC_DIGIFLOW_RES = os.path.dirname(os.path.abspath(__file__))
 
 # schema validtion XSDs
-METS_1_12 = os.path.join(DIGIFLOW_METADATA_ROOT,
+METS_1_12 = os.path.join(SRC_DIGIFLOW_RES,
                          'resources', 'xsd', 'mets_1-12.xsd')
-MODS_3_7 = os.path.join(DIGIFLOW_METADATA_ROOT,
+MODS_3_7 = os.path.join(SRC_DIGIFLOW_RES,
                         'resources', 'xsd', 'mods_3-7.xsd')
-MIX_2_0 = os.path.join(DIGIFLOW_METADATA_ROOT,
+MIX_2_0 = os.path.join(SRC_DIGIFLOW_RES,
                        'resources', 'xsd', 'mix_2-0.xsd')
-ALTO_3_1 = os.path.join(DIGIFLOW_METADATA_ROOT,
+ALTO_3_1 = os.path.join(SRC_DIGIFLOW_RES,
                         'resources', 'xsd', 'alto_3-1.xsd')
-ALTO_4_2 = os.path.join(DIGIFLOW_METADATA_ROOT,
+ALTO_4_2 = os.path.join(SRC_DIGIFLOW_RES,
                         'resources', 'xsd', 'alto_4-2.xsd')
 XSD_MAPPINGS = {'mets:mets': [METS_1_12], 'mods:mods': [MODS_3_7], 'mix:mix': [
     MIX_2_0], 'alto': [ALTO_4_2]}
-
 
 
 def __is_schema_root(xml_tree, schema) -> bool:
@@ -195,8 +194,8 @@ def pretty_xml(xml_root, preamble='<?xml version="1.0" encoding="UTF-8"?>'):
     """
     _as_string = ET.tostring(ET.ElementTree(xml_root), pretty_print=True, encoding='UTF-8')
     _pretty_parser = ET.XMLParser(resolve_entities=False,
-                                 strip_cdata=False,
-                                 remove_blank_text=True)
+                                  strip_cdata=False,
+                                  remove_blank_text=True)
     _root = ET.fromstring(_as_string, _pretty_parser)
     ET.cleanup_namespaces(_root, top_nsmap=XMLNS)
     _formatted = ET.tostring(_root, pretty_print=True, encoding='UTF-8').decode('UTF-8')
@@ -315,7 +314,7 @@ class MetsProcessor(XMLProcessor):
                             parent = agent.getparent()
                             parent.remove(agent)
 
-    def contains_group(self, group:'str|List[str]') -> bool:
+    def contains_group(self, group: 'str|List[str]') -> bool:
         """Test if a certain fileGroup exists"""
 
         if isinstance(group, list):
@@ -382,15 +381,17 @@ class MetsReaderReport:
 PREFIX_VLS = 'md'
 
 NEWSPAPER_TYPES = ['issue', 'additional', 'year', 'newspaper']
+
+
 class MetsReader(MetsProcessor):
     """
     Read and try to make sense of METS/MODS Metadata which
     might be enclosed in OAI-PMH or as local file.
-    
+
     Each METS-Record is considere to have at least
     * a primary descriptive Metadata section (prime_dmd), and 
     * a structure Mapping, optionally marked with @TYPE=LOGICAL
-    
+
     For Identifiers of primary descriptive Metadata sections (prime_dmd) holds
     * VLS-Records are prefixed 'md' and the ID is considered numeric
     * Kitodo2 Monographs are fixed to "DMDLOG_0000"
@@ -399,7 +400,7 @@ class MetsReader(MetsProcessor):
     * Kitodo3 objects use UUIDs
     """
 
-    def __init__(self, path_mets, dmd_id:str=None):
+    def __init__(self, path_mets, dmd_id: str = None):
         super().__init__(path_mets)
         self._prime_type: Optional[str] = None
         self._prime_mods = None
@@ -438,9 +439,9 @@ class MetsReader(MetsProcessor):
             # if more MODS present
             # we are only interested in those with identifiers present
             primes = [d.get('ID')
-                for d in dmd_candidates
-                if len([m for m in d.iterdescendants() if 'identifier' in m.tag]) > 0
-            ]
+                      for d in dmd_candidates
+                      if len([m for m in d.iterdescendants() if 'identifier' in m.tag]) > 0
+                      ]
             if len(primes) == 1:
                 self._prime_mods_id = primes[0]
             else:
@@ -495,7 +496,8 @@ class MetsReader(MetsProcessor):
     def _determine_prime_dmd(self):
         """Encapsulated recognition of primary DMD section"""
         _raw_id = self._prime_mods_id
-        dmd_secs = self.tree.findall(f'.//mets:dmdSec[@ID="{_raw_id}"]/mets:mdWrap/mets:xmlData/mods:mods', XMLNS)
+        dmd_secs = self.tree.findall(
+            f'.//mets:dmdSec[@ID="{_raw_id}"]/mets:mdWrap/mets:xmlData/mods:mods', XMLNS)
         if len(dmd_secs) == 0:
             raise RuntimeError(f"invalid dmd_id {_raw_id}")
         # although this means invalid METS, rather check this, too
@@ -536,7 +538,7 @@ class MetsReader(MetsProcessor):
 
     def check(self):
         """Ensure certain invariants
-        
+
         * each logical section is at least connected to a physical container
           if not, this means empty logical sections => DDB warning, Derivans death
 
@@ -550,7 +552,7 @@ class MetsReader(MetsProcessor):
 
     def _check_logical_interlinking(self):
         _log_ids = self.tree.xpath(f'.//mets:div[@DMDID="{self.dmd_id}"]/mets:div/@ID',
-            namespaces=XMLNS)
+                                   namespaces=XMLNS)
         for _log_id in _log_ids:
             _links = self.tree.findall(f'.//mets:smLink[@{XLINK_FROM}="{_log_id}"]', XMLNS)
             if not _links:
@@ -595,7 +597,7 @@ class MetsReader(MetsProcessor):
         log_el = self.findall(xpath, get_all=False)
         if log_el is not None:
             log_type = log_el.attrib['TYPE']
-            _mods_id:str = self._prime_mods_id
+            _mods_id: str = self._prime_mods_id
             if _mods_id.startswith('md'):
                 _mods_id = _mods_id[2:]
             _line = [(_mods_id, log_type)]
@@ -682,15 +684,16 @@ class MetsReader(MetsProcessor):
         _mhdrs = self.xpath('//mets:metsHdr')
         if len(_mhdrs) == 1:
             _mhdr = _mhdrs[0]
-            _repos = self.xpath('mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()',_mhdr)
+            _repos = self.xpath('mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()', _mhdr)
         _repo = _repos[0] if len(_repos) == 1 else MARK_AGENT_LEGACY.split(':', maxsplit=1)[0]
         # legacy migrated record found?
         _legacy_marks = self.xpath(f'//mets:note[contains(text(), "{MARK_AGENT_LEGACY}")]/text()')
         if len(_legacy_marks) == 1:
             _id = _legacy_marks[0]
             if ':' in _id:
-                _legacy_ident = _id.rsplit(':',maxsplit=1)[1].strip()
-                _legacy_ident = _legacy_ident[2:] if _legacy_ident.startswith('md') else _legacy_ident
+                _legacy_ident = _id.rsplit(':', maxsplit=1)[1].strip()
+                _legacy_ident = _legacy_ident[2:] if _legacy_ident.startswith(
+                    'md') else _legacy_ident
                 _idents[_repo] = _legacy_ident
             else:
                 _idents[_repo] = _id
@@ -699,11 +702,12 @@ class MetsReader(MetsProcessor):
             _id = _vls_marks[0][len(MARK_AGENT_VLID):].strip()
             _idents[_repo] = _id
         # legacy vls record which is not mapped by now?
-        if _repo and ('digital' in _repo or 'menadoc' in _repo)and _repo not in _idents:
+        if _repo and ('digital' in _repo or 'menadoc' in _repo) and _repo not in _idents:
             _legacy_id = self.dmd_id[2:] if self.dmd_id.startswith('md') else self.dmd_id
             _idents[_repo] = _legacy_id
         # legacy kitodo2 source _without_ OAI envelope
-        _creators = self.tree.xpath('//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name', namespaces=XMLNS)
+        _creators = self.tree.xpath(
+            '//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name', namespaces=XMLNS)
         if len(_creators) == 1 and 'kitodo-ugh' in _creators[0].text.lower():
             _idents[MARK_KITODO2] = None
         # kitodo3 metsDocumentID?
@@ -711,7 +715,8 @@ class MetsReader(MetsProcessor):
         if len(_doc_ids) == 1:
             _idents[MARK_KITODO3] = _doc_ids[0]
         # once migrated, now hosted at opendata
-        _pres = self.tree.xpath('.//dv:presentation[contains(./text(), "://opendata")]/text()', namespaces=XMLNS)
+        _pres = self.tree.xpath(
+            './/dv:presentation[contains(./text(), "://opendata")]/text()', namespaces=XMLNS)
         if len(_pres) == 1 and 'simple-search' not in _pres[0]:
             _idents[_pres[0].split('/')[2]] = _pres[0]
         if self._report and len(self._report.system_identifiers) > 0:
@@ -735,11 +740,12 @@ class MetsReader(MetsProcessor):
             if _v in _transformed:
                 raise RuntimeError(f"identifier category {_v} already in {_transformed}!")
             for k, v in _identifiers.items():
-                _k = k.replace('/','.') if '/' in k else k
+                _k = k.replace('/', '.') if '/' in k else k
                 if _opt.endswith('_'+_k):
                     _transformed[_v] = v
         if len(_transformed) != len(_identifiers):
-            raise RuntimeError(f"Identifier transformation missmatch: {_identifiers} != {_transformed}")
+            raise RuntimeError(
+                f"Identifier transformation missmatch: {_identifiers} != {_transformed}")
         return _transformed
 
     def get_language_information(self):

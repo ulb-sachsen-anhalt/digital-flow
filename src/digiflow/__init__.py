@@ -19,6 +19,7 @@ from .digiflow_validate import (
     DIGIS_MULTIVOLUME,
     DIGIS_NEWSPAPER,
     REPORT_FILE_SCHEMATRON,
+	REPORT_FILE_XSLT,
 	DigiflowDDBException,
     ddb_validation,
     ddb_validation_sch,
