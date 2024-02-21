@@ -206,7 +206,7 @@ class Image:
             if not _current:
                 _missing_tags.append(_label)        
         if len(_missing_tags) > 0:
-            _invalids.append()
+            _invalids.append(_missing_tags)
 
         # dimension
         _imd = self.metadata
