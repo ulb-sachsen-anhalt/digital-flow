@@ -108,7 +108,7 @@ class FailedAssert:
         self.id: str = elem.get('id')
         self.role: str = elem.get('role')
         self.location: str = elem.get('location')
-        self.text:str = elem.get('test')
+        self.text:str = elem.get('text')
         self.context: str = ''
         self._text: str = '. '.join(elem.xpath('svrl:text/text()', namespaces=XMLNS))
         self._description = ' '.join(elem.xpath('svrl:description/text()', namespaces=XMLNS))
@@ -151,7 +151,7 @@ class FailedAssert:
         return self.role in CRITICAL_VALIDATION_ROLES
 
 
-def gather_failed_asserts(path_mets, processor, path_report, ignore_rules):
+def gather_failed_asserts(path_mets, processor, path_report, ignore_rules=None):
     """Gather all information about failed assertions"""
 
     _failures = _get_failures(path_mets, processor, path_report, ignore_rules)
@@ -162,30 +162,31 @@ def gather_failed_asserts(path_mets, processor, path_report, ignore_rules):
     return _aggregated
 
 
-def _get_failures(path_mets, proc, path_report, ignore_rules=None) -> List[FailedAssert]:
+def _get_failures(path_mets, proc, path_report, ignores=None) -> List[FailedAssert]:
     """Inspect results from tmp report file
     if any irregularities detected, apply XSLT2.0
     expressions from report file to gather details"""
 
     _failures = []
-    if ignore_rules is None:
-        ignore_rules = []
+    if ignores is None:
+        ignores = []
     tmp_root = ET.parse(path_report).getroot()
     _failed_assert_roles = tmp_root.findall('svrl:*[@role]', XMLNS)
     if len(_failed_assert_roles) > 0:
         _fails = [FailedAssert(e)
                   for e in _failed_assert_roles
-                  if e.attrib['id'] not in ignore_rules]
+                  if e.attrib['id'] not in ignores]
         try:
             _mets_doc = proc.parse_xml(xml_file_name=path_mets)
             _xp_proc = proc.new_xpath_processor()
             _xp_proc.set_context(xdm_item=_mets_doc)
             for _fail in _fails:
-                _info = _xp_proc.evaluate(_fail.location)
-                if isinstance(_info, PyXdmValue) and _info.size > 0:
-                    _items = [_info.item_at(i) for i in range(0, _info.size)]
-                    _ctx = ','.join(_i.string_value.strip() for _i in _items)
-                    _fail.add_context(_ctx)
+                if _fail.location is not None:
+                    _info = _xp_proc.evaluate(_fail.location)
+                    if isinstance(_info, PyXdmValue) and _info.size > 0:
+                        _items = [_info.item_at(i) for i in range(0, _info.size)]
+                        _ctx = ','.join(_i.string_value.strip() for _i in _items)
+                        _fail.add_context(_ctx)
                 _failures.append(_fail)
         except Exception as _exc:
             raise RuntimeError(_exc) from _exc
@@ -238,7 +239,7 @@ def ddb_validation(path_mets, digi_type='Aa', ignore_rules=None, post_process=ga
         return post_process(path_mets, proc, _path_result_file, ignore_rules)
 
 
-def apply(path_input_xml, path_xslt, path_result_file, post_process=None) -> Path:
+def apply(path_input_xml, path_xslt, path_result_file=None, post_process=None) -> Path:
     """Low-level API to apply XSLT-Transformation
     like Schematron Validation Report Language XSLT
     on given input file and store outcome in local

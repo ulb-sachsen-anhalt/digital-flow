@@ -42,7 +42,7 @@ def _fixture_share_it_monography(tmp_path):
     return str(mets_target)
 
 
-def test_ddb_schematron_opendata_44046_defaults(share_it_monography):
+def test_ddb_validate_opendata_44046_defaults(share_it_monography):
     """Schematron validation with common monography (Aa)
     and default ignorance yield no problems
     """
@@ -55,7 +55,7 @@ def test_ddb_schematron_opendata_44046_defaults(share_it_monography):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_xslt_opendata_44046_ignore_ident01(share_it_monography):
+def test_ddb_validate_opendata_44046_ignore_ident01(share_it_monography):
     """Suppress identifier validation message for 
     simple monography (Aa)"""
 
@@ -68,7 +68,7 @@ def test_ddb_xslt_opendata_44046_ignore_ident01(share_it_monography):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_xslt_opendata_44046_without_ignorances(share_it_monography):
+def test_ddb_validate_opendata_44046_without_ignorances(share_it_monography):
     """XSLT validation with common monography (Aa)
     complains about identifier type 'gbv'
     """
@@ -84,7 +84,7 @@ def test_ddb_xslt_opendata_44046_without_ignorances(share_it_monography):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_xslt_validation_kitodo2_legacy_monography_raw(tmp_path):
+def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     """XSLT validation outcome for out-dated
     print export data from Kitodo2 legacy system
     
@@ -112,7 +112,7 @@ def test_ddb_xslt_validation_kitodo2_legacy_monography_raw(tmp_path):
     assert 'dmdSec_04' in _exc_load[1]
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_schematron_validation_kitodo2_legacy_monography_curated(tmp_path):
+def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     """DDB compliant data with curated METS which doesn't 
     contain former additional dmdSec anymore so only
     warnings concerning licence and digiprovMD remain
@@ -135,7 +135,7 @@ def test_ddb_schematron_validation_kitodo2_legacy_monography_curated(tmp_path):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_xslt_validation_kitodo2_menadoc_44080924x(tmp_path):
+def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
     """XSLT validation outcome for rather
     recent digitized object from menadoc retro-digi
     
@@ -165,7 +165,7 @@ def test_ddb_xslt_validation_kitodo2_menadoc_44080924x(tmp_path):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_xslt_validation_kitodo2_vd18_153142537_raw(tmp_path):
+def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     """XSLT validation outcome for VD18 c-stage
     without default customm ignore rules
     
@@ -195,7 +195,7 @@ def test_ddb_xslt_validation_kitodo2_vd18_153142537_raw(tmp_path):
     assert 'structMapLogical_17' in _load[6]
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_schematron_validation_kitodo2_vd18_153142537_dafault_ignorances(tmp_path):
+def test_ddb_validate_kitodo2_vd18_153142537_dafault_ignorances(tmp_path):
     """Schematron validation outcome for VD18 F-Stage
     which considers default ignore rules for
     multivolumes like LOCTYPE HREF and alike or
@@ -222,7 +222,7 @@ def test_ddb_schematron_validation_kitodo2_vd18_153142537_dafault_ignorances(tmp
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_schematron_validation_kitodo2_vd18_153142537_curated(tmp_path):
+def test_ddb_validate_kitodo2_vd18_153142537_curated(tmp_path):
     """DDB compliant with curated METS which doesn't contain
     the former additional dmdSec anymore and also ignores
     originInfo_06 issues"""
@@ -247,7 +247,7 @@ def test_ddb_schematron_validation_kitodo2_vd18_153142537_curated(tmp_path):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_schematron_validation_kitodo2_vd18_153142340_raw(tmp_path):
+def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
     """Schematron validation outcome for VD18 C-Stage
     corresponding to k2_mets_153142537.xml as-it-is"""
 
@@ -270,7 +270,7 @@ def test_ddb_schematron_validation_kitodo2_vd18_153142340_raw(tmp_path):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_schematron_validation_kitodo2_vd18_153142340( tmp_path):
+def test_ddb_validate_kitodo2_vd18_153142340( tmp_path):
     """Schematron validation outcome for VD18 C-Stage
     corresponding to k2_mets_153142537.xml
     considering ULB default ignore rules"""
@@ -293,7 +293,7 @@ def test_ddb_schematron_validation_kitodo2_vd18_153142340( tmp_path):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_schematron_validation_kitodo2_morbio_1748529021(tmp_path):
+def test_ddb_validate_kitodo2_morbio_1748529021(tmp_path):
     """Schematron validation outcome for recent Morbio
     export considering ULB default ignore rules
     
