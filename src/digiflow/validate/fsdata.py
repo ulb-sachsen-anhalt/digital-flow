@@ -215,7 +215,7 @@ class Image:
 
         # compression
         if _imd.compression != 1:
-            _invalids.append(TIFF_METADATA_LABELS[COMPRESSION])
+            _invalids.append(f"{TIFF_METADATA_LABELS[COMPRESSION]}: {_imd.compression}")
 
         # samples per pixel
         _ssp = _imd.samples_per_pixel

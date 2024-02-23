@@ -1,4 +1,6 @@
 from .fsdata import (
+	FSReadException,
+	FSWriteException,
 	Image,
 	ImageMetadata,
 	ImageInvalidException,

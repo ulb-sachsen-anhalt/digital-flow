@@ -18,3 +18,15 @@ from .digiflow_validate import (
     ddb_validation,
 	gather_failed_asserts,
 )
+from .validate.fsdata import (
+	DEFAULT_REQUIRED_TIFF_METADATA,
+	FSReadException,
+	FSWriteException,
+	Image,
+	ImageMetadata,
+	ImageInvalidException,
+	resource_can_be,
+	group_can_read,
+	group_can_write,
+	validate_tiff,
+)
