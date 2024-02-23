@@ -75,7 +75,7 @@ def test_apply_xslt_issue_plain(tmp_path):
     _fired_rules = _the_root.xpath('//svrl:fired-rule/text()', namespaces=_map)
     assert len(_fired_rules) == 1
     
-    assert _fired_rules[0] == "Datumsangaben passen 1840-12-31 = 1840-12-31"
+    assert _fired_rules[0] == "Datumsangaben passen: 1840-12-31 = 1840-12-31"
 
 
 @pytest.fixture(name='corrupted_issue')
@@ -138,5 +138,5 @@ def test_apply_xslt_issue_corrputed_gathering_failures(corrupted_issue):
               post_process=gather_failed_asserts)
 
     # assert
-    _fail_str = '[date_mets_to_mods]  (Logisches Datum passt nicht zu in publication:dateIssued: 1840-12-31 != 1840-12-30)'
+    _fail_str = '[date_mets_to_mods]  (Logisches Datum passt nicht zu Publikationsdatum: 1840-12-31 != 1840-12-30)'
     assert _fail_str == _exc.value.args[0][0]
