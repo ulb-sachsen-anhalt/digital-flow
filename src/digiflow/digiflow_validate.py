@@ -162,7 +162,7 @@ def gather_failed_asserts(path_mets, processor, path_report, ignore_rules=None):
     return _aggregated
 
 
-def _get_failures(path_mets, proc, path_report, ignores=None) -> List[FailedAssert]:
+def _get_failures(path_input, proc, path_report, ignores=None) -> List[FailedAssert]:
     """Inspect results from tmp report file
     if any irregularities detected, apply XSLT2.0
     expressions from report file to gather details"""
@@ -177,7 +177,9 @@ def _get_failures(path_mets, proc, path_report, ignores=None) -> List[FailedAsse
                   for e in _failed_assert_roles
                   if e.attrib['id'] not in ignores]
         try:
-            _mets_doc = proc.parse_xml(xml_file_name=path_mets)
+            if not isinstance(path_input, str):
+                path_input = str(path_input)
+            _mets_doc = proc.parse_xml(xml_file_name=path_input)
             _xp_proc = proc.new_xpath_processor()
             _xp_proc.set_context(xdm_item=_mets_doc)
             for _fail in _fails:
@@ -260,11 +262,11 @@ def _transform_to(path_input_file, proc, path_template, path_result_file=None):
         path_input_file = str(path_input_file)
     if not isinstance(path_template, str):
         path_template = str(path_template)
-    if not isinstance(path_result_file, str):
-        path_result_file = str(path_result_file)
     if path_result_file is None:
         _the_dir = os.path.dirname(path_input_file)
         path_result_file = os.path.join(_the_dir, REPORT_FILE_XSLT)
+    if not isinstance(path_result_file, str):
+        path_result_file = str(path_result_file)
     try:
         xsltproc = proc.new_xslt30_processor()
         _exec = xsltproc.compile_stylesheet(stylesheet_file=path_template)
