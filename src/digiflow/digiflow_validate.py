@@ -255,15 +255,20 @@ def apply(path_input_xml, path_xslt, path_result_file=None, post_process=None) -
         return _path_result_file
 
 
-def _transform_to(path_mets, proc, path_template, path_result_file=None):
-    # _path_file = None
+def _transform_to(path_input_file, proc, path_template, path_result_file=None):
+    if not isinstance(path_input_file, str):
+        path_input_file = str(path_input_file)
+    if not isinstance(path_template, str):
+        path_template = str(path_template)
+    if not isinstance(path_result_file, str):
+        path_result_file = str(path_result_file)
     if path_result_file is None:
-        _the_dir = os.path.dirname(path_mets)
+        _the_dir = os.path.dirname(path_input_file)
         path_result_file = os.path.join(_the_dir, REPORT_FILE_XSLT)
     try:
         xsltproc = proc.new_xslt30_processor()
         _exec = xsltproc.compile_stylesheet(stylesheet_file=path_template)
-        _exec.transform_to_file(source_file=path_mets,
+        _exec.transform_to_file(source_file=path_input_file,
                                 output_file=path_result_file)
     except Exception as _exc:
         raise DigiflowTransformException(_exc) from _exc

@@ -127,7 +127,7 @@ def test_apply_xslt_issue_corrupted_file(corrupted_issue):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_apply_xslt_issue_corrputed_gathering_failures(corrupted_issue):
+def test_apply_xslt_issue_corrupted_gathering_failures(corrupted_issue):
     """Simple MWE to trigger transformation including
     schematron failures => none in this case, all fine
     """
