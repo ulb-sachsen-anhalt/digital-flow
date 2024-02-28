@@ -230,7 +230,7 @@ class ScanFileValidator(Validator):
         if _file_size < MIN_SCAN_FILESIZE:
             _msg = f"{INVALID_LABEL_RANGE} filesize {_file_size}b < {MIN_SCAN_FILESIZE}b"
             self.invalids.append(Invalid(self.label, self.input_data, _msg))
-        _input: Image = self.input_data
+        _input: Image = Image(self.input_data)
         _input.read()
         _imd: ImageMetadata = _input.metadata
         if not _imd.width or not _imd.height:
@@ -391,7 +391,6 @@ VALIDATORS = {
     LABEL_VALIDATOR_SCAN_CHANNEL: ScanChannelValidator,
     LABEL_VALIDATOR_SCAN_COMPRESSION: ScanCompressionValidator,
     LABEL_VALIDATOR_SCAN_RESOLUTION: ScanResolutionValidator,
-    LABEL_VALIDATOR_SCAN_FILEDATA: TiffImageFile,
     LABEL_VALIDATOR_SCAN_PHOTOMETRICS: ScanPhotometricValidator,
 }
 

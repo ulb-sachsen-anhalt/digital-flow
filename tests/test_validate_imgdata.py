@@ -11,13 +11,15 @@ import pytest
 from digiflow.validate import (
     INVALID_LABEL_RANGE,
     INVALID_LABEL_TYPE,
-    INVALID_LABEL_UNSET,
     LABEL_VALIDATOR_SCAN_CHANNEL,
+    LABEL_VALIDATOR_SCAN_FILEDATA,
     LABEL_VALIDATOR_SCAN_RESOLUTION,
     Image,
     CombinedScanValidator,
     ScanChannelValidator,
     ScanResolutionValidator,
+    Validator,
+    ValidatorFactory,
     validate_tiff,
 )
 
@@ -170,3 +172,26 @@ def test_tiff_grayscale_newspaper_valid(tmp_path):
     assert _img_data.metadata.yRes == 470
     assert _img_data.metadata.resolution_unit == 2
     assert str(_img_data.url).endswith(file_name)
+
+
+def test_tiff_grayscale_newspaper_only_scanfiledata_valid(tmp_path):
+    """Prevent regression: don't map validator to
+    'TiffImageFile' since this a class from 
+    'PIL.TiffImagePlugin' and all will crack
+    """
+
+    # arrange
+    file_name = '1667522809_J_0025_0512.tif'
+    file_source = Path(TEST_RES) / 'image' / file_name
+    file_target = Path(str(tmp_path), file_name)
+    shutil.copy(file_source, file_target)
+
+    # act
+    _scan_file_validator_clazz = ValidatorFactory.get(LABEL_VALIDATOR_SCAN_FILEDATA)
+    _validator: Validator = _scan_file_validator_clazz(file_target)
+
+    # assert
+    assert _validator.valid()
+    assert _validator.label == LABEL_VALIDATOR_SCAN_FILEDATA
+    assert _validator.input_data == file_target
+
