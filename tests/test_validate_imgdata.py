@@ -195,3 +195,21 @@ def test_tiff_grayscale_newspaper_only_scanfiledata_valid(tmp_path):
     assert _validator.label == LABEL_VALIDATOR_SCAN_FILEDATA
     assert _validator.input_data == file_target
 
+
+def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
+    """Don't mix input data, otherwise something pops up like:
+    AttributeError: 'Image' object has no attribute 'stat'
+    """
+
+    # arrange
+    file_name = '1667522809_J_0025_0512.tif'
+    file_source = Path(TEST_RES) / 'image' / file_name
+    file_target = Path(str(tmp_path), file_name)
+    shutil.copy(file_source, file_target)
+    _validator_labels = [LABEL_VALIDATOR_SCAN_FILEDATA, LABEL_VALIDATOR_SCAN_RESOLUTION]
+
+    # act
+    _val = validate_tiff(file_target, _validator_labels)
+
+    # assert
+    assert _val.valid()

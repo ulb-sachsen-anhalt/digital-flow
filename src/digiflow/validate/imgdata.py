@@ -219,6 +219,8 @@ class ScanFileValidator(Validator):
 
     def __init__(self, input_data: Path):
         super().__init__(LABEL_VALIDATOR_SCAN_FILEDATA, input_data)
+        if isinstance(self.input_data, Image):
+            self.input_data = self.input_data.local_path
 
     def valid(self) -> bool:
         """Fail faster: If file can't even be read by group,
