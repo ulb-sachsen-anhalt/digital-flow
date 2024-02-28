@@ -13,7 +13,9 @@ from typing import (
 
 UNSET_LABEL = 'n.a.'
 UNSET_NUMBR = -1
-INVALID_UNSET_LABEL = 'UNSET'
+INVALID_LABEL_UNSET = 'INVALID_UNSET'
+INVALID_LABEL_RANGE = 'INVALID_RANGE'
+INVALID_LABEL_TYPE = 'INVALID_TYPE'
 
 LABEL_VALIDATOR_SCAN_COMBINED = 'ScanCombinedValidator'
 LABEL_VALIDATOR_SCAN_CHANNEL = 'ScanMetadataChannel'
@@ -28,6 +30,7 @@ class Invalid:
     """Container for invalid data"""
 
     label: str
+    location: str
     info: str
 
 

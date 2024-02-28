@@ -9,6 +9,9 @@ from pathlib import (
 import pytest
 
 from digiflow.validate import (
+    INVALID_LABEL_RANGE,
+    INVALID_LABEL_TYPE,
+    INVALID_LABEL_UNSET,
     LABEL_VALIDATOR_SCAN_CHANNEL,
     LABEL_VALIDATOR_SCAN_RESOLUTION,
     Image,
@@ -39,7 +42,10 @@ def test_tiff_channel_depth_invalid(tmp_path):
 
     # assert
     assert len(_outcomes.invalids) == 1
-    assert 'channel: (16, 16, 16)' == _outcomes.invalids[0].info
+    _inv = _outcomes.invalids[0]
+    assert _inv.label == LABEL_VALIDATOR_SCAN_CHANNEL
+    assert _inv.location == file_target
+    assert f'{INVALID_LABEL_RANGE} channel (16, 16, 16) > 8' == _inv.info
 
 
 def test_tiff_resolution_invalid(tmp_path):
@@ -59,11 +65,11 @@ def test_tiff_resolution_invalid(tmp_path):
     # assert
     assert len(_outcomes.invalids) == 2
     assert str(_outcomes.path_input).endswith(file_name)
-    assert 'xRes: 470.55' == _outcomes.invalids[0].info
-    assert 'yRes: 470.55' == _outcomes.invalids[1].info
+    assert f'{INVALID_LABEL_TYPE} xRes: 470.55' == _outcomes.invalids[0].info
+    assert f'{INVALID_LABEL_TYPE} yRes: 470.55' == _outcomes.invalids[1].info
 
 
-def test_tiff_validate_by_labels(tmp_path):
+def test_tiff_validate_only_channels_valid(tmp_path):
     """Ensure that validation can be controlled
     by provided labels so in this case only
     channels are validate (although image still
@@ -94,7 +100,7 @@ def _fixture_img_resolution_invalid(tmp_path):
     yield _img
 
 
-def test_tiffexifresolution_resolution_not_integral(img_resolution_invalid):
+def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
     """Ensure invalid resolution is recognized"""
 
     # arrange
@@ -106,11 +112,11 @@ def test_tiffexifresolution_resolution_not_integral(img_resolution_invalid):
     # assert
     assert _tiff_exif_val.label == LABEL_VALIDATOR_SCAN_RESOLUTION
     assert len(_tiff_exif_val.invalids) == 2
-    assert 'xRes: 470.55' == _tiff_exif_val.invalids[0].info
-    assert 'yRes: 470.55' == _tiff_exif_val.invalids[1].info
+    assert f'{INVALID_LABEL_TYPE} xRes: 470.55' == _tiff_exif_val.invalids[0].info
+    assert f'{INVALID_LABEL_TYPE} yRes: 470.55' == _tiff_exif_val.invalids[1].info
     
 
-def test_tiffexifresolution_channels_ok(img_resolution_invalid):
+def test_tiffexifresolution_channels_valid(img_resolution_invalid):
     """Ensure channel data is valid this time"""
 
     # arrange

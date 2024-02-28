@@ -25,7 +25,7 @@ from .validate import (
     LABEL_VALIDATOR_SCAN_FILEDATA,
     UNSET_LABEL,
     UNSET_NUMBR,
-    INVALID_UNSET_LABEL,
+    INVALID_LABEL_UNSET,
     Validator,
     Invalid,
     FSReadException,
