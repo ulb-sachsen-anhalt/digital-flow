@@ -11,6 +11,7 @@ import pytest
 from digiflow.validate import (
     INVALID_LABEL_RANGE,
     INVALID_LABEL_TYPE,
+    INVALID_LABEL_UNSET,
     LABEL_VALIDATOR_SCAN_CHANNEL,
     LABEL_VALIDATOR_SCAN_FILEDATA,
     LABEL_VALIDATOR_SCAN_RESOLUTION,
@@ -21,6 +22,12 @@ from digiflow.validate import (
     Validator,
     ValidatorFactory,
     validate_tiff,
+)
+from digiflow.validate.imgdata import (
+    LABEL_CHANNEL,
+    LABEL_RES_UNIT,
+    LABEL_RES_X,
+    LABEL_RES_Y,
 )
 
 from .conftest import (
@@ -47,7 +54,7 @@ def test_tiff_channel_depth_invalid(tmp_path):
     _inv = _outcomes.invalids[0]
     assert _inv.label == LABEL_VALIDATOR_SCAN_CHANNEL
     assert _inv.location == file_target
-    assert f'{INVALID_LABEL_RANGE} channel (16, 16, 16) > 8' == _inv.info
+    assert f'{INVALID_LABEL_RANGE} {LABEL_CHANNEL} (16, 16, 16) > 8' == _inv.info
 
 
 def test_tiff_resolution_invalid(tmp_path):
@@ -67,8 +74,8 @@ def test_tiff_resolution_invalid(tmp_path):
     # assert
     assert len(_outcomes.invalids) == 2
     assert str(_outcomes.path_input).endswith(file_name)
-    assert f'{INVALID_LABEL_TYPE} xRes: 470.55' == _outcomes.invalids[0].info
-    assert f'{INVALID_LABEL_TYPE} yRes: 470.55' == _outcomes.invalids[1].info
+    assert f'{INVALID_LABEL_TYPE} {LABEL_RES_X}: 470.55' == _outcomes.invalids[0].info
+    assert f'{INVALID_LABEL_TYPE} {LABEL_RES_Y}: 470.55' == _outcomes.invalids[1].info
 
 
 def test_tiff_validate_only_channels_valid(tmp_path):
@@ -114,8 +121,8 @@ def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
     # assert
     assert _tiff_exif_val.label == LABEL_VALIDATOR_SCAN_RESOLUTION
     assert len(_tiff_exif_val.invalids) == 2
-    assert f'{INVALID_LABEL_TYPE} xRes: 470.55' == _tiff_exif_val.invalids[0].info
-    assert f'{INVALID_LABEL_TYPE} yRes: 470.55' == _tiff_exif_val.invalids[1].info
+    assert f'{INVALID_LABEL_TYPE} {LABEL_RES_X}: 470.55' == _tiff_exif_val.invalids[0].info
+    assert f'{INVALID_LABEL_TYPE} {LABEL_RES_Y}: 470.55' == _tiff_exif_val.invalids[1].info
     
 
 def test_tiffexifresolution_channels_valid(img_resolution_invalid):
@@ -213,3 +220,25 @@ def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
 
     # assert
     assert _val.valid()
+
+
+def test_tiff_resolution_missing(tmp_path):
+    """What happens if resolution values are 
+    completely missing?
+    """
+
+    # arrange
+    file_name = '8736_max_02.tif'
+    file_source = Path(TEST_RES) / 'image' / file_name
+    file_target = Path(str(tmp_path), file_name)
+    shutil.copy(file_source, file_target)
+
+    # act
+    _outcomes:CombinedScanValidator = validate_tiff(file_target)
+
+    # assert
+    assert len(_outcomes.invalids) == 3
+    assert str(_outcomes.path_input).endswith(file_name)
+    assert f'{INVALID_LABEL_UNSET} {LABEL_RES_UNIT}' == _outcomes.invalids[0].info
+    assert f'{INVALID_LABEL_UNSET} {LABEL_RES_X}' == _outcomes.invalids[1].info
+    assert f'{INVALID_LABEL_UNSET} {LABEL_RES_Y}' == _outcomes.invalids[2].info
