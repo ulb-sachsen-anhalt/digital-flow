@@ -164,11 +164,11 @@ class Image:
         try:
             _ts_object = datetime.datetime.now()
             self.time_stamp = _ts_object.strftime(DATETIME_SRC_FORMAT)
+            self.file_size = os.path.getsize(self.local_path)
             # open resource
             _pil_img: TiffImageFile = PILImage.open(self.local_path)
             _image_bytes = _pil_img.tobytes()
             self.image_checksum = sha512(_image_bytes).hexdigest()
-
             # read information from TIF TAG V2 section
             _meta_data: ImageMetadata = self._read(_pil_img)
             _meta_data.color_space = _pil_img.mode

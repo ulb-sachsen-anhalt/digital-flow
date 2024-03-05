@@ -28,6 +28,7 @@ from digiflow.validate.imgdata import (
     LABEL_RES_UNIT,
     LABEL_RES_X,
     LABEL_RES_Y,
+    UNSET_NUMBR,
 )
 
 from .conftest import (
@@ -69,7 +70,7 @@ def test_tiff_resolution_invalid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    _outcomes:CombinedScanValidator = validate_tiff(file_target)
+    _outcomes: CombinedScanValidator = validate_tiff(file_target)
 
     # assert
     assert len(_outcomes.invalids) == 2
@@ -92,7 +93,7 @@ def test_tiff_validate_only_channels_valid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    _outcomes:CombinedScanValidator = validate_tiff(file_target, [LABEL_VALIDATOR_SCAN_CHANNEL])
+    _outcomes: CombinedScanValidator = validate_tiff(file_target, [LABEL_VALIDATOR_SCAN_CHANNEL])
 
     # assert
     assert len(_outcomes.invalids) == 0
@@ -123,7 +124,7 @@ def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
     assert len(_tiff_exif_val.invalids) == 2
     assert f'{INVALID_LABEL_TYPE} {LABEL_RES_X}: 470.55' == _tiff_exif_val.invalids[0].info
     assert f'{INVALID_LABEL_TYPE} {LABEL_RES_Y}: 470.55' == _tiff_exif_val.invalids[1].info
-    
+
 
 def test_tiffexifresolution_channels_valid(img_resolution_invalid):
     """Ensure channel data is valid this time"""
@@ -234,7 +235,7 @@ def test_tiff_resolution_missing(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    _outcomes:CombinedScanValidator = validate_tiff(file_target)
+    _outcomes: CombinedScanValidator = validate_tiff(file_target)
 
     # assert
     assert len(_outcomes.invalids) == 3
@@ -242,3 +243,24 @@ def test_tiff_resolution_missing(tmp_path):
     assert f'{INVALID_LABEL_UNSET} {LABEL_RES_UNIT}' == _outcomes.invalids[0].info
     assert f'{INVALID_LABEL_UNSET} {LABEL_RES_X}' == _outcomes.invalids[1].info
     assert f'{INVALID_LABEL_UNSET} {LABEL_RES_Y}' == _outcomes.invalids[2].info
+
+
+@pytest.mark.parametrize(['image_name', 'sha_start', 'file_size', 'x_resolution'],
+                         [('8736_max_01.tif', '4d5a', 7522, 470.55),
+                          ('8736_max_02.tif', '4d5a', 7470, UNSET_NUMBR),
+                          ('1667522809_J_0025_0512.tif', 'b5a7', 7574, 470),])
+def test_tiff_image_properties(image_name, sha_start, file_size, x_resolution):
+    """Make sure image properties read properly"""
+
+    # arrange
+    file_source = Path(TEST_RES) / 'image' / image_name
+
+    # act
+    _image: Image = Image(file_source)
+    _image.read()
+
+    # assert
+    assert _image.metadata
+    assert _image.image_checksum.startswith(sha_start)
+    assert _image.metadata.xRes == x_resolution
+    assert _image.file_size == file_size
