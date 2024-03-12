@@ -14,6 +14,7 @@ from pathlib import (
     Path,
 )
 from typing import (
+    Dict,
     List,
 )
 
@@ -42,12 +43,6 @@ from PIL.TiffImagePlugin import (
 )
 
 from .common import (
-    LABEL_VALIDATOR_SCAN_COMBINED,
-    LABEL_VALIDATOR_SCAN_FILEDATA,
-    LABEL_VALIDATOR_SCAN_CHANNEL,
-    LABEL_VALIDATOR_SCAN_COMPRESSION,
-    LABEL_VALIDATOR_SCAN_RESOLUTION,
-    LABEL_VALIDATOR_SCAN_PHOTOMETRICS,
     INVALID_LABEL_RANGE,
     INVALID_LABEL_TYPE,
     INVALID_LABEL_UNSET,
@@ -118,6 +113,14 @@ ADOBE_PROFILE_NAME = 'Adobe RGB (1998)'  # Preferred ICC-Profile for RGB-TIF
 # date formatting
 DATETIME_MIX_FORMAT = "%Y-%m-%dT%H:%M:%S"
 DATETIME_SRC_FORMAT = "%Y:%m:%d %H:%M:%S"
+
+# labels for clazzes
+LABEL_SCAN_VALIDATOR_COMBINED = 'ScanValidatorCombined'
+LABEL_SCAN_VALIDATOR_CHANNEL = 'ScanValidatorChannel'
+LABEL_SCAN_VALIDATOR_COMPRESSION = 'ScanValidatorCompression'
+LABEL_SCAN_VALIDATOR_FILEDATA = 'ScanValidatorFiledata'
+LABEL_SCAN_VALIDATOR_PHOTOMETRICS = 'ScanValidatorPhotometrics'
+LABEL_SCAN_VALIDATOR_RESOLUTION = 'ScanValidatorResolution'
 
 
 class InvalidImageDataException(Exception):
@@ -221,14 +224,14 @@ class Image:
         return f"{self.url}\t{self.image_checksum}\t{_fsize}\t{self.metadata.width}x{self.metadata.height}\t{_mds}\t{self.time_stamp}\t{_invalids}"
 
 
-class ScanFileValidator(Validator):
+class ScanValidatorFile(Validator):
     """Validate file on very basic level, i.e.
     whether it can be read, file size suspicous
     or no metadata tags for width/height present
     """
 
     def __init__(self, input_data: Path):
-        super().__init__(LABEL_VALIDATOR_SCAN_FILEDATA, input_data)
+        super().__init__(LABEL_SCAN_VALIDATOR_FILEDATA, input_data)
         if isinstance(self.input_data, Image):
             self.input_data = self.input_data.local_path
 
@@ -251,14 +254,14 @@ class ScanFileValidator(Validator):
         return super().valid()
 
 
-class ScanChannelValidator(Validator):
+class ScanValidatorChannel(Validator):
     """Validate EXIF metadata concerning
     maximal processable channel depth and
     number of channels
     """
 
     def __init__(self, input_data: Image):
-        super().__init__(LABEL_VALIDATOR_SCAN_CHANNEL, input_data)
+        super().__init__(LABEL_SCAN_VALIDATOR_CHANNEL, input_data)
 
     def valid(self) -> bool:
         _input: Image = self.input_data
@@ -276,11 +279,11 @@ class ScanChannelValidator(Validator):
         return super().valid()
 
 
-class ScanCompressionValidator(Validator):
+class ScanValidatorCompression(Validator):
     """Validate EXIF metadata uncompressed set"""
 
     def __init__(self, input_data: Image):
-        super().__init__(LABEL_VALIDATOR_SCAN_COMPRESSION, input_data)
+        super().__init__(LABEL_SCAN_VALIDATOR_COMPRESSION, input_data)
 
     def valid(self) -> bool:
         """Check flag umcompressed data set"""
@@ -293,7 +296,7 @@ class ScanCompressionValidator(Validator):
         return super().valid()
 
 
-class ScanResolutionValidator(Validator):
+class ScanValidatorResolution(Validator):
     """Validate EXIF metadata concerning
     values of required Resolution information
     * XResolution / YResolution: must not be rationals
@@ -301,7 +304,7 @@ class ScanResolutionValidator(Validator):
     """
 
     def __init__(self, input_data: Image):
-        super().__init__(LABEL_VALIDATOR_SCAN_RESOLUTION, input_data)
+        super().__init__(LABEL_SCAN_VALIDATOR_RESOLUTION, input_data)
 
     def valid(self) -> bool:
         _input: Image = self.input_data
@@ -340,14 +343,14 @@ class ScanResolutionValidator(Validator):
         return super().valid()
 
 
-class ScanPhotometricValidator(Validator):
+class ScanValidatorPhotometric(Validator):
     """Check EXIF Photometric information
     * Photometric interpretation must be Grayscale or RGB 
     * if RGB, then profile must be ADOBE RGB 1998
     """
 
     def __init__(self, input_data: Image):
-        super().__init__(LABEL_VALIDATOR_SCAN_PHOTOMETRICS, input_data)
+        super().__init__(LABEL_SCAN_VALIDATOR_PHOTOMETRICS, input_data)
 
     def valid(self) -> bool:
         _input: Image = self.input_data
@@ -362,55 +365,60 @@ class ScanPhotometricValidator(Validator):
         return super().valid()
 
 
-# determine fallback if no Validators provided
-DEFAULT_VALIDATORS = [
-    LABEL_VALIDATOR_SCAN_CHANNEL,
-    LABEL_VALIDATOR_SCAN_COMPRESSION,
-    LABEL_VALIDATOR_SCAN_RESOLUTION,
-    LABEL_VALIDATOR_SCAN_PHOTOMETRICS,
-]
+class ValidatorFactory:
+
+    validators: Dict = {
+        LABEL_SCAN_VALIDATOR_FILEDATA: ScanValidatorFile,
+        LABEL_SCAN_VALIDATOR_CHANNEL: ScanValidatorChannel,
+        LABEL_SCAN_VALIDATOR_COMPRESSION: ScanValidatorCompression,
+        LABEL_SCAN_VALIDATOR_RESOLUTION: ScanValidatorResolution,
+        LABEL_SCAN_VALIDATOR_PHOTOMETRICS: ScanValidatorPhotometric, 
+    }
+
+    @staticmethod
+    def register(validator_label:str, validator_class: Validator):
+        ValidatorFactory.validators[validator_label] = validator_class
+
+    @staticmethod
+    def unregister(validator_label:str):
+        if validator_label in ValidatorFactory.validators:
+            del ValidatorFactory.validators[validator_label]
+
+    @staticmethod
+    def get(validator_label: str) -> Validator:
+        """Get Validator object for label"""
+
+        if validator_label not in ValidatorFactory.validators:
+            raise Exception(f"Missing Implementation for {validator_label}!")
+        return ValidatorFactory.validators[validator_label]
 
 
-class CombinedScanValidator(Validator):
+class ScanValidatorCombined(Validator):
     """Encapsulate image validation"""
 
+    validator_factory: ValidatorFactory = ValidatorFactory
+
     def __init__(self, path_input: Path, validator_labels: List[str]):
-        super().__init__(LABEL_VALIDATOR_SCAN_COMBINED, path_input)
+        super().__init__(LABEL_SCAN_VALIDATOR_COMBINED, path_input)
         self.path_input = path_input
         self.validator_labels: List[str] = validator_labels
         self.img_data: Image = None
+
+    @staticmethod
+    def register(validator_label, validator_class):
+        if validator_label not in ScanValidatorCombined.validator_factory.validators:
+            ScanValidatorCombined.validator_factory.register(validator_label, validator_class)
 
     def valid(self) -> bool:
         self.img_data = Image(self.input_data)
         self.img_data.url = self.path_input
         self.img_data.read()
         for _label in self.validator_labels:
-            _val_clazz = ValidatorFactory.get(_label)
+            _val_clazz = ScanValidatorCombined.validator_factory.get(_label)
             _val: Validator = _val_clazz(self.img_data)
             if not _val.valid():
                 self.invalids.extend(_val.invalids)
         return super().valid()
-
-
-# module validator mapping
-VALIDATORS = {
-    LABEL_VALIDATOR_SCAN_FILEDATA: ScanFileValidator,
-    LABEL_VALIDATOR_SCAN_CHANNEL: ScanChannelValidator,
-    LABEL_VALIDATOR_SCAN_COMPRESSION: ScanCompressionValidator,
-    LABEL_VALIDATOR_SCAN_RESOLUTION: ScanResolutionValidator,
-    LABEL_VALIDATOR_SCAN_PHOTOMETRICS: ScanPhotometricValidator,
-}
-
-
-class ValidatorFactory:
-
-    @staticmethod
-    def get(validator_label: str) -> Validator:
-        """Get Validator object for label"""
-
-        if not validator_label in VALIDATORS:
-            raise Exception(f"Missing Implementation for {validator_label}!")
-        return VALIDATORS[validator_label]
 
 
 def validate_tiff(tif_path, required_validators=None):
@@ -423,7 +431,7 @@ def validate_tiff(tif_path, required_validators=None):
     """
 
     if required_validators is None:
-        required_validators = DEFAULT_VALIDATORS
-    _image_val = CombinedScanValidator(tif_path, required_validators)
+        required_validators = ValidatorFactory.validators
+    _image_val = ScanValidatorCombined(tif_path, required_validators)
     _image_val.valid()
     return _image_val

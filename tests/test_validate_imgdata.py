@@ -12,13 +12,13 @@ from digiflow.validate import (
     INVALID_LABEL_RANGE,
     INVALID_LABEL_TYPE,
     INVALID_LABEL_UNSET,
-    LABEL_VALIDATOR_SCAN_CHANNEL,
-    LABEL_VALIDATOR_SCAN_FILEDATA,
-    LABEL_VALIDATOR_SCAN_RESOLUTION,
+    LABEL_SCAN_VALIDATOR_CHANNEL,
+    LABEL_SCAN_VALIDATOR_FILEDATA,
+    LABEL_SCAN_VALIDATOR_RESOLUTION,
     Image,
-    CombinedScanValidator,
-    ScanChannelValidator,
-    ScanResolutionValidator,
+    ScanValidatorCombined,
+    ScanValidatorChannel,
+    ScanValidatorResolution,
     Validator,
     ValidatorFactory,
     validate_tiff,
@@ -53,7 +53,7 @@ def test_tiff_channel_depth_invalid(tmp_path):
     # assert
     assert len(_outcomes.invalids) == 1
     _inv = _outcomes.invalids[0]
-    assert _inv.label == LABEL_VALIDATOR_SCAN_CHANNEL
+    assert _inv.label == LABEL_SCAN_VALIDATOR_CHANNEL
     assert _inv.location == file_target
     assert f'{INVALID_LABEL_RANGE} {LABEL_CHANNEL} (16, 16, 16) > 8' == _inv.info
 
@@ -70,7 +70,7 @@ def test_tiff_resolution_invalid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    _outcomes: CombinedScanValidator = validate_tiff(file_target)
+    _outcomes: ScanValidatorCombined = validate_tiff(file_target)
 
     # assert
     assert len(_outcomes.invalids) == 2
@@ -93,7 +93,7 @@ def test_tiff_validate_only_channels_valid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    _outcomes: CombinedScanValidator = validate_tiff(file_target, [LABEL_VALIDATOR_SCAN_CHANNEL])
+    _outcomes: ScanValidatorCombined = validate_tiff(file_target, [LABEL_SCAN_VALIDATOR_CHANNEL])
 
     # assert
     assert len(_outcomes.invalids) == 0
@@ -114,13 +114,13 @@ def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
     """Ensure invalid resolution is recognized"""
 
     # arrange
-    _tiff_exif_val = ScanResolutionValidator(img_resolution_invalid)
+    _tiff_exif_val = ScanValidatorResolution(img_resolution_invalid)
 
     # act
     _tiff_exif_val.valid()
 
     # assert
-    assert _tiff_exif_val.label == LABEL_VALIDATOR_SCAN_RESOLUTION
+    assert _tiff_exif_val.label == LABEL_SCAN_VALIDATOR_RESOLUTION
     assert len(_tiff_exif_val.invalids) == 2
     assert f'{INVALID_LABEL_TYPE} {LABEL_RES_X}: 470.55' == _tiff_exif_val.invalids[0].info
     assert f'{INVALID_LABEL_TYPE} {LABEL_RES_Y}: 470.55' == _tiff_exif_val.invalids[1].info
@@ -130,13 +130,13 @@ def test_tiffexifresolution_channels_valid(img_resolution_invalid):
     """Ensure channel data is valid this time"""
 
     # arrange
-    _tiff_exif_val = ScanChannelValidator(img_resolution_invalid)
+    _tiff_exif_val = ScanValidatorChannel(img_resolution_invalid)
 
     # act
     _tiff_exif_val.valid()
 
     # assert
-    assert _tiff_exif_val.label == LABEL_VALIDATOR_SCAN_CHANNEL
+    assert _tiff_exif_val.label == LABEL_SCAN_VALIDATOR_CHANNEL
     assert len(_tiff_exif_val.invalids) == 0
 
 
@@ -195,12 +195,12 @@ def test_tiff_grayscale_newspaper_only_scanfiledata_valid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    _scan_file_validator_clazz = ValidatorFactory.get(LABEL_VALIDATOR_SCAN_FILEDATA)
+    _scan_file_validator_clazz = ValidatorFactory.get(LABEL_SCAN_VALIDATOR_FILEDATA)
     _validator: Validator = _scan_file_validator_clazz(file_target)
 
     # assert
     assert _validator.valid()
-    assert _validator.label == LABEL_VALIDATOR_SCAN_FILEDATA
+    assert _validator.label == LABEL_SCAN_VALIDATOR_FILEDATA
     assert _validator.input_data == file_target
 
 
@@ -214,7 +214,7 @@ def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
     file_source = Path(TEST_RES) / 'image' / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
-    _validator_labels = [LABEL_VALIDATOR_SCAN_FILEDATA, LABEL_VALIDATOR_SCAN_RESOLUTION]
+    _validator_labels = [LABEL_SCAN_VALIDATOR_FILEDATA, LABEL_SCAN_VALIDATOR_RESOLUTION]
 
     # act
     _val = validate_tiff(file_target, _validator_labels)
@@ -235,7 +235,7 @@ def test_tiff_resolution_missing(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    _outcomes: CombinedScanValidator = validate_tiff(file_target)
+    _outcomes: ScanValidatorCombined = validate_tiff(file_target)
 
     # assert
     assert len(_outcomes.invalids) == 3

@@ -1,15 +1,11 @@
 from .common import (
-	LABEL_VALIDATOR_SCAN_CHANNEL,
-	LABEL_VALIDATOR_SCAN_COMPRESSION,
-    LABEL_VALIDATOR_SCAN_RESOLUTION,
-	LABEL_VALIDATOR_SCAN_FILEDATA,
+    INVALID_LABEL_RANGE,
+    INVALID_LABEL_TYPE,
+    INVALID_LABEL_UNSET,
     UNSET_LABEL,
     UNSET_NUMBR,
-	INVALID_LABEL_RANGE,
-	INVALID_LABEL_TYPE,
-	INVALID_LABEL_UNSET,
+    Invalid,
     Validator,
-	Invalid,
 )
 
 from .fsdata import (
@@ -21,12 +17,21 @@ from .fsdata import (
 )
 
 from .imgdata import (
+    LABEL_SCAN_VALIDATOR_CHANNEL,
+    LABEL_SCAN_VALIDATOR_COMBINED,
+    LABEL_SCAN_VALIDATOR_COMPRESSION,
+    LABEL_SCAN_VALIDATOR_FILEDATA,
+    LABEL_SCAN_VALIDATOR_PHOTOMETRICS,
+    LABEL_SCAN_VALIDATOR_RESOLUTION,
     Image,
     ImageMetadata,
     InvalidImageDataException,
-	CombinedScanValidator,
-    ScanChannelValidator,
-    ScanResolutionValidator,
+    ScanValidatorCombined,
+    ScanValidatorChannel,
+    ScanValidatorCompression,
+    ScanValidatorFile,
+    ScanValidatorPhotometric,
+    ScanValidatorResolution,
     ValidatorFactory,
     validate_tiff,
 )
