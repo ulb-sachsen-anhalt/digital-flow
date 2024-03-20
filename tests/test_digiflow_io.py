@@ -29,8 +29,6 @@ from digiflow import (
     OAIFileSweeper,
     OAIRecordHandler,
     OAILoadException,
-    OAILoadServerError,
-    OAILoadClientError,
     F_IDENTIFIER,
     F_SPEC,
     F_DATESTAMP,
@@ -40,9 +38,9 @@ from digiflow import (
     RECORD_STATE_MASK_FRAME,
     HEADER_MIGRATION,
     OAILoader,
-    post_oai_extract_mets,
     LocalStore,
-    send_mail,
+    post_oai_extract_mets,
+    smtp_note,
     request_resource,
     transform_to_record,
     get_enclosed,
@@ -641,7 +639,7 @@ def test_migration_sweeper_pdf(migration_sweeper_pdf_fixture):
             assert len(list(item.iterdir())) == 0
 
 
-@mock.patch('digiflow.digiflow_io.get_smtp_server')
+@mock.patch('digiflow.digiflow_io.SMTP')
 def test_send_mail(mock_smtp):
     """test sending mail"""
 
@@ -649,15 +647,16 @@ def test_send_mail(mock_smtp):
     random_message = uuid.uuid4().hex
 
     # act
-    mess = send_mail(
+    mess = smtp_note(
+        'localhost:25',
         subject='test',
         message=random_message,
-        sender='test@example.com',
-        recipients='me@example.de')
+        froms='test@example.com',
+        tos='me@example.de')
 
     # assert
     assert random_message in mess
-    assert 'notification' in mess
+    assert 'me@example.de' in mess
     assert mock_smtp.called
 
 

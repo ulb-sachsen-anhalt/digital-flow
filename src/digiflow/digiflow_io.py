@@ -4,7 +4,9 @@ import csv
 import os
 import shutil
 import time
-import smtplib
+from smtplib import (
+    SMTP,
+)
 from email.mime.text import (
     MIMEText
 )
@@ -1035,31 +1037,25 @@ def _sanitize_local_file_extension(path_local, content_type):
     return path_local
 
 
-def get_smtp_server():
-    return smtplib.SMTP('localhost')
-
-
-def send_mail(subject, message, sender, recipients):
-    """Notify recipients with message from local host
+def smtp_note(smtp_conn:str, subject:str, message:str, froms:str, tos):
+    """Notify recipients about something
+    stmp_connn: str Information about host:port
     subject: str The Subject
     message: str The Message
     sender: str Email of sender
     recipients: str, list  Email(s)
     """
 
-    if isinstance(recipients, list):
-        recipients = ','.join(recipients)
+    if isinstance(tos, list):
+        tos = ','.join(tos)
     try:
         msg = MIMEText(message)
         msg['Subject'] = subject
-        msg['From'] = sender
-        msg['To'] = recipients + "\n"
-        server = get_smtp_server()
+        msg['From'] = froms
+        msg['To'] = tos + "\n"
+        server = SMTP(smtp_conn)
         server.send_message(msg)
         server.quit()
-        return "notification to '{}' sent: '{}'"\
-               .format(recipients, message)
-    except Exception as exc:
-        msg = "Failed to notify '{}':'{}'\nmessage:\n'{}'\n{}!"\
-            .format(recipients, subject, message, exc)
-        return msg
+        return f"'{tos}' note: '{message}'"
+    except Exception as _exc:
+        return f"Failed to notify '{tos}': '{_exc.args[0]}' ('{message}')!"
