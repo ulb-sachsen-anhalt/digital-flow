@@ -4,27 +4,31 @@ import csv
 import os
 import shutil
 import time
-from smtplib import (
-    SMTP,
-)
-from email.mime.text import (
-    MIMEText
-)
 
 from collections import (
     OrderedDict
 )
+from email.utils import (
+    formatdate,
+)
+from email.mime.text import (
+    MIMEText
+)
 from pathlib import (
     Path
 )
+from smtplib import (
+    SMTP,
+)
+
 
 import requests
 from lxml import etree as ET
 
 from .digiflow_metadata import (
     XMLNS,
+    MetsReader,
     write_xml_file,
-    MetsReader
 )
 
 
@@ -1038,7 +1042,8 @@ def _sanitize_local_file_extension(path_local, content_type):
 
 
 def smtp_note(smtp_conn:str, subject:str, message:str, froms:str, tos):
-    """Notify recipients about something
+    """Notify recipients about subject
+    in true local time
     stmp_connn: str Information about host:port
     subject: str The Subject
     message: str The Message
@@ -1050,6 +1055,7 @@ def smtp_note(smtp_conn:str, subject:str, message:str, froms:str, tos):
         tos = ','.join(tos)
     try:
         msg = MIMEText(message)
+        msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
         msg['From'] = froms
         msg['To'] = tos + "\n"

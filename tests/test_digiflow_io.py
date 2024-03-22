@@ -7,14 +7,17 @@ import pytest
 import shutil
 import sys
 import uuid
+from json.decoder import (
+    JSONDecodeError
+)
 from pathlib import (
     Path
 )
+from smtplib import (
+    SMTP,
+)
 from unittest import (
     mock
-)
-from json.decoder import (
-    JSONDecodeError
 )
 
 import lxml.etree as ET
@@ -639,7 +642,7 @@ def test_migration_sweeper_pdf(migration_sweeper_pdf_fixture):
             assert len(list(item.iterdir())) == 0
 
 
-@mock.patch('digiflow.digiflow_io.SMTP')
+@mock.patch('digiflow.digiflow_io.SMTP.send_message')
 def test_send_mail(mock_smtp):
     """test sending mail"""
 
@@ -657,6 +660,7 @@ def test_send_mail(mock_smtp):
     # assert
     assert random_message in mess
     assert 'me@example.de' in mess
+    assert mock_smtp is SMTP.send_message
     assert mock_smtp.called
 
 
