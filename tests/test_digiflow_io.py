@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""Specification for IO API"""
 
 import ast
 import json
@@ -46,7 +46,6 @@ from digiflow import (
     transform_to_record,
     write_xml_file,
 )
-import digiflow # just again for proper SMTP mocking
 
 from .conftest import (
     TEST_RES
@@ -58,13 +57,14 @@ EXPORT_METS = 'export_mets.xml'
 
 # some test constants
 ID_737429 = '737429'
-OAI_ID_737429 = 'oai:digital.bibliothek.uni-halle.de/hd:{}'.format(ID_737429)
+OAI_ID_737429 = f'oai:digital.bibliothek.uni-halle.de/hd:{ID_737429}'
 OAI_SPEC_737429 = 'ulbhaldod'
 CONTENT_TYPE_TXT = 'text/xml;charset=utf-8'
 OAI_BASE_URL_VD16 = 'digitale.bibliothek.uni-halle.de/vd16/oai'
 OAI_BASE_URL_ZD = 'digitale.bibliothek.uni-halle.de/zd/oai'
 OAI_BASE_URL_OPENDATA = 'opendata.uni-halle.de/oai/dd'
 
+# pylint: disable=c-extension-no-member, line-too-long
 
 @pytest.mark.skipif("sys.version_info < (3,6)")
 def test_intermediate_dirs_created_with_path(tmp_path):
@@ -95,24 +95,28 @@ def test_intermediate_dirs_created_with_tmpdir(tmpdir):
 
 
 def test_write_xml_defaults(tmp_path):
+    """Output with deafult write settings"""
+
     txt = '<parent><child name="foo">bar</child></parent>'
     xml_tree = ET.fromstring(txt)
     outpath = tmp_path / "write_foo.xml"
     write_xml_file(xml_tree, str(outpath))
 
     assert os.path.isfile(str(outpath))
-    assert open(str(outpath)).read().startswith(
+    assert open(str(outpath), encoding='utf8').read().startswith(
         '<?xml version="1.0" encoding="UTF-8"?>\n')
 
 
 def test_write_xml_without_preamble(tmp_path):
+    """Test output if no preamble required"""
+
     txt = '<parent><child name="foo">bar</child></parent>'
     xml_tree = ET.fromstring(txt)
     outpath = tmp_path / "write_foo.xml"
     write_xml_file(xml_tree, str(outpath), preamble=None)
 
     assert os.path.isfile(str(outpath))
-    assert open(str(outpath)).read().startswith('<parent>\n')
+    assert open(str(outpath), encoding='utf8').read().startswith('<parent>\n')
 
 
 @pytest.mark.parametrize(['urn', 'local_identifier'],
@@ -123,6 +127,7 @@ def test_write_xml_without_preamble(tmp_path):
     ('oai:dev.opendata.uni-halle.de:123456789/27949', '123456789_27949'),
 ])
 def test_record_local_identifiers(urn, local_identifier):
+    """Ensure local identifier for different URN inputs"""
 
     # act
     record = OAIRecord(urn)
@@ -273,12 +278,11 @@ def test_oai_load_opendata_request_kwargs(
     assert os.path.exists(str(store_dir))
 
 
-DEFAULT_HEADERS = "{}\t{}\t{}\t{}\t{}\t{}\n"\
-    .format(F_IDENTIFIER, F_SPEC, F_DATESTAMP, F_STATE_INFO, F_STATE, F_STATE_TS)
+DEFAULT_HEADERS = f"{F_IDENTIFIER}\t{F_SPEC}\t{F_DATESTAMP}\t{F_STATE_INFO}\t{F_STATE}\t{F_STATE_TS}\n"
 
 
 def _write_datalist(path_data_list, data, headers=DEFAULT_HEADERS):
-    with open(str(path_data_list), 'w') as handle:
+    with open(str(path_data_list), 'w', encoding='utf8') as handle:
         if headers:
             handle.write(headers)
         handle.writelines(data)
@@ -407,7 +411,7 @@ def test_migration_dataset_vl_info_stays(vl_datasets):
 
     a_set = handler.next_record(state='migration_done')
     assert a_set.local_identifier == '1416976'
-    with open(vl_datasets) as reader:
+    with open(vl_datasets, encoding='utf8') as reader:
         lines = reader.readlines()
     assert lines[1].split('\t')[3] == '123,ger'
 
@@ -431,15 +435,15 @@ def test_statelist_ocr_hdz(tmp_path):
 
     # arrange
     path_state_list = tmp_path / 'ocr_list'
-    first_row = "{}\t{}\t{}\n".format(F_IDENTIFIER, F_STATE, F_STATE_TS)
+    first_row = f"{F_IDENTIFIER}\t{F_STATE}\t{F_STATE_TS}\n"
     data = [
         'oai:digitale.bibliothek.uni-halle.de/zd:123\tn.a.\tn.a.\n'
     ]
     _write_datalist(path_state_list, data, first_row)
-    headers = [F_IDENTIFIER, F_STATE, F_STATE_TS]
+    _headers = [F_IDENTIFIER, F_STATE, F_STATE_TS]
     handler = OAIRecordHandler(
         path_state_list,
-        data_fields=headers,
+        data_fields=_headers,
         transform_func=lambda r: r)
 
     # act
@@ -456,8 +460,7 @@ def test_statelist_ocr_hdz(tmp_path):
 
 
 # record list header data
-OAI_LIST_HEADER = "{}\t{}\t{}\t{}\t{}\n".format(
-    F_IDENTIFIER, F_DATESTAMP, F_STATE_INFO, F_STATE, F_STATE_TS)
+OAI_LIST_HEADER = f"{F_IDENTIFIER}\t{F_DATESTAMP}\t{F_STATE_INFO}\t{F_STATE}\t{F_STATE_TS}\n"
 
 
 @pytest.fixture(name="oai_record_list")
@@ -484,7 +487,7 @@ def _morph(row):
 
 
 # OAI record list default headers
-headers = [F_IDENTIFIER, F_DATESTAMP, F_STATE_INFO, F_STATE, F_STATE_TS]
+HEADERS = [F_IDENTIFIER, F_DATESTAMP, F_STATE_INFO, F_STATE, F_STATE_TS]
 
 
 def test_statelist_use_n_a_properly(oai_record_list):
@@ -493,7 +496,7 @@ def test_statelist_use_n_a_properly(oai_record_list):
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # act
@@ -544,10 +547,8 @@ def fixture_request_vls_zd1_16359609(*args, **kwargs):
 
 @mock.patch("digiflow.requests.get")
 def test_oai_load_vls_zd1_with_ocr(mock_request, tmp_path):
-    """Behavior of state lists for ocr pipeline"""
-
-    # arrange
-    """test oai loader implementation for opendata"""
+    """Behavior of state lists for ocr pipeline
+    """
 
     # arrange
     mock_request.side_effect = fixture_request_vls_zd1_16359609
@@ -678,7 +679,7 @@ def test_record_state_list_set_state_from(oai_record_list):
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     c_state = OAIRecordCriteriaState('ocr_skip')
     c_from = OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:03:56')
@@ -762,7 +763,7 @@ def test_record_state_list_set_state_from_dry_run(oai_record_list):
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     c_state = OAIRecordCriteriaState('ocr_skip')
     c_from = OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:03:56')
@@ -786,7 +787,7 @@ def test_record_state_list_set_state_from_dry_run_verbose(oai_record_list, capsy
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     c_state = OAIRecordCriteriaState('ocr_skip')
     c_from = OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:03:56')
@@ -811,7 +812,7 @@ def test_record_state_list_rewind_state_upload(oai_record_list):
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     c_state = OAIRecordCriteriaState('upload_done')
 
@@ -825,7 +826,7 @@ def test_record_state_list_rewind_state_upload(oai_record_list):
 
     # assert next open record changed
     h2 = OAIRecordHandler(
-        oai_record_list, data_fields=headers, transform_func=_morph)
+        oai_record_list, data_fields=HEADERS, transform_func=_morph)
     assert h2.next_record()[F_IDENTIFIER].endswith('17320046')
 
 
@@ -835,7 +836,7 @@ def test_record_set_some_other_state(oai_record_list):
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     c_state = OAIRecordCriteriaState('upload_done')
 
@@ -850,7 +851,7 @@ def test_record_set_some_other_state(oai_record_list):
 
     # assert next open record changed
     h2 = OAIRecordHandler(
-        oai_record_list, data_fields=headers, transform_func=_morph)
+        oai_record_list, data_fields=HEADERS, transform_func=_morph)
     assert h2.next_record(state='metadata_read')[F_IDENTIFIER].endswith('17320046')
 
 
@@ -860,7 +861,7 @@ def test_record_list_time_range(oai_record_list):
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     c_state = OAIRecordCriteriaState('ocr_skip')
     c_range = OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:10:00',
@@ -898,7 +899,7 @@ def test_record_handler_merge_plain(tmp_path):
     _write_datalist(path_oai_list2, data2, OAI_LIST_HEADER)
     handler = OAIRecordHandler(
         path_oai_list1,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # assert original next == first record with identifier 8853012
@@ -942,7 +943,7 @@ def test_record_handler_merge_only_done(tmp_path):
     _write_datalist(path_oai_list2, data2, OAI_LIST_HEADER)
     handler = OAIRecordHandler(
         path_oai_list1,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # act
@@ -983,7 +984,7 @@ def test_record_handler_merge_ignore_failure(tmp_path):
     _write_datalist(path_oai_list2, data2, OAI_LIST_HEADER)
     handler = OAIRecordHandler(
         path_oai_list1,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # act
@@ -1018,7 +1019,7 @@ def test_record_handler_merge_larger_into_smaller_dry_run(tmp_path):
     _write_datalist(path_oai_list_a, data, OAI_LIST_HEADER)
     handler = OAIRecordHandler(
         path_oai_list_a,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     path_oai_list_b = tmp_path / 'oai_list_b'
     data = [
@@ -1062,7 +1063,7 @@ def test_record_handler_merge_larger_into_smaller_hot_run_subsequent(tmp_path):
     _write_datalist(path_oai_list_a, data1, OAI_LIST_HEADER)
     handler = OAIRecordHandler(
         path_oai_list_a,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     path_oai_list_b = tmp_path / 'oai_list_b'
     data2 = [
@@ -1105,7 +1106,7 @@ def test_record_handler_merge_larger_into_smaller_hot_run_inverse(tmp_path):
     _write_datalist(path_oai_list_a, data1, OAI_LIST_HEADER)
     handler = OAIRecordHandler(
         path_oai_list_a,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
     path_oai_list_b = tmp_path / 'oai_list_b'
     data2 = [
@@ -1156,7 +1157,7 @@ def test_record_handler_merge_cross(tmp_path):
     _write_datalist(path_oai_list2, data2, OAI_LIST_HEADER)
     handler = OAIRecordHandler(
         path_oai_list1,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # assert original next == first record with identifier 8853012
@@ -1173,11 +1174,13 @@ def test_record_handler_merge_cross(tmp_path):
 
 
 def test_records_frame_with_start(oai_record_list):
+    """Behavior for framing results with 
+    explicite start value"""
 
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # act
@@ -1189,7 +1192,7 @@ def test_records_frame_with_start(oai_record_list):
 
     frame_handler = OAIRecordHandler(
         new_path,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # ensure that only first records is set to 'other_load'
@@ -1199,11 +1202,12 @@ def test_records_frame_with_start(oai_record_list):
 
 
 def test_records_frame_range(oai_record_list):
+    """Test framing from-too in range"""
 
     # arrange
     handler = OAIRecordHandler(
         oai_record_list,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # act
@@ -1215,7 +1219,7 @@ def test_records_frame_range(oai_record_list):
 
     frame_handler = OAIRecordHandler(
         new_path,
-        data_fields=headers,
+        data_fields=HEADERS,
         transform_func=_morph)
 
     # ensure that by now 4 records are set to 'other_load'
@@ -1225,6 +1229,7 @@ def test_records_frame_range(oai_record_list):
 
 
 def test_records_default_header_from_file(oai_record_list):
+    """Ensure proper range has been selected"""
 
     # arrange
     handler = OAIRecordHandler(
@@ -1301,6 +1306,7 @@ def test_response_200_with_error_content(mock_requests):
 
 
 def test_records_sample_zd1_post_ocr():
+    """Ensure proper state recognized"""
 
     path_list = os.path.join(str(ROOT), 'tests', 'resources',
                              'vls', 'oai-urn-zd1-sample70k.tsv')
