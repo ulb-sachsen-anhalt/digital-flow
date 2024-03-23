@@ -3,7 +3,6 @@
 import ast
 import json
 import os
-import pytest
 import shutil
 import sys
 import uuid
@@ -13,25 +12,15 @@ from json.decoder import (
 from pathlib import (
     Path
 )
-from smtplib import (
-    SMTP,
-)
 from unittest import (
     mock
 )
 
+import pytest
+
 import lxml.etree as ET
 
 from digiflow import (
-    write_xml_file,
-    OAIRecord,
-    OAIRecordCriteriaState,
-    OAIRecordCriteriaDatetime,
-    OAIRecordCriteriaIdentifier,
-    OAIRecordCriteriaText,
-    OAIFileSweeper,
-    OAIRecordHandler,
-    OAILoadException,
     F_IDENTIFIER,
     F_SPEC,
     F_DATESTAMP,
@@ -40,14 +29,24 @@ from digiflow import (
     F_STATE_TS,
     RECORD_STATE_MASK_FRAME,
     HEADER_MIGRATION,
+    OAIRecord,
+    OAIRecordCriteriaState,
+    OAIRecordCriteriaDatetime,
+    OAIRecordCriteriaIdentifier,
+    OAIRecordCriteriaText,
+    OAIFileSweeper,
+    OAIRecordHandler,
+    OAILoadException,
     OAILoader,
     LocalStore,
-    post_oai_extract_mets,
-    smtp_note,
-    request_resource,
-    transform_to_record,
     get_enclosed,
+    post_oai_extract_mets,
+    request_resource,
+    smtp_note,
+    transform_to_record,
+    write_xml_file,
 )
+import digiflow # just again for proper SMTP mocking
 
 from .conftest import (
     TEST_RES
@@ -642,9 +641,17 @@ def test_migration_sweeper_pdf(migration_sweeper_pdf_fixture):
             assert len(list(item.iterdir())) == 0
 
 
-@mock.patch('digiflow.digiflow_io.SMTP.send_message')
+@mock.patch('digiflow.digiflow_io.SMTP')
 def test_send_mail(mock_smtp):
-    """test sending mail"""
+    """Test note using SMTP mock because
+    tails fails outside proper plattform
+    without reachable local smto-host
+
+    Mock called 3 times
+    * object init
+    * object sends message
+    * object quits connection
+    """
 
     # arrange
     random_message = uuid.uuid4().hex
@@ -660,8 +667,9 @@ def test_send_mail(mock_smtp):
     # assert
     assert random_message in mess
     assert 'me@example.de' in mess
-    assert mock_smtp is SMTP.send_message
-    # assert mock_smtp.called == True   # toxic doesnt like this
+    assert mock_smtp.called
+    assert len(mock_smtp.mock_calls) == 3
+    assert mock_smtp.mock_calls[1][0] == '().send_message'
 
 
 def test_record_state_list_set_state_from(oai_record_list):
@@ -1280,8 +1288,8 @@ def test_response_200_with_error_content(mock_requests):
 
     # arrange
     data_path = os.path.join(str(ROOT), 'tests/resources/opendata/id_not_exist.xml')
-    _req = mock_response(status_code=200, 
-                         headers= {'Content-Type': 'text/xml;charset=UTF-8'},
+    _req = mock_response(status_code=200,
+                         headers={'Content-Type': 'text/xml;charset=UTF-8'},
                          data_path=data_path)
     mock_requests.return_value = _req
 
@@ -1382,7 +1390,7 @@ def test_record_handler_quotation_broken(tmp_path):
     handler = OAIRecordHandler(path_oai_list1, transform_func=transform_to_record)
 
     # act
-    _next_rec = handler.next_record(state='ocr_fail')    
+    _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
     with pytest.raises(JSONDecodeError) as _decode_err:
         json.loads(_next_rec.info)
@@ -1405,11 +1413,12 @@ def test_record_handler_quotation_mixture_json(tmp_path):
     handler = OAIRecordHandler(path_oai_list1, transform_func=transform_to_record)
 
     # act
-    _next_rec = handler.next_record(state='ocr_fail')    
+    _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
     with pytest.raises(JSONDecodeError) as _decode_err:
         json.loads(_next_rec.info)
     assert 'Extra data: line 1 column 7 (char 6)' in _decode_err.value.args[0]
+
 
 def test_record_handler_quotation_fixed_json(tmp_path):
     """
@@ -1427,7 +1436,7 @@ def test_record_handler_quotation_fixed_json(tmp_path):
     handler = OAIRecordHandler(path_oai_list1, transform_func=transform_to_record)
 
     # act
-    _next_rec = handler.next_record(state='ocr_fail')    
+    _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
     _info_token = get_enclosed(_next_rec.info)
     _last_info = json.loads(_info_token)['info']
@@ -1450,7 +1459,7 @@ def test_record_handler_quotation_fixed_ast(tmp_path):
     handler = OAIRecordHandler(path_oai_list1, transform_func=transform_to_record)
 
     # act
-    _next_rec = handler.next_record(state='ocr_fail')    
+    _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
     _info_token = get_enclosed(_next_rec.info)
     _last_info = ast.literal_eval(_info_token)['info']
@@ -1477,14 +1486,14 @@ def test_record_handler_quotation_mixture_ast(tmp_path):
     handler = OAIRecordHandler(path_oai_list1, transform_func=transform_to_record)
 
     # act
-    _next_rec = handler.next_record(state='ocr_fail')    
+    _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
     _info_token = get_enclosed(_next_rec.info)
     _last_info = ast.literal_eval(_info_token)['info']
     assert "processing 'https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg'" in _last_info
 
 
-@pytest.mark.skipif(sys.version_info >= (3,10), reason="Specific to Python <3.10")
+@pytest.mark.skipif(sys.version_info >= (3, 10), reason="Specific to Python <3.10")
 def test_record_handler_quotation_mixture_ast_639763(tmp_path):
     """
     Behavior when encountering data like this:
@@ -1502,14 +1511,14 @@ def test_record_handler_quotation_mixture_ast_639763(tmp_path):
     handler = OAIRecordHandler(path_oai_list1, transform_func=transform_to_record)
 
     # act
-    _next_rec = handler.next_record(state='ocr_busy')    
+    _next_rec = handler.next_record(state='ocr_busy')
     _info_token = get_enclosed(_next_rec.info)
     with pytest.raises(SyntaxError) as _decode_err:
         ast.literal_eval(_info_token)
     assert 'invalid syntax' in _decode_err.value.args[0]
 
 
-@pytest.mark.skipif(sys.version_info < (3,10), 
+@pytest.mark.skipif(sys.version_info < (3, 10),
                     reason="Specific to Python >= 3.10")
 def test_record_handler_quotation_mixture_ast_639763_python_310(tmp_path):
     """
@@ -1528,7 +1537,7 @@ def test_record_handler_quotation_mixture_ast_639763_python_310(tmp_path):
     handler = OAIRecordHandler(path_oai_list1, transform_func=transform_to_record)
 
     # act
-    _next_rec = handler.next_record(state='ocr_busy')    
+    _next_rec = handler.next_record(state='ocr_busy')
     _info_token = get_enclosed(_next_rec.info)
     with pytest.raises(SyntaxError) as _decode_err:
         ast.literal_eval(_info_token)
@@ -1540,7 +1549,7 @@ def test_oai_load_exception_for_server_error(mock_504, tmp_path):
     """Ensure OAILoadException for Response status_code
     which indicates internal Server-Errors gets properly
     propagated upstream to caller.
-    
+
     Because we're testing the very response status_code,
     any subsequent steps that usually require additional
     information for parsing the response content (like
