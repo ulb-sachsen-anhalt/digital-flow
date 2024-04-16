@@ -786,3 +786,20 @@ def test_metsreader_kitodo2_mena_periodical_volume_dmd_id():
 
     # assert
     assert mets_reader.dmd_id == 'DMDLOG_0001'
+
+
+def test_metadata_processor_contains_single_fgroup():
+    """Ensure behavior for passing single str arg
+    Bugfix: 
+    TypeError: '>' not supported between instances of 'list' and 'int'
+    """
+
+    _proc = MetsProcessor(TEST_RES / 'k2_mets_morbio_1748529021.xml')
+    assert _proc.contains_group('MAX')
+
+
+def test_metadata_processor_contains_multiple_fgroup():
+    """Ensure behavior for passing list args"""
+
+    _proc = MetsProcessor(TEST_RES / 'k2_mets_morbio_1748529021.xml')
+    assert _proc.contains_group(['MAX'])

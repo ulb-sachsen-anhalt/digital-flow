@@ -320,7 +320,8 @@ class MetsProcessor(XMLProcessor):
         if isinstance(group, list):
             return any(self.tree.findall(PATTERN_FILEGROUP_USE.format(g), XMLNS)
                        for g in group)
-        return self.tree.findall(PATTERN_FILEGROUP_USE.format(group), XMLNS) > 0
+        _fgroups = self.tree.findall(PATTERN_FILEGROUP_USE.format(group), XMLNS)
+        return len(_fgroups) > 0
 
     def clear_filegroups(self, black_list=None):
         """Clear file Groups by blacklist"""
