@@ -8,107 +8,14 @@ import pytest
 import lxml.etree as ET
 
 from digiflow import (
-    validate_xml,
     MetsProcessor,
     MetsReader,
-    XMLNS,
     MARK_KITODO2,
 )
+import digiflow.common as dfc
 
-from .conftest import (
-    TEST_RES,
-    LIB_RES,
-)
+from .conftest import TEST_RES, LIB_RES
 
-EXPORT_METS = 'export_mets.xml'
-
-
-@pytest.mark.skipif("sys.version_info < (3,6)")
-def test_validate_archivable_01(tmp_path):
-    """Test depends on PosixPath, only works with 3.6+"""
-
-    src_path = TEST_RES / "k2_mets_vd18_147638674.xml"
-    path_meta = tmp_path / "147638674.xml"
-    shutil.copyfile(src_path, path_meta)
-
-    # act
-    assert validate_xml(path_meta)
-
-
-def test_create_export_mets_invalid():
-    """
-    xml validation of some artificial zkw export
-    """
-
-    # arrange
-    path_zk_export = os.path.join(TEST_RES, 'zkw', '584', EXPORT_METS)
-    assert os.path.exists(path_zk_export)
-
-    # act
-    with pytest.raises(RuntimeError) as err:
-        validate_xml(path_zk_export)
-    assert 'invalid schema' in err.value.args[0]
-    assert 'messageDigestAlgorithm' in err.value.args[0]
-    assert "value 'foo' is not an element of the set" in err.value.args[0]
-
-
-def test_create_export_mets_valid():
-    """
-    xml validation if export_mets from kitodo2 ID 1064
-    """
-
-    # arrange
-    path_zk_export = os.path.join(TEST_RES, 'zkw', '1064', EXPORT_METS)
-    assert os.path.exists(path_zk_export)
-
-    # act
-    assert validate_xml(path_zk_export)
-
-
-def test_altov4_is_valid():
-    """Ensure validity for ALTO V4"""
-
-    # arrange
-    path_altov4_737429 = os.path.join(TEST_RES, 'ocr', 'alto', 'FULLTEXT_737438.xml')
-    assert os.path.exists(path_altov4_737429)
-
-    # act
-    assert validate_xml(path_altov4_737429)
-
-
-def test_altov4_from_kraken_serializer_is_valid():
-    """Ensure Kraken produces valid ALTO"""
-
-    # arrange
-    path_altov4_737429 = os.path.join(
-        TEST_RES, 'ocr', 'alto', 'test-kraken-alto4-serialization.xml')
-    assert os.path.exists(path_altov4_737429)
-
-    # act
-    assert validate_xml(path_altov4_737429)
-
-
-def test_mets_from_migration_mvwvd18_cstage_is_invalid():
-    """
-    Check oai:digitale.bibliothek.uni-halle.de/vd18:9427342
-    when dropped filegroup DOWNLOAD - which is the only fileGroup -
-    METS is invalid since fileSec *must* contain at least one fileGrp
-    """
-
-    # arrange
-    path_2910519 = os.path.join(TEST_RES, 'migration', '2910519.fail.xml')
-    assert os.path.exists(path_2910519)
-
-    # act
-    with pytest.raises(Exception) as exc:
-        validate_xml(path_2910519)
-
-    # assert
-    _info = exc.value.args[0]
-    assert 'invalid schema' in _info
-    assert 'ERROR:SCHEMASV:SCHEMAV_ELEMENT_CONTENT' in _info
-    assert "Element '{http://www.loc.gov/METS/}fileSec': Missing child element(s)." in _info
-    assert "Expected is ( {http://www.loc.gov/METS/}fileGrp )" in _info
 
 
 def test_metsreader_kitodo2_mvw():
@@ -413,7 +320,7 @@ def test_metsreader_clear_agents(tmp_path):
     # arrange
     mets = os.path.join(TEST_RES, 'migration/369765.mets.xml')
     the_orig = ET.parse(mets)
-    orig_agents = the_orig.findall('.//mets:agent', XMLNS)
+    orig_agents = the_orig.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 4
     dst = tmp_path / '369765.mets.xml'
     shutil.copyfile(mets, str(dst))
@@ -425,7 +332,7 @@ def test_metsreader_clear_agents(tmp_path):
 
     # assert
     the_root = ET.parse(str(result_path))
-    agents = the_root.findall('.//mets:agent', XMLNS)
+    agents = the_root.findall('.//mets:agent', dfc.XMLNS)
     assert len(agents) == 2
     for agent in agents:
         assert 'REPOSITORY' not in agent.attrib['OTHERTYPE']
@@ -560,7 +467,7 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
     # arrange
     mets = os.path.join(TEST_RES, 'migration/vd17-14591176.mets.xml')
     the_orig = ET.parse(mets)
-    orig_file_groups = the_orig.findall('.//mets:fileGrp', XMLNS)
+    orig_file_groups = the_orig.findall('.//mets:fileGrp', dfc.XMLNS)
     assert len(orig_file_groups) == 6
 
     dst = tmp_path / '14591176.xml'
@@ -570,7 +477,7 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
     # act
     mets_proc.clear_filegroups(black_list=['DEFAULT', 'THUMBS', 'MIN', 'DOWNLOAD', 'TEASER'])
     new_roots = ET.parse(str(dst))
-    assert len(new_roots.findall('.//mets:fileGrp', XMLNS)) == 6
+    assert len(new_roots.findall('.//mets:fileGrp', dfc.XMLNS)) == 6
 
 
 def test_metsreader_zd2_issue_18680621():

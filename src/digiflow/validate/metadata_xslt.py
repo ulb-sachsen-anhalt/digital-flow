@@ -15,9 +15,7 @@ from pathlib import (
 
 from lxml import etree as ET
 
-from .digiflow_metadata import (
-    XMLNS,
-)
+import digiflow.common as dfc
 
 # trigger saxon API
 SAXON_ENABLED = True
@@ -30,7 +28,7 @@ except ModuleNotFoundError:
     SAXON_ENABLED = False
 
 # add schematron validation language mapping
-XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
+dfc.XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
 
 
 # DDB Report information *not* to care about
@@ -67,7 +65,7 @@ DDB_IGNORE_RULES_NEWSPAPERS = [
 
 DDB_MEDIA_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-medien.xsl'
 DDB_NEWSP_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-zeitungen.xsl'
-XSL_DIR = Path(__file__).parent / 'resources' / 'xsl'
+XSL_DIR = Path(__file__).parent.parent / 'resources' / 'xsl'
 PATH_MEDIA_XSL = XSL_DIR / DDB_MEDIA_XSL
 PATH_NEWSP_XSL = XSL_DIR / DDB_NEWSP_XSL
 
@@ -110,9 +108,9 @@ class FailedAssert:
         self.location: str = elem.get('location')
         self.text:str = elem.get('text')
         self.context: str = ''
-        self._text: str = '. '.join(elem.xpath('svrl:text/text()', namespaces=XMLNS))
-        self._description = ' '.join(elem.xpath('svrl:description/text()', namespaces=XMLNS))
-        self._properties = elem.xpath('svrl:property', namespaces=XMLNS)
+        self._text: str = '. '.join(elem.xpath('svrl:text/text()', namespaces=dfc.XMLNS))
+        self._description = ' '.join(elem.xpath('svrl:description/text()', namespaces=dfc.XMLNS))
+        self._properties = elem.xpath('svrl:property', namespaces=dfc.XMLNS)
 
     def explain(self):
         """Explain the failure"""
@@ -171,7 +169,7 @@ def _get_failures(path_input, proc, path_report, ignores=None) -> List[FailedAss
     if ignores is None:
         ignores = []
     tmp_root = ET.parse(path_report).getroot()
-    _failed_assert_roles = tmp_root.findall('svrl:*[@role]', XMLNS)
+    _failed_assert_roles = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
     if len(_failed_assert_roles) > 0:
         _fails = [FailedAssert(e)
                   for e in _failed_assert_roles

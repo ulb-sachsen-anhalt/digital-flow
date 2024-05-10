@@ -1,9 +1,10 @@
+
 from .digflow_identifier import *
 from .digiflow_io import *
 from .digiflow_metadata import *
 from .digiflow_generate import *
 from .digiflow_export import *
-from .digiflow_validate import (
+from .validate.metadata_xslt import (
     DDB_IGNORE_RULES_BASIC,
     DDB_IGNORE_RULES_MVW,
     DDB_IGNORE_RULES_NEWSPAPERS,
@@ -23,7 +24,6 @@ from .validate import (
     LABEL_SCAN_VALIDATOR_COMPRESSION,
     LABEL_SCAN_VALIDATOR_RESOLUTION,
     LABEL_SCAN_VALIDATOR_FILEDATA,
-    UNSET_LABEL,
     UNSET_NUMBR,
     INVALID_LABEL_UNSET,
     FSReadException,
@@ -45,3 +45,5 @@ from .validate import (
     group_can_write,
     validate_tiff,
 )
+
+from .common import UNSET_LABEL, XMLNS

@@ -18,8 +18,9 @@ from typing import (
 
 from .digiflow_metadata import (
     MetsReader,
-    XMLNS,
 )
+
+import digiflow.common as dfc
 
 
 ##################
@@ -218,7 +219,7 @@ def enrich_urn_granular(xml_tree,
     # if no granular urns exist at all, then all must get new urn ...
     if not cnt_urn_fits:
         # identify insertion point
-        phys_divs = xml_tree.findall('.//mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', XMLNS)
+        phys_divs = xml_tree.findall('.//mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', dfc.XMLNS)
         # alert invalid data
         if len(phys_divs) == 0:
             raise GranularURNException(f"No phys pages in {xml_tree.base}!")
@@ -329,7 +330,7 @@ def insert_granular_urn(urn_type, phys_conts, main_urn, page_num=None, padd_left
 def _get_phys_containers(xml_tree):
     """Get all physical containers that contain @ORDER attribute"""
     return xml_tree.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', XMLNS)
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS)
 
 
 def enrich_urn_kitodo2(process_path:'str|Path', collection='1', system_id=KITODO2_ID, exemplar='1',

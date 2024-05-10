@@ -9,7 +9,7 @@ from pathlib import (
 
 import pytest
 
-from digiflow.digiflow_validate import (
+from digiflow.validate.metadata_xslt import (
     DDB_IGNORE_RULES_MVW,
     FAILED_ASSERT_ERROR,
     FAILED_ASSERT_OTHER,

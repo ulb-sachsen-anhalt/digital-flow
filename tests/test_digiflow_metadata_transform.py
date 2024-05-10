@@ -12,7 +12,7 @@ import lxml.etree as ET
 
 import pytest
 
-from digiflow.digiflow_validate import (
+from digiflow.validate.metadata_xslt import (
     DigiflowDDBException,
     apply,
     gather_failed_asserts,

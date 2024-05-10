@@ -26,10 +26,11 @@ import requests
 from lxml import etree as ET
 
 from .digiflow_metadata import (
-    XMLNS,
     MetsReader,
     write_xml_file,
 )
+
+import digiflow.common as dfc
 
 
 ####
@@ -51,28 +52,6 @@ RECORD_STATE_MASK_FRAME = 'other_load'
 SETSPEC_SPLITTER = '##'
 STATETIME_FORMAT = '%Y-%m-%d_%H:%M:%S'
 STATETIME_FORMAT_ALT = '%Y-%m-%dT%H:%M:%SZ'
-
-
-def post_oai_extract_metsdata(xml_tree):
-    """Extract METS as new root from OAI envelope"""
-
-    namespace = xml_tree.xpath('namespace-uri(.)')
-    if namespace == 'http://www.loc.gov/METS/':
-        return xml_tree
-
-    if namespace == 'http://www.openarchives.org/OAI/2.0/':
-        mets_root_el = xml_tree.find('.//mets:mets', XMLNS)
-        if mets_root_el is not None:
-            return ET.ElementTree(mets_root_el).getroot()
-    return None
-
-
-def post_oai_extract_mets(the_self, the_data):
-    """Just extract METS from OAI body"""
-
-    xml_root = ET.fromstring(the_data)
-    mets_tree = post_oai_extract_metsdata(xml_root)
-    write_xml_file(mets_tree, the_self.path_mets, preamble=None)
 
 
 def post_oai_store_ocr(path_local, the_data):
@@ -816,8 +795,8 @@ class OAILoader:
                 # from test-data or *real* requests
                 if not isinstance(_snippet, str):
                     _snippet = _snippet.decode('utf-8')
-                if XMLNS['mets'] in _snippet or XMLNS['oai'] in _snippet:
-                    data = post_func(self, data)
+                if dfc.XMLNS['mets'] in _snippet or dfc.XMLNS['oai'] in _snippet:
+                    data = post_func(self.path_mets, data)
                 elif 'http://www.loc.gov/standards/alto' in _snippet:
                     data = post_func(local_path, data)
                 else:

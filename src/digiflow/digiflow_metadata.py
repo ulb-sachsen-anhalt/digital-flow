@@ -22,6 +22,8 @@ from typing import (
 
 from lxml import etree as ET
 
+import digiflow.common as dfc
+
 
 # old-school: register all namespaces known so-far for writing
 ET.register_namespace('dc', 'http://purl.org/dc/elements/1.1/')
@@ -38,26 +40,6 @@ ET.register_namespace('vls', 'http://semantics.de/vls')
 ET.register_namespace('vlz', 'http://visuallibrary.net/vlz/1.0/')
 ET.register_namespace('xlink', 'http://www.w3.org/1999/xlink')
 ET.register_namespace('zvdd', 'http://zvdd.gdz-cms.de/')
-
-
-XMLNS = {
-    'alto': 'http://www.loc.gov/standards/alto/ns-v4#',
-    'dc': 'http://purl.org/dc/elements/1.1/',
-    'dv': 'http://dfg-viewer.de/',
-    'epicur': 'urn:nbn:de:1111-2004033116',
-    'marcxml': 'http://www.loc.gov/MARC21/slim',
-    'goobi': 'http://meta.goobi.org/v1.5.1/',
-    'mets': 'http://www.loc.gov/METS/',
-    'mix': 'http://www.loc.gov/mix/v20',
-    'mods': 'http://www.loc.gov/mods/v3',
-    'oai': 'http://www.openarchives.org/OAI/2.0/',
-    'oai_dc': 'http://www.openarchives.org/OAI/2.0/oai_dc/',
-    'ulb': 'https://bibliothek.uni-halle.de',
-    'vl': 'http://visuallibrary.net/vl',
-    'vlz': 'http://visuallibrary.net/vlz/1.0/',
-    'xlink': 'http://www.w3.org/1999/xlink',
-    'zvdd': 'http://zvdd.gdz-cms.de/',
-}
 
 #
 # METS/MODS common python-flavour XML expressions / namespaces attributes
@@ -87,87 +69,6 @@ CONTENT_FILE_GROUPS = [
     'MAX', 'LOCAL'
 ]
 
-# well grounded script root
-SRC_DIGIFLOW_RES = os.path.dirname(os.path.abspath(__file__))
-
-# schema validtion XSDs
-METS_1_12 = os.path.join(SRC_DIGIFLOW_RES,
-                         'resources', 'xsd', 'mets_1-12.xsd')
-MODS_3_7 = os.path.join(SRC_DIGIFLOW_RES,
-                        'resources', 'xsd', 'mods_3-7.xsd')
-MIX_2_0 = os.path.join(SRC_DIGIFLOW_RES,
-                       'resources', 'xsd', 'mix_2-0.xsd')
-ALTO_3_1 = os.path.join(SRC_DIGIFLOW_RES,
-                        'resources', 'xsd', 'alto_3-1.xsd')
-ALTO_4_2 = os.path.join(SRC_DIGIFLOW_RES,
-                        'resources', 'xsd', 'alto_4-2.xsd')
-XSD_MAPPINGS = {'mets:mets': [METS_1_12], 'mods:mods': [MODS_3_7], 'mix:mix': [
-    MIX_2_0], 'alto': [ALTO_4_2]}
-
-
-def __is_schema_root(xml_tree, schema) -> bool:
-    """
-    Schema *might* be prefixed, like mets:mets, *or* not like ALTO-files
-    Therefore we go for QName
-    """
-    qualified_name = ET.QName(xml_tree)
-    local_name = qualified_name.localname
-    return local_name in schema
-
-
-def _is_contained(xml_tree, schema):
-    if __is_schema_root(xml_tree, schema):
-        return True
-    return len(xml_tree.findall('.//' + schema, XMLNS)) > 0
-
-
-def __validation_error(xmlschema, xml_tree):
-    err = xmlschema.error_log
-    raise RuntimeError(f"invalid schema '{xml_tree}' {err}")
-
-
-def __validate_subtrees(xml_tree, schema, schema_tree):
-    sections = xml_tree.findall('.//' + schema, XMLNS)
-    for section in sections:
-        if not schema_tree.validate(section):
-            return __validation_error(schema_tree, xml_tree)
-
-
-def _validate_with_xsd(xml_tree, schema, xsd_file):
-    the_tree = ET.parse(xsd_file)
-    schema_tree = ET.XMLSchema(the_tree)
-    # Plese note:
-    # going this way makes a vast difference from schema_tree.assertValidate !
-    if __is_schema_root(
-            xml_tree, schema) and not schema_tree.validate(xml_tree):
-        return __validation_error(schema_tree, xml_tree)
-    else:
-        __validate_subtrees(xml_tree, schema, schema_tree)
-
-
-def validate_xml(xml_data, xsd_mappings=XSD_MAPPINGS) -> bool:
-    """
-    Validate XML data with a set of given schema definitions (XSDs)
-
-    :param xml_data: can be a str representing a local path, a PosixPath or ET.etree.root
-
-    """
-
-    # foster
-    if isinstance(xml_data, Path):
-        xml_data = str(xml_data)
-    if isinstance(xml_data, str):
-        xml_data = ET.parse(xml_data).getroot()
-
-    # inspect
-    for schema, xsd_files in xsd_mappings.items():
-        if _is_contained(xml_data, schema):
-            for xsd_file in xsd_files:
-                _validate_with_xsd(xml_data, schema, xsd_file)
-
-    # return default True if no error so far
-    return True
-
 
 def write_xml_file(xml_root,
                    outfile,
@@ -177,7 +78,7 @@ def write_xml_file(xml_root,
     create export dir if not exists and writeable
     """
 
-    _prettified = pretty_xml(xml_root, preamble)
+    _prettified = _pretty_xml(xml_root, preamble)
     dst_dir = os.path.dirname(outfile)
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
@@ -185,7 +86,7 @@ def write_xml_file(xml_root,
         file_handler.write(_prettified)
 
 
-def pretty_xml(xml_root, preamble='<?xml version="1.0" encoding="UTF-8"?>'):
+def _pretty_xml(xml_root, preamble='<?xml version="1.0" encoding="UTF-8"?>'):
     """XML root as prettified string
     witd cleared namespace declarations
     and default preamble like for XML files
@@ -197,13 +98,35 @@ def pretty_xml(xml_root, preamble='<?xml version="1.0" encoding="UTF-8"?>'):
                                   strip_cdata=False,
                                   remove_blank_text=True)
     _root = ET.fromstring(_as_string, _pretty_parser)
-    ET.cleanup_namespaces(_root, top_nsmap=XMLNS)
+    ET.cleanup_namespaces(_root, top_nsmap=dfc.XMLNS)
     _formatted = ET.tostring(_root, pretty_print=True, encoding='UTF-8').decode('UTF-8')
     if preamble:
         formatted_file_content = f'{preamble}\n{_formatted}'
     else:
         formatted_file_content = f'{_formatted}'
     return formatted_file_content.encode('UTF-8').replace(b'\n', b'\r\n')
+
+
+def _post_oai_extract_metsdata(xml_tree):
+    """Extract METS as new root from OAI envelope"""
+
+    namespace = xml_tree.xpath('namespace-uri(.)')
+    if namespace == 'http://www.loc.gov/METS/':
+        return xml_tree
+
+    if namespace == 'http://www.openarchives.org/OAI/2.0/':
+        mets_root_el = xml_tree.find('.//mets:mets', dfc.XMLNS)
+        if mets_root_el is not None:
+            return ET.ElementTree(mets_root_el).getroot()
+    return None
+
+
+def extract_mets(path_mets, the_data):
+    """Just extract METS from OAI body"""
+
+    xml_root = ET.fromstring(the_data)
+    mets_tree = _post_oai_extract_metsdata(xml_root)
+    write_xml_file(mets_tree, path_mets, preamble=None)
 
 
 class XMLProcessor(abc.ABC):
@@ -216,7 +139,7 @@ class XMLProcessor(abc.ABC):
         self.path_xml = path_xml
         self.xmlns = xmlns
         if not self.xmlns:
-            self.xmlns = XMLNS
+            self.xmlns = dfc.XMLNS
         self.path_xml_dir = os.path.dirname(path_xml)
         self._parse()
 
@@ -239,9 +162,9 @@ class XMLProcessor(abc.ABC):
         """wrap search by xpath-expression"""
         els = None
         if element is not None:
-            els = element.findall(expression, XMLNS)
+            els = element.findall(expression, dfc.XMLNS)
         else:
-            els = self.tree.findall(expression, XMLNS)
+            els = self.tree.findall(expression, dfc.XMLNS)
         if els is None:
             return []
         if not get_all:
@@ -251,8 +174,8 @@ class XMLProcessor(abc.ABC):
     def xpath(self, expression, element=None):
         """wrap xpath 1.0 calls"""
         if element is not None:
-            return element.xpath(expression, namespaces=XMLNS)
-        return self.tree.xpath(expression, namespaces=XMLNS)
+            return element.xpath(expression, namespaces=dfc.XMLNS)
+        return self.tree.xpath(expression, namespaces=dfc.XMLNS)
 
     def write(self, ext='.xml', out_dir=None, suffix=None) -> str:
         """Write XML-Data to METS/MODS with optional suffix"""
@@ -286,7 +209,7 @@ class MetsProcessor(XMLProcessor):
     def enrich_agent(self, note_msg):
         """Enrich agent information"""
 
-        mets_hdr = self.tree.find('.//mets:metsHdr', XMLNS)
+        mets_hdr = self.tree.find('.//mets:metsHdr', dfc.XMLNS)
         agent_smith = ET.SubElement(mets_hdr,
                                     '{http://www.loc.gov/METS/}agent',
                                     {'TYPE': 'OTHER',
@@ -318,16 +241,16 @@ class MetsProcessor(XMLProcessor):
         """Test if a certain fileGroup exists"""
 
         if isinstance(group, list):
-            return any(self.tree.findall(PATTERN_FILEGROUP_USE.format(g), XMLNS)
+            return any(self.tree.findall(PATTERN_FILEGROUP_USE.format(g), dfc.XMLNS)
                        for g in group)
-        _fgroups = self.tree.findall(PATTERN_FILEGROUP_USE.format(group), XMLNS)
+        _fgroups = self.tree.findall(PATTERN_FILEGROUP_USE.format(group), dfc.XMLNS)
         return len(_fgroups) > 0
 
     def clear_filegroups(self, black_list=None):
         """Clear file Groups by blacklist"""
 
         cleared = 0
-        file_sections = self.tree.findall('.//mets:fileSec', XMLNS)
+        file_sections = self.tree.findall('.//mets:fileSec', dfc.XMLNS)
         if len(file_sections) < 1:
             return cleared
 
@@ -353,12 +276,12 @@ class MetsProcessor(XMLProcessor):
         not only in physical Sequence Map but also in logical structMap
         """
 
-        files = sub_group.findall('mets:file', XMLNS)
+        files = sub_group.findall('mets:file', dfc.XMLNS)
         for _file in files:
             file_id = _file.attrib['ID']
             # self._sanitze_reference_and_page(file_id)
             references = self.tree.findall(
-                f'.//mets:fptr[@FILEID="{file_id}"]', XMLNS)
+                f'.//mets:fptr[@FILEID="{file_id}"]', dfc.XMLNS)
             for reference in references:
                 parent = reference.getparent()
                 parent.remove(reference)
@@ -433,7 +356,7 @@ class MetsReader(MetsProcessor):
         * otherwise, guess prime by structure map
         """
 
-        dmd_candidates = self.tree.findall(XPR_MODS_SEC, XMLNS)
+        dmd_candidates = self.tree.findall(XPR_MODS_SEC, dfc.XMLNS)
         if len(dmd_candidates) == 1 and 'ID' in dmd_candidates[0].attrib:
             self._prime_mods_id = dmd_candidates[0].attrib['ID']
         else:
@@ -449,7 +372,7 @@ class MetsReader(MetsProcessor):
                 self._prime_mods_id = self._determine_prime_dmd_id_by_logical_struct()
 
     def _determine_prime_dmd_id_by_logical_struct(self) -> str:
-        log_struct = self.tree.find('.//mets:structMap[@TYPE="LOGICAL"]', XMLNS)
+        log_struct = self.tree.find('.//mets:structMap[@TYPE="LOGICAL"]', dfc.XMLNS)
         if log_struct is None:
             raise RuntimeError(f"No logical struct in {self.tree.base}!")
         first_level = log_struct.getchildren()
@@ -467,18 +390,18 @@ class MetsReader(MetsProcessor):
                     # a subsequent digital object (monograph, volume, issue) should have MAX images
                     # and further, it should posses a physical root mapping
                     _xpr_root_link = f'.//mets:structLink/mets:smLink[@{XLINK_TO}="physroot"]'
-                    _root_link = self.tree.find(_xpr_root_link, XMLNS)
+                    _root_link = self.tree.find(_xpr_root_link, dfc.XMLNS)
                     if _root_link is not None:
-                        _log_id = _root_link.attrib[f'{{{XMLNS["xlink"]}}}from']
+                        _log_id = _root_link.attrib[f'{{{dfc.XMLNS["xlink"]}}}from']
                     # no physical root link found
                     # now map most frequent xlink:from reference
                     # this must be the logical root
                     else:
                         _xpr_link = './/mets:structLink/mets:smLink'
-                        _links = self.tree.findall(_xpr_link, XMLNS)
+                        _links = self.tree.findall(_xpr_link, dfc.XMLNS)
                         _link_map = defaultdict(int)
                         for _link in _links:
-                            _from = _link.attrib[f'{{{XMLNS["xlink"]}}}from']
+                            _from = _link.attrib[f'{{{dfc.XMLNS["xlink"]}}}from']
                             _link_map[_from] += 1
                         # now sort entries
                         # get first match which must be the "top-linker"
@@ -486,7 +409,7 @@ class MetsReader(MetsProcessor):
                     # ... so
                     # we shall know by now the top log id
                     _xpr_log = f'.//mets:structMap[@TYPE="LOGICAL"]//mets:div[@ID="{_log_id}"]'
-                    _log = self.tree.find(_xpr_log, XMLNS)
+                    _log = self.tree.find(_xpr_log, dfc.XMLNS)
                     if _log is not None:
                         _raw_id = _log.attrib['DMDID']
         # if still no primary id found, go nuts
@@ -498,7 +421,7 @@ class MetsReader(MetsProcessor):
         """Encapsulated recognition of primary DMD section"""
         _raw_id = self._prime_mods_id
         dmd_secs = self.tree.findall(
-            f'.//mets:dmdSec[@ID="{_raw_id}"]/mets:mdWrap/mets:xmlData/mods:mods', XMLNS)
+            f'.//mets:dmdSec[@ID="{_raw_id}"]/mets:mdWrap/mets:xmlData/mods:mods', dfc.XMLNS)
         if len(dmd_secs) == 0:
             raise RuntimeError(f"invalid dmd_id {_raw_id}")
         # although this means invalid METS, rather check this, too
@@ -553,9 +476,9 @@ class MetsReader(MetsProcessor):
 
     def _check_logical_interlinking(self):
         _log_ids = self.tree.xpath(f'.//mets:div[@DMDID="{self.dmd_id}"]/mets:div/@ID',
-                                   namespaces=XMLNS)
+                                   namespaces=dfc.XMLNS)
         for _log_id in _log_ids:
-            _links = self.tree.findall(f'.//mets:smLink[@{XLINK_FROM}="{_log_id}"]', XMLNS)
+            _links = self.tree.findall(f'.//mets:smLink[@{XLINK_FROM}="{_log_id}"]', dfc.XMLNS)
             if not _links:
                 raise RuntimeError(f"{self.tree.base} no link for logical section:'{_log_id}'!")
 
@@ -582,7 +505,7 @@ class MetsReader(MetsProcessor):
         """
 
         xp_vls_ext_type = 'mods:extension/*[@recordSyntax="pica"]'
-        record_el = self.primary_dmd.find(xp_vls_ext_type, XMLNS)
+        record_el = self.primary_dmd.find(xp_vls_ext_type, dfc.XMLNS)
         if record_el is not None:
             if 'code' in record_el.attrib:
                 pica_code = record_el.attrib['code']
@@ -622,7 +545,7 @@ class MetsReader(MetsProcessor):
                 elif log_type in NEWSPAPER_TYPES and not level_up.attrib['ID'].startswith('uuid'):
                     _id = level_up.attrib['ID'].strip('log')
                 else:
-                    mptr_curr = level_up.findall('mets:mptr', XMLNS)
+                    mptr_curr = level_up.findall('mets:mptr', dfc.XMLNS)
                     # exported METS from kitodo3
                     # using mptr to link parents
                     if len(mptr_curr) == 1:
@@ -638,7 +561,7 @@ class MetsReader(MetsProcessor):
         this will ONLY work with VL METS, when this workflows has processed
         the OAI-response data
         """
-        agent_notes = self.tree.xpath('.//mets:agent/mets:note/text()', namespaces=XMLNS)
+        agent_notes = self.tree.xpath('.//mets:agent/mets:note/text()', namespaces=dfc.XMLNS)
         if agent_notes:
             migration_note = [n for n in agent_notes if 'vlid' in n]
             if migration_note:
@@ -663,10 +586,10 @@ class MetsReader(MetsProcessor):
     def _identifiers_from_prime_mods(self) -> dict:
         """Collect identifiers and sources from prime MODS"""
         _identifiers = {}
-        top_idents = self.primary_dmd.findall('mods:identifier', XMLNS)
+        top_idents = self.primary_dmd.findall('mods:identifier', dfc.XMLNS)
         for top_ident in top_idents:
             _identifiers[top_ident.attrib['type']] = top_ident.text
-        record_infos = self.primary_dmd.findall('mods:recordInfo/mods:recordIdentifier', XMLNS)
+        record_infos = self.primary_dmd.findall('mods:recordInfo/mods:recordIdentifier', dfc.XMLNS)
         for rec in record_infos:
             _identifiers[rec.attrib['source']] = rec.text
         return _identifiers
@@ -708,7 +631,7 @@ class MetsReader(MetsProcessor):
             _idents[_repo] = _legacy_id
         # legacy kitodo2 source _without_ OAI envelope
         _creators = self.tree.xpath(
-            '//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name', namespaces=XMLNS)
+            '//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name', namespaces=dfc.XMLNS)
         if len(_creators) == 1 and 'kitodo-ugh' in _creators[0].text.lower():
             _idents[MARK_KITODO2] = None
         # kitodo3 metsDocumentID?
@@ -717,7 +640,7 @@ class MetsReader(MetsProcessor):
             _idents[MARK_KITODO3] = _doc_ids[0]
         # once migrated, now hosted at opendata
         _pres = self.tree.xpath(
-            './/dv:presentation[contains(./text(), "://opendata")]/text()', namespaces=XMLNS)
+            './/dv:presentation[contains(./text(), "://opendata")]/text()', namespaces=dfc.XMLNS)
         if len(_pres) == 1 and 'simple-search' not in _pres[0]:
             _idents[_pres[0].split('/')[2]] = _pres[0]
         if self._report and len(self._report.system_identifiers) > 0:
@@ -753,19 +676,19 @@ class MetsReader(MetsProcessor):
         """Read language information"""
 
         xp_lang_term = 'mods:language/mods:languageTerm/text()'
-        return self.primary_dmd.xpath(xp_lang_term, namespaces=XMLNS)
+        return self.primary_dmd.xpath(xp_lang_term, namespaces=dfc.XMLNS)
 
     def get_location_shelfs(self):
         """get data for physical prints if available; might contain multiple entries"""
 
         xpr_signature = f'.//mets:dmdSec[@ID="{self._prime_mods_id}"]//mods:shelfLocator/text()'
-        return self.tree.xpath(xpr_signature, namespaces=XMLNS)
+        return self.tree.xpath(xpr_signature, namespaces=dfc.XMLNS)
 
     def get_filegrp_links(self, group='MAX'):
         """Gather resource links for given filegroup"""
 
         xpath = f'.//mets:fileGrp[@USE="{group}"]/mets:file/mets:FLocat'
-        resources = self.tree.findall(xpath, XMLNS)
+        resources = self.tree.findall(xpath, dfc.XMLNS)
         return [res.attrib[XLINK_HREF] for res in resources]
 
     def get_invalid_physical_structs(self):
@@ -777,7 +700,7 @@ class MetsReader(MetsProcessor):
 
         xpath_links = './/mets:smLink'
         xpath_phys_pattern = './/*[@ID="{}"]'
-        links = self.tree.findall(xpath_links, XMLNS)
+        links = self.tree.findall(xpath_links, dfc.XMLNS)
 
         miss_targets = []
         latest_working = None
@@ -785,7 +708,7 @@ class MetsReader(MetsProcessor):
             link_from = link.attrib[XLINK_FROM]
             link_to = link.attrib[XLINK_TO]
             xpath_phys = xpath_phys_pattern.format(link_to)
-            phys_el = self.tree.find(xpath_phys, XMLNS)
+            phys_el = self.tree.find(xpath_phys, dfc.XMLNS)
             if phys_el is None:
                 miss_targets.append((link_from, link_to, latest_working))
             else:
@@ -798,11 +721,11 @@ class MetsReader(MetsProcessor):
 
         xp_origins = 'mods:originInfo'
         xp_place_term = 'mods:place/mods:placeTerm/text()'
-        origins = self.primary_dmd.findall(xp_origins, XMLNS)
+        origins = self.primary_dmd.findall(xp_origins, dfc.XMLNS)
 
         infos = []
         for origin in origins:
-            place_labels = origin.xpath(xp_place_term, namespaces=XMLNS)
+            place_labels = origin.xpath(xp_place_term, namespaces=dfc.XMLNS)
             for place_label in place_labels:
                 if 'eventType' in origin.attrib:
                     infos.append((origin.attrib['eventType'], place_label))

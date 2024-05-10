@@ -40,7 +40,7 @@ from digiflow import (
     OAILoader,
     LocalStore,
     get_enclosed,
-    post_oai_extract_mets,
+    extract_mets,
     request_resource,
     smtp_note,
     transform_to_record,
@@ -188,7 +188,7 @@ def test_oai_load_vd16_with_localstore(mock_request_vd16_997508, tmp_path):
     # act
     loader = OAILoader(local_dir, base_url='digitale.bibliothek.uni-halle.de/vd16/oai',
                        group_images=key_images,
-                       post_oai=post_oai_extract_mets)
+                       post_oai=extract_mets)
     loader.store = LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst, 'md997508')
 
@@ -223,7 +223,7 @@ def test_oai_load_opendata_with_localstore(
     # act
     loader = OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
                        group_images=key_images,
-                       post_oai=post_oai_extract_mets)
+                       post_oai=extract_mets)
     loader.store = LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst)
 
@@ -262,7 +262,7 @@ def test_oai_load_opendata_request_kwargs(
     # act
     loader = OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
                        group_images=key_images,
-                       post_oai=post_oai_extract_mets,
+                       post_oai=extract_mets,
                        request_kwargs=request_kwargs)
     loader.store = LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst)
@@ -561,15 +561,9 @@ def test_oai_load_vls_zd1_with_ocr(mock_request, tmp_path):
     store_dir.mkdir(parents=True)
     local_dst = str(local_dir) + '/' + _id + '.xml'
 
-    def post_write_mets(the_self, the_data):
-        """Just extract METS from OAI body"""
-        xml_root = ET.fromstring(the_data)
-        write_xml_file(xml_root, the_self.path_mets, preamble=None)
-        return the_self.path_mets
-
     # act
     loader = OAILoader(local_dir, base_url=OAI_BASE_URL_ZD,
-                       post_oai=post_write_mets)
+                       post_oai=extract_mets)
     loader.store = LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst)
 
@@ -1580,7 +1574,7 @@ def test_oai_load_exception_for_server_error(mock_504, tmp_path):
     # act
     loader = OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
                        group_images=key_images,
-                       post_oai=post_oai_extract_mets,
+                       post_oai=extract_mets,
                        request_kwargs=request_kwargs)
     loader.store = LocalStore(store_dir, local_dir)
 

@@ -42,11 +42,11 @@ from PIL.TiffImagePlugin import (
     IFDRational,
 )
 
+import digiflow.common as dfc
 from .common import (
     INVALID_LABEL_RANGE,
     INVALID_LABEL_TYPE,
     INVALID_LABEL_UNSET,
-    UNSET_LABEL,
     UNSET_NUMBR,
     Validator,
     Invalid,
@@ -137,15 +137,15 @@ class ImageMetadata:
     compression = UNSET_NUMBR
     photometric_interpretation = UNSET_NUMBR
     samples_per_pixel = UNSET_NUMBR
-    model = UNSET_LABEL
+    model = dfc.UNSET_LABEL
     xRes = UNSET_NUMBR
     yRes = UNSET_NUMBR
     resolution_unit = UNSET_NUMBR
     color_space = UNSET_NUMBR
-    artist = UNSET_LABEL
-    copyright = UNSET_LABEL
-    software = UNSET_LABEL
-    created = UNSET_LABEL  # EXIF TAG 306 DATE_TIME
+    artist = dfc.UNSET_LABEL
+    copyright = dfc.UNSET_LABEL
+    software = dfc.UNSET_LABEL
+    created = dfc.UNSET_LABEL  # EXIF TAG 306 DATE_TIME
     channel = UNSET_NUMBR  # EFIX TAG 258 BITSPERSAMPLE
 
 
@@ -154,11 +154,11 @@ class Image:
     """Store required data"""
 
     local_path: str
-    url = UNSET_LABEL
+    url = dfc.UNSET_LABEL
     file_size = 0
     time_stamp = None
-    profile = UNSET_LABEL
-    image_checksum = UNSET_LABEL
+    profile = dfc.UNSET_LABEL
+    image_checksum = dfc.UNSET_LABEL
     metadata: ImageMetadata = None
     invalids = []
 
@@ -177,7 +177,7 @@ class Image:
             _meta_data.color_space = _pil_img.mode
 
             # datetime present?
-            if _meta_data.created is None or _meta_data.created == UNSET_LABEL:
+            if _meta_data.created is None or _meta_data.created == dfc.UNSET_LABEL:
                 ctime = os.stat(self.local_path).st_ctime
                 dt_object = datetime.datetime.fromtimestamp(ctime)
                 _meta_data.created = dt_object.strftime(DATETIME_SRC_FORMAT)
@@ -267,7 +267,7 @@ class ScanValidatorChannel(Validator):
         _input: Image = self.input_data
         _imd: ImageMetadata = _input.metadata
         _spp = _imd.samples_per_pixel
-        if _spp == UNSET_LABEL:
+        if _spp == dfc.UNSET_LABEL:
             self.invalids.append(Invalid(self.label, _input.local_path,
                                  f"{INVALID_LABEL_UNSET} {LABEL_SAMPLES_PIXEL}"))
         elif _spp not in GREYSCALE_OR_RGB:

@@ -2,7 +2,6 @@ from .common import (
     INVALID_LABEL_RANGE,
     INVALID_LABEL_TYPE,
     INVALID_LABEL_UNSET,
-    UNSET_LABEL,
     UNSET_NUMBR,
     Invalid,
     Validator,
@@ -34,4 +33,9 @@ from .imgdata import (
     ScanValidatorResolution,
     ValidatorFactory,
     validate_tiff,
+)
+
+from .metadata_xsd import (
+    InvalidXMLException,
+    validate_xml,
 )
