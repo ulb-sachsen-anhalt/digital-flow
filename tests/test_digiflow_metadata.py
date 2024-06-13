@@ -571,9 +571,34 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
     mets_proc = df.MetsProcessor(str(dst), '14591176')
 
     # act
-    mets_proc.clear_filegroups(black_list=['DEFAULT', 'THUMBS', 'MIN', 'DOWNLOAD', 'TEASER'])
-    new_roots = ET.parse(str(dst))
-    assert len(new_roots.findall('.//mets:fileGrp', dfc.XMLNS)) == 6
+    mets_proc.clear_filegroups(black_list=['TEASER', 'DOWNLOAD', 'DEFAULT', 'THUMBS', 'MIN'])
+    mets_proc.write()
+    new_tree = ET.parse(str(dst))
+    assert len(new_tree.findall('.//mets:fileGrp', dfc.XMLNS)) == 1
+    dfv.validate_xml(new_tree.getroot())
+
+
+def test_metsprocessor_clear_filegroups_odem_ocrd(tmp_path):
+    """MetsProcessor with already ocr-ed VD18 print"""
+
+    # arrange
+    mets = os.path.join(TEST_RES, 'opendata/1981185920_38841.xml')
+    the_orig = ET.parse(mets)
+    orig_file_groups = the_orig.findall('.//mets:fileGrp', dfc.XMLNS)
+    assert len(orig_file_groups) == 5
+
+    dst = tmp_path / '1981185920_38841.xml'
+    shutil.copyfile(mets, str(dst))
+    mets_proc = df.MetsProcessor(str(dst))
+
+    # act
+    mets_proc.clear_filegroups(black_list=['DOWNLOAD', 'DEFAULT', 'THUMBS', 'FULLTEXT'])
+    mets_proc.write()
+    
+    # assert
+    new_tree = ET.parse(dst)
+    dfv.validate_xml(new_tree.getroot())
+    assert len(new_tree.findall('.//mets:fileGrp', dfc.XMLNS)) == 1
 
 
 def test_metsreader_zd2_issue_18680621():

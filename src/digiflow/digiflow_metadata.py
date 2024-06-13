@@ -269,11 +269,10 @@ class MetsProcessor(XMLProcessor):
         for sub_group in sub_groups:
             subgroup_label = sub_group.attrib['USE']
             if black_list:
-                for black in black_list:
-                    if subgroup_label == black:
-                        self._clear_also_fileptrs(sub_group)
-                        file_sections[0].remove(sub_group)
-                        cleared += 1
+                if subgroup_label in black_list:
+                    self._clear_also_fileptrs(sub_group)
+                    file_sections[0].remove(sub_group)
+                    cleared += 1
 
         # optional: handle *now* possibly empty file section
         if len(file_sections[0].getchildren()) < 1:
