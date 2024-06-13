@@ -3,16 +3,15 @@
 import os
 import shutil
 
+from pathlib import Path
+
 import pytest
 
 import lxml.etree as ET
 
-from digiflow import (
-    MetsProcessor,
-    MetsReader,
-    MARK_KITODO2,
-)
+import digiflow as df
 import digiflow.common as dfc
+import digiflow.validate as dfv
 
 from .conftest import TEST_RES, LIB_RES
 
@@ -26,7 +25,7 @@ def test_metsreader_kitodo2_mvw():
     # arrange
     path = os.path.join(TEST_RES, 'k2_mets_vd18_183475917.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path)
+    reader = df.MetsReader(path)
 
     # act
     report = reader.analyze()
@@ -49,7 +48,7 @@ def test_metsreader_report_vd18_cstage():
     # arrange
     path = os.path.join(TEST_RES, 'migration', '9427342.mets.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path, 'md9427342')
+    reader = df.MetsReader(path, 'md9427342')
 
     # act
     report = reader.analyze()
@@ -71,7 +70,7 @@ def test_metsreader_report_vd18_fstage():
     # arrange
     path = os.path.join(TEST_RES, 'migration', '9427337.mets.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path, 'md9427337')
+    reader = df.MetsReader(path, 'md9427337')
 
     # act
     report = reader.analyze()
@@ -97,7 +96,7 @@ def test_metsreader_report_vd17_fstage_pica_case():
                         'migration',
                         'vd17-14591176.mets.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path, 'md14591176')
+    reader = df.MetsReader(path, 'md14591176')
 
     # act
     report = reader.analyze()
@@ -123,7 +122,7 @@ def test_metsreader_report_hd_monography():
                         'monography',
                         '10595.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path, 'md10595')
+    reader = df.MetsReader(path, 'md10595')
 
     # act
     report = reader.analyze()
@@ -146,13 +145,13 @@ def test_metsreader_report_kitodo2_export_monography():
     # arrange
     path = os.path.join(TEST_RES, 'k2_mets_vd18_147638674.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path, 'DMDLOG_0000')
+    reader = df.MetsReader(path, 'DMDLOG_0000')
 
     # act
     report = reader.analyze()
     # need to set this manually since
     # we do not know the kitodo ID from METS
-    report.system_identifiers[MARK_KITODO2] = '1234'
+    report.system_identifiers[df.MARK_KITODO2] = '1234'
 
     # assert
     assert report.languages == ['ger']
@@ -176,7 +175,7 @@ def test_metsreader_logical_type_1686755_is_document():
     mets = os.path.join(TEST_RES, 'migration/1686755.oai.xml')
 
     # arrange
-    mets_reader = MetsReader(mets, 'md1686755')
+    mets_reader = df.MetsReader(mets, 'md1686755')
 
     # assert
     outcome = mets_reader.get_type_and_hierarchy()
@@ -190,7 +189,7 @@ def test_metsreader_type_pica_monography():
     mets = os.path.join(TEST_RES, 'migration/201517.oai.xml')
 
     # act
-    mets_reader = MetsReader(mets, 'md201517')
+    mets_reader = df.MetsReader(mets, 'md201517')
 
     assert "Aa" in mets_reader.get_type_and_hierarchy()
 
@@ -204,7 +203,7 @@ def test_metsreader_wrong_logical_type():
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/416811.mets.xml')
-    mets_reader = MetsReader(mets, 'md416811')
+    mets_reader = df.MetsReader(mets, 'md416811')
 
     # has no picaType enriched
     # asserts "monograph", which is actually *wrong*
@@ -229,7 +228,7 @@ def test_metsreader_invalid_physlinks_10595(monograph_hd_invalid_physlinks):
     Handle digital objects with invalid links from
     logical maps to physical structure
     """
-    mets = MetsReader(monograph_hd_invalid_physlinks, 'md10595')
+    mets = df.MetsReader(monograph_hd_invalid_physlinks, 'md10595')
     structs = mets.get_invalid_physical_structs()
 
     assert len(structs) == 26
@@ -243,7 +242,7 @@ def test_metsreader_report_for_10595(monograph_hd_invalid_physlinks):
     """Report for digital library object hd/10595"""
 
     # arrange
-    reader = MetsReader(monograph_hd_invalid_physlinks, 'md10595')
+    reader = df.MetsReader(monograph_hd_invalid_physlinks, 'md10595')
 
     # act
     report = reader.analyze()
@@ -263,7 +262,7 @@ def test_metsreader_logical_type_is_multivolume():
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/9427342.mets.xml')
-    mets_reader = MetsReader(mets, 'md9427342')
+    mets_reader = df.MetsReader(mets, 'md9427342')
 
     # act
     mets_reader.analyze()
@@ -282,7 +281,7 @@ def test_metsreader_logical_type_is_tome():
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/9427334.mets.xml')
-    mets_reader = MetsReader(mets, 'md9427334')
+    mets_reader = df.MetsReader(mets, 'md9427334')
 
     # act
     mets_reader.analyze()
@@ -301,7 +300,7 @@ def test_metsreader_ambigious_recordinfo():
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/369765.mets.xml')
-    mets_reader = MetsReader(mets, 'md369765')
+    mets_reader = df.MetsReader(mets, 'md369765')
 
     # act
     mets_reader.analyze()
@@ -324,7 +323,7 @@ def test_metsreader_clear_agents(tmp_path):
     assert len(orig_agents) == 4
     dst = tmp_path / '369765.mets.xml'
     shutil.copyfile(mets, str(dst))
-    mets_reader = MetsReader(str(dst), 'md369765')
+    mets_reader = df.MetsReader(str(dst), 'md369765')
 
     # act
     mets_reader.clear_agents('OTHERTYPE', ['REPOSITORY', 'INSTANCE'])
@@ -339,6 +338,103 @@ def test_metsreader_clear_agents(tmp_path):
         assert 'INSTANCE' not in agent.attrib['OTHERTYPE']
 
 
+def test_metsreader_enrich_first_agent(tmp_path):
+    """
+    Ensure mets:agent doesn't yield invalid METS =>
+    insert agent at right position
+    cf. https://www.loc.gov/standards/mets/mets.xsd
+
+    Prevent
+    digiflow.validate.metadata_xsd.InvalidXMLException: 
+        [('ERROR', 
+          'SCHEMASV', 
+          "Element '{http://www.loc.gov/METS/}agent': This element is not expected.")]
+    """
+
+    # arrange
+    mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
+    mets_input = ET.parse(mets)
+    orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
+    assert len(orig_agents) == 0
+    dst = tmp_path / 'mets.xml'
+    shutil.copyfile(mets, str(dst))
+    mets_reader = df.MetsReader(dst)
+
+    # act
+    mets_reader.enrich_agent('Agent Smith')
+    result_path = mets_reader.write('ulb')
+
+    # assert
+    assert Path(result_path).exists()
+    dfv.validate_xml(ET.parse(result_path).getroot()) # no Exception plz
+
+def test_metsreader_enrich_another_agent(tmp_path):
+    """
+    Ensure mets:agent doesn't yield invalid METS =>
+    insert agent at right position
+    cf. https://www.loc.gov/standards/mets/mets.xsd
+
+    Prevent
+    digiflow.validate.metadata_xsd.InvalidXMLException: 
+        [('ERROR', 
+          'SCHEMASV', 
+          "Element '{http://www.loc.gov/METS/}agent': This element is not expected.")]
+    """
+
+    # arrange
+    mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
+    mets_input = ET.parse(mets)
+    orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
+    assert len(orig_agents) == 0
+    dst = tmp_path / 'mets.xml'
+    shutil.copyfile(mets, str(dst))
+    mets_reader = df.MetsReader(dst)
+
+    # act
+    mets_reader.enrich_agent('Agent J')
+    mets_reader.enrich_agent('Agent K')
+    result_path = mets_reader.write('ulb')
+
+    # assert
+    assert Path(result_path).exists()
+    dfv.validate_xml(ET.parse(result_path).getroot()) # no Exception plz
+
+
+def test_metsreader_enrich_agent_kwargs(tmp_path):
+    """
+    Ensure mets:agent doesn't yield invalid METS =>
+    insert agent at right position
+    cf. https://www.loc.gov/standards/mets/mets.xsd
+
+    Prevent
+    digiflow.validate.metadata_xsd.InvalidXMLException: 
+        [('ERROR', 
+          'SCHEMASV', 
+          "Element '{http://www.loc.gov/METS/}agent': This element is not expected.")]
+    """
+
+    # arrange
+    mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
+    mets_input = ET.parse(mets)
+    orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
+    assert len(orig_agents) == 0
+    dst = tmp_path / '369765.mets.xml'
+    shutil.copyfile(mets, str(dst))
+    mets_reader = df.MetsReader(dst)
+
+    # act
+    kwargs = {'ROLE': 'CREATOR', 'TYPE': 'INDIVIDUAL'}
+    mets_reader.enrich_agent(agent_name='Agent Smith', **kwargs)
+    result_path = mets_reader.write('ulb')
+
+    # assert
+    assert Path(result_path).exists()
+    result_root = ET.parse(result_path).getroot()
+    dfv.validate_xml(result_root) # no Exception plz
+    assert result_root.xpath('.//mets:agent[@TYPE="INDIVIDUAL"]/mets:name/text()',
+                             namespaces=df.XMLNS)[0] == 'Agent Smith'
+
+
 def test_metsreader_log_hierarchy_menadoc_oai_record_section():
     """
     Handle strange records from menadoc with logical root element
@@ -350,7 +446,7 @@ def test_metsreader_log_hierarchy_menadoc_oai_record_section():
     target_file = os.path.join(TEST_RES, 'migration/20586.mets.xml')
 
     # act
-    _mreader = MetsReader(target_file)
+    _mreader = df.MetsReader(target_file)
     with pytest.raises(RuntimeError) as rer:
         _report = _mreader.report
     assert 'no record _identifiers' in rer.value.args[0]
@@ -372,7 +468,7 @@ def test_metsreader_opendata2_inspect_migrated_record_identifiers():
 
     # arrange
     target_file = os.path.join(TEST_RES, 'mets/vd16_opendata2_1516514412012_4400.xml')
-    mets_reader = MetsReader(target_file)
+    mets_reader = df.MetsReader(target_file)
 
     # act
     report = mets_reader.analyze()
@@ -399,7 +495,7 @@ def test_metsreader_opendata_migrated_record_with_doi():
 
     # arrange
     target_file = os.path.join(TEST_RES, 'opendata/1981185920_43053.xml')
-    mets_reader = MetsReader(target_file)
+    mets_reader = df.MetsReader(target_file)
 
     # act
     report = mets_reader.analyze()
@@ -425,7 +521,7 @@ def test_metsreader_opendata_inspect_migrated_record_origins():
 
     # arrange
     target_file = os.path.join(TEST_RES, 'opendata2/vd16-opendata2-1516514412012-4400.xml')
-    mets_reader = MetsReader(target_file)
+    mets_reader = df.MetsReader(target_file)
 
     # act
     report = mets_reader.analyze()
@@ -442,7 +538,7 @@ def test_metsreader_zd1_issue_16767392():
     mets = os.path.join(TEST_RES, 'vls/zd/zd1-16767392.oai.xml')
 
     # act
-    mets_reader = MetsReader(mets, 'md16767392')
+    mets_reader = df.MetsReader(mets, 'md16767392')
 
     assert "16767392" in mets_reader.get_identifiers()['local']
     assert "issue" in mets_reader.get_type_and_hierarchy()
@@ -455,7 +551,7 @@ def test_metsreader_zd1_issue_16359609():
     mets = os.path.join(TEST_RES, 'vls/zd/zd1-16359609.mets.xml')
 
     # act
-    mets_reader = MetsReader(mets)
+    mets_reader = df.MetsReader(mets)
 
     assert "ulbhalvd:16359609" == mets_reader.get_identifiers()['local']
     assert "issue" in mets_reader.get_type_and_hierarchy()
@@ -472,7 +568,7 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
 
     dst = tmp_path / '14591176.xml'
     shutil.copyfile(mets, str(dst))
-    mets_proc = MetsProcessor(str(dst), '14591176')
+    mets_proc = df.MetsProcessor(str(dst), '14591176')
 
     # act
     mets_proc.clear_filegroups(black_list=['DEFAULT', 'THUMBS', 'MIN', 'DOWNLOAD', 'TEASER'])
@@ -487,7 +583,7 @@ def test_metsreader_zd2_issue_18680621():
     mets = os.path.join(TEST_RES, 'kitodo3-zd2/1021634069-18680621.xml')
 
     # act
-    mets_reader = MetsReader(mets)
+    mets_reader = df.MetsReader(mets)
 
     _idents = mets_reader.get_identifiers()
     assert _idents == {
@@ -517,7 +613,7 @@ def test_metsreader_zd2_issue_18680621():
 def test_metsreader_identify_prime_dmd_section(mets_path, dmd_id):
 
     # act
-    mets_reader = MetsReader(mets_path)
+    mets_reader = df.MetsReader(mets_path)
 
     # assert
     assert mets_reader._prime_mods_id == dmd_id
@@ -536,7 +632,7 @@ def test_metsprocessor_remove_elements_and_close_tags(tmp_path):
     path_altov4_737429 = os.path.join(TEST_RES, 'ocr', 'alto', 'FULLTEXT_737438.xml')
     dst = tmp_path / '737438.xml'
     shutil.copyfile(path_altov4_737429, str(dst))
-    mets_proc = MetsProcessor(str(dst))
+    mets_proc = df.MetsProcessor(str(dst))
 
     # act
     mets_proc.remove(['alto:Shape', 'alto:Processing'])
@@ -558,7 +654,7 @@ def test_metsprocessor_remove_elements_no_keyerror(tmp_path):
     _a_path = os.path.join(TEST_RES, 'vls_menadoc_99454.mets.xml')
     dst = tmp_path / '99454.xml'
     shutil.copyfile(_a_path, str(dst))
-    mets_proc = MetsProcessor(str(dst))
+    mets_proc = df.MetsProcessor(str(dst))
     assert len(mets_proc.xpath('//vl:sourceinfo')) == 1
 
     # act
@@ -566,7 +662,7 @@ def test_metsprocessor_remove_elements_no_keyerror(tmp_path):
     path_result = mets_proc.write()
 
     # assert
-    resl_proc = MetsProcessor(path_result)
+    resl_proc = df.MetsProcessor(path_result)
     assert len(resl_proc.xpath('//vl:sourceinfo')) == 0
 
 
@@ -583,7 +679,7 @@ def test_metsreader_logical_hierachy_newspaper_issue():
 
     # arrange
     mets = os.path.join(TEST_RES, 'vls/zd/zd1-issue-16359603.zmets.xml')
-    mets_reader = MetsReader(mets, 'md16359603')
+    mets_reader = df.MetsReader(mets, 'md16359603')
 
     # act
     pica, log_typ, hierachy = mets_reader.get_type_and_hierarchy()
@@ -606,7 +702,7 @@ def test_metsreader_missing_struct_mapping():
 
     # arrange
     mets = os.path.join(TEST_RES, 'opendata/1981185920_43053.xml')
-    mets_reader = MetsReader(mets)
+    mets_reader = df.MetsReader(mets)
     assert mets_reader.dmd_id == 'md1177525'
 
     # act
@@ -628,7 +724,7 @@ def test_metsreader3_report_vd18_cstage():
     # arrange
     path = os.path.join(TEST_RES, 'migration', '9427342.mets.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path, 'md9427342')
+    reader = df.MetsReader(path, 'md9427342')
     reader.config = DIGIFLOW_CONFIG
     _identifier_opts = reader.config.options('identifier')
     assert len(_identifier_opts) == 14
@@ -657,7 +753,7 @@ def test_metsreader3_report_vd18_fstage():
     # arrange
     path = os.path.join(TEST_RES, 'migration', '9427337.mets.xml')
     assert os.path.exists(path)
-    reader = MetsReader(path, 'md9427337')
+    reader = df.MetsReader(path, 'md9427337')
     reader.config = DIGIFLOW_CONFIG
 
     # act
@@ -689,7 +785,7 @@ def test_metsreader_kitodo2_mena_periodical_volume_dmd_id():
     mets = os.path.join(TEST_RES, 'k2_mets_mena_12988274719564.xml')
 
     # act
-    mets_reader = MetsReader(mets)
+    mets_reader = df.MetsReader(mets)
 
     # assert
     assert mets_reader.dmd_id == 'DMDLOG_0001'
@@ -701,12 +797,12 @@ def test_metadata_processor_contains_single_fgroup():
     TypeError: '>' not supported between instances of 'list' and 'int'
     """
 
-    _proc = MetsProcessor(TEST_RES / 'k2_mets_morbio_1748529021.xml')
+    _proc = df.MetsProcessor(TEST_RES / 'k2_mets_morbio_1748529021.xml')
     assert _proc.contains_group('MAX')
 
 
 def test_metadata_processor_contains_multiple_fgroup():
     """Ensure behavior for passing list args"""
 
-    _proc = MetsProcessor(TEST_RES / 'k2_mets_morbio_1748529021.xml')
+    _proc = df.MetsProcessor(TEST_RES / 'k2_mets_morbio_1748529021.xml')
     assert _proc.contains_group(['MAX'])

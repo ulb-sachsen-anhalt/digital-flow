@@ -206,19 +206,30 @@ class XMLProcessor(abc.ABC):
 class MetsProcessor(XMLProcessor):
     """Basic METS/MODS-Handling"""
 
-    def enrich_agent(self, note_msg):
-        """Enrich agent information"""
+    def enrich_agent(self, agent_name, agent_note=None, **kwargs):
+        """Enrich agent information by name
+        at the proper Header position
+        optional set note/remark (per default current date)
+        and additional mets:agent attributes as kwargs => 
+        be sure to know how to do, since the schema is
+        rigorous concerning *both* attributes and values!
+        """
 
-        mets_hdr = self.tree.find('.//mets:metsHdr', dfc.XMLNS)
-        agent_smith = ET.SubElement(mets_hdr,
-                                    '{http://www.loc.gov/METS/}agent',
-                                    {'TYPE': 'OTHER',
-                                     'ROLE': 'OTHER',
-                                     'OTHERTYPE': 'SOFTWARE'})
+        mets_hdr: ET._Element = self.tree.find('.//mets:metsHdr', dfc.XMLNS)
+        next_agent_id = 0
+        for i, sub_el in enumerate(mets_hdr.getchildren(), 1):
+            if ET.QName(sub_el.tag).localname == 'agent':
+                next_agent_id = i
+        if kwargs is None or len(kwargs) == 0:
+            kwargs = {'TYPE': 'OTHER', 'ROLE': 'OTHER', 'OTHERTYPE': 'SOFTWARE'}
+        agent_smith = ET.Element('{http://www.loc.gov/METS/}agent', kwargs)
         the_name = ET.SubElement(agent_smith, '{http://www.loc.gov/METS/}name')
-        the_name.text = note_msg
+        the_name.text = agent_name
         the_note = ET.SubElement(agent_smith, '{http://www.loc.gov/METS/}note')
-        the_note.text = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+        if agent_note is None:
+            agent_note = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+        the_note.text = agent_note
+        mets_hdr.insert(next_agent_id, agent_smith)
 
     def clear_agents(self, filter_by_attr, black_list):
         """
