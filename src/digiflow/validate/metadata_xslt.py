@@ -3,15 +3,9 @@ cf. https://github.com/Deutsche-Digitale-Bibliothek/ddb-metadata-schematron-vali
 """
 
 import os
+import typing
 
-from typing import (
-    Dict,
-    List,
-)
-
-from pathlib import (
-    Path
-)
+from pathlib import Path
 
 from lxml import etree as ET
 
@@ -38,6 +32,7 @@ DDB_IGNORE_RULES_BASIC = [
     'fileSec_02',       # fatal: no mets:fileSec[@TYPE="DEFAULT"]
     'identifier_01',    # info:  record identifier types like "bv" or "eki" not accepted
     'titleInfo_02',     # fatal: parts of work lack titel
+    'originInfo_06',    # error: placeTerm contains invalid attr type 'code' (i.e. code=XA-DE)
 ]
 
 # some special corner cases, when certain DDB-rules
@@ -63,11 +58,11 @@ DDB_IGNORE_RULES_NEWSPAPERS = [
     'originInfo_01',
 ]
 
-DDB_MEDIA_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-medien.xsl'
-DDB_NEWSP_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-zeitungen.xsl'
-XSL_DIR = Path(__file__).parent.parent / 'resources' / 'xsl'
-PATH_MEDIA_XSL = XSL_DIR / DDB_MEDIA_XSL
-PATH_NEWSP_XSL = XSL_DIR / DDB_NEWSP_XSL
+_DDB_MEDIA_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-medien.xsl'
+_DDB_NEWSP_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-zeitungen.xsl'
+_XSL_DIR = Path(__file__).parent.parent / 'resources' / 'xsl'
+PATH_MEDIA_XSL = _XSL_DIR / _DDB_MEDIA_XSL
+PATH_NEWSP_XSL = _XSL_DIR / _DDB_NEWSP_XSL
 
 # default temporary report file
 REPORT_FILE_XSLT = 'report_xslt.xml'
@@ -160,7 +155,7 @@ def gather_failed_asserts(path_mets, processor, path_report, ignore_rules=None):
     return _aggregated
 
 
-def _get_failures(path_input, proc, path_report, ignores=None) -> List[FailedAssert]:
+def _get_failures(path_input, proc, path_report, ignores=None) -> typing.List[FailedAssert]:
     """Inspect results from tmp report file
     if any irregularities detected, apply XSLT2.0
     expressions from report file to gather details"""
@@ -193,7 +188,7 @@ def _get_failures(path_input, proc, path_report, ignores=None) -> List[FailedAss
     return _failures
 
 
-def _failed_asserts_to_dict(fails: List[FailedAssert]) -> Dict:
+def _failed_asserts_to_dict(fails: typing.List[FailedAssert]) -> typing.Dict:
     _dict = {}
     for _f in fails:
         _xpln = _f.explain()
@@ -223,8 +218,8 @@ def ddb_validation(path_mets, digi_type='Aa', ignore_rules=None, post_process=ga
     """
     if ignore_rules is None:
         ignore_rules = DDB_IGNORE_RULES_BASIC
-    if digi_type in DIGIS_MULTIVOLUME:
-        ignore_rules = DDB_IGNORE_RULES_MVW
+        if digi_type in DIGIS_MULTIVOLUME:
+            ignore_rules = DDB_IGNORE_RULES_MVW
     _path_xslt = str(PATH_MEDIA_XSL)
     if digi_type in DIGIS_NEWSPAPER:
         _path_xslt = str(PATH_NEWSP_XSL)

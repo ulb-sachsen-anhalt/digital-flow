@@ -355,3 +355,24 @@ def test_ddb_validate_newspaper_02(tmp_path):
 
     # assert
     assert len(_result) == 0
+
+
+def test_ddb_validate_opendata_origin_info_mystery():
+    """Why error although set to ignore?
+    Because recent bahavior was to override any
+    ignore rules if digitalization type indicated
+    multivolume work, therefore ignores weren't
+    respected before!
+    """
+
+    # arrange
+    the_mets = '1981185920_34752.xml'
+    mets_path = TEST_RES / 'opendata' / the_mets
+    ignore_these = ['identifier_01', 'originInfo_06']
+
+    # act
+    validation_result = ddb_validation(mets_path, digi_type='AF', ignore_rules=ignore_these)
+
+    # assert
+    assert len(validation_result) == 1
+    assert 'failed_assert_other' in validation_result
