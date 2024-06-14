@@ -11,7 +11,6 @@ import os
 import pathlib
 import shutil
 import subprocess
-import sys
 import tempfile
 
 from lxml import etree as ET
@@ -95,7 +94,7 @@ def process(export_mappings, work_dir, archive_name,
     _handle_collections_file(work_dir, target_collection)
     #_handle_contents_file(work_dir)
     _handle_contents_file(work_dir, export_mappings)
-    (the_tmp_path, the_filesize) = _compress(os.path.dirname(work_dir), archive_name)
+    (the_tmp_path, the_filesize) = compress(os.path.dirname(work_dir), archive_name)
     path_export_processing = _move_to_tmp_file(the_tmp_path, target_data_dir)
     return (path_export_processing, the_filesize)
 
@@ -202,7 +201,7 @@ def _is_alto(path_file) -> bool:
         raise DigiFlowExportError(f"Unknown OCR-Format: {_err.args}") from _err
 
 
-def _compress(work_dir, archive_name):
+def compress(work_dir, archive_name):
     """
     Switched implementation since unable to de-compress zip64Format
     created with shutil.make_archive by Share_it
