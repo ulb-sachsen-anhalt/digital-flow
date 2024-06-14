@@ -32,7 +32,7 @@ DDB_IGNORE_RULES_BASIC = [
     'fileSec_02',       # fatal: no mets:fileSec[@TYPE="DEFAULT"]
     'identifier_01',    # info:  record identifier types like "bv" or "eki" not accepted
     'titleInfo_02',     # fatal: parts of work lack titel
-    'originInfo_06',    # error: placeTerm contains invalid attr type 'code' (i.e. code=XA-DE)
+    # 'originInfo_06',  # error: unclear = placeTerm contains invalid attr type 'code' (i.e. XA-DE)
 ]
 
 # some special corner cases, when certain DDB-rules
