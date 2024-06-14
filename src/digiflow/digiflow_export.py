@@ -95,7 +95,7 @@ def process(export_mappings, work_dir, archive_name,
     #_handle_contents_file(work_dir)
     _handle_contents_file(work_dir, export_mappings)
     (the_tmp_path, the_filesize) = compress(os.path.dirname(work_dir), archive_name)
-    path_export_processing = _move_to_tmp_file(the_tmp_path, target_data_dir)
+    path_export_processing = move_to_tmp_file(the_tmp_path, target_data_dir)
     return (path_export_processing, the_filesize)
 
 
@@ -218,7 +218,7 @@ def compress(work_dir, archive_name):
     return (zip_file_path, "{}MB".format(zip_size))
 
 
-def _move_to_tmp_file(the_file_path, destination):
+def move_to_tmp_file(the_file_path, destination):
     """
     Move propably very large export data with masked name to external drive
     """
