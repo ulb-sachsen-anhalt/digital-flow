@@ -1,35 +1,20 @@
 # -*- coding: utf-8 -*-
 
+import collections
 import csv
+import email.utils
+import email.mime.text
 import os
 import shutil
+import smtplib
 import time
 
-from collections import (
-    OrderedDict
-)
-from email.utils import (
-    formatdate,
-)
-from email.mime.text import (
-    MIMEText
-)
-from pathlib import (
-    Path
-)
-from smtplib import (
-    SMTP,
-)
-
+from pathlib import Path
 
 import requests
 from lxml import etree as ET
 
-from .digiflow_metadata import (
-    MetsReader,
-    write_xml_file,
-)
-
+import digiflow.digiflow_metadata as df_md
 import digiflow.common as dfc
 
 
@@ -64,7 +49,7 @@ def post_oai_store_ocr(path_local, the_data):
     if isinstance(the_data, str):
         the_data = the_data.encode('utf-8')
     xml_root = ET.fromstring(the_data)
-    write_xml_file(xml_root, path_local, preamble=None)
+    df_md.write_xml_file(xml_root, path_local, preamble=None)
 
 
 def get_enclosed(tokens_str:str, mark_end='}', mark_start='{', func_find='rfind') -> str:
@@ -198,7 +183,7 @@ class OAIRecordCriteria:
     Criteria to pick OAIRecords from a list
     """
 
-    def matched(self, _: OrderedDict) -> bool:
+    def matched(self, _: collections.OrderedDict) -> bool:
         """Determine, whether given OAI-Record matched criteria"""
 
 
@@ -207,7 +192,7 @@ class OAIRecordCriteriaIdentifier(OAIRecordCriteria):
     def __init__(self, ident):
         self.ident = ident
 
-    def matched(self, record: OrderedDict) -> bool:
+    def matched(self, record: collections.OrderedDict) -> bool:
         rec_id = record[F_IDENTIFIER]
         # maybe must deal shortened identifier (like legacy id)
         if 'oai' not in self.ident or ':' not in self.ident:
@@ -220,7 +205,7 @@ class OAIRecordCriteriaState(OAIRecordCriteria):
     def __init__(self, state):
         self.state = state
 
-    def matched(self, record: OrderedDict) -> bool:
+    def matched(self, record: collections.OrderedDict) -> bool:
         record_state = record[F_STATE]
         return self.state == record_state
 
@@ -249,7 +234,7 @@ class OAIRecordCriteriaDatetime(OAIRecordCriteria):
         if 'dt_to' in kwargs.keys():
             self.dt_to = time.strptime(kwargs['dt_to'], self.dt_pattern)
 
-    def matched(self, record: OrderedDict) -> bool:
+    def matched(self, record: collections.OrderedDict) -> bool:
         if self.field not in record:
             raise RuntimeError("Field {} not in {}".format(self.field, record))
         record_state_ts = record[self.field]
@@ -272,7 +257,7 @@ class OAIRecordCriteriaText(OAIRecordCriteria):
         self.text = text
         self.field = field
 
-    def matched(self, record: OrderedDict) -> bool:
+    def matched(self, record: collections.OrderedDict) -> bool:
         return self.text in record[self.field]
 
 
@@ -346,7 +331,7 @@ class OAIRecordHandler:
         """
 
         splits = row_as_str.strip().split('\t')
-        return OrderedDict(zip(self.header, splits))
+        return collections.OrderedDict(zip(self.header, splits))
 
     @staticmethod
     def _to_str_nl(dict_row):
@@ -718,7 +703,7 @@ class OAILoader:
             return loaded
 
         # inspect if additional file resources are requested
-        mets_reader = MetsReader(self.path_mets, mets_digital_object_identifier)
+        mets_reader = df_md.MetsReader(self.path_mets, mets_digital_object_identifier)
 
         # get linked resources
         for k in self.groups:
@@ -1033,12 +1018,12 @@ def smtp_note(smtp_conn:str, subject:str, message:str, froms:str, tos):
     if isinstance(tos, list):
         tos = ','.join(tos)
     try:
-        msg = MIMEText(message)
-        msg['Date'] = formatdate(localtime=True)
+        msg = email.mime.text.MIMEText(message)
+        msg['Date'] = email.utils.formatdate(localtime=True)
         msg['Subject'] = subject
         msg['From'] = froms
         msg['To'] = tos + "\n"
-        server = SMTP(smtp_conn)
+        server = smtplib.SMTP(smtp_conn)
         server.send_message(msg)
         server.quit()
         return f"'{tos}' note: '{message}'"

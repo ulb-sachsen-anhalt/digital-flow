@@ -636,7 +636,7 @@ def test_migration_sweeper_pdf(migration_sweeper_pdf_fixture):
             assert len(list(item.iterdir())) == 0
 
 
-@mock.patch('digiflow.digiflow_io.SMTP')
+@mock.patch('digiflow.digiflow_io.smtplib.SMTP')
 def test_send_mail(mock_smtp):
     """Test note using SMTP mock because
     tails fails outside proper plattform
