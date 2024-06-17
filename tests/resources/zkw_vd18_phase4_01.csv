@@ -1,0 +1,7 @@
+IDENTIFIER	URN	HANDLE	INFO	STATE	STATE_TIME
+4719	urn:nbn:de:gbv:3:1-1192015415-78962625X-11	oai:opendata.uni-halle.de:1981185920/55931	{'ppn': '78962625X', 'pica': 'Aa', 'pages': 67, 'granular_urn': False, 'n_ocr': 36, 'languages': ['ita']}	n.a.	n.a.
+2145	urn:nbn:de:gbv:3:1-1192015415-858191652-17	oai:opendata.uni-halle.de:1981185920/34227	{'ppn': '858191652', 'pica': 'Af', 'pages': 695, 'granular_urn': False, 'n_ocr': 632, 'languages': ['ger']}	n.a.	n.a.
+2146	urn:nbn:de:gbv:3:1-1192015415-858191997-14	oai:opendata.uni-halle.de:1981185920/34228	{'ppn': '858191997', 'pica': 'Af', 'pages': 461, 'granular_urn': False, 'n_ocr': 458, 'languages': ['ger']}	n.a.	n.a.
+# error of 2024-05-27 12:01
+#lse, 'n_ocr': 458, 'languages': ['ger']}	n.a.	n.a.
+lse, 'n_ocr': 458, 'languages': ['ger']}	n.a.	n.a.
