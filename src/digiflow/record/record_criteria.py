@@ -1,13 +1,13 @@
-"""API for filtering of Records from larger data sets"""
+"""API to filter Records from data set"""
 
 import abc
 import collections
 import time
 
-import digiflow as df
 import digiflow.record as df_r
 
-class OAIRecordCriteria:
+
+class Criteria:
     """Criteria to select Records"""
 
     @abc.abstractmethod
@@ -15,20 +15,24 @@ class OAIRecordCriteria:
         """Determine, whether given OAI-Record matched criteria"""
 
 
-class OAIRecordCriteriaIdentifier(OAIRecordCriteria):
+class Identifier(Criteria):
+    """Expect an OAI-URN as identifier,
+    therefore assume prefix 'oai:' 
+    otherwise use last ':' segment
+    """
 
     def __init__(self, ident):
-        self.ident = ident
+        self.identifier = ident
 
     def matched(self, record: collections.OrderedDict) -> bool:
         rec_id = record[df_r.FIELD_IDENTIFIER]
         # maybe must deal shortened identifier (like legacy id)
-        if 'oai' not in self.ident or ':' not in self.ident:
+        if 'oai' not in self.identifier or ':' not in self.identifier:
             rec_id = rec_id.split(':')[-1]
-        return self.ident == rec_id
+        return self.identifier == rec_id
 
 
-class OAIRecordCriteriaState(OAIRecordCriteria):
+class State(Criteria):
 
     def __init__(self, state):
         self.state = state
@@ -38,7 +42,7 @@ class OAIRecordCriteriaState(OAIRecordCriteria):
         return self.state == record_state
 
 
-class OAIRecordCriteriaDatetime(OAIRecordCriteria):
+class Datetime(Criteria):
     """
     Use datetime data to match OAIRecords.\n
     Match field 'STATE_TIME' (or 'CREATED')\n
@@ -78,7 +82,9 @@ class OAIRecordCriteriaDatetime(OAIRecordCriteria):
         return False
 
 
-class OAIRecordCriteriaText(OAIRecordCriteria):
+class Text(Criteria):
+    """Search for complete enclosing
+    string, not via pattern"""
 
     def __init__(self, text, field=df_r.FIELD_INFO) -> None:
         super().__init__()
@@ -87,4 +93,3 @@ class OAIRecordCriteriaText(OAIRecordCriteria):
 
     def matched(self, record: collections.OrderedDict) -> bool:
         return self.text in record[self.field]
-

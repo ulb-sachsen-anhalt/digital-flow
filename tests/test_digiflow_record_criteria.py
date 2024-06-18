@@ -22,8 +22,8 @@ def test_record_state_list_set_state_from(oai_record_list):
         oai_record_list,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    c_state = df_rcr.OAIRecordCriteriaState('ocr_skip')
-    c_from = df_rcr.OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:03:56')
+    c_state = df_rcr.State('ocr_skip')
+    c_from = df_rcr.Datetime(dt_from='2021-08-03_15:03:56')
 
     # pre-check
     record1: df_r.Record = handler.next_record()
@@ -47,8 +47,8 @@ def test_record_state_list_set_state_from_dry_run(oai_record_list):
         oai_record_list,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    c_state = df_rcr.OAIRecordCriteriaState('ocr_skip')
-    c_from = df_rcr.OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:03:56')
+    c_state = df_rcr.State('ocr_skip')
+    c_from = df_rcr.Datetime(dt_from='2021-08-03_15:03:56')
 
     # pre-check
     record1: df_r.Record = handler.next_record()
@@ -71,8 +71,8 @@ def test_record_state_list_set_state_from_dry_run_verbose(oai_record_list, capsy
         oai_record_list,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    c_state = df_rcr.OAIRecordCriteriaState('ocr_skip')
-    c_from = df_rcr.OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:03:56')
+    c_state = df_rcr.State('ocr_skip')
+    c_from = df_rcr.Datetime(dt_from='2021-08-03_15:03:56')
 
     # pre-check
     record1 = handler.next_record()
@@ -96,7 +96,7 @@ def test_record_state_list_rewind_state_upload(oai_record_list):
         oai_record_list,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    c_state = df_rcr.OAIRecordCriteriaState('upload_done')
+    c_state = df_rcr.State('upload_done')
 
     # pre-check
     record1 = handler.next_record()
@@ -120,7 +120,7 @@ def test_record_set_some_other_state(oai_record_list):
         oai_record_list,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    c_state = df_rcr.OAIRecordCriteriaState('upload_done')
+    c_state = df_rcr.State('upload_done')
 
     # pre-check
     record1 = handler.next_record()
@@ -145,9 +145,9 @@ def test_record_list_time_range(oai_record_list):
         oai_record_list,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    c_state = df_rcr.OAIRecordCriteriaState('ocr_skip')
-    c_range = df_rcr.OAIRecordCriteriaDatetime(dt_from='2021-08-03_15:10:00',
-                                               dt_to='2021-08-03_15:20:00')
+    c_state = df_rcr.State('ocr_skip')
+    c_range = df_rcr.Datetime(dt_from='2021-08-03_15:10:00',
+                              dt_to='2021-08-03_15:20:00')
 
     # pre-check
     record1 = handler.next_record()
@@ -201,8 +201,8 @@ def test_record_handler_merge_plain(tmp_path):
     # next must have changed, since 'n.a.' was merged with 'upload_done'
     assert handler.next_record().identifier.endswith('8853013')
     # state from record with ident '8853012' is now 'upload_done'
-    criterias = [df_rcr.OAIRecordCriteriaIdentifier(
-        '8853012'), df_rcr.OAIRecordCriteriaState('upload_done')]
+    criterias = [df_rcr.Identifier(
+        '8853012'), df_rcr.State('upload_done')]
     assert handler.states(criterias=criterias) == 1
 
 
@@ -242,8 +242,8 @@ def test_record_handler_merge_only_done(tmp_path):
     # next must have changed, since 'n.a.' was merged with 'upload_done'
     assert handler.next_record().identifier.endswith('8853013')
     # state from record with ident '8853012' is now 'upload_done'
-    criterias = [df_rcr.OAIRecordCriteriaIdentifier(
-        '8853012'), df_rcr.OAIRecordCriteriaState('upload_done')]
+    criterias = [df_rcr.Identifier(
+        '8853012'), df_rcr.State('upload_done')]
     assert handler.states(criterias=criterias) == 1
 
 
@@ -283,8 +283,8 @@ def test_record_handler_merge_ignore_failure(tmp_path):
     # next is still first record
     assert handler.next_record().identifier.endswith('8853012')
     # state from record with ident '9510507' is now 'ocr_fail'
-    criterias = [df_rcr.OAIRecordCriteriaIdentifier(
-        '9510507'), df_rcr.OAIRecordCriteriaState('ocr_fail')]
+    criterias = [df_rcr.Identifier(
+        '9510507'), df_rcr.State('ocr_fail')]
     assert handler.states(criterias=criterias) == 1
 
 
@@ -309,7 +309,7 @@ def test_records_default_header_from_file(oai_record_list):
 
     # ensure that by now 4 records are set to 'other_load'
     # first + second record only
-    c_state = df_rcr.OAIRecordCriteriaState(df_r.RECORD_STATE_MASK_FRAME)
+    c_state = df_rcr.State(df_r.RECORD_STATE_MASK_FRAME)
     assert frame_handler.states([c_state]) == 2
 
 
@@ -322,11 +322,11 @@ def test_records_sample_zd1_post_ocr():
 
     # arrange
     handler = df_r.RecordHandler(path_list)
-    crit1 = df_rcr.OAIRecordCriteriaDatetime(dt_from='2021-10-16_09:45:00')
+    crit1 = df_rcr.Datetime(dt_from='2021-10-16_09:45:00')
 
     # assert
     assert 1 == handler.states([crit1])
-    crit2 = df_rcr.OAIRecordCriteriaState('other_load')
+    crit2 = df_rcr.State('other_load')
     assert 10 == handler.states([crit2])
 
 
@@ -340,7 +340,7 @@ def test_recordcriteria_with_created_datetime_format():
     # arrange
     handler = df_r.RecordHandler(
         path_list)
-    crit1 = df_rcr.OAIRecordCriteriaDatetime(
+    crit1 = df_rcr.Datetime(
         dt_field='CREATED',
         dt_to='2021-09-01T15:26:00Z',
         dt_format='%Y-%m-%dT%H:%M:%SZ')
@@ -372,8 +372,8 @@ def test_record_handler_search_info(tmp_path):
         path_oai_list1,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    crit1 = df_rcr.OAIRecordCriteriaText('no colorchecker')
-    crit2 = df_rcr.OAIRecordCriteriaText('no_publ_place')
+    crit1 = df_rcr.Text('no colorchecker')
+    crit2 = df_rcr.Text('no_publ_place')
 
     # assert original next == nothing open
     assert not handler.next_record()

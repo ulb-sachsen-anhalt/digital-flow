@@ -492,7 +492,7 @@ def test_records_default_header_from_file(oai_record_list):
 
     # ensure that by now 4 records are set to 'other_load'
     # first + second record only
-    c_state = df_r.OAIRecordCriteriaState(df_r.RECORD_STATE_MASK_FRAME)
+    c_state = df_r.State(df_r.RECORD_STATE_MASK_FRAME)
     assert frame_handler.states([c_state]) == 2
 
 
@@ -541,11 +541,11 @@ def test_records_sample_zd1_post_ocr():
     # arrange
     handler = df_r.RecordHandler(
         path_list)
-    crit1 = df_r.OAIRecordCriteriaDatetime(dt_from='2021-10-16_09:45:00')
+    crit1 = df_r.Datetime(dt_from='2021-10-16_09:45:00')
 
     # assert
     assert 1 == handler.states([crit1])
-    crit2 = df_r.OAIRecordCriteriaState('other_load')
+    crit2 = df_r.State('other_load')
     assert 10 == handler.states([crit2])
 
 
@@ -559,7 +559,7 @@ def test_recordcriteria_with_created_datetime_format():
     # arrange
     handler = df_r.RecordHandler(
         path_list)
-    crit1 = df_r.OAIRecordCriteriaDatetime(
+    crit1 = df_r.Datetime(
         dt_field='CREATED',
         dt_to='2021-09-01T15:26:00Z',
         dt_format='%Y-%m-%dT%H:%M:%SZ')
@@ -591,8 +591,8 @@ def test_record_handler_search_info(tmp_path):
         path_oai_list1,
         data_fields=df_r.LEGACY_HEADER,
         transform_func=df_r.row_to_record)
-    crit1 = df_r.OAIRecordCriteriaText('no colorchecker')
-    crit2 = df_r.OAIRecordCriteriaText('no_publ_place')
+    crit1 = df_r.Text('no colorchecker')
+    crit2 = df_r.Text('no_publ_place')
 
     # assert original next == nothing open
     assert not handler.next_record()

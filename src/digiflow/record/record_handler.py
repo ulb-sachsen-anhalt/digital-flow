@@ -208,7 +208,7 @@ class RecordHandler:
         """
         total_matches = []
         if len(criterias) == 0:
-            criterias = [df_r.OAIRecordCriteriaState(df_r.UNSET_LABEL)]
+            criterias = [df_r.State(df_r.UNSET_LABEL)]
         for record in self.data:
             if all(map(lambda c, d=record: c.matched(d), criterias)):
                 if not dry_run:

@@ -4,7 +4,7 @@ from .record_handler import (
     RecordHandlerException,
 )
 from .record_criteria import (
-    OAIRecordCriteriaText,
-    OAIRecordCriteriaState,
-    OAIRecordCriteriaDatetime,
+    Text,
+    State,
+    Datetime,
 )
