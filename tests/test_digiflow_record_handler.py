@@ -37,7 +37,6 @@ OAI_BASE_URL_ZD = 'digitale.bibliothek.uni-halle.de/zd/oai'
 OAI_BASE_URL_OPENDATA = 'opendata.uni-halle.de/oai/dd'
 
 # pylint: disable=c-extension-no-member, line-too-long
-
 @pytest.mark.parametrize(['urn', 'local_identifier'],
                          [
     ('oai:digital.bibliothek.uni-halle.de/hd:10595', '10595'),
@@ -51,6 +50,7 @@ def test_record_local_identifiers(urn, local_identifier):
     # act
     record = df_r.Record(urn)
     assert record.local_identifier == local_identifier
+    assert urn in str(record)
 
 
 def test_invalid_input_data(tmp_path):

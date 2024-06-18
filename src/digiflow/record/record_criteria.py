@@ -33,6 +33,7 @@ class Identifier(Criteria):
 
 
 class State(Criteria):
+    """Select by actual STATE"""
 
     def __init__(self, state):
         self.state = state
@@ -57,18 +58,18 @@ class Datetime(Criteria):
         self.dt_from = None
         self.dt_to = None
         # *ORDER MATTERS*
-        if 'dt_field' in kwargs.keys():
+        if 'dt_field' in kwargs:
             self.field = kwargs['dt_field']
-        if 'dt_format' in kwargs.keys():
+        if 'dt_format' in kwargs:
             self.dt_pattern = kwargs['dt_format']
-        if 'dt_from' in kwargs.keys():
+        if 'dt_from' in kwargs:
             self.dt_from = time.strptime(kwargs['dt_from'], self.dt_pattern)
-        if 'dt_to' in kwargs.keys():
+        if 'dt_to' in kwargs:
             self.dt_to = time.strptime(kwargs['dt_to'], self.dt_pattern)
 
     def matched(self, record: collections.OrderedDict) -> bool:
         if self.field not in record:
-            raise RuntimeError("Field {} not in {}".format(self.field, record))
+            raise RuntimeError(f"{self.field} not in {record}")
         record_state_ts = record[self.field]
         if record_state_ts == df_r.UNSET_LABEL:
             return False

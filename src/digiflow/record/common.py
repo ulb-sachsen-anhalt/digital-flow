@@ -86,11 +86,11 @@ class Record:
 
     def __str__(self) -> str:
         the_str = f"{self.__urn}"
-        if self.set != df._UNSET:
+        if self.set != df.UNSET_LABEL:
             the_str = f"{the_str}\t{self.set}"
-        if self.date_stamp != df._UNSET:
+        if self.date_stamp != df.UNSET_LABEL:
             the_str = f"{the_str}\t{self.date_stamp}"
-        if self.info != df._UNSET:
+        if self.info != df.UNSET_LABEL:
             the_str = f"{the_str}\t{self.info}"
         return f"{the_str}\n{self.state}\t{self.state_datetime}"
 
