@@ -22,6 +22,7 @@ dependencies = [
 	"docker",
 	"requests",
 	"saxonche",
+ 	"openpyxl",
 ]
 
 [project.urls]
