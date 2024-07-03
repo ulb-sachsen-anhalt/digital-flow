@@ -140,7 +140,6 @@ class RecordHandler:
             if state == row[self.state_field]:
                 self.position = f"{(i+1):04d}/{(self.total_len):04d}"
                 return self.transform_func(row)
-        raise 
 
     def get(self, identifier, exact_match=True):
         """Read data for first Record with
