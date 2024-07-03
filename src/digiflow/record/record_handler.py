@@ -126,8 +126,9 @@ class RecordHandler:
 
     def next_record(self, state=None):
         """
-        Get *NEXT* single OAIRecord _from scratch_ with
-        given state if any exist, None otherwise
+        Get *NEXT* IRecord _from scratch_ with
+        given state if any exist, raise Exception
+        otherwise
         """
 
         if not state:
@@ -139,9 +140,10 @@ class RecordHandler:
             if state == row[self.state_field]:
                 self.position = f"{(i+1):04d}/{(self.total_len):04d}"
                 return self.transform_func(row)
+        raise 
 
     def get(self, identifier, exact_match=True):
-        """Read data for first OAIRecord with
+        """Read data for first Record with
         given identifier *without* changing state
 
         Args:
@@ -196,9 +198,9 @@ class RecordHandler:
         """Process record states according certain criterias.
 
         Args:
-            criterias (list): List of OAIRecordCriteria where each record
+            criterias (list): List of RecordCriteria where each record
                 must match all provided criterias. Defaults to a list 
-                only containing OAIRecordCriteriaState(RECORD_STATE_UNSET).
+                only containing RecordCriteriaState(RECORD_STATE_UNSET).
             set_state (_type_, optional): Record state to set, if provided,
                 and dry_run is disabled. Defaults to RECORD_STATE_UNSET.
             dry_run (bool, optional): Whether to persist possible
@@ -225,7 +227,7 @@ class RecordHandler:
     def frame(self, start, frame_size=1000, mark_state=RECORD_STATE_MASK_FRAME,
               sort_by=None) -> str:
         """
-        create frame from OAI Records with start (inclusive)
+        create record frame with start (inclusive)
         and opt frame_size (how many records from start)
         *please note*
         record count starts with "1", although intern represented as list
@@ -283,8 +285,8 @@ class RecordHandler:
         Precondition: both header fields must fit
 
         Args:
-            other_handler (str|OAIRecordHandler):
-                other OAIRecordHandler or str representation of file path
+            other_handler (str|RecordHandler):
+                other RecordHandler or str representation of file path
             other_require_state (str, default: None): only respect states from
                 other_handler matching this state, if set. Can be used to
                 compare or pick just specific outcome like 'migration_done',
@@ -399,7 +401,7 @@ def _other_is_newer(self_record, other_record):
 
 
 def _report_stdout(list_records, delimiter='\t'):
-    """Print set of OAIRecords, assume they are OrderedDicts
+    """Print set of Records, assume they are OrderedDicts
     with identical Headers"""
     if len(list_records) > 0:
         # read header
