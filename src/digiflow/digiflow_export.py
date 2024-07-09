@@ -50,7 +50,7 @@ class DigiFlowExportError(Exception):
 
 class ExportMapping:
 
-    def __init__(self, path_source, path_target):
+    def __init__(self, path_source, path_target, access_right=None):
         if not os.path.exists(path_source):
             raise DigiFlowExportError("Invalid source path '{}'!'".format(path_source))
         if not os.path.isabs(path_source):
@@ -60,6 +60,7 @@ class ExportMapping:
             os.makedirs(path_target_dir)
         self.path_source = path_source
         self.path_target = path_target
+        self.access_right = access_right
         _path_src = pathlib.Path(path_source)
         self.src_bundle = _path_src.parent.stem
 
@@ -116,6 +117,7 @@ def map_contents(src_dir, dst_dir, export_map=None):
     """
 
     mappings = []
+    access_right = None
     if not export_map:
         export_map = {'.xml': SAF_METS_XML}
 
@@ -128,12 +130,16 @@ def map_contents(src_dir, dst_dir, export_map=None):
         for source_path in source_paths:
             if src in source_path:
                 # for each individual file review
+                if isinstance(dst, list):
+                    # with E-Pflicht migr. we pass the right
+                    # as second list element
+                    dst, access_right = dst
                 if not dst:
                     _default_dst = os.path.basename(source_path)
                     dst_path = os.path.join(dst_dir, _default_dst)
                 else:
                     dst_path = os.path.join(dst_dir, dst)
-                _mapping = ExportMapping(source_path, dst_path)
+                _mapping = ExportMapping(source_path, dst_path, access_right)
                 # prevent re-addition
                 if _mapping not in mappings:
                     mappings.append(_mapping)
@@ -151,8 +157,14 @@ def _handle_contents_file(working_item_dir, export_mappings):
             _src_bundle = mapping.src_bundle
             if _name == SAF_METS_XML:
                 contents_file.write(f"{SAF_METS_XML}\tbundle:METS_BACKUP\n")
-            elif _name.endswith('.pdf'):
-                contents_file.write(f"{_name}\n")
+            elif _name.endswith(('.pdf', '.epub')):
+                _right = ''
+                if mapping.access_right is not None:
+                    _right = f"\tpermissions: -r {mapping.access_right}"
+                contents_file.write(f"{_name}{_right}\n")
+            elif _name == 'dublin_core.xml' or _name.startswith('metadata_'):
+                # these xml's are dublin core metadata for E-Pflicht migration
+                continue
             elif _name.endswith('.pdf.txt'):
                 contents_file.write(f"{_name}\tbundle:TEXT\n")
             elif _src_bundle == SRC_FULLTEXT and _is_alto(_target_base):
@@ -233,6 +245,9 @@ def move_to_tmp_file(the_file_path, destination):
 
 def _handle_dublin_core_dummy(work_dir):
     dc_dummy_path = os.path.join(work_dir, "dublin_core.xml")
+    if os.path.exists(dc_dummy_path):
+        # already provided by pipeline (E-Pflicht)
+        return
     dublin_core = ET.Element('dublin_core')
     el_title = ET.Element('dcvalue')
     el_title.set('element', 'title')
@@ -256,6 +271,10 @@ def _handle_dublin_core_derivates(work_dir):
     </dublin_core>
     """
     dc_path = os.path.join(work_dir, "metadata_local.xml")
+    # axel
+    if os.path.exists(dc_path):
+        # already provided by pipeline (E-Pflicht)
+        return
     dublin_core = ET.Element('dublin_core', {'schema': 'local'})
     el_pict = ET.Element('dcvalue')
     el_pict.set('element', 'picturegroup')
@@ -289,7 +308,6 @@ def export_data_from(process_metafile_path,
     Main entry point to prepare, create and export specified data
     related to provided digitalization item process metadatafile_path
     """
-
     source_path_dir = os.path.dirname(process_metafile_path)
     tmp_dir = tempfile.gettempdir()
     prefix = 'opendata-working-'
