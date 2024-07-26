@@ -44,6 +44,7 @@ CONTENTS_FILE_MAPPINGS = {
     SRC_MAX : ''
 }
 
+
 class DigiFlowExportError(Exception):
     """Mark Export Exception"""
 
@@ -77,7 +78,7 @@ class ExportMapping:
 
     def __eq__(self, __o: object) -> bool:
         return self.path_source == __o.path_source and self.path_target == __o.path_target
-    
+
     def __lt__(self, __o: object) -> bool:
         self_src_base = os.path.basename(self.path_source)
         other_src_base = os.path.basename(__o.path_source)
@@ -162,7 +163,8 @@ def _handle_contents_file(working_item_dir, export_mappings):
                 if mapping.access_right is not None:
                     _right = f"\tpermissions: -r {mapping.access_right}"
                 contents_file.write(f"{_name}{_right}\n")
-            elif _name == 'dublin_core.xml' or _name.startswith('metadata_'):
+            elif _name in ['dublin_core.xml', 'relationships']\
+                    or _name.startswith('metadata_'):
                 # these xml's are dublin core metadata for E-Pflicht migration
                 continue
             elif _name.endswith('.pdf.txt'):
@@ -271,9 +273,8 @@ def _handle_dublin_core_derivates(work_dir):
     </dublin_core>
     """
     dc_path = os.path.join(work_dir, "metadata_local.xml")
-    # axel
     if os.path.exists(dc_path):
-        # already provided by pipeline (E-Pflicht)
+        # already provided by pipeline (EPflicht)
         return
     dublin_core = ET.Element('dublin_core', {'schema': 'local'})
     el_pict = ET.Element('dcvalue')
