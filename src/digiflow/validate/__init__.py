@@ -39,3 +39,7 @@ from .metadata_xsd import (
     InvalidXMLException,
     validate_xml,
 )
+
+from .ddb import (
+    ddb_validation,
+)

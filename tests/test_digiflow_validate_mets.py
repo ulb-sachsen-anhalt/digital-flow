@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Digiflow validation API"""
+"""Digiflow DDB conformant validation API"""
 
+import os
 import shutil
 
 from pathlib import (
@@ -9,7 +10,7 @@ from pathlib import (
 
 import pytest
 
-from digiflow.validate.metadata_xslt import (
+from digiflow.validate.ddb import (
     DDB_IGNORE_RULES_MVW,
     FAILED_ASSERT_ERROR,
     FAILED_ASSERT_OTHER,
@@ -25,8 +26,45 @@ from .conftest import (
 SAXON_PY_ENABLED = True
 try:
     import saxonche
-except ModuleNotFoundError: 
+except ModuleNotFoundError:
     SAXON_PY_ENABLED = False
+
+
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
+def test_apply_xslt_issue_with_gathering(tmp_path):
+    """Simple MWE to trigger transformation including
+    schematron failures => none in this case, all fine
+    """
+
+    # arrange
+    file_name = 'vls_digitale_9633116.zmets.xml'
+    mets_source = Path(TEST_RES) / file_name
+    mets_target = os.path.join(tmp_path, file_name)
+    shutil.copy(str(mets_source), str(mets_target))
+
+    # act
+    _result = transform(mets_target, path_template=TEST_XSL,
+                        path_result=None,
+                        post_process=gather_failed_asserts)
+
+    # assert
+    assert _result == {}
+
+
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
+def test_apply_xslt_issue_corrupted_gathering_failures(corrupted_issue):
+    """Simple MWE to trigger transformation including
+    schematron failures => none in this case, all fine
+    """
+
+    # act
+    with pytest.raises(df_ddb.DigiflowDDBException) as _exc:
+        transform(corrupted_issue, path_template=TEST_XSL,
+                  post_process=gather_failed_asserts)
+
+    # assert
+    _fail_str = '[date_mets_to_mods]  (Logisches Datum passt nicht zu Publikationsdatum: 1840-12-31 != 1840-12-30)'
+    assert _fail_str == _exc.value.args[0][0]
 
 
 @pytest.fixture(name="share_it_monography")
@@ -87,7 +125,7 @@ def test_ddb_validate_opendata_44046_without_ignorances(share_it_monography):
 def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     """XSLT validation outcome for out-dated
     print export data from Kitodo2 legacy system
-    
+
     Please note, that any other roles like info or warning
     (=> amdSec_13, amdSec_15) will be swalled
     """
@@ -111,6 +149,7 @@ def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     assert 'location_01' in _exc_load[0]
     assert 'dmdSec_04' in _exc_load[1]
 
+
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     """DDB compliant data with curated METS which doesn't 
@@ -127,10 +166,10 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     # act
     result = ddb_validation(mets_target)
 
-    # assert 
+    # assert
     assert len(result) == 1
     assert FAILED_ASSERT_ERROR not in result
-    assert len(result[FAILED_ASSERT_OTHER]) == 2 
+    assert len(result[FAILED_ASSERT_OTHER]) == 2
     assert 'amdSec_13' in result[FAILED_ASSERT_OTHER][0]
 
 
@@ -138,7 +177,7 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
 def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
     """XSLT validation outcome for rather
     recent digitized object from menadoc retro-digi
-    
+
     changes between 05/22 and 06/23
     * increase number of errors from 3 to 16(!)
     * assert 'originInfo_06' in result[DDB_ERROR][0]
@@ -160,7 +199,7 @@ def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
     _load = _dexc.value.args[0]
     assert len(_load) == 16
     assert 'originInfo_06' in _load[0]
-    assert 'location_01' in _load[1] # before: location_02
+    assert 'location_01' in _load[1]  # before: location_02
     assert 'dmdSec_04' in _load[2]
 
 
@@ -168,7 +207,7 @@ def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
 def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     """XSLT validation outcome for VD18 c-stage
     without default customm ignore rules
-    
+
     changed from 05/22 => 06/23
     * increased errors from 7 to 11
     """
@@ -183,7 +222,7 @@ def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     with pytest.raises(DigiflowDDBException) as _dexc:
         ddb_validation(mets_target, ignore_rules=[])
 
-    # assert 
+    # assert
     _load = _dexc.value.args[0]
     assert len(_load) == 11
     assert 'titleInfo_02' in _load[0]
@@ -193,6 +232,7 @@ def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     assert 'dmdSec_04' in _load[4]
     assert 'fileSec_02' in _load[5]
     assert 'structMapLogical_17' in _load[6]
+
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_validate_kitodo2_vd18_153142537_dafault_ignorances(tmp_path):
@@ -212,7 +252,7 @@ def test_ddb_validate_kitodo2_vd18_153142537_dafault_ignorances(tmp_path):
     with pytest.raises(DigiflowDDBException) as _dexc:
         ddb_validation(mets_target, ignore_rules=DDB_IGNORE_RULES_MVW)
 
-    # assert 
+    # assert
     _load = _dexc.value.args[0]
     assert len(_load) == 4
     assert _load[0].startswith('[originInfo_06]')
@@ -239,7 +279,7 @@ def test_ddb_validate_kitodo2_vd18_153142537_curated(tmp_path):
     with pytest.raises(DigiflowDDBException) as _dexc:
         ddb_validation(mets_target, ignore_rules=_ignore_them)
 
-    # assert 
+    # assert
     _load = _dexc.value.args[0]
     assert len(_load) == 2
     assert _load[0].startswith('[location_01')
@@ -261,7 +301,7 @@ def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
     with pytest.raises(DigiflowDDBException) as _dexc:
         ddb_validation(mets_target, ignore_rules=[])
 
-    # assert 
+    # assert
     _load = _dexc.value.args[0]
     assert len(_load) == 3
     assert _load[0].startswith('[originInfo_06]')
@@ -270,7 +310,7 @@ def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_validate_kitodo2_vd18_153142340( tmp_path):
+def test_ddb_validate_kitodo2_vd18_153142340(tmp_path):
     """Schematron validation outcome for VD18 C-Stage
     corresponding to k2_mets_153142537.xml
     considering ULB default ignore rules"""
@@ -285,7 +325,7 @@ def test_ddb_validate_kitodo2_vd18_153142340( tmp_path):
     with pytest.raises(DigiflowDDBException) as _dexc:
         ddb_validation(mets_target, digi_type='Ac')
 
-     # assert 
+     # assert
     _load = _dexc.value.args[0]
     assert len(_load) == 2
     assert _load[0].startswith('[originInfo_06]')
@@ -296,7 +336,7 @@ def test_ddb_validate_kitodo2_vd18_153142340( tmp_path):
 def test_ddb_validate_kitodo2_morbio_1748529021(tmp_path):
     """Schematron validation outcome for recent Morbio
     export considering ULB default ignore rules
-    
+
     changed due 2023/06: dropped failure for amdSec_05 (licence)
     """
 
@@ -310,11 +350,11 @@ def test_ddb_validate_kitodo2_morbio_1748529021(tmp_path):
     with pytest.raises(DigiflowDDBException) as _dexc:
         ddb_validation(mets_target, digi_type='Ac')
 
-    # assert 
+    # assert
     _load = _dexc.value.args[0]
-    assert len(_load) ==  2    # 2 errors
+    assert len(_load) == 2    # 2 errors
     assert _load[0].startswith('[location_01]')
-    assert _load[1].startswith('[dmdSec_04]') # suspicious additional dmdSec
+    assert _load[1].startswith('[dmdSec_04]')  # suspicious additional dmdSec
 
 
 def test_ddb_validate_newspaper(tmp_path):
@@ -329,7 +369,7 @@ def test_ddb_validate_newspaper(tmp_path):
     mets_target = Path(str(tmp_path), the_name)
     shutil.copy(str(mets_source), str(mets_target))
 
-     # act
+    # act
     with pytest.raises(DigiflowDDBException) as _dexc:
         ddb_validation(mets_target, digi_type='issue')
 
@@ -350,7 +390,7 @@ def test_ddb_validate_newspaper_02(tmp_path):
     mets_target = Path(str(tmp_path), the_name)
     shutil.copy(str(mets_source), str(mets_target))
 
-     # act
+    # act
     _result = ddb_validation(mets_target, digi_type='OZ')
 
     # assert

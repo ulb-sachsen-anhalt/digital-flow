@@ -5,6 +5,10 @@ from .digiflow_metadata import *
 from .digiflow_generate import *
 from .digiflow_export import *
 from .validate.metadata_xslt import (
+    DigiflowTransformException,
+    transform,
+)
+from .validate.ddb import (
     DDB_IGNORE_RULES_BASIC,
     DDB_IGNORE_RULES_MVW,
     DDB_IGNORE_RULES_NEWSPAPERS,
@@ -14,8 +18,6 @@ from .validate.metadata_xslt import (
     DIGIS_NEWSPAPER,
     REPORT_FILE_XSLT,
     DigiflowDDBException,
-    DigiflowTransformException,
-    apply,
     ddb_validation,
     gather_failed_asserts,
 )
