@@ -15,6 +15,7 @@ from digiflow.validate.ddb import (
     FAILED_ASSERT_ERROR,
     FAILED_ASSERT_OTHER,
     DigiflowDDBException,
+    DDBReporter,
     ddb_validation,
 )
 
@@ -41,30 +42,14 @@ def test_apply_xslt_issue_with_gathering(tmp_path):
     mets_source = Path(TEST_RES) / file_name
     mets_target = os.path.join(tmp_path, file_name)
     shutil.copy(str(mets_source), str(mets_target))
+    reporter = DDBReporter(mets_target, digi_type='OZ')
 
     # act
-    _result = transform(mets_target, path_template=TEST_XSL,
-                        path_result=None,
-                        post_process=gather_failed_asserts)
-
+    what = reporter.meldungen
+ 
     # assert
-    assert _result == {}
-
-
-@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_apply_xslt_issue_corrupted_gathering_failures(corrupted_issue):
-    """Simple MWE to trigger transformation including
-    schematron failures => none in this case, all fine
-    """
-
-    # act
-    with pytest.raises(df_ddb.DigiflowDDBException) as _exc:
-        transform(corrupted_issue, path_template=TEST_XSL,
-                  post_process=gather_failed_asserts)
-
-    # assert
-    _fail_str = '[date_mets_to_mods]  (Logisches Datum passt nicht zu Publikationsdatum: 1840-12-31 != 1840-12-30)'
-    assert _fail_str == _exc.value.args[0][0]
+    assert len(what) == 2
+    reporter.clean()
 
 
 @pytest.fixture(name="share_it_monography")

@@ -1,4 +1,16 @@
-"""API processing and evaluating DDB validations"""
+"""API processing and evaluating DDB validations
+
+Assume DDB (Deutsche Digitale Bibliothek = German Digital Library)
+order it's remarks into 5 categories:
+
+* info      ingested but some information won't be used by DDB
+* warn      error but ingested without modification
+* caution   ingest but suspicous
+* error     ingest after DDB-modification
+* fatal     records can't be ingested => strict mode throws exception
+
+wiki.deutsche-digitale-bibliothek.de/display/DFD/Schematron-Validierungen+der+Fachstelle+Bibliothek
+"""
 
 import os
 import typing
@@ -9,7 +21,7 @@ import lxml.etree as ET
 
 import digiflow.common as dfc
 
-from digiflow.validate.metadata_xslt import transform
+from digiflow.validate.metadata_xslt import transform, evaluate
 
 # add schematron validation language mapping
 dfc.XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
@@ -78,12 +90,12 @@ class DigiflowDDBException(Exception):
     """
 
 
-class FailedAssert:
-    """Encapsulate individual Schematron Report
-    Element svrl:failed-assert to gather
-    @id, @role and @location Attributes
-    as well as optional children svrl:text,
-    svrl:description ans svrl:property
+class DDBMeldung:
+    """Individual DDB Meldung de-serialized from
+    svrl:*-elements to gather @id, @role and 
+    @location Attributes as well as optional 
+    children svrl:text, svrl:description 
+    and svrl:property
     """
 
     def __init__(self, elem: ET.Element):
@@ -97,7 +109,7 @@ class FailedAssert:
         self._properties = elem.xpath('svrl:property', namespaces=dfc.XMLNS)
 
     def explain(self):
-        """Explain the failure"""
+        """Explain yourself"""
         _msg = f'[{self.id}] '
         if len(self._properties) > 0:
             _props = '=>'.join(f"{_p.get('id')}:{_p.text}" for _p in self._properties)
@@ -133,6 +145,86 @@ class FailedAssert:
         return self.role in CRITICAL_VALIDATION_ROLES
 
 
+class DDBReporter:
+    """Encapsulates DDB conformant Validation
+    of metadata with corresponding schema
+    and the generation of DDBMeldungen
+    """
+
+    def __init__(self, path_input,
+                 digi_type='Aa', ignore_ids=None,
+                 tmp_report_dir=None):
+        self.path_input = path_input
+        self._meldungen = []
+        self.ignore_ids = []
+        if isinstance(ignore_ids, list) and len(ignore_ids) > 0:
+            self.ignore_ids = ignore_ids
+        self.digi_type = digi_type
+        self.path_xslt = PATH_MEDIA_XSL
+        if self.digi_type[1] == 'Z':
+            self.path_xslt = PATH_NEWSP_XSL
+        self.tmp_report_dir = tmp_report_dir
+        self.tmp_report_file = REPORT_FILE_XSLT
+
+    @property
+    def report_path(self) -> Path:
+        """Returns temporary report path"""
+        if self.tmp_report_dir is None:
+            self.tmp_report_dir = Path(self.path_input).parent
+        return self.tmp_report_dir / self.tmp_report_file
+    
+    @property
+    def meldungen(self) -> typing.List[DDBMeldung]:
+        """get actual validation"""
+
+        if len(self._meldungen) == 0:
+            self._meldungen = transform(self.path_input, self.path_xslt, self.report_path)
+            self._enrich_location()
+        return self._meldungen
+
+    def _enrich_location(self):
+        """Inspect results from tmp report file
+        if any irregularities detected, apply XSLT2.0
+
+        """
+        self._meldungen = self._as_meldungen()
+        if len(self._meldungen) == 0:
+            return self._meldungen
+        try:
+            path_input = self.path_input
+            if not isinstance(path_input, str):
+                path_input = str(self.path_input)
+            for the_m in self.meldungen:
+                if the_m.location is not None:
+                    more_ctx = evaluate(path_input, the_m.location)
+                    if more_ctx.size > 0:
+                        ctx_items = [more_ctx.item_at(i) for i in range(0, more_ctx.size)]
+                        ctx = ','.join(_i.string_value.strip() for _i in ctx_items)
+                        the_m.add_context(ctx)
+        except Exception as _exc:
+            raise RuntimeError(_exc) from _exc
+
+    def _as_meldungen(self):
+        """Information to gather details can be located in
+        * svrl:failed-assert 
+        * svrl:successful-report
+        """
+
+        tmp_root = ET.parse(self.report_path).getroot()
+        sch_els = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
+        if len(sch_els) > 0:
+            return [DDBMeldung(e)
+                    for e in sch_els
+                    if e.attrib['id'] not in self.ignore_ids]
+        return []
+
+    def clean(self):
+        """Remove any artifacts if exist"""
+
+        if self.report_path.exists():
+            self.report_path.unlink()
+
+
 def gather_failed_asserts(path_mets, path_report, ignore_rules=None):
     """Gather all information about failed assertions"""
 
@@ -144,7 +236,7 @@ def gather_failed_asserts(path_mets, path_report, ignore_rules=None):
     return _aggregated
 
 
-def _get_failures(path_input, proc, path_report, ignores=None) -> typing.List[FailedAssert]:
+def _get_failures(path_input, proc, path_report, ignores=None) -> typing.List[DDBMeldung]:
     """Inspect results from tmp report file
     if any irregularities detected, apply XSLT2.0
     expressions from report file to gather details"""
@@ -155,13 +247,12 @@ def _get_failures(path_input, proc, path_report, ignores=None) -> typing.List[Fa
     tmp_root = ET.parse(path_report).getroot()
     _failed_assert_roles = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
     if len(_failed_assert_roles) > 0:
-        _fails = [FailedAssert(e)
+        _fails = [DDBMeldung(e)
                   for e in _failed_assert_roles
                   if e.attrib['id'] not in ignores]
         try:
             if not isinstance(path_input, str):
                 path_input = str(path_input)
-            
             _mets_doc = proc.parse_xml(xml_file_name=path_input)
             _xp_proc = proc.new_xpath_processor()
             _xp_proc.set_context(xdm_item=_mets_doc)
@@ -178,7 +269,7 @@ def _get_failures(path_input, proc, path_report, ignores=None) -> typing.List[Fa
     return _failures
 
 
-def _failed_asserts_to_dict(fails: typing.List[FailedAssert]) -> typing.Dict:
+def _failed_asserts_to_dict(fails: typing.List[DDBMeldung]) -> typing.Dict:
     _dict = {}
     for _f in fails:
         _xpln = _f.explain()
@@ -226,3 +317,4 @@ def ddb_validation(path_mets, digi_type='Aa', ignore_rules=None,
         raise DigiflowDDBException(f"missing tmp output file {_path_result_file}")
     return post_process(path_mets, _path_result_file, ignore_rules)
     
+

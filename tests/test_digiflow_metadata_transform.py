@@ -99,3 +99,4 @@ def test_apply_xslt_issue_corrupted_file(corrupted_issue):
     assert "date_mets_to_mods" in failures.get('id')
     assert "fatal" in failures.get('role')
     assert "Logisches Datum passt nicht" in failures[0].text
+    assert "1840-12-31 != 1840-12-30"  in failures[0].text

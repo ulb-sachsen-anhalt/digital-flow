@@ -3,6 +3,8 @@ cf. https://github.com/Deutsche-Digitale-Bibliothek/ddb-metadata-schematron-vali
 """
 
 import os
+import typing
+
 from pathlib import Path
 
 # trigger saxon API
@@ -50,3 +52,20 @@ def transform(path_input, path_template, path_result=None, post_process=None) ->
     if post_process is not None:
         return post_process(path_input, proc, path_result)
     return Path(path_result).resolve()
+
+
+def evaluate(path_input, xpr):
+    """Use extended XPath 2+ evaluation (like from DDB)
+    to evaluate XPath-Expression against given input
+    """
+
+    if not isinstance(path_input, str):
+        path_input = str(path_input)
+    try:
+        with PySaxonProcessor() as proc:
+            the_doc = proc.parse_xml(xml_file_name=path_input)
+            xpath_proc = proc.new_xpath_processor()
+            xpath_proc.set_context(xdm_item=the_doc)
+            return xpath_proc.evaluate(xpr)
+    except Exception as any_exc:
+        raise DigiflowTransformException(any_exc) from any_exc
