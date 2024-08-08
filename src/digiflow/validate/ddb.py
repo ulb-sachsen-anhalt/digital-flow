@@ -7,7 +7,7 @@ order it's remarks into 5 categories:
 * warn      error but ingested without modification
 * caution   ingest but suspicous
 * error     ingest after DDB-modification
-* fatal     records can't be ingested => strict mode throws exception
+* fatal     records can't be ingested => strict mode yields exceptional state
 
 wiki.deutsche-digitale-bibliothek.de/display/DFD/Schematron-Validierungen+der+Fachstelle+Bibliothek
 """
@@ -32,9 +32,9 @@ dfc.XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
 # digitalization / migration results
 DDB_IGNORE_RULES_BASIC = [
     'fileSec_02',       # fatal: no mets:fileSec[@TYPE="DEFAULT"]
-    'identifier_01',    # info:  record identifier types like "bv" or "eki" not accepted
     'titleInfo_02',     # fatal: parts of work lack titel
     # 'originInfo_06',  # error: unclear = placeTerm contains invalid attr type 'code' (i.e. XA-DE)
+    'identifier_01',    # info:  record identifier types like "bv" or "eki" ignored
 ]
 
 # some special corner cases, when certain DDB-rules
@@ -45,19 +45,8 @@ DDB_IGNORE_RULES_BASIC = [
 # the name of the SAF because Share_it creates this
 # link afterwards beyond migration workflow
 DDB_IGNORE_RULES_MVW = DDB_IGNORE_RULES_BASIC + [
-    # fatal: metsPtr xlink:href must have valid URN
-    # at import time it references local host SAF
-    'structMapLogical_17',
-    # error: no image from fileGroup@USE='DEFAULT' linked
-    # at import time it's not yet existing
-    'structMapLogical_22',
-]
-
-# periodicals (end therefore periodical_volumes)
-# may have lots of extended dateIssued elements
-# which seem to confuse DDB Validation
-DDB_IGNORE_RULES_NEWSPAPERS = [
-    'originInfo_01',
+    'structMapLogical_17',  # fatal: metsPtr xlink:href invalid URN at import references SAF
+    'structMapLogical_22',  # error: no fileGroup@USE='DEFAULT' at import not yet existing
 ]
 
 _DDB_MEDIA_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-medien.xsl'
@@ -143,6 +132,17 @@ class DDBMeldung:
     def is_error(self):
         """Need special care?"""
         return self.role in CRITICAL_VALIDATION_ROLES
+    
+
+class DDBReport:
+    """Collection of DDBMeldungen"""
+
+    def __init__(self, meldungen):
+        self.meldungen = meldungen
+
+    def read(self, only_headlines=True):
+        if len(self.meldungen) == 0:
+            return []
 
 
 class DDBReporter:
@@ -155,7 +155,7 @@ class DDBReporter:
                  digi_type='Aa', ignore_ids=None,
                  tmp_report_dir=None):
         self.path_input = path_input
-        self._meldungen = []
+        self._ddb_report = None
         self.ignore_ids = []
         if isinstance(ignore_ids, list) and len(ignore_ids) > 0:
             self.ignore_ids = ignore_ids
@@ -174,27 +174,25 @@ class DDBReporter:
         return self.tmp_report_dir / self.tmp_report_file
     
     @property
-    def meldungen(self) -> typing.List[DDBMeldung]:
-        """get actual validation"""
+    def report(self, only_headlines=True) -> DDBReport:
+        """get actual validation report"""
 
-        if len(self._meldungen) == 0:
-            self._meldungen = transform(self.path_input, self.path_xslt, self.report_path)
-            self._enrich_location()
-        return self._meldungen
+        if self._ddb_report is None:
+            transform(self.path_input, self.path_xslt, self.report_path)
+            meldungen = self._as_meldungen()
+            self._ddb_report = DDBReport(meldungen)
+        return self._ddb_report
 
-    def _enrich_location(self):
+    def _enrich_location(self, meldungen):
         """Inspect results from tmp report file
         if any irregularities detected, apply XSLT2.0
 
         """
-        self._meldungen = self._as_meldungen()
-        if len(self._meldungen) == 0:
-            return self._meldungen
         try:
             path_input = self.path_input
             if not isinstance(path_input, str):
                 path_input = str(self.path_input)
-            for the_m in self.meldungen:
+            for the_m in meldungen:
                 if the_m.location is not None:
                     more_ctx = evaluate(path_input, the_m.location)
                     if more_ctx.size > 0:
@@ -213,9 +211,9 @@ class DDBReporter:
         tmp_root = ET.parse(self.report_path).getroot()
         sch_els = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
         if len(sch_els) > 0:
-            return [DDBMeldung(e)
-                    for e in sch_els
-                    if e.attrib['id'] not in self.ignore_ids]
+            meldungen =  [DDBMeldung(e) for e in sch_els]
+            self._enrich_location(meldungen)
+            return meldungen
         return []
 
     def clean(self):

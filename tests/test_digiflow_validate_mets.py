@@ -45,10 +45,11 @@ def test_apply_xslt_issue_with_gathering(tmp_path):
     reporter = DDBReporter(mets_target, digi_type='OZ')
 
     # act
-    what = reporter.meldungen
+    what = reporter.report
  
     # assert
-    assert len(what) == 2
+    assert what
+    assert len(what.meldungen) == 2
     reporter.clean()
 
 
