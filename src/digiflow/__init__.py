@@ -11,7 +11,6 @@ from .validate.metadata_xslt import (
 from .validate.ddb import (
     DDB_IGNORE_RULES_BASIC,
     DDB_IGNORE_RULES_MVW,
-    DDB_IGNORE_RULES_NEWSPAPERS,
     FAILED_ASSERT_ERROR,
     FAILED_ASSERT_OTHER,
     DIGIS_MULTIVOLUME,
