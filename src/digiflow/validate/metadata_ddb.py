@@ -1,6 +1,8 @@
-"""API processing and evaluating DDB validations
+"""API processing and evaluating metadata in respect
+to DDB (Deutsche Digitale Bibliothek = German Digital Library)
+specific validations as well as XML schemata
 
-Assume DDB (Deutsche Digitale Bibliothek = German Digital Library)
+Assume DDB
 order it's remarks into 5 categories:
 
 * info      ingested but some information won't be used by DDB
@@ -13,7 +15,6 @@ wiki.deutsche-digitale-bibliothek.de/display/DFD/Schematron-Validierungen+der+Fa
 """
 
 import enum
-import os
 import typing
 
 from pathlib import Path
@@ -32,7 +33,7 @@ dfc.XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
 # DDB Report information *not* to care about
 # because we're using this for intermediate
 # digitalization workflow results
-IGNORE_RULES_INTERMEDIATE = [
+IGNORE_DDB_RULES_INTERMEDIATE = [
     'fileSec_02',           # fatal: no mets:fileSec[@TYPE="DEFAULT"]
 
     # special cases for combined digital objects (i.e. volumes)
@@ -41,9 +42,9 @@ IGNORE_RULES_INTERMEDIATE = [
     'fileSec_05',           # warn: no fileGroup FULLTEXT (newspapers)
 ]
 
-IGNORE_RULES_ULB = IGNORE_RULES_INTERMEDIATE + [
-    'originInfo_06',        # some non-DDB-compliant mods:placeTerm
-    'titleInfo_02',         # some title are just shorter than 3 chars
+IGNORE_DDB_RULES_ULB = IGNORE_DDB_RULES_INTERMEDIATE + [
+    'originInfo_06',        # non-DDB-compliant mods:placeTerm
+    'titleInfo_02',         # some titles are just shorter than 3 chars
     'structMapLogical_27',  # would not allow TYPE = cover_front
 ]
 
@@ -63,7 +64,7 @@ DIGIS_MULTIVOLUME = ['Ac', 'Af', 'AF', 'Hc', 'Hf', 'HF',
 DIGIS_NEWSPAPER = ['issue', 'additional', 'OZ', 'AZ']
 
 
-class DigiflowDDBException(Exception):
+class DigiflowMetadataValidationException(Exception):
     """Mark Validation Criticals which
     otherwise prevent records from being
     imported by German Digital Library
@@ -160,12 +161,16 @@ class DDBMeldung:
         return (self.id, self.explain())
 
 
-class DDBReport:
-    """Collection of DDBMeldungen"""
+class Report:
+    """Report the state of object's
+    metadata - includes collection of DDBMeldungen
+    and optional schema error hints
+    """
 
     def __init__(self, meldungen: typing.List[DDBMeldung]):
         self.meldungen = sorted(meldungen, key=lambda e: e.role.order, reverse=True)
         self.ignored_rules = []
+        self.xsd_errors = None
 
     def read(self, only_headlines=True, map_roles=False) -> typing.List:
         """Get information from validation in order
@@ -192,7 +197,7 @@ class DDBReport:
                 delivery = [f"{k}({len(v)}x):{v}" for k, v in map_roles.items()]
         return delivery
 
-    def to_ignores(self, ignore_rule_ids, min_level):
+    def categorize(self, ignore_rule_ids, min_level):
         """Move meldungen to ignores if matching
         id labels (and optional below importance level
         threshold - to just ignore levels like 'info')
@@ -218,14 +223,17 @@ class DDBReport:
 
     def alert(self, min_role_label=None):
         """Inspect current meldungen if something
-        (per default) very severe is lurking"""
+        (per default) very severe lurks or
+        recognized schema errors
+        """
 
         role_level = None
         if isinstance(min_role_label, str):
             role_level = DDBRole.from_label(min_role_label)
         if role_level is None:
             role_level = DDBRole.FATAL
-        return any(m for m in self.meldungen if m.role >= role_level)
+        has_alerts = any(m for m in self.meldungen if m.role >= role_level)
+        return has_alerts or self.xsd_errors is not None
 
 
 class DDBTransformer:
@@ -259,7 +267,7 @@ class DDBTransformer:
             self.report_path.unlink()
 
 
-class DDBReporter:
+class Reporter:
     """Encapsulates DDB conformant Validation
     of metadata with corresponding schema
     and the generation of DDBMeldungen
@@ -270,8 +278,7 @@ class DDBReporter:
                  tmp_report_dir=None):
         self.path_input = path_input
         self.digi_type = digi_type
-        self.xsd_errors = None
-        self._report = None
+        self._report: typing.Optional[Report] = None
         path_xslt = PATH_MEDIA_XSL
         if self.digi_type[1] == 'Z':
             path_xslt = PATH_NEWSP_XSL
@@ -281,7 +288,7 @@ class DDBReporter:
 
     def get(self, ignore_rule_ids=None,
             min_level=None,
-            validate_schema=True) -> DDBReport:
+            validate_schema=True) -> Report:
         """get actual validation report with
         respect to custum ignore rule ids
         starting from provided minimal
@@ -290,19 +297,20 @@ class DDBReporter:
 
         if self._report is None:
             self.transformer.transform()
-            meldungen = self.as_meldungen()
-            ddb_report = DDBReport(meldungen)
+            meldungen = self.extract_meldungen()
+            ddb_report = Report(meldungen)
+            self._report = ddb_report
             self.transformer.clean()
             if ignore_rule_ids is None:
                 ignore_rule_ids = []
             if min_level is None:
                 min_level = DDBRole.WARN.label
-            ddb_report.to_ignores(ignore_rule_ids, min_level)
+            ddb_report.categorize(ignore_rule_ids, min_level)
             if validate_schema:
                 self.run_schema_validation()
-        return ddb_report
+        return self._report
 
-    def as_meldungen(self):
+    def extract_meldungen(self):
         """Information to gather details can be located in
         * svrl:failed-assert 
         * svrl:successful-report
@@ -333,7 +341,7 @@ class DDBReporter:
                         ctx = ','.join(_i.string_value.strip() for _i in ctx_items)
                         the_m.add_context(ctx)
         except Exception as _exc:
-            raise DigiflowDDBException(_exc) from _exc
+            raise DigiflowMetadataValidationException(_exc) from _exc
 
     def run_schema_validation(self):
         """Forward to separate XSD schema validation"""
@@ -342,10 +350,10 @@ class DDBReporter:
             dfv.validate_xml(self.path_input,
                              xsd_mappings=dfv.METS_MODS_XSD)
         except dfv.InvalidXMLException as invalids:
-            self.xsd_errors = invalids.args[0]
+            self._report.xsd_errors = invalids.args[0]
 
     def input_conform(self):
         """Check if any irregularities concerning
         XSD-schema recognized"""
 
-        return self.xsd_errors is None
+        return self._report.xsd_errors is None

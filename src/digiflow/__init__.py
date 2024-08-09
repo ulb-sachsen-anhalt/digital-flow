@@ -8,16 +8,16 @@ from .validate.metadata_xslt import (
     DigiflowTransformException,
     transform,
 )
-from .validate.ddb import (
+from .validate.metadata_ddb import (
     DIGIS_MULTIVOLUME,
     DIGIS_NEWSPAPER,
-	IGNORE_RULES_INTERMEDIATE,
-	IGNORE_RULES_ULB,
+	IGNORE_DDB_RULES_INTERMEDIATE,
+	IGNORE_DDB_RULES_ULB,
     REPORT_FILE_XSLT,
-    DigiflowDDBException,
+    DigiflowMetadataValidationException,
 	DDBRole,
-	DDBReport,
-	DDBReporter,
+	Report,
+	Reporter,
 )
 from .validate import (
     INVALID_LABEL_UNSET,

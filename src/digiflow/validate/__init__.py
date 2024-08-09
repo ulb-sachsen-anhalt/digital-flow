@@ -41,8 +41,8 @@ from .metadata_xsd import (
     validate_xml,
 )
 
-from .ddb import (
+from .metadata_ddb import (
 	DDBRole,
-	DDBReport,
-    DDBReporter,
+	Report,
+    Reporter,
 )
