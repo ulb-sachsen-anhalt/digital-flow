@@ -12,6 +12,7 @@ order it's remarks into 5 categories:
 wiki.deutsche-digitale-bibliothek.de/display/DFD/Schematron-Validierungen+der+Fachstelle+Bibliothek
 """
 
+import enum
 import os
 import typing
 
@@ -20,8 +21,9 @@ from pathlib import Path
 import lxml.etree as ET
 
 import digiflow.common as dfc
+import digiflow.validate as dfv
+import digiflow.validate.metadata_xslt as df_vmdx
 
-from digiflow.validate.metadata_xslt import transform, evaluate
 
 # add schematron validation language mapping
 dfc.XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
@@ -29,24 +31,20 @@ dfc.XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
 
 # DDB Report information *not* to care about
 # because we're using this for intermediate
-# digitalization / migration results
-DDB_IGNORE_RULES_BASIC = [
-    'fileSec_02',       # fatal: no mets:fileSec[@TYPE="DEFAULT"]
-    'titleInfo_02',     # fatal: parts of work lack titel
-    # 'originInfo_06',  # error: unclear = placeTerm contains invalid attr type 'code' (i.e. XA-DE)
-    'identifier_01',    # info:  record identifier types like "bv" or "eki" ignored
-]
+# digitalization workflow results
+IGNORE_RULES_INTERMEDIATE = [
+    'fileSec_02',           # fatal: no mets:fileSec[@TYPE="DEFAULT"]
 
-# some special corner cases, when certain DDB-rules
-# shall be ignored on this stage
-# example:
-# at migration time there's no valid href
-# for the METS-pointer in the logical section, just
-# the name of the SAF because Share_it creates this
-# link afterwards beyond migration workflow
-DDB_IGNORE_RULES_MVW = DDB_IGNORE_RULES_BASIC + [
+    # special cases for combined digital objects (i.e. volumes)
     'structMapLogical_17',  # fatal: metsPtr xlink:href invalid URN at import references SAF
     'structMapLogical_22',  # error: no fileGroup@USE='DEFAULT' at import not yet existing
+    'fileSec_05',           # warn: no fileGroup FULLTEXT (newspapers)
+]
+
+IGNORE_RULES_ULB = IGNORE_RULES_INTERMEDIATE + [
+    'originInfo_06',        # some non-DDB-compliant mods:placeTerm
+    'titleInfo_02',         # some title are just shorter than 3 chars
+    'structMapLogical_27',  # would not allow TYPE = cover_front
 ]
 
 _DDB_MEDIA_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-medien.xsl'
@@ -64,19 +62,51 @@ DIGIS_MULTIVOLUME = ['Ac', 'Af', 'AF', 'Hc', 'Hf', 'HF',
                      'volume', 'periodical', 'periodical_volume']
 DIGIS_NEWSPAPER = ['issue', 'additional', 'OZ', 'AZ']
 
-# context text len
-ASSERT_DSCR_MAX_LEN = 64
-ASSERT_TEXT_MAX_LEN = 256
-CRITICAL_VALIDATION_ROLES = ['critical', 'error', 'fatal']
-FAILED_ASSERT_ERROR = 'failed_assert_error'
-FAILED_ASSERT_OTHER = 'failed_assert_other'
-
 
 class DigiflowDDBException(Exception):
     """Mark Validation Criticals which
     otherwise prevent records from being
     imported by German Digital Library
     """
+
+
+class DDBRole(enum.Enum):
+    """Consider the severty of a meldung"""
+
+    INFO = (1, 'info')
+    WARN = (2, 'warn')
+    CAUTION = (3, 'caution')
+    ERROR = (4, 'error')
+    FATAL = (5, 'fatal')
+
+    def __init__(self, order: int, label: str):
+        self.order = order
+        self.label = label
+
+    def __gt__(self, other):
+        if self.__class__ is other.__class__:
+            return self.order > other.order
+        return NotImplemented
+
+    def __ge__(self, other):
+        if self.__class__ is other.__class__:
+            return self.value >= other.value
+        return NotImplemented
+
+    def __lt__(self, other):
+        if self.__class__ is other.__class__:
+            return self.order < other.order
+        return NotImplemented
+
+    @classmethod
+    def from_label(cls, label):
+        """Get DDBRole object for label if exists"""
+        if not isinstance(label, str):
+            label = str(label)
+        for role in DDBRole:
+            if role.label.lower() == label.lower():
+                return role
+        return None
 
 
 class DDBMeldung:
@@ -88,61 +118,145 @@ class DDBMeldung:
     """
 
     def __init__(self, elem: ET.Element):
+        self._source = elem
         self.id: str = elem.get('id')
-        self.role: str = elem.get('role')
+        self.role: DDBRole = DDBRole.from_label(elem.get('role'))
         self.location: str = elem.get('location')
-        self.text:str = elem.get('text')
         self.context: str = ''
-        self._text: str = '. '.join(elem.xpath('svrl:text/text()', namespaces=dfc.XMLNS))
-        self._description = ' '.join(elem.xpath('svrl:description/text()', namespaces=dfc.XMLNS))
-        self._properties = elem.xpath('svrl:property', namespaces=dfc.XMLNS)
+        self._text = ''
+
+    def __str__(self) -> str:
+        return str(self.role.label, self.id)
 
     def explain(self):
         """Explain yourself"""
-        _msg = f'[{self.id}] '
-        if len(self._properties) > 0:
-            _props = '=>'.join(f"{_p.get('id')}:{_p.text}" for _p in self._properties)
-            _msg = f'{_msg} {_props}'
+        msg_txt = f'[{self.id}] '
+        properties = self._source.xpath('svrl:property', namespaces=dfc.XMLNS)
+        if len(properties) > 0:
+            _props = '=>'.join(f"{_p.get('id')}:{_p.text}" for _p in properties)
+            msg_txt = f'{msg_txt} {_props}'
         if len(self.context) > 0:
-            _ctx = self.context
-            if len(_ctx) > ASSERT_DSCR_MAX_LEN:
-                _ctx = _ctx[:ASSERT_DSCR_MAX_LEN]
-            _msg = f'{_msg} test:{_ctx}'
-        _add_dscr = ''
-        _add_text = ''
-        if self._description:
-            _dscr = self._description
-            if len(_dscr) > ASSERT_DSCR_MAX_LEN:
-                _dscr = _dscr[:ASSERT_DSCR_MAX_LEN]
-            _add_dscr = _dscr + ', '
-        if self._text:
-            _txt = self._text
-            if len(_txt) > ASSERT_TEXT_MAX_LEN:
-                _txt = _txt[:(ASSERT_TEXT_MAX_LEN-3)] + '...'
-            _add_text = _txt
-        if len(_add_dscr) > 2 or len(_add_text) > 0:
-            _msg = f'{_msg} ({_add_dscr}{_add_text})'
-        return _msg
+            msg_txt = f'{msg_txt} test:{self.context}'
+        descriptions = ' '.join(self._source.xpath('svrl:description/text()', namespaces=dfc.XMLNS))
+        texts = '. '.join(self._source.xpath('svrl:text/text()', namespaces=dfc.XMLNS))
+        explain_token = f'{descriptions} {texts}'
+        if len(explain_token) > 1:  # because centered whitespace will exist
+            msg_txt = f'{msg_txt} ({descriptions})'
+        return msg_txt
 
     def add_context(self, ctx: str):
         """Add even more context on error data"""
         if ctx is not None and len(ctx) > 0:
             self.context = ctx
 
-    def is_error(self):
-        """Need special care?"""
-        return self.role in CRITICAL_VALIDATION_ROLES
-    
+    def shortform(self) -> typing.Tuple:
+        """Only basic information"""
+
+        return (self.role.label, self.id)
+
+    def longform(self) -> typing.Tuple:
+        """All we know minus role"""
+
+        return (self.id, self.explain())
+
 
 class DDBReport:
     """Collection of DDBMeldungen"""
 
-    def __init__(self, meldungen):
-        self.meldungen = meldungen
+    def __init__(self, meldungen: typing.List[DDBMeldung]):
+        self.meldungen = sorted(meldungen, key=lambda e: e.role.order, reverse=True)
+        self.ignored_rules = []
 
-    def read(self, only_headlines=True):
+    def read(self, only_headlines=True, map_roles=False) -> typing.List:
+        """Get information from validation in order
+        of their level from worse descending
+        """
+
         if len(self.meldungen) == 0:
             return []
+        delivery = self.meldungen
+        if only_headlines:
+            delivery = [m.shortform() for m in delivery]
+        if map_roles:
+            map_roles = {}
+            for news in delivery:
+                if isinstance(news, tuple):
+                    the_key, appendum = news
+                elif isinstance(news, DDBMeldung):
+                    the_key = news.role.label
+                    appendum = news.longform()
+                if the_key not in map_roles:
+                    map_roles.setdefault(the_key, [])
+                map_roles[the_key].append(appendum)
+            if len(map_roles) > 0:
+                delivery = [f"{k}({len(v)}x):{v}" for k, v in map_roles.items()]
+        return delivery
+
+    def to_ignores(self, ignore_rule_ids, min_level):
+        """Move meldungen to ignores if matching
+        id labels (and optional below importance level
+        threshold - to just ignore levels like 'info')
+        """
+
+        ignores = []
+        respect = []
+        for m in self.meldungen:
+            if m.id in ignore_rule_ids:
+                ignores.append(m)
+            elif isinstance(min_level, str):
+                current_role = m.role
+                mininum_role = DDBRole.from_label(min_level)
+                if (current_role and mininum_role) \
+                        and current_role < mininum_role:
+                    ignores.append(m)
+                else:
+                    respect.append(m)
+            else:
+                respect.append(m)
+        self.meldungen = respect
+        self.ignored_rules = ignores
+
+    def alert(self, min_role_label=None):
+        """Inspect current meldungen if something
+        (per default) very severe is lurking"""
+
+        role_level = None
+        if isinstance(min_role_label, str):
+            role_level = DDBRole.from_label(min_role_label)
+        if role_level is None:
+            role_level = DDBRole.FATAL
+        return any(m for m in self.meldungen if m.role >= role_level)
+
+
+class DDBTransformer:
+    """Encapsulate technical aspects"""
+
+    def __init__(self, path_input, path_xslt,
+                 tmp_report_dir, tmp_report_file=None):
+        self.path_input = path_input
+        self.path_xslt = path_xslt
+        self.tmp_report_dir = tmp_report_dir
+        self.tmp_report_file = REPORT_FILE_XSLT
+        if tmp_report_file is not None:
+            self.tmp_report_file = tmp_report_file
+
+    @property
+    def report_path(self) -> Path:
+        """Returns temporary report path"""
+        if self.tmp_report_dir is None:
+            self.tmp_report_dir = Path(self.path_input).parent
+        return self.tmp_report_dir / self.tmp_report_file
+
+    def transform(self):
+        """Trigger actual report generation"""
+
+        df_vmdx.transform(self.path_input, self.path_xslt, self.report_path)
+
+    def clean(self):
+        """Remove any artifacts if exist"""
+
+        if self.report_path.exists():
+            self.report_path.unlink()
 
 
 class DDBReporter:
@@ -152,36 +266,55 @@ class DDBReporter:
     """
 
     def __init__(self, path_input,
-                 digi_type='Aa', ignore_ids=None,
+                 digi_type='Aa',
                  tmp_report_dir=None):
         self.path_input = path_input
-        self._ddb_report = None
-        self.ignore_ids = []
-        if isinstance(ignore_ids, list) and len(ignore_ids) > 0:
-            self.ignore_ids = ignore_ids
         self.digi_type = digi_type
-        self.path_xslt = PATH_MEDIA_XSL
+        self.xsd_errors = None
+        self._report = None
+        path_xslt = PATH_MEDIA_XSL
         if self.digi_type[1] == 'Z':
-            self.path_xslt = PATH_NEWSP_XSL
-        self.tmp_report_dir = tmp_report_dir
-        self.tmp_report_file = REPORT_FILE_XSLT
+            path_xslt = PATH_NEWSP_XSL
+        self.transformer = DDBTransformer(path_input,
+                                          path_xslt,
+                                          tmp_report_dir)
 
-    @property
-    def report_path(self) -> Path:
-        """Returns temporary report path"""
-        if self.tmp_report_dir is None:
-            self.tmp_report_dir = Path(self.path_input).parent
-        return self.tmp_report_dir / self.tmp_report_file
-    
-    @property
-    def report(self, only_headlines=True) -> DDBReport:
-        """get actual validation report"""
+    def get(self, ignore_rule_ids=None,
+            min_level=None,
+            validate_schema=True) -> DDBReport:
+        """get actual validation report with
+        respect to custum ignore rule ids
+        starting from provided minimal
+        DDBRole level label (defaults to 'warn')
+        """
 
-        if self._ddb_report is None:
-            transform(self.path_input, self.path_xslt, self.report_path)
-            meldungen = self._as_meldungen()
-            self._ddb_report = DDBReport(meldungen)
-        return self._ddb_report
+        if self._report is None:
+            self.transformer.transform()
+            meldungen = self.as_meldungen()
+            ddb_report = DDBReport(meldungen)
+            self.transformer.clean()
+            if ignore_rule_ids is None:
+                ignore_rule_ids = []
+            if min_level is None:
+                min_level = DDBRole.WARN.label
+            ddb_report.to_ignores(ignore_rule_ids, min_level)
+            if validate_schema:
+                self.run_schema_validation()
+        return ddb_report
+
+    def as_meldungen(self):
+        """Information to gather details can be located in
+        * svrl:failed-assert 
+        * svrl:successful-report
+        """
+
+        tmp_root = ET.parse(self.transformer.report_path).getroot()
+        sch_els = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
+        if len(sch_els) > 0:
+            meldungen = [DDBMeldung(e) for e in sch_els]
+            self._enrich_location(meldungen)
+            return meldungen
+        return []
 
     def _enrich_location(self, meldungen):
         """Inspect results from tmp report file
@@ -194,125 +327,25 @@ class DDBReporter:
                 path_input = str(self.path_input)
             for the_m in meldungen:
                 if the_m.location is not None:
-                    more_ctx = evaluate(path_input, the_m.location)
+                    more_ctx = df_vmdx.evaluate(path_input, the_m.location)
                     if more_ctx.size > 0:
                         ctx_items = [more_ctx.item_at(i) for i in range(0, more_ctx.size)]
                         ctx = ','.join(_i.string_value.strip() for _i in ctx_items)
                         the_m.add_context(ctx)
         except Exception as _exc:
-            raise RuntimeError(_exc) from _exc
+            raise DigiflowDDBException(_exc) from _exc
 
-    def _as_meldungen(self):
-        """Information to gather details can be located in
-        * svrl:failed-assert 
-        * svrl:successful-report
-        """
+    def run_schema_validation(self):
+        """Forward to separate XSD schema validation"""
 
-        tmp_root = ET.parse(self.report_path).getroot()
-        sch_els = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
-        if len(sch_els) > 0:
-            meldungen =  [DDBMeldung(e) for e in sch_els]
-            self._enrich_location(meldungen)
-            return meldungen
-        return []
-
-    def clean(self):
-        """Remove any artifacts if exist"""
-
-        if self.report_path.exists():
-            self.report_path.unlink()
-
-
-def gather_failed_asserts(path_mets, path_report, ignore_rules=None):
-    """Gather all information about failed assertions"""
-
-    _failures = _get_failures(path_mets, path_report, ignore_rules)
-    _aggregated = _failed_asserts_to_dict(_failures)
-    if FAILED_ASSERT_ERROR in _aggregated:
-        raise DigiflowDDBException(_aggregated[FAILED_ASSERT_ERROR])
-    os.unlink(path_report)
-    return _aggregated
-
-
-def _get_failures(path_input, proc, path_report, ignores=None) -> typing.List[DDBMeldung]:
-    """Inspect results from tmp report file
-    if any irregularities detected, apply XSLT2.0
-    expressions from report file to gather details"""
-
-    _failures = []
-    if ignores is None:
-        ignores = []
-    tmp_root = ET.parse(path_report).getroot()
-    _failed_assert_roles = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
-    if len(_failed_assert_roles) > 0:
-        _fails = [DDBMeldung(e)
-                  for e in _failed_assert_roles
-                  if e.attrib['id'] not in ignores]
         try:
-            if not isinstance(path_input, str):
-                path_input = str(path_input)
-            _mets_doc = proc.parse_xml(xml_file_name=path_input)
-            _xp_proc = proc.new_xpath_processor()
-            _xp_proc.set_context(xdm_item=_mets_doc)
-            for _fail in _fails:
-                if _fail.location is not None:
-                    _info = _xp_proc.evaluate(_fail.location)
-                    if isinstance(_info, PyXdmValue) and _info.size > 0:
-                        _items = [_info.item_at(i) for i in range(0, _info.size)]
-                        _ctx = ','.join(_i.string_value.strip() for _i in _items)
-                        _fail.add_context(_ctx)
-                _failures.append(_fail)
-        except Exception as _exc:
-            raise RuntimeError(_exc) from _exc
-    return _failures
+            dfv.validate_xml(self.path_input,
+                             xsd_mappings=dfv.METS_MODS_XSD)
+        except dfv.InvalidXMLException as invalids:
+            self.xsd_errors = invalids.args[0]
 
+    def input_conform(self):
+        """Check if any irregularities concerning
+        XSD-schema recognized"""
 
-def _failed_asserts_to_dict(fails: typing.List[DDBMeldung]) -> typing.Dict:
-    _dict = {}
-    for _f in fails:
-        _xpln = _f.explain()
-        _role = FAILED_ASSERT_ERROR if _f.is_error() else FAILED_ASSERT_OTHER
-        if _role in _dict:
-            _prev = _dict[_role]
-            _prev.append(_xpln)
-            _dict[_role] = _prev
-        else:
-            _dict.setdefault(_role, [_xpln])
-    return _dict
-
-
-def ddb_validation(path_mets, digi_type='Aa', ignore_rules=None, 
-                   post_process=gather_failed_asserts, path_result_file=None):
-    """Process METS/MODS Validation which complies to Deutsche Digitale Bibliothek (DDB)
-    plus applying additional set of rules which shall not be taken into account
-
-    Further information can be found at:
-        https://github.com/Deutsche-Digitale-Bibliothek/ddb-metadata-schematron-validation
-
-    Args:
-        path_mets (str|Path): resource for METS-file
-        digi_type (str, optional): PICA-Type. Defaults to 'Aa'.
-        ignore_rules (_type_, optional): Which Rules shall be
-            ignored when evaluating validation outcome.
-            Defaults to DDB_IGNORE_RULES_BASIC.
-    """
-    if ignore_rules is None:
-        ignore_rules = DDB_IGNORE_RULES_BASIC
-        if digi_type in DIGIS_MULTIVOLUME:
-            ignore_rules = DDB_IGNORE_RULES_MVW
-    _path_xslt = str(PATH_MEDIA_XSL)
-    if digi_type in DIGIS_NEWSPAPER:
-        _path_xslt = str(PATH_NEWSP_XSL)
-    if not isinstance(path_mets, str):
-        path_mets = str(path_mets)
-    # just create saxon processor context once
-    # several calls seem to break stuff
-    if path_result_file is None:
-        _the_dir = os.path.dirname(path_mets)
-        path_result_file = os.path.join(_the_dir, REPORT_FILE_XSLT)
-    _path_result_file = transform(path_mets, _path_xslt, path_result_file)
-    if not os.path.isfile(_path_result_file):
-        raise DigiflowDDBException(f"missing tmp output file {_path_result_file}")
-    return post_process(path_mets, _path_result_file, ignore_rules)
-    
-
+        return self.xsd_errors is None

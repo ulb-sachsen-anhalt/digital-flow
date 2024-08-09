@@ -36,10 +36,13 @@ from .imgdata import (
 )
 
 from .metadata_xsd import (
+	METS_MODS_XSD,
     InvalidXMLException,
     validate_xml,
 )
 
 from .ddb import (
-    ddb_validation,
+	DDBRole,
+	DDBReport,
+    DDBReporter,
 )

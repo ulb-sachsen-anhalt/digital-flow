@@ -11,12 +11,12 @@ from pathlib import (
 import pytest
 
 from digiflow.validate.ddb import (
-    DDB_IGNORE_RULES_MVW,
-    FAILED_ASSERT_ERROR,
-    FAILED_ASSERT_OTHER,
+    IGNORE_RULES_INTERMEDIATE,
+    IGNORE_RULES_ULB,
     DigiflowDDBException,
+    DDBRole,
+    DDBReport,
     DDBReporter,
-    ddb_validation,
 )
 
 from .conftest import (
@@ -31,8 +31,30 @@ except ModuleNotFoundError:
     SAXON_PY_ENABLED = False
 
 
+def test_role_order():
+    """Ensure roles order matters"""
+
+    assert DDBRole.FATAL > DDBRole.ERROR
+    assert DDBRole.INFO < DDBRole.FATAL
+    assert DDBRole.FATAL >= DDBRole.FATAL
+
+
+@pytest.mark.parametrize(
+    "input_string,expected_obj", [
+        ('caution', DDBRole.CAUTION),
+        ('error', DDBRole.ERROR),
+        ('fatal', DDBRole.FATAL),
+        ('foo', None),
+        (None, None),
+        ])
+def test_role_for_label(input_string, expected_obj):
+    """Ensure enum objects found for given input"""
+
+    assert DDBRole.from_label(input_string) is expected_obj
+
+
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_apply_xslt_issue_with_gathering(tmp_path):
+def test_ddb_report_newspaper_headlines(tmp_path):
     """Simple MWE to trigger transformation including
     schematron failures => none in this case, all fine
     """
@@ -45,12 +67,34 @@ def test_apply_xslt_issue_with_gathering(tmp_path):
     reporter = DDBReporter(mets_target, digi_type='OZ')
 
     # act
-    what = reporter.report
- 
+    whats_up: DDBReport = reporter.get()
+
     # assert
-    assert what
-    assert len(what.meldungen) == 2
-    reporter.clean()
+    assert len(whats_up.meldungen) == 2
+    assert ('error', 'amdSec_04') == whats_up.read()[0]
+    assert ('warn', 'structMapLogical_12') == whats_up.read()[1]
+
+
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
+def test_ddb_report_newspaper_longform(tmp_path):
+    """Simple MWE to trigger transformation including
+    schematron failures => none in this case, all fine
+    """
+
+    # arrange
+    file_name = 'vls_digitale_9633116.zmets.xml'
+    mets_source = Path(TEST_RES) / file_name
+    mets_target = os.path.join(tmp_path, file_name)
+    shutil.copy(str(mets_source), str(mets_target))
+    reporter = DDBReporter(mets_target, digi_type='OZ')
+
+    # act
+    whats_up: DDBReport = reporter.get()
+
+    # assert
+    assert len(whats_up.meldungen) == 2
+    assert "error(1x):['amdSec_04']" == whats_up.read(map_roles=True)[0]
+    assert "warn(1x):['structMapLogical_12']" == whats_up.read(map_roles=True)[1]
 
 
 @pytest.fixture(name="share_it_monography")
@@ -66,16 +110,41 @@ def _fixture_share_it_monography(tmp_path):
     return str(mets_target)
 
 
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_validate_opendata_44046_defaults(share_it_monography):
     """Schematron validation with common monography (Aa)
-    and default ignorance yield no problems
+    and default ignorance yield no problems and no
+    default alert
+
+    BUT
+
+    if role min level adopted, then yield alert
     """
 
     # act
-    outcome = ddb_validation(share_it_monography)
+    reporter = DDBReporter(share_it_monography)
+    whats_up: DDBReport = reporter.get(min_level='info')
 
     # assert
-    assert len(outcome) == 0    # nothing invalid to see
+    assert not whats_up.alert()         # nothing very bad per se
+    assert len(whats_up.meldungen) == 1 # but still one meldung
+    assert ('info', 'identifier_01') == whats_up.read()[0]
+    assert whats_up.alert('info')   # provoke alert
+    assert reporter.input_conform()
+
+
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
+def test_opendata_44046_defaults_not_conform(share_it_monography):
+    """XSD validation yields null problemo"""
+
+    # act
+    reporter = DDBReporter(share_it_monography)
+    _ = reporter.get()
+
+    # assert
+    assert reporter.input_conform()
+    assert not reporter.get().alert()
+    assert not reporter.xsd_errors
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -84,27 +153,9 @@ def test_ddb_validate_opendata_44046_ignore_ident01(share_it_monography):
     simple monography (Aa)"""
 
     # act
-    outcome = ddb_validation(share_it_monography, ignore_rules=['identifier_01'])
-
-    # assert
-    assert 'info' not in outcome
-    assert len(outcome) == 0
-
-
-@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_validate_opendata_44046_without_ignorances(share_it_monography):
-    """XSLT validation with common monography (Aa)
-    complains about identifier type 'gbv'
-    """
-
-    # act
-    outcome = ddb_validation(share_it_monography, ignore_rules=[])
-
-    # assert
-    assert len(outcome) == 1
-    assert 'identifier_01' in outcome[FAILED_ASSERT_OTHER][0]
-    assert 'type:gbv' in outcome[FAILED_ASSERT_OTHER][0]
-    assert '265982944' in outcome[FAILED_ASSERT_OTHER][0]
+    whats_up: DDBReport = DDBReporter(share_it_monography).get(ignore_rule_ids=['identifier_01'])
+    assert not whats_up.alert()
+    assert len(whats_up.meldungen) == 0
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -113,7 +164,10 @@ def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     print export data from Kitodo2 legacy system
 
     Please note, that any other roles like info or warning
-    (=> amdSec_13, amdSec_15) will be swalled
+    (=> amdSec_13, amdSec_15) will be swallowed
+
+    changed: 4.3+
+    no more exception thrown, but .alert() yields TRUE
     """
 
     # arrange
@@ -123,17 +177,20 @@ def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target)
+    reporter = DDBReporter(mets_source)
+    whats_up: DDBReport = reporter.get()
 
     # assert
-    _exc_load = _dexc.value.args[0]
-    assert len(_exc_load) == 2
-    assert isinstance(_exc_load, list)
-    # changed from 05/22 => 06/23
-    # from location_02 => location_01
-    assert 'location_01' in _exc_load[0]
-    assert 'dmdSec_04' in _exc_load[1]
+    loads = whats_up.read()
+    assert whats_up.alert()
+    assert len(whats_up.meldungen) == 6
+    assert ('fatal', 'fileSec_02') == loads[0]
+    assert ('error', 'titleInfo_02') == loads[1]
+    assert ('error', 'location_01') == loads[2]
+    assert ('error', 'dmdSec_04') == loads[3]
+    assert ('caution', 'amdSec_13') == loads[4]
+    assert ('warn', 'amdSec_15') == loads[5]
+    assert reporter.input_conform()
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -141,6 +198,9 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     """DDB compliant data with curated METS which doesn't 
     contain former additional dmdSec anymore so only
     warnings concerning licence and digiprovMD remain
+
+    FATAL for fileSec_02 would remain otherwise,
+    since this contains no DEFAULT image section
     """
 
     # arrange
@@ -150,13 +210,12 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result = ddb_validation(mets_target)
+    result: DDBReport = DDBReporter(mets_source).get(ignore_rule_ids=['fileSec_02'])
 
     # assert
-    assert len(result) == 1
-    assert FAILED_ASSERT_ERROR not in result
-    assert len(result[FAILED_ASSERT_OTHER]) == 2
-    assert 'amdSec_13' in result[FAILED_ASSERT_OTHER][0]
+    assert not result.alert()
+    assert len(result.read()) == 2
+    assert ('caution', 'amdSec_13') == result.read()[0]
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -178,24 +237,26 @@ def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target)
+    result: DDBReport = DDBReporter(mets_source).get(min_level='info')
 
     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 16
-    assert 'originInfo_06' in _load[0]
-    assert 'location_01' in _load[1]  # before: location_02
-    assert 'dmdSec_04' in _load[2]
+    loads = result.read()
+    assert len(loads) == 26
+    loads_mapped = result.read(map_roles=True)
+    assert len(loads_mapped) == 5   # all five rule roles
+    assert result.alert()
+    assert "fatal(1x):['fileSec_02']" == loads_mapped[0]
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     """XSLT validation outcome for VD18 c-stage
-    without default customm ignore rules
+    without default custom ignore rules
 
     changed from 05/22 => 06/23
     * increased errors from 7 to 11
+    changed from 06/23 => 04/24
+    * increased meldungen from 11 to 15
     """
 
     # arrange
@@ -205,24 +266,17 @@ def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target, ignore_rules=[])
+    result: DDBReport = DDBReporter(mets_source).get(min_level='info')
 
     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 11
-    assert 'titleInfo_02' in _load[0]
-    assert 'originInfo_06' in _load[1]
-    assert 'originInfo_06' in _load[2]
-    assert 'location_01' in _load[3]
-    assert 'dmdSec_04' in _load[4]
-    assert 'fileSec_02' in _load[5]
-    assert 'structMapLogical_17' in _load[6]
+    loads = result.read()
+    assert len(loads) == 15
+    assert result.alert()
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
-def test_ddb_validate_kitodo2_vd18_153142537_dafault_ignorances(tmp_path):
-    """Schematron validation outcome for VD18 F-Stage
+def test_ddb_validate_kitodo2_vd18_153142537(tmp_path):
+    """Validation outcome for VD18 F-Stage
     which considers default ignore rules for
     multivolumes like LOCTYPE HREF and alike or
     wants fileGroup@USE='DEFAULT' (which isn't present yet)
@@ -235,23 +289,26 @@ def test_ddb_validate_kitodo2_vd18_153142537_dafault_ignorances(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target, ignore_rules=DDB_IGNORE_RULES_MVW)
+    reporter = DDBReporter(mets_source)
+    result: DDBReport = reporter.get(ignore_rule_ids=IGNORE_RULES_ULB,
+                                     min_level='info')
 
     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 4
-    assert _load[0].startswith('[originInfo_06]')
-    assert _load[1].startswith('[originInfo_06]')
-    assert _load[2].startswith('[location_01')
-    assert _load[3].startswith('[dmdSec_04]')
+    loads = result.read()
+    assert len(loads) == 4
+    assert not result.alert()
+    assert loads[0] == ('error', 'location_01')
+    assert loads[1] == ('error', 'dmdSec_04')
+    assert loads[2] == ('warn', 'amdSec_15')
+    assert loads[3] == ('info', 'identifier_01')
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_validate_kitodo2_vd18_153142537_curated(tmp_path):
     """DDB compliant with curated METS which doesn't contain
-    the former additional dmdSec anymore and also ignores
-    originInfo_06 issues"""
+    former additional dmdSec anymore and also ignores
+    all DDB rules below 'error'
+    """
 
     # arrange
     # arrange
@@ -261,21 +318,25 @@ def test_ddb_validate_kitodo2_vd18_153142537_curated(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    _ignore_them = DDB_IGNORE_RULES_MVW + ['originInfo_06']
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target, ignore_rules=_ignore_them)
+    ignore_them = IGNORE_RULES_ULB
+    result: DDBReport = DDBReporter(mets_source).get(ignore_them, 'error')
 
     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 2
-    assert _load[0].startswith('[location_01')
-    assert _load[1].startswith('[dmdSec_04]')
+    loads = result.read()
+    assert len(loads) == 2
+    assert loads[0] == ('error', 'location_01')
+    assert loads[1] == ('error', 'dmdSec_04')
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
     """Schematron validation outcome for VD18 C-Stage
-    corresponding to k2_mets_153142537.xml as-it-is"""
+    corresponding to k2_mets_153142537.xml as-it-is
+    
+    changed 2024/08
+    * due min role level set to warning now having 5 meldungen
+      (instead of 3 before)
+    """
 
     # arrange
     file_name = 'k2_mets_vd18_153142340.xml'
@@ -284,15 +345,15 @@ def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target, ignore_rules=[])
+    result: DDBReport = DDBReporter(mets_source).get()
 
     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 3
-    assert _load[0].startswith('[originInfo_06]')
-    assert _load[1].startswith('[originInfo_06]')
-    assert _load[2].startswith('[structMapLogical_17]')
+    loads = result.read()
+    assert result.alert()
+    assert len(loads) == 5
+    assert loads[0] == ('fatal', 'structMapLogical_17')
+    assert loads[1] == ('error', 'originInfo_06')
+    assert loads[2] == ('error', 'originInfo_06')
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -308,14 +369,15 @@ def test_ddb_validate_kitodo2_vd18_153142340(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target, digi_type='Ac')
+    result: DDBReport = DDBReporter(mets_source).get(min_level='error')
 
-     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 2
-    assert _load[0].startswith('[originInfo_06]')
-    assert _load[1].startswith('[originInfo_06]')
+    # assert
+    loads = result.read()
+    assert len(loads) == 3
+    assert result.alert()
+    assert loads[0] == ('fatal', 'structMapLogical_17')
+    assert loads[1] == ('error', 'originInfo_06')
+    assert loads[2] == ('error', 'originInfo_06')
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -324,6 +386,8 @@ def test_ddb_validate_kitodo2_morbio_1748529021(tmp_path):
     export considering ULB default ignore rules
 
     changed due 2023/06: dropped failure for amdSec_05 (licence)
+
+    changed due 2024/08: some more meldungen poping up
     """
 
     # arrange
@@ -333,20 +397,25 @@ def test_ddb_validate_kitodo2_morbio_1748529021(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target, digi_type='Ac')
+    result: DDBReport = DDBReporter(mets_source).get()
 
     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 2    # 2 errors
-    assert _load[0].startswith('[location_01]')
-    assert _load[1].startswith('[dmdSec_04]')  # suspicious additional dmdSec
+    loads = result.read()
+    assert result.alert()
+    assert len(loads) == 6    # 4 meldungen total
+    assert loads[0] == ('fatal', 'fileSec_02')
+    assert loads[1] == ('error', 'titleInfo_02')
+    assert loads[2] == ('error', 'location_01')
+    assert loads[3] == ('error', 'dmdSec_04')   # suspicious additional dmdSec
 
 
 def test_ddb_validate_newspaper(tmp_path):
     """Test recent DDB-Validation 06/23 for
     migrated newspaper issue missing
     * license information
+
+    changed 2024/08
+    * one more warning poping up considering missing FULLTEXT
     """
 
     # arrange
@@ -356,13 +425,13 @@ def test_ddb_validate_newspaper(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    with pytest.raises(DigiflowDDBException) as _dexc:
-        ddb_validation(mets_target, digi_type='issue')
+    result: DDBReport = DDBReporter(mets_source, digi_type='OZ').get(min_level='warn')
 
     # assert
-    _load = _dexc.value.args[0]
-    assert len(_load) == 1
-    assert '[amdSec_04]' in _load[0]
+    loads = result.read()
+    assert not result.alert()
+    assert len(loads) == 2
+    assert loads[0] == ('error', 'amdSec_04')
 
 
 def test_ddb_validate_newspaper_02(tmp_path):
@@ -377,18 +446,21 @@ def test_ddb_validate_newspaper_02(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    _result = ddb_validation(mets_target, digi_type='OZ')
+    result: DDBReport = DDBReporter(mets_source, digi_type='OZ').get()
 
     # assert
-    assert len(_result) == 0
+    assert len(result.meldungen) == 0
 
 
 def test_ddb_validate_opendata_origin_info_mystery():
     """Why error although set to ignore?
-    Because recent bahavior was to override any
-    ignore rules if digitalization type indicated
-    multivolume work, therefore ignores weren't
-    respected before!
+    Recent behavior was to override ignore rules 
+    if digitalization type for 'medien' recognize
+
+    changed 2024/08
+    * popping up structMapLogical_27 warning concerning struct types
+      1x for 'cover_front'
+      1x for 'cover_back'
     """
 
     # arrange
@@ -397,8 +469,11 @@ def test_ddb_validate_opendata_origin_info_mystery():
     ignore_these = ['identifier_01', 'originInfo_06']
 
     # act
-    validation_result = ddb_validation(mets_path, digi_type='AF', ignore_rules=ignore_these)
+    reporter = DDBReporter(mets_path, digi_type='AF')
+    report: DDBReport = reporter.get(ignore_rule_ids=ignore_these)
 
     # assert
-    assert len(validation_result) == 1
-    assert 'failed_assert_other' in validation_result
+    assert not report.alert()
+    assert len(report.meldungen) == 2
+    assert report.read()[0] == ('warn', 'structMapLogical_27')
+    assert report.read()[1] == ('warn', 'structMapLogical_27')

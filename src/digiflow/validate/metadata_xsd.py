@@ -16,6 +16,9 @@ MODS_3_7 = os.path.join(_XDS_RES, 'mods_3-7.xsd')
 MIX_2_0 = os.path.join(_XDS_RES, 'mix_2-0.xsd')
 ALTO_3_1 = os.path.join(_XDS_RES, 'alto_3-1.xsd')
 ALTO_4_2 = os.path.join(_XDS_RES, 'alto_4-2.xsd')
+
+METS_MODS_XSD = {'mets:mets': [METS_1_12],
+                 'mods:mods': [MODS_3_7]}
 _DEFAULT_XSD_MAPPINGS = {'mets:mets': [METS_1_12], 'mods:mods': [MODS_3_7], 'mix:mix': [
     MIX_2_0], 'alto': [ALTO_4_2]}
 
