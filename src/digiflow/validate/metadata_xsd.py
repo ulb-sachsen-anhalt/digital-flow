@@ -22,6 +22,9 @@ METS_MODS_XSD = {'mets:mets': [METS_1_12],
 _DEFAULT_XSD_MAPPINGS = {'mets:mets': [METS_1_12], 'mods:mods': [MODS_3_7], 'mix:mix': [
     MIX_2_0], 'alto': [ALTO_4_2]}
 
+# please linter for lxml
+# pylint: disable=c-extension-no-member
+
 
 class InvalidXMLException(Exception):
     """Mark invalid Validation outcome"""
@@ -41,18 +44,6 @@ def _is_contained(xml_tree, schema):
     if __is_schema_root(xml_tree, schema):
         return True
     return len(xml_tree.findall('.//' + schema, dfc.XMLNS)) > 0
-
-
-# def __validation_error(xmlschema, xml_tree):
-#     err = xmlschema.error_log
-#     raise RuntimeError(f"invalid schema '{xml_tree}' {err}")
-
-
-# def __validate_subtrees(xml_tree, schema, schema_tree):
-#     sections = xml_tree.findall('.//' + schema, dfc.XMLNS)
-#     for section in sections:
-#         if not schema_tree.validate(section):
-#             return __validation_error(schema_tree, xml_tree)
 
 
 def _validate(xml_tree, schema, xsd_file):

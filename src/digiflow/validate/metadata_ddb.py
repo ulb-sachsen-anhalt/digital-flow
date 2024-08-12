@@ -64,6 +64,10 @@ DIGIS_MULTIVOLUME = ['Ac', 'Af', 'AF', 'Hc', 'Hf', 'HF',
 DIGIS_NEWSPAPER = ['issue', 'additional', 'OZ', 'AZ']
 
 
+# please linter for lxml
+# pylint: disable=c-extension-no-member
+
+
 class DigiflowMetadataValidationException(Exception):
     """Mark Validation Criticals which
     otherwise prevent records from being
@@ -167,37 +171,37 @@ class Report:
     and optional schema error hints
     """
 
-    def __init__(self, meldungen: typing.List[DDBMeldung]):
-        self.meldungen = sorted(meldungen, key=lambda e: e.role.order, reverse=True)
-        self.ignored_rules = []
+    def __init__(self, ddb_meldungen: typing.List[DDBMeldung]):
+        self.ddb_meldungen = sorted(ddb_meldungen, key=lambda e: e.role.order, reverse=True)
+        self.ignored_ddn_rules = []
         self.xsd_errors = None
 
-    def read(self, only_headlines=True, map_roles=False) -> typing.List:
+    def read(self, only_headlines=True, map_ddb_roles=False) -> typing.List:
         """Get information from validation in order
         of their level from worse descending
         """
 
-        if len(self.meldungen) == 0:
+        if len(self.ddb_meldungen) == 0:
             return []
-        delivery = self.meldungen
+        delivery = self.ddb_meldungen
         if only_headlines:
             delivery = [m.shortform() for m in delivery]
-        if map_roles:
-            map_roles = {}
+        if map_ddb_roles:
+            map_ddb_roles = {}
             for news in delivery:
                 if isinstance(news, tuple):
                     the_key, appendum = news
                 elif isinstance(news, DDBMeldung):
                     the_key = news.role.label
                     appendum = news.longform()
-                if the_key not in map_roles:
-                    map_roles.setdefault(the_key, [])
-                map_roles[the_key].append(appendum)
-            if len(map_roles) > 0:
-                delivery = [f"{k}({len(v)}x):{v}" for k, v in map_roles.items()]
+                if the_key not in map_ddb_roles:
+                    map_ddb_roles.setdefault(the_key, [])
+                map_ddb_roles[the_key].append(appendum)
+            if len(map_ddb_roles) > 0:
+                delivery = [f"{k}({len(v)}x):{v}" for k, v in map_ddb_roles.items()]
         return delivery
 
-    def categorize(self, ignore_rule_ids, min_level):
+    def categorize(self, ignore_ddb_rule_ids, min_ddb_level):
         """Move meldungen to ignores if matching
         id labels (and optional below importance level
         threshold - to just ignore levels like 'info')
@@ -205,12 +209,12 @@ class Report:
 
         ignores = []
         respect = []
-        for m in self.meldungen:
-            if m.id in ignore_rule_ids:
+        for m in self.ddb_meldungen:
+            if m.id in ignore_ddb_rule_ids:
                 ignores.append(m)
-            elif isinstance(min_level, str):
+            elif isinstance(min_ddb_level, str):
                 current_role = m.role
-                mininum_role = DDBRole.from_label(min_level)
+                mininum_role = DDBRole.from_label(min_ddb_level)
                 if (current_role and mininum_role) \
                         and current_role < mininum_role:
                     ignores.append(m)
@@ -218,21 +222,22 @@ class Report:
                     respect.append(m)
             else:
                 respect.append(m)
-        self.meldungen = respect
-        self.ignored_rules = ignores
+        self.ddb_meldungen = respect
+        self.ignored_ddn_rules = ignores
 
-    def alert(self, min_role_label=None):
+    def alert(self, min_ddb_role_label=None):
         """Inspect current meldungen if something
-        (per default) very severe lurks or
+        (per default) very severe lurks
+        OR
         recognized schema errors
         """
 
-        role_level = None
-        if isinstance(min_role_label, str):
-            role_level = DDBRole.from_label(min_role_label)
-        if role_level is None:
-            role_level = DDBRole.FATAL
-        has_alerts = any(m for m in self.meldungen if m.role >= role_level)
+        min_level = None
+        if isinstance(min_ddb_role_label, str):
+            min_level = DDBRole.from_label(min_ddb_role_label)
+        if min_level is None:
+            min_level = DDBRole.FATAL
+        has_alerts = any(m for m in self.ddb_meldungen if m.role >= min_level)
         return has_alerts or self.xsd_errors is not None
 
 
@@ -270,7 +275,9 @@ class DDBTransformer:
 class Reporter:
     """Encapsulates DDB conformant Validation
     of metadata with corresponding schema
-    and the generation of DDBMeldungen
+    and the generation of DDBMeldungen for
+    common PICA Types
+    Switch for issues (PICA: AZ|OZ)
     """
 
     def __init__(self, path_input,
@@ -286,8 +293,8 @@ class Reporter:
                                           path_xslt,
                                           tmp_report_dir)
 
-    def get(self, ignore_rule_ids=None,
-            min_level=None,
+    def get(self, ignore_ddb_rule_ids=None,
+            min_ddb_level=None,
             validate_schema=True) -> Report:
         """get actual validation report with
         respect to custum ignore rule ids
@@ -301,11 +308,11 @@ class Reporter:
             ddb_report = Report(meldungen)
             self._report = ddb_report
             self.transformer.clean()
-            if ignore_rule_ids is None:
-                ignore_rule_ids = []
-            if min_level is None:
-                min_level = DDBRole.WARN.label
-            ddb_report.categorize(ignore_rule_ids, min_level)
+            if ignore_ddb_rule_ids is None:
+                ignore_ddb_rule_ids = []
+            if min_ddb_level is None:
+                min_ddb_level = DDBRole.WARN.label
+            ddb_report.categorize(ignore_ddb_rule_ids, min_ddb_level)
             if validate_schema:
                 self.run_schema_validation()
         return self._report
@@ -344,7 +351,7 @@ class Reporter:
             raise DigiflowMetadataValidationException(_exc) from _exc
 
     def run_schema_validation(self):
-        """Forward to separate XSD schema validation"""
+        """Forward to XSD schema validation"""
 
         try:
             dfv.validate_xml(self.path_input,

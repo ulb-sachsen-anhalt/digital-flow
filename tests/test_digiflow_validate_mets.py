@@ -68,7 +68,7 @@ def test_ddb_report_newspaper_headlines(tmp_path):
     whats_up: Report = reporter.get()
 
     # assert
-    assert len(whats_up.meldungen) == 2
+    assert len(whats_up.ddb_meldungen) == 2
     assert ('error', 'amdSec_04') == whats_up.read()[0]
     assert ('warn', 'structMapLogical_12') == whats_up.read()[1]
 
@@ -90,9 +90,9 @@ def test_ddb_report_newspaper_longform(tmp_path):
     whats_up: Report = reporter.get()
 
     # assert
-    assert len(whats_up.meldungen) == 2
-    assert "error(1x):['amdSec_04']" == whats_up.read(map_roles=True)[0]
-    assert "warn(1x):['structMapLogical_12']" == whats_up.read(map_roles=True)[1]
+    assert len(whats_up.ddb_meldungen) == 2
+    assert "error(1x):['amdSec_04']" == whats_up.read(map_ddb_roles=True)[0]
+    assert "warn(1x):['structMapLogical_12']" == whats_up.read(map_ddb_roles=True)[1]
 
 
 @pytest.fixture(name="share_it_monography")
@@ -121,11 +121,11 @@ def test_ddb_validate_opendata_44046_defaults(share_it_monography):
 
     # act
     reporter = Reporter(share_it_monography)
-    whats_up: Report = reporter.get(min_level='info')
+    whats_up: Report = reporter.get(min_ddb_level='info')
 
     # assert
     assert not whats_up.alert()         # nothing very bad per se
-    assert len(whats_up.meldungen) == 1  # but still one meldung
+    assert len(whats_up.ddb_meldungen) == 1  # but still one meldung
     assert ('info', 'identifier_01') == whats_up.read()[0]
     assert whats_up.alert('info')   # provoke alert
     assert reporter.input_conform()
@@ -150,9 +150,9 @@ def test_ddb_validate_opendata_44046_ignore_ident01(share_it_monography):
     simple monography (Aa)"""
 
     # act
-    whats_up: Report = Reporter(share_it_monography).get(ignore_rule_ids=['identifier_01'])
+    whats_up: Report = Reporter(share_it_monography).get(ignore_ddb_rule_ids=['identifier_01'])
     assert not whats_up.alert()
-    assert len(whats_up.meldungen) == 0
+    assert len(whats_up.ddb_meldungen) == 0
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -180,7 +180,7 @@ def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     # assert
     loads = whats_up.read()
     assert whats_up.alert()
-    assert len(whats_up.meldungen) == 6
+    assert len(whats_up.ddb_meldungen) == 6
     assert ('fatal', 'fileSec_02') == loads[0]
     assert ('error', 'titleInfo_02') == loads[1]
     assert ('error', 'location_01') == loads[2]
@@ -207,7 +207,7 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(ignore_rule_ids=['fileSec_02'])
+    result: Report = Reporter(mets_source).get(ignore_ddb_rule_ids=['fileSec_02'])
 
     # assert
     assert not result.alert()
@@ -234,12 +234,12 @@ def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(min_level='info')
+    result: Report = Reporter(mets_source).get(min_ddb_level='info')
 
     # assert
     loads = result.read()
     assert len(loads) == 26
-    loads_mapped = result.read(map_roles=True)
+    loads_mapped = result.read(map_ddb_roles=True)
     assert len(loads_mapped) == 5   # all five rule roles
     assert result.alert()
     assert "fatal(1x):['fileSec_02']" == loads_mapped[0]
@@ -263,7 +263,7 @@ def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(min_level='info')
+    result: Report = Reporter(mets_source).get(min_ddb_level='info')
 
     # assert
     loads = result.read()
@@ -287,8 +287,8 @@ def test_ddb_validate_kitodo2_vd18_153142537(tmp_path):
 
     # act
     reporter = Reporter(mets_source)
-    result: Report = reporter.get(ignore_rule_ids=IGNORE_DDB_RULES_ULB,
-                                  min_level='info')
+    result: Report = reporter.get(ignore_ddb_rule_ids=IGNORE_DDB_RULES_ULB,
+                                  min_ddb_level='info')
 
     # assert
     loads = result.read()
@@ -366,7 +366,7 @@ def test_ddb_validate_kitodo2_vd18_153142340(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(min_level='error')
+    result: Report = Reporter(mets_source).get(min_ddb_level='error')
 
     # assert
     loads = result.read()
@@ -447,7 +447,7 @@ def test_ddb_validate_newspaper(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source, digi_type='OZ').get(min_level='warn')
+    result: Report = Reporter(mets_source, digi_type='OZ').get(min_ddb_level='warn')
 
     # assert
     loads = result.read()
@@ -471,7 +471,7 @@ def test_ddb_validate_newspaper_02(tmp_path):
     result: Report = Reporter(mets_source, digi_type='OZ').get()
 
     # assert
-    assert len(result.meldungen) == 0
+    assert len(result.ddb_meldungen) == 0
 
 
 def test_ddb_validate_opendata_origin_info_mystery():
@@ -492,10 +492,10 @@ def test_ddb_validate_opendata_origin_info_mystery():
 
     # act
     reporter = Reporter(mets_path, digi_type='AF')
-    report: Report = reporter.get(ignore_rule_ids=ignore_these)
+    report: Report = reporter.get(ignore_ddb_rule_ids=ignore_these)
 
     # assert
     assert not report.alert()
-    assert len(report.meldungen) == 2
+    assert len(report.ddb_meldungen) == 2
     assert report.read()[0] == ('warn', 'structMapLogical_27')
     assert report.read()[1] == ('warn', 'structMapLogical_27')
