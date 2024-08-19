@@ -82,6 +82,7 @@ class Record:
 
     @property
     def identifier(self):
+        """Get record identifier"""
         return self.__urn
 
     def __str__(self) -> str:
@@ -93,6 +94,14 @@ class Record:
         if self.info != df.UNSET_LABEL:
             the_str = f"{the_str}\t{self.info}"
         return f"{the_str}\n{self.state}\t{self.state_datetime}"
+
+    @staticmethod
+    def create(input_data):
+        """De-serialize record from different input forms"""
+        record = Record(UNSET_LABEL)
+        if isinstance(input_data, dict):
+            record = row_to_record(input_data)
+        return record
 
 
 def row_to_record(row: typing.Dict):

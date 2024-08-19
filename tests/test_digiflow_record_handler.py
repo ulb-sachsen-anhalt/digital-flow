@@ -37,13 +37,13 @@ OAI_BASE_URL_ZD = 'digitale.bibliothek.uni-halle.de/zd/oai'
 OAI_BASE_URL_OPENDATA = 'opendata.uni-halle.de/oai/dd'
 
 # pylint: disable=c-extension-no-member, line-too-long
+
+
 @pytest.mark.parametrize(['urn', 'local_identifier'],
-                         [
-    ('oai:digital.bibliothek.uni-halle.de/hd:10595', '10595'),
-    ('oai:digitale.bibliothek.uni-halle.de/vd18:9427342', '9427342'),
-    ('oai:opendata.uni-halle.de:1981185920/34265', '1981185920_34265'),
-    ('oai:dev.opendata.uni-halle.de:123456789/27949', '123456789_27949'),
-])
+                         [('oai:digital.bibliothek.uni-halle.de/hd:10595', '10595'),
+                          ('oai:digitale.bibliothek.uni-halle.de/vd18:9427342', '9427342'),
+                          ('oai:opendata.uni-halle.de:1981185920/34265', '1981185920_34265'),
+                          ('oai:dev.opendata.uni-halle.de:123456789/27949', '123456789_27949')])
 def test_record_local_identifiers(urn, local_identifier):
     """Ensure local identifier for different URN inputs"""
 
@@ -789,13 +789,11 @@ def test_record_handler_with_broken_row(tmp_path):
     with open(tmp_res_path, 'a', encoding='utf-8') as tmp_file:
         tmp_file.write('\n')
 
-    handler = df_r.RecordHandler(tmp_res_path, 
+    handler = df_r.RecordHandler(tmp_res_path,
                                  transform_func=df_r.row_to_record)
 
     # act
     with pytest.raises(df_r.RecordHandlerException) as handl_exc:
-        handler.next_record(state='foo') # dummy state to provoke error
+        handler.next_record(state='foo')  # dummy state to provoke error
 
     assert "line:003 no STATE field " in handl_exc.value.args[0]
-
-

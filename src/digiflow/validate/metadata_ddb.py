@@ -2,14 +2,13 @@
 to DDB (Deutsche Digitale Bibliothek = German Digital Library)
 specific validations as well as XML schemata
 
-Assume DDB
-order it's remarks into 5 categories:
+Assuming DDB orders it's remarks in 5 categories:
 
-* info      ingested but some information won't be used by DDB
-* warn      error but ingested without modification
-* caution   ingest but suspicous
-* error     ingest after DDB-modification
-* fatal     records can't be ingested => strict mode yields exceptional state
+1) info      ingested but information won't be used by DDB
+2) warn      ingested without modification, but request for change
+3) caution   ingested but suspicous
+4) error     ingested after DDB did modifications
+5) fatal     records won't be ingested at all
 
 wiki.deutsche-digitale-bibliothek.de/display/DFD/Schematron-Validierungen+der+Fachstelle+Bibliothek
 """
