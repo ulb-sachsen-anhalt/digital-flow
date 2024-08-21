@@ -8,3 +8,4 @@ from .record_criteria import (
     State,
     Datetime,
 )
+from .record_service import Client, HandlerInformation, run_server

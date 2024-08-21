@@ -6,7 +6,6 @@ import os
 import time
 
 
-import digiflow as df
 import digiflow.record as df_r
 
 RECORD_STATE_MASK_FRAME = 'other_load'
@@ -67,6 +66,7 @@ class RecordHandler:
 
     @property
     def total_len(self):
+        """Number of records"""
         return len(self.data)
 
     def _build_data(self):
@@ -118,17 +118,15 @@ class RecordHandler:
         self.header = _header
 
     def _validate_header(self, data_fields):
-        """validate both occurence and order"""
+        """validate header fields presence and order"""
         if self.header != data_fields:
-            msg = "invalid fields: '{}', expect: '{}'".format(
-                self.header, data_fields)
+            msg = f"invalid fields: '{self.header}', expect: '{data_fields}'"
             raise RecordHandlerException(msg)
 
     def next_record(self, state=None):
         """
-        Get *NEXT* IRecord _from scratch_ with
-        given state if any exist, raise Exception
-        otherwise
+        Get *NEXT* Record with given state
+        if any exist, otherwise None
         """
 
         if not state:
@@ -140,6 +138,7 @@ class RecordHandler:
             if state == row[self.state_field]:
                 self.position = f"{(i+1):04d}/{(self.total_len):04d}"
                 return self.transform_func(row)
+        return None
 
     def get(self, identifier, exact_match=True):
         """Read data for first Record with

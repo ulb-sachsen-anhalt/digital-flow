@@ -250,30 +250,30 @@ def test_record_datestamp(oai_record_list):
     """Check if proper datestamp gets picked"""
 
     # arrange
-    _handler = df_r.RecordHandler(oai_record_list)
+    hndlr = df_r.RecordHandler(oai_record_list)
 
     # act
-    _record = _handler.next_record()
+    rcrd: df_r.Record = hndlr.next_record()
 
     # assert
-    assert _record.identifier == 'oai:digitale.bibliothek.uni-halle.de/zd:9510508'
-    assert _record.local_identifier == '9510508'
-    assert _record.date_stamp == '2015-08-25T20:00:35Z'
+    assert rcrd.identifier == 'oai:digitale.bibliothek.uni-halle.de/zd:9510508'
+    assert rcrd.local_identifier == '9510508'
+    assert rcrd.created_time == '2015-08-25T20:00:35Z'
 
 
 def test_record_get_fullident(oai_record_list):
     """Check if proper datestamp gets picked"""
 
     # arrange
-    _ident_urn = 'oai:digitale.bibliothek.uni-halle.de/zd:9510508'
-    _handler = df_r.RecordHandler(oai_record_list)
+    ident_urn = 'oai:digitale.bibliothek.uni-halle.de/zd:9510508'
+    hndlr = df_r.RecordHandler(oai_record_list)
 
     # act
-    _record = _handler.get(_ident_urn)
+    rcrd: df_r.Record = hndlr.get(ident_urn)
 
     # assert
-    assert _record.identifier == _ident_urn
-    assert _record.date_stamp == '2015-08-25T20:00:35Z'
+    assert rcrd.identifier == ident_urn
+    assert rcrd.created_time == '2015-08-25T20:00:35Z'
 
 
 def test_record_get_partialident(oai_record_list):
@@ -282,17 +282,17 @@ def test_record_get_partialident(oai_record_list):
     identifier) has been provided"""
 
     # arrange
-    _ident_urn = 'oai:digitale.bibliothek.uni-halle.de/zd:9510508'
-    _handler = df_r.RecordHandler(oai_record_list)
+    ident_urn = 'oai:digitale.bibliothek.uni-halle.de/zd:9510508'
+    handler = df_r.RecordHandler(oai_record_list)
 
     # act
-    _record_exact = _handler.get('9510508')
-    _record_fuzzy = _handler.get('9510508', exact_match=False)
+    record_exact = handler.get('9510508')
+    record_fuzzy: df_r.Record = handler.get('9510508', exact_match=False)
 
     # assert
-    assert not _record_exact
-    assert _record_fuzzy.identifier == _ident_urn
-    assert _record_fuzzy.date_stamp == '2015-08-25T20:00:35Z'
+    assert not record_exact
+    assert record_fuzzy.identifier == ident_urn
+    assert record_fuzzy.created_time == '2015-08-25T20:00:35Z'
 
 
 def test_record_get_non_existent(oai_record_list):

@@ -47,4 +47,4 @@ from .validate import (
     validate_tiff,
 )
 
-from .common import UNSET_LABEL, XMLNS
+from .common import UNSET_LABEL, XMLNS, FallbackLogger

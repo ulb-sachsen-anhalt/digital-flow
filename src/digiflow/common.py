@@ -1,5 +1,7 @@
 """common constants"""
 
+import logging
+import sys
 
 XMLNS = {
     'alto': 'http://www.loc.gov/standards/alto/ns-v4#',
@@ -23,3 +25,22 @@ XMLNS = {
 
 UNSET_LABEL = 'n.a.'
 
+
+class FallbackLogger:
+    """Different way to inject logging facilities"""
+
+    def __init__(self, some_logger=None):
+        self.logger: logging.Logger = some_logger
+
+    def log(self, message: str, *args, level = logging.INFO):
+        """Encapsulate Loggin"""
+        if self.logger:
+            self.logger.log(level, message, *args)
+        else:
+            message = message.replace('%s','{}')
+            if args is not None and len(args) > 0:
+                message = message.format(*args)
+            if level >= logging.ERROR:
+                print(message, file=sys.stderr)
+            else:
+                print(message)
