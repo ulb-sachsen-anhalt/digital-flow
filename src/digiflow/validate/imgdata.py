@@ -1,27 +1,15 @@
 """Image / TIFF-data specific Validation API"""
 
+import dataclasses
 import datetime
+import hashlib
 import io
 import os
+import typing
 
-from dataclasses import (
-    dataclass,
-)
-from hashlib import (
-    sha512
-)
-from pathlib import (
-    Path,
-)
-from typing import (
-    Dict,
-    List,
-)
+from pathlib import Path
 
-from PIL import (
-    Image as PILImage,
-    ImageCms,
-)
+from PIL import Image as PILImage, ImageCms
 from PIL.TiffImagePlugin import (
     IMAGEWIDTH,     # 256
     IMAGELENGTH,    # 257
@@ -43,6 +31,7 @@ from PIL.TiffImagePlugin import (
 )
 
 import digiflow.common as dfc
+
 from .common import (
     INVALID_LABEL_RANGE,
     INVALID_LABEL_TYPE,
@@ -127,7 +116,7 @@ class InvalidImageDataException(Exception):
     """Mark invalid image data"""
 
 
-@dataclass
+@dataclasses.dataclass
 class ImageMetadata:
     """Wrap image metadata information (i.e. EXIF)
     """
@@ -149,7 +138,7 @@ class ImageMetadata:
     channel = UNSET_NUMBR  # EFIX TAG 258 BITSPERSAMPLE
 
 
-@dataclass
+@dataclasses.dataclass
 class Image:
     """Store required data"""
 
@@ -165,26 +154,29 @@ class Image:
     def read(self):
         """Try to read image data"""
         try:
-            _ts_object = datetime.datetime.now()
-            self.time_stamp = _ts_object.strftime(DATETIME_SRC_FORMAT)
+            dt_object = datetime.datetime.now()
+            self.time_stamp = dt_object.strftime(DATETIME_SRC_FORMAT)
             self.file_size = os.path.getsize(self.local_path)
             # open resource
-            _pil_img: TiffImageFile = PILImage.open(self.local_path)
-            _image_bytes = _pil_img.tobytes()
-            self.image_checksum = sha512(_image_bytes).hexdigest()
+            pil_img: TiffImageFile = PILImage.open(self.local_path)
+            # due PIL.TiffImagePlugin problems to handle
+            # tag STRIPOFFSETS properly
+            image_bytes = pil_img.tobytes()
+            self.image_checksum = hashlib.sha512(image_bytes).hexdigest()
             # read information from TIF TAG V2 section
-            _meta_data: ImageMetadata = self._read(_pil_img)
-            _meta_data.color_space = _pil_img.mode
+            meta_data: ImageMetadata = self._read(pil_img)
+            meta_data.color_space = pil_img.mode
 
             # datetime present?
-            if _meta_data.created is None or _meta_data.created == dfc.UNSET_LABEL:
+            if meta_data.created is None or meta_data.created == dfc.UNSET_LABEL:
                 ctime = os.stat(self.local_path).st_ctime
                 dt_object = datetime.datetime.fromtimestamp(ctime)
-                _meta_data.created = dt_object.strftime(DATETIME_SRC_FORMAT)
-            self.metadata = _meta_data
-            _pil_img.close()
+                meta_data.created = dt_object.strftime(DATETIME_SRC_FORMAT)
+            self.metadata = meta_data
+            pil_img.close()
         except Exception as exc:
-            raise InvalidImageDataException(exc.args[0])
+            msg = f'{self.local_path}: {exc.args[0]}'
+            raise InvalidImageDataException(msg) from exc
 
     def _read(self, img_data: TiffImageFile) -> ImageMetadata:
         """Read present TIFF metadata information
@@ -192,36 +184,35 @@ class Image:
         care since this is included in bytes
         """
 
-        _image_tags: ImageFileDirectory_v2 = img_data.tag_v2
-        _image_md = ImageMetadata()
-        for _tag in _image_tags:
-            if _tag in TIFF_METADATA_LABELS:
-                _label = TIFF_METADATA_LABELS[_tag]
-                if _tag != ICCPROFILE:
-                    _val = _image_tags[_tag]
-                    if isinstance(_val, str):
-                        _val = str(_val).strip()
-                    setattr(_image_md, _label, _val)
+        image_tags: ImageFileDirectory_v2 = img_data.tag_v2
+        image_md = ImageMetadata()
+        for a_tag in image_tags:
+            if a_tag in TIFF_METADATA_LABELS:
+                a_label = TIFF_METADATA_LABELS[a_tag]
+                if a_tag != ICCPROFILE:
+                    tag_val = image_tags[a_tag]
+                    if isinstance(tag_val, str):
+                        tag_val = str(tag_val).strip()
+                    setattr(image_md, a_label, tag_val)
                 else:
-                    _profile = img_data.info.get('icc_profile')
-                    if _profile:
-                        _profile_data = io.BytesIO(_profile)
-                        _profile_cms = ImageCms.ImageCmsProfile(_profile_data)
-                        if _profile_cms:
-                            _profile_name = ImageCms.getProfileDescription(_profile_cms)
-                            if _profile_name:
-                                _stripped = _profile_name.strip()
-                            self.profile = _stripped
-        return _image_md
+                    icc_profile = img_data.info.get('icc_profile')
+                    if icc_profile:
+                        profile_bytes = io.BytesIO(icc_profile)
+                        profile_cms = ImageCms.ImageCmsProfile(profile_bytes)
+                        if profile_cms:
+                            profile_name = ImageCms.getProfileDescription(profile_cms)
+                            if profile_name:
+                                name_stripped = profile_name.strip()
+                            self.profile = name_stripped
+        return image_md
 
     def __str__(self):
-        _fsize = f"{self.file_size}"
-        _md = self.metadata
-        _mds_res = f"({_md.xRes},{_md.yRes},{_md.resolution_unit})"
-        _mds = f"\t{_mds_res}\t{_md.created}\t{_md.artist}\t{_md.copyright}\t{_md.model}\t{_md.software}\t{self.profile}"
-        _invalids = f"INVALID{self.invalids}" if len(
-            self.invalids) > 0 else 'VALID'
-        return f"{self.url}\t{self.image_checksum}\t{_fsize}\t{self.metadata.width}x{self.metadata.height}\t{_mds}\t{self.time_stamp}\t{_invalids}"
+        img_fsize = f"{self.file_size}"
+        img_md = self.metadata
+        mds_res = f"({img_md.xRes},{img_md.yRes},{img_md.resolution_unit})"
+        img_mds = f"\t{mds_res}\t{img_md.created}\t{img_md.artist}\t{img_md.copyright}\t{img_md.model}\t{img_md.software}\t{self.profile}"
+        invalids = f"INVALID{self.invalids}" if len(self.invalids) > 0 else 'VALID'
+        return f"{self.url}\t{self.image_checksum}\t{img_fsize}\t{self.metadata.width}x{self.metadata.height}\t{img_mds}\t{self.time_stamp}\t{invalids}"
 
 
 class ScanValidatorFile(Validator):
@@ -241,14 +232,14 @@ class ScanValidatorFile(Validator):
 
         if not group_can_read(self.input_data):
             raise FSReadException(f'No permission to read {self.input_data}!')
-        _file_size = os.path.getsize(self.input_data)
-        if _file_size < MIN_SCAN_FILESIZE:
-            _msg = f"{INVALID_LABEL_RANGE} filesize {_file_size}b < {MIN_SCAN_FILESIZE}b"
-            self.invalids.append(Invalid(self.label, self.input_data, _msg))
-        _input: Image = Image(self.input_data)
-        _input.read()
-        _imd: ImageMetadata = _input.metadata
-        if not _imd.width or not _imd.height:
+        f_size = os.path.getsize(self.input_data)
+        if f_size < MIN_SCAN_FILESIZE:
+            msg = f"{INVALID_LABEL_RANGE} filesize {f_size}b < {MIN_SCAN_FILESIZE}b"
+            self.invalids.append(Invalid(self.label, self.input_data, msg))
+        input_image: Image = Image(self.input_data)
+        input_image.read()
+        img_md: ImageMetadata = input_image.metadata
+        if not img_md.width or not img_md.height:
             self.invalids.append(Invalid(self.label, self.input_data,
                                  f"{INVALID_LABEL_UNSET} width/height"))
         return super().valid()
@@ -264,18 +255,18 @@ class ScanValidatorChannel(Validator):
         super().__init__(LABEL_SCAN_VALIDATOR_CHANNEL, input_data)
 
     def valid(self) -> bool:
-        _input: Image = self.input_data
-        _imd: ImageMetadata = _input.metadata
-        _spp = _imd.samples_per_pixel
-        if _spp == dfc.UNSET_LABEL:
-            self.invalids.append(Invalid(self.label, _input.local_path,
+        input_image: Image = self.input_data
+        img_md: ImageMetadata = input_image.metadata
+        md_spp = img_md.samples_per_pixel
+        if md_spp == dfc.UNSET_LABEL:
+            self.invalids.append(Invalid(self.label, input_image.local_path,
                                  f"{INVALID_LABEL_UNSET} {LABEL_SAMPLES_PIXEL}"))
-        elif _spp not in GREYSCALE_OR_RGB:
-            self.invalids.append(Invalid(self.label, _input.local_path,
-                                 f"{INVALID_LABEL_RANGE} {LABEL_SAMPLES_PIXEL} {_spp} not in {GREYSCALE_OR_RGB}"))
-        if not all(c <= MAX_CHANNEL_DEPTH for c in _imd.channel):
-            self.invalids.append(Invalid(self.label, _input.local_path,
-                                 f"{INVALID_LABEL_RANGE} {LABEL_CHANNEL} {_imd.channel} > {MAX_CHANNEL_DEPTH}"))
+        elif md_spp not in GREYSCALE_OR_RGB:
+            self.invalids.append(Invalid(self.label, input_image.local_path,
+                                 f"{INVALID_LABEL_RANGE} {LABEL_SAMPLES_PIXEL} {md_spp} not in {GREYSCALE_OR_RGB}"))
+        if not all(c <= MAX_CHANNEL_DEPTH for c in img_md.channel):
+            self.invalids.append(Invalid(self.label, input_image.local_path,
+                                 f"{INVALID_LABEL_RANGE} {LABEL_CHANNEL} {img_md.channel} > {MAX_CHANNEL_DEPTH}"))
         return super().valid()
 
 
@@ -288,11 +279,11 @@ class ScanValidatorCompression(Validator):
     def valid(self) -> bool:
         """Check flag umcompressed data set"""
 
-        _input: Image = self.input_data
-        _imd: ImageMetadata = _input.metadata
-        if _imd.compression != 1:
-            _info = f"{INVALID_LABEL_RANGE} {LABEL_COMPRESSION} {_imd.compression} != 1"
-            self.invalids.append(Invalid(self.label, _input.local_path, _info))
+        input_image: Image = self.input_data
+        img_md: ImageMetadata = input_image.metadata
+        if img_md.compression != 1:
+            msg = f"{INVALID_LABEL_RANGE} {LABEL_COMPRESSION} {img_md.compression} != 1"
+            self.invalids.append(Invalid(self.label, input_image.local_path, msg))
         return super().valid()
 
 
@@ -307,39 +298,39 @@ class ScanValidatorResolution(Validator):
         super().__init__(LABEL_SCAN_VALIDATOR_RESOLUTION, input_data)
 
     def valid(self) -> bool:
-        _input: Image = self.input_data
-        _loc = _input.local_path
-        _imd: ImageMetadata = _input.metadata
-        _prefix = self.label
-        if _imd.resolution_unit == UNSET_NUMBR:
-            _inv01 = Invalid(_prefix, _loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_UNIT}")
-            self.invalids.append(_inv01)
-        elif _imd.resolution_unit != RES_UNIT_DPI:
-            _inv02 = Invalid(
-                _prefix, _loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_UNIT} {_imd.resolution_unit} != {RES_UNIT_DPI}")
-            self.invalids.append(_inv02)
-        if _imd.xRes == UNSET_NUMBR:
-            _inv03 = Invalid(_prefix, _loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_X}")
-            self.invalids.append(_inv03)
+        input_image: Image = self.input_data
+        img_loc = input_image.local_path
+        img_md: ImageMetadata = input_image.metadata
+        a_prefix = self.label
+        if img_md.resolution_unit == UNSET_NUMBR:
+            inv01 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_UNIT}")
+            self.invalids.append(inv01)
+        elif img_md.resolution_unit != RES_UNIT_DPI:
+            inv02 = Invalid(
+                a_prefix, img_loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_UNIT} {img_md.resolution_unit} != {RES_UNIT_DPI}")
+            self.invalids.append(inv02)
+        if img_md.xRes == UNSET_NUMBR:
+            inv03 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_X}")
+            self.invalids.append(inv03)
         else:
-            if _imd.xRes < MIN_SCAN_RESOLUTION:
-                _inv04 = Invalid(_prefix, _loc, f"{INVALID_LABEL_RANGE}{LABEL_RES_X}: {_imd.xRes}")
-                self.invalids.append(_inv04)
-            _xres: IFDRational = _imd.xRes
-            if _xres.real.denominator != 1:
-                _inv07 = Invalid(_prefix, _loc, f"{INVALID_LABEL_TYPE} {LABEL_RES_X}: {_imd.xRes}")
-                self.invalids.append(_inv07)
-        if _imd.yRes == UNSET_NUMBR:
-            _inv05 = Invalid(_prefix, _loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_Y}")
-            self.invalids.append(_inv05)
+            if img_md.xRes < MIN_SCAN_RESOLUTION:
+                inv04 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_RANGE}{LABEL_RES_X}: {img_md.xRes}")
+                self.invalids.append(inv04)
+            x_res: IFDRational = img_md.xRes
+            if x_res.real.denominator != 1:
+                inv07 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_TYPE} {LABEL_RES_X}: {img_md.xRes}")
+                self.invalids.append(inv07)
+        if img_md.yRes == UNSET_NUMBR:
+            inv05 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_Y}")
+            self.invalids.append(inv05)
         else:
-            if _imd.yRes < MIN_SCAN_RESOLUTION:
-                _inv06 = Invalid(_prefix, _loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_Y}: {_imd.yRes}")
-                self.invalids.append(_inv06)
-            _yres: IFDRational = _imd.yRes
-            if _yres.real.denominator != 1:
-                _inv08 = Invalid(_prefix, _loc, f"{INVALID_LABEL_TYPE} {LABEL_RES_Y}: {_imd.yRes}")
-                self.invalids.append(_inv08)
+            if img_md.yRes < MIN_SCAN_RESOLUTION:
+                inv06 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_Y}: {img_md.yRes}")
+                self.invalids.append(inv06)
+            y_res: IFDRational = img_md.yRes
+            if y_res.real.denominator != 1:
+                inv08 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_TYPE} {LABEL_RES_Y}: {img_md.yRes}")
+                self.invalids.append(inv08)
         return super().valid()
 
 
@@ -353,34 +344,37 @@ class ScanValidatorPhotometric(Validator):
         super().__init__(LABEL_SCAN_VALIDATOR_PHOTOMETRICS, input_data)
 
     def valid(self) -> bool:
-        _input: Image = self.input_data
-        _imd: ImageMetadata = _input.metadata
-        _pmetric = _imd.photometric_interpretation
-        if _pmetric not in PHOTOMETRICS:
-            self.invalids.append(Invalid(self.label, _input.local_path,
-                                 f"{INVALID_LABEL_RANGE} {LABEL_GRAY_RGB} {_pmetric} not in {PHOTOMETRICS}"))
-        if _pmetric == 2 and _input.profile != ADOBE_PROFILE_NAME:
-            self.invalids.append(Invalid(self.label, _input.local_path,
+        input_image: Image = self.input_data
+        img_md: ImageMetadata = input_image.metadata
+        pmetrics = img_md.photometric_interpretation
+        if pmetrics not in PHOTOMETRICS:
+            self.invalids.append(Invalid(self.label, input_image.local_path,
+                                 f"{INVALID_LABEL_RANGE} {LABEL_GRAY_RGB} {pmetrics} not in {PHOTOMETRICS}"))
+        if pmetrics == 2 and input_image.profile != ADOBE_PROFILE_NAME:
+            self.invalids.append(Invalid(self.label, input_image.local_path,
                                  f"{INVALID_LABEL_RANGE} {LABEL_PROFILE} != {ADOBE_PROFILE_NAME}"))
         return super().valid()
 
 
 class ValidatorFactory:
+    """Encapsulate access to actual validator objects"""
 
-    validators: Dict = {
+    validators: typing.Dict = {
         LABEL_SCAN_VALIDATOR_FILEDATA: ScanValidatorFile,
         LABEL_SCAN_VALIDATOR_CHANNEL: ScanValidatorChannel,
         LABEL_SCAN_VALIDATOR_COMPRESSION: ScanValidatorCompression,
         LABEL_SCAN_VALIDATOR_RESOLUTION: ScanValidatorResolution,
-        LABEL_SCAN_VALIDATOR_PHOTOMETRICS: ScanValidatorPhotometric, 
+        LABEL_SCAN_VALIDATOR_PHOTOMETRICS: ScanValidatorPhotometric,
     }
 
     @staticmethod
     def register(validator_label:str, validator_class: Validator):
+        """Extend given validators at runtime"""
         ValidatorFactory.validators[validator_label] = validator_class
 
     @staticmethod
     def unregister(validator_label:str):
+        """Manage validators at runtime"""
         if validator_label in ValidatorFactory.validators:
             del ValidatorFactory.validators[validator_label]
 
@@ -389,7 +383,7 @@ class ValidatorFactory:
         """Get Validator object for label"""
 
         if validator_label not in ValidatorFactory.validators:
-            raise Exception(f"Missing Implementation for {validator_label}!")
+            raise NotImplementedError(f"No implementation for {validator_label}!")
         return ValidatorFactory.validators[validator_label]
 
 
@@ -398,14 +392,15 @@ class ScanValidatorCombined(Validator):
 
     validator_factory: ValidatorFactory = ValidatorFactory
 
-    def __init__(self, path_input: Path, validator_labels: List[str]):
+    def __init__(self, path_input: Path, validator_labels: typing.List[str]):
         super().__init__(LABEL_SCAN_VALIDATOR_COMBINED, path_input)
         self.path_input = path_input
-        self.validator_labels: List[str] = validator_labels
+        self.validator_labels: typing.List[str] = validator_labels
         self.img_data: Image = None
 
     @staticmethod
     def register(validator_label, validator_class):
+        """Extend validators at runtime"""
         if validator_label not in ScanValidatorCombined.validator_factory.validators:
             ScanValidatorCombined.validator_factory.register(validator_label, validator_class)
 
@@ -413,11 +408,11 @@ class ScanValidatorCombined(Validator):
         self.img_data = Image(self.input_data)
         self.img_data.url = self.path_input
         self.img_data.read()
-        for _label in self.validator_labels:
-            _val_clazz = ScanValidatorCombined.validator_factory.get(_label)
-            _val: Validator = _val_clazz(self.img_data)
-            if not _val.valid():
-                self.invalids.extend(_val.invalids)
+        for a_label in self.validator_labels:
+            clazz = ScanValidatorCombined.validator_factory.get(a_label)
+            validator: Validator = clazz(self.img_data)
+            if not validator.valid():
+                self.invalids.extend(validator.invalids)
         return super().valid()
 
 
@@ -432,6 +427,6 @@ def validate_tiff(tif_path, required_validators=None):
 
     if required_validators is None:
         required_validators = ValidatorFactory.validators
-    _image_val = ScanValidatorCombined(tif_path, required_validators)
-    _image_val.valid()
-    return _image_val
+    image_val = ScanValidatorCombined(tif_path, required_validators)
+    image_val.valid()
+    return image_val
