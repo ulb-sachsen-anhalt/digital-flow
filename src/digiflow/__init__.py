@@ -1,5 +1,5 @@
 
-from .digflow_identifier import *
+from .digiflow_identifier import *
 from .digiflow_io import *
 from .digiflow_metadata import *
 from .digiflow_generate import *
