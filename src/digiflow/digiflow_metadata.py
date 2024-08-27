@@ -25,6 +25,9 @@ from lxml import etree as ET
 import digiflow.common as dfc
 
 
+# due lxml
+# pylint:disable=c-extension-no-member
+
 # old-school: register all namespaces known so-far for writing
 ET.register_namespace('dc', 'http://purl.org/dc/elements/1.1/')
 ET.register_namespace('dv', 'http://dfg-viewer.de/')
@@ -113,7 +116,6 @@ def _post_oai_extract_metsdata(xml_tree):
     namespace = xml_tree.xpath('namespace-uri(.)')
     if namespace == 'http://www.loc.gov/METS/':
         return xml_tree
-
     if namespace == 'http://www.openarchives.org/OAI/2.0/':
         mets_root_el = xml_tree.find('.//mets:mets', dfc.XMLNS)
         if mets_root_el is not None:
