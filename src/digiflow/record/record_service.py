@@ -25,7 +25,8 @@ X_HEADER_SET_STATE = 'X-SET-STATE'
 
 STATETIME_FORMAT = '%Y-%m-%d_%H:%M:%S'
 
-DATA_EXHAUSTED_MARK = 'no open records'
+DATA_EXHAUSTED_PREFIX = 'no open records'
+DATA_EXHAUSTED_MARK = DATA_EXHAUSTED_PREFIX + ' in {}'
 
 
 @dataclasses.dataclass
@@ -46,9 +47,9 @@ class HandlerInformation:
         self.logger = logger
 
 
-class RecordExhaustedException(Exception):
+class RecordsExhaustedException(Exception):
     """Mark state when no more records can be
-    served to clients anymore"""
+    achieved anymore"""
 
 
 class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
@@ -209,12 +210,10 @@ class Client(df.FallbackLogger):
     """
 
     def __init__(self, oai_record_list_label, host, port,
-
-                 notify_callback=None, logger=None):
+                 logger=None):
         self.oai_record_list_label = oai_record_list_label
         self.record: df_r.Record = None
         self.oai_server_url = f'http://{host}:{port}/{oai_record_list_label}'
-        self.notify_callback = notify_callback
         super().__init__(some_logger=logger)
 
     def get_record(self, get_record_state, set_record_state):
@@ -228,9 +227,7 @@ class Client(df.FallbackLogger):
                                     timeout=300, headers=the_headers)
         except requests.exceptions.RequestException as err:
             if self.logger is not None:
-                self.logger.error("OAI server connection fails: %s", err)
-            if self.notify_callback:
-                self.notify_callback(f'[OCR-D-ODEM] Failure for {self.oai_server_url}', err)
+                self.logger.error("connection fails: %s", err)
             sys.exit(1)
         status = response.status_code
         result = response.content
@@ -239,7 +236,7 @@ class Client(df.FallbackLogger):
             if DATA_EXHAUSTED_MARK in str(result):
                 if self.logger is not None:
                     self.logger.info(result)
-                raise RecordExhaustedException(result.decode(encoding='utf-8'))
+                raise RecordsExhaustedException(result.decode(encoding='utf-8'))
             # otherwise exit anyway
             sys.exit(1)
 
