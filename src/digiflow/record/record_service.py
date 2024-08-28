@@ -53,6 +53,10 @@ class RecordsExhaustedException(df_rc.RecordDataException):
     achieved anymore"""
 
 
+class RecordsServiceException(df_rc.RecordDataException):
+    """Mark generic exception state"""
+
+
 class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                            df.FallbackLogger):
     """Simple handler for POST and GET requests
@@ -234,18 +238,16 @@ class Client(df.FallbackLogger):
         result = response.content
         if status == 404:
             # probably nothing to do?
-            if DATA_EXHAUSTED_MARK in str(result):
+            if DATA_EXHAUSTED_PREFIX in str(result):
                 if self.logger is not None:
                     self.logger.info(result)
                 raise RecordsExhaustedException(result.decode(encoding='utf-8'))
-            # otherwise exit anyway
-            sys.exit(1)
 
         if status != 200:
             if self.logger is not None:
                 self.logger.error(
                     "server connection status: %s -> %s", status, result)
-            sys.exit(1)
+            raise RecordsServiceException(f"Record service error {status} - {result}")
 
         # otherwise response ok
         self.record = df_r.Record.parse(response.json())

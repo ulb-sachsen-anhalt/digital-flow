@@ -8,4 +8,8 @@ from .record_criteria import (
     State,
     Datetime,
 )
-from .record_service import Client, HandlerInformation, RecordsExhaustedException, run_server
+from .record_service import (
+    Client, HandlerInformation, 
+	RecordsExhaustedException, RecordsServiceException,
+	run_server
+)
