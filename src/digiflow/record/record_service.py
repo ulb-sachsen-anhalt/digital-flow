@@ -12,6 +12,7 @@ from pathlib import Path
 import requests
 
 import digiflow as df
+import digiflow.record.common as df_rc
 import digiflow.record as df_r
 
 
@@ -47,7 +48,7 @@ class HandlerInformation:
         self.logger = logger
 
 
-class RecordsExhaustedException(Exception):
+class RecordsExhaustedException(df_rc.RecordDataException):
     """Mark state when no more records can be
     achieved anymore"""
 
@@ -164,7 +165,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         next_record = handler.next_record(requested_state)
         # if no record available, alert no resource
         if next_record is None:
-            the_msg = f'{DATA_EXHAUSTED_MARK}: {data_file_path}'
+            the_msg = DATA_EXHAUSTED_MARK.format(data_file_path)
             self.log(the_msg)
             return (404, the_msg)
 
