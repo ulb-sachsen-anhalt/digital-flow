@@ -130,18 +130,6 @@ class Record:
         for label, field in dict_map.items():
             if hasattr(self, label):
                 as_dict[field] = getattr(self, label)
-            # as_dict[FIELD_IDENTIFIER] = self.identifier
-            # if self._info != UNSET_LABEL:
-            #     as_dict[FIELD_INFO] = self._info
-            # if self._state != UNSET_LABEL:
-            #     as_dict[FIELD_STATE] = self._state
-            # if self.state_time != UNSET_LABEL:
-            #     as_dict[FIELD_STATETIME] = self.state_time
-            # # legacy
-            # if self.setspec != UNSET_LABEL:
-            #     as_dict[FIELD_SPEC] = self.setspec
-            # if self.created_time != UNSET_LABEL:
-            #     as_dict[FIELD_DATESTAMP] = self.created_time
         return as_dict
 
     @property
