@@ -5,7 +5,6 @@ import functools
 import http.server
 import json
 import logging
-import sys
 
 from pathlib import Path
 
@@ -219,6 +218,7 @@ class Client(df.FallbackLogger):
         self.oai_record_list_label = oai_record_list_label
         self.record: df_r.Record = None
         self.oai_server_url = f'http://{host}:{port}/{oai_record_list_label}'
+        self.timeout_secs = 30
         super().__init__(some_logger=logger)
 
     def get_record(self, get_record_state, set_record_state):
@@ -229,11 +229,11 @@ class Client(df.FallbackLogger):
             the_headers = {X_HEADER_GET_STATE: get_record_state,
                            X_HEADER_SET_STATE: set_record_state}
             response = requests.get(f'{self.oai_server_url}/next',
-                                    timeout=300, headers=the_headers)
+                                    timeout=self.timeout_secs, headers=the_headers)
         except requests.exceptions.RequestException as err:
             if self.logger is not None:
-                self.logger.error("connection fails: %s", err)
-            sys.exit(1)
+                self.logger.error("Connection failure: %s", err)
+            raise RecordsServiceException(f"Connection failure: {err}") from err
         status = response.status_code
         result = response.content
         if status == 404:

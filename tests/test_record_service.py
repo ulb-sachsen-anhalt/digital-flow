@@ -4,6 +4,7 @@ import ast
 import typing
 import unittest.mock
 
+import requests.exceptions as req_ex
 import pytest
 
 import digiflow.record as df_r
@@ -150,18 +151,36 @@ def test_exit_on_data_exhausted(mock_request):
     """
 
     # arrange
-    _the_list_label = 'oai-record-test'
-    _rsp = f'{df_rs.DATA_EXHAUSTED_MARK.format(_the_list_label)}'.encode()
-    client = df_r.Client(_the_list_label, '1.2.3.4', '9999')
+    list_label = 'oai-record-test'
+    srv_rsp = f'{df_rs.DATA_EXHAUSTED_MARK.format(list_label)}'.encode()
+    client = df_r.Client(list_label, '1.2.3.4', '9999')
     mock_resp = unittest.mock.Mock()
     mock_resp.status_code = 404
     mock_resp.headers = {'Content-Type': 'text/xml'}
-    mock_resp.content = _rsp
+    mock_resp.content = srv_rsp
     mock_request.return_value = mock_resp
 
     # act
-    with pytest.raises(SystemExit) as proc_exit:
+    with pytest.raises(df_r.RecordsExhaustedException) as recs_ex:
         client.get_record(get_record_state=df_r.UNSET_LABEL, set_record_state='busy')
 
     # assert
-    assert proc_exit.value.args[0] == 1
+    assert recs_ex.value.args[0] == f'no open records in {list_label}'
+
+
+@unittest.mock.patch('digiflow.requests.get')
+def test_client_connection_timeout(mock_request):
+    """Behavior when server down"""
+
+    # arrange
+    a_label = 'oai-record-test'
+    client = df_r.Client(a_label, '1.2.3.4', '9999')
+    exc_msg = f'connection timeout after {client.timeout_secs} seconds'
+    mock_request.side_effect = req_ex.ConnectTimeout(exc_msg)
+
+    # act
+    with pytest.raises(df_r.RecordsServiceException) as rse:
+        client.get_record(get_record_state=df_r.UNSET_LABEL, set_record_state='busy')
+
+    # assert
+    assert exc_msg in rse.value.args[0]
