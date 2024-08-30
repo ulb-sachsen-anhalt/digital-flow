@@ -25,8 +25,8 @@ X_HEADER_SET_STATE = 'X-SET-STATE'
 
 STATETIME_FORMAT = '%Y-%m-%d_%H:%M:%S'
 
-DATA_EXHAUSTED_PREFIX = 'no open records'
-DATA_EXHAUSTED_MARK = DATA_EXHAUSTED_PREFIX + ' in {}'
+DATA_EXHAUSTED_PREFIX = 'no records '
+DATA_EXHAUSTED_MARK = DATA_EXHAUSTED_PREFIX + '{} in {}'
 
 
 @dataclasses.dataclass
@@ -237,7 +237,6 @@ class Client(df.FallbackLogger):
         if status == 404:
             # probably nothing to do?
             if DATA_EXHAUSTED_PREFIX in str(result):
-                self.log(result)
                 raise RecordsExhaustedException(result.decode(encoding='utf-8'))
 
         if status != 200:

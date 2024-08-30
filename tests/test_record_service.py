@@ -128,17 +128,17 @@ def test_record_update_dealing_invalid_data():
     assert 'ppn#3345' in record.info
 
 
-@pytest.mark.parametrize("file_path,result",
+@pytest.mark.parametrize("state,file_path,result",
                          [
-                             ('/data/oai/test.csv', 'no open records in /data/oai/test.csv'),
-                             ('', 'no open records in '),
-                             (None, 'no open records in None')
+                             ('n.a.', '/data/oai/test.csv', 'no records n.a. in /data/oai/test.csv'),
+                             ('n.a.', '', 'no records n.a. in '),
+                             (None, None, 'no records None in None')
                          ])
-def test_mark_exhausted_matching(file_path, result):
+def test_mark_exhausted_matching(state, file_path, result):
     """Check formatting behavior"""
 
     # assert
-    assert df_rs.DATA_EXHAUSTED_MARK.format(file_path) == result
+    assert df_rs.DATA_EXHAUSTED_MARK.format(state, file_path) == result
 
 
 @unittest.mock.patch('digiflow.requests.get')
@@ -151,8 +151,9 @@ def test_exit_on_data_exhausted(mock_request):
     """
 
     # arrange
+    record_state = 'ocr_busy'
     list_label = 'oai-record-test'
-    srv_rsp = f'{df_rs.DATA_EXHAUSTED_MARK.format(list_label)}'.encode()
+    srv_rsp = f'{df_rs.DATA_EXHAUSTED_MARK.format(record_state, list_label)}'.encode()
     client = df_r.Client(list_label, '1.2.3.4', '9999')
     mock_resp = unittest.mock.Mock()
     mock_resp.status_code = 404
@@ -165,7 +166,7 @@ def test_exit_on_data_exhausted(mock_request):
         client.get_record(get_record_state=df_r.UNSET_LABEL, set_record_state='busy')
 
     # assert
-    assert recs_ex.value.args[0] == f'no open records in {list_label}'
+    assert recs_ex.value.args[0] == f'no records {record_state} in {list_label}'
 
 
 @unittest.mock.patch('digiflow.requests.get')
