@@ -30,12 +30,12 @@ class FallbackLogger:
     """Different way to inject logging facilities"""
 
     def __init__(self, some_logger=None):
-        self.logger: logging.Logger = some_logger
+        self._logger: logging.Logger = some_logger
 
     def log(self, message: str, *args, level = logging.INFO):
         """Encapsulate Loggin"""
-        if self.logger:
-            self.logger.log(level, message, *args)
+        if self._logger:
+            self._logger.log(level, message, *args)
         else:
             message = message.replace('%s','{}')
             if args is not None and len(args) > 0:

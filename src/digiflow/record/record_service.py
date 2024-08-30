@@ -66,31 +66,32 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                  *args,
                  **kwargs):
         self.record_list_directory: Path = start_info.data_path
-        self.logger = start_info.logger
         self.command_next = DEFAULT_COMMAND_NEXT
         self.command_update = DEFAULT_COMMAND_UPDATE
+        self._logger = start_info.logger
         super(http.server.SimpleHTTPRequestHandler, self).__init__(*args, **kwargs)
+
+    def _parse_request_path(self):
+        try:
+            _, file_name, command = self.path.split('/')
+            return command, file_name
+        except ValueError:
+            self._set_headers(state=400, mime_type=_MIME_TXT)
+            self.wfile.write(
+                b'provide file name and command, e.g.: /<file_name>/<command>')
+            self.log("unable to parse '%s'", self.path, level=logging.ERROR)
 
     def do_GET(self):
         """handle GET request"""
         client_name = self.address_string()
-        if self.path == '/favicon.ico':
-            return
-        self.log("request '%s' from client %s", self.path, client_name, level=logging.DEBUG)
         get_record_state = self.headers.get(X_HEADER_GET_STATE)
         set_record_state = self.headers.get(X_HEADER_SET_STATE)
-        try:
-            _, file_name, command = self.path.split('/')
-        except ValueError:
-            self.wfile.write(
-                b'please provide record file name and command '
-                b' e.g.: /oai_record_vd18/next')
-            self.log("missing data: '%s'", self.path, level=logging.WARNING)
-            return
-        if command == DEFAULT_COMMAND_NEXT:
+        command, file_name = self._parse_request_path()
+        if command is not None and command == DEFAULT_COMMAND_NEXT:
             state, data = self.get_next_record(file_name, client_name,
                                                get_record_state, set_record_state)
-            self.log("deliver next record: '%s'", data, level=logging.DEBUG)
+            self.log("get '%s': '%s'", get_record_state, data,
+                     level=logging.DEBUG)
             if isinstance(data, str):
                 self._set_headers(state, _MIME_TXT)
                 self.wfile.write(data.encode('utf-8'))
@@ -98,25 +99,22 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                 self._set_headers(state)
                 self.wfile.write(json.dumps(data, default=df_r.Record.dict).encode('utf-8'))
 
+    def log_request(self, _):
+        """silence internal logger"""
+
     def do_POST(self):
         """handle POST request"""
-        data = 'no data available'
         client_name = self.address_string()
         self.log('url path %s from %s', self.path, client_name)
-        try:
-            _, file_name, command = self.path.split('/')
-        except ValueError as val_err:
-            self.wfile.write(
-                b'please provide record file name and command '
-                b' e.g.: /records-vd18/next')
-            self.log('request next record failed %s', val_err.args[0], level=logging.ERROR)
+        command, file_name = self._parse_request_path()
+        if command is None:
+            return
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
         data_dict = json.loads(post_data)
-        self.log("POST request, Path: %s", self.path, level=logging.DEBUG)
-        self.log('do_POST: %s', data_dict)
+        ident = data_dict.get(df_r.FIELD_IDENTIFIER)
         if command == DEFAULT_COMMAND_UPDATE:
-            ident = data_dict.get(df_r.FIELD_IDENTIFIER)
+            self.log('update %s in %s: %s', ident, self.path, data_dict)
             if ident:
                 state, data = self.update_record(file_name, data_dict)
                 if isinstance(data, str):
@@ -127,28 +125,27 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                     self.wfile.write(json.dumps(data, default=data.dict).encode('utf-8'))
             else:
                 self._set_headers(404, _MIME_TXT)
-                self.wfile.write(f"no entry for {ident} in {file_name}!".encode('utf-8'))
+                self.wfile.write(f"no {ident} in {file_name}!".encode('utf-8'))
 
     def _set_headers(self, state=200, mime_type='application/json') -> None:
         self.send_response(state)
         self.send_header('Content-type', mime_type)
         self.end_headers()
 
-    def get_data_file(self, data_file_name: str):
+    def get_data_file(self, file_name: str):
         """data_file_name comes with no extension!
            so we must search for a valid match-
            returns propably None-values if
            nothing found.
         """
-        if isinstance(data_file_name, str):
-            data_file_name = Path(data_file_name).stem
+        if isinstance(file_name, str):
+            file_name = Path(file_name).stem
         for a_file in self.record_list_directory.iterdir():
-            if data_file_name == Path(a_file).stem:
+            if file_name == Path(a_file).stem:
                 data_file = self.record_list_directory / a_file.name
                 return data_file
-        self.log("found no %s in %s", data_file_name, self.record_list_directory,
+        self.log("no file %s in %s", file_name, self.record_list_directory,
                  level=logging.CRITICAL)
-        return None
 
     def get_next_record(self, file_name, client_name, requested_state, set_state) -> tuple:
         """Deliver next record data if both
@@ -156,7 +153,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         * inside this record list are open records available
         """
 
-        self.log("look for %s in %s", file_name, self.record_list_directory)
+        self.log("get %s from %s", file_name, self.record_list_directory)
         data_file_path = self.get_data_file(file_name)
         # no match results in 404 - resources not available after all
         if data_file_path is None:
@@ -186,8 +183,8 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
 
         data_file_path = self.get_data_file(data_file)
         if data_file_path is None:
-            self.log('do_POST: %s not found', data_file_path, level=logging.ERROR)
-            return (404, f"data file not found: {data_file_path}")
+            self.log('%s not found', data_file_path, level=logging.ERROR)
+            return (404, f"file not found: {data_file_path}")
         try:
             handler = df_r.RecordHandler(data_file_path)
             if isinstance(in_data, dict):
@@ -196,15 +193,16 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
             prev_record: df_r.Record = handler.get(in_ident)
             prev_record.info = in_data.info
             info_str = f"{prev_record.info}"
+            in_state = in_data.state
             handler.save_record_state(in_ident,
-                                      state=in_data.state, **{df_r.FIELD_INFO: info_str})
-            _msg = f"update done for {in_ident} in '{data_file_path}"
-            self.log(_msg)
-            return (200, _msg)
+                                      state=in_state, **{df_r.FIELD_INFO: info_str})
+            msg = f"set {in_ident} to {in_state} in {data_file_path}"
+            self.log(msg)
+            return (200, msg)
         except RuntimeError as _rer:
-            _msg = f"update fail for {in_ident} in '{data_file_path}' ({_rer.args[0]})"
-            self.log(_msg, level=logging.ERROR)
-            return (500, _msg)
+            msg = f"set {in_ident} to {in_state} in '{data_file_path}' failed: {_rer.args[0]}"
+            self.log(msg, level=logging.ERROR)
+            return (500, msg)
 
 
 class Client(df.FallbackLogger):
@@ -231,22 +229,20 @@ class Client(df.FallbackLogger):
             response = requests.get(f'{self.oai_server_url}/next',
                                     timeout=self.timeout_secs, headers=the_headers)
         except requests.exceptions.RequestException as err:
-            if self.logger is not None:
-                self.logger.error("Connection failure: %s", err)
+            if self._logger is not None:
+                self._logger.error("Connection failure: %s", err)
             raise RecordsServiceException(f"Connection failure: {err}") from err
         status = response.status_code
         result = response.content
         if status == 404:
             # probably nothing to do?
             if DATA_EXHAUSTED_PREFIX in str(result):
-                if self.logger is not None:
-                    self.logger.info(result)
+                self.log(result)
                 raise RecordsExhaustedException(result.decode(encoding='utf-8'))
 
         if status != 200:
-            if self.logger is not None:
-                self.logger.error(
-                    "server connection status: %s -> %s", status, result)
+            self.log("server connection status: %s -> %s", status, result,
+                     logging.ERROR)
             raise RecordsServiceException(f"Record service error {status} - {result}")
 
         # otherwise response ok
@@ -255,8 +251,7 @@ class Client(df.FallbackLogger):
 
     def update(self, status, oai_urn, **kwargs):
         """Store status update && send message to OAI Service"""
-        if self.logger is not None:
-            self.logger.debug("set status '%s' for urn '%s'", status, oai_urn)
+        self.log("set status '%s' for urn '%s'", status, oai_urn, logging.DEBUG)
         self.record = df_r.Record(oai_urn)
         self.record.state = status
         # if we have to report somethin' new, then append it
@@ -264,12 +259,11 @@ class Client(df.FallbackLogger):
             try:
                 self.record.info = kwargs
             except AttributeError as attr_err:
-                self.logger.error("info update failed for %s: %s (prev:%s, in:%s)",
-                                  self.record.identifier,
-                                  attr_err.args[0],
-                                  self.record.info, kwargs)
-        if self.logger is not None:
-            self.logger.debug("update record %s url %s", self.record, self.oai_server_url)
+                self._logger.error("info update failed for %s: %s (prev:%s, in:%s)",
+                                   self.record.identifier,
+                                   attr_err.args[0],
+                                   self.record.info, kwargs)
+        self.log("update record %s url %s", self.record, self.oai_server_url, logging.DEBUG)
         return requests.post(f'{self.oai_server_url}/update', json=self.record.dict(), timeout=60)
 
 
@@ -278,11 +272,10 @@ def run_server(host, port, start_data: HandlerInformation):
     for local file resources"""
 
     the_logger = start_data.logger
-    the_logger.info("server starts listen at: %s:%s", host, port)
-    the_logger.info("deliver record files from: %s", start_data.data_path)
-    the_logger.info("call next record with: %s:%s/<record-file>/next", host, port)
-    the_logger.info("post update data with: %s:%s/<record-file>/update", host, port)
-    the_logger.info("stop server press CTRL+C")
+    the_logger.info("listen at: %s:%s for files from %s", host, port, start_data.data_path)
+    the_logger.info("next data: %s:%s/<record-file>/next", host, port)
+    the_logger.info("post data: %s:%s/<record-file>/update", host, port)
+    the_logger.info("to stop server, press CTRL+C")
     the_handler = functools.partial(RecordRequestHandler, start_data)
     with http.server.HTTPServer((host, int(port)), the_handler) as the_server:
         try:
