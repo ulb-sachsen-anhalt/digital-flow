@@ -40,6 +40,7 @@ class HandlerInformation:
 
     def __init__(self, data_path, logger):
         """Enforce proper types"""
+        self.data_path = data_path
         if isinstance(data_path, str):
             self.data_path = Path(data_path)
         if not self.data_path.is_absolute():
@@ -165,7 +166,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         next_record = handler.next_record(requested_state)
         # if no record available, alert no resource
         if next_record is None:
-            the_msg = DATA_EXHAUSTED_MARK.format(data_file_path)
+            the_msg = DATA_EXHAUSTED_MARK.format(requested_state, data_file_path)
             self.log(the_msg)
             return (404, the_msg)
 
