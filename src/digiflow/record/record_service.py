@@ -91,8 +91,6 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         if command is not None and command == DEFAULT_COMMAND_NEXT:
             state, data = self.get_next_record(file_name, client_name,
                                                get_record_state, set_record_state)
-            self.log("get '%s': '%s'", get_record_state, data,
-                     level=logging.DEBUG)
             if isinstance(data, str):
                 self._set_headers(state, _MIME_TXT)
                 self.wfile.write(data.encode('utf-8'))
@@ -154,13 +152,12 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         * inside this record list are open records available
         """
 
-        self.log("get %s from %s", file_name, self.record_list_directory)
         data_file_path = self.get_data_file(file_name)
         # no match results in 404 - resources not available after all
         if data_file_path is None:
-            self.log("no '%s' found in '%s'", file_name, self.record_list_directory,
+            self.log("no %s found in %s", file_name, self.record_list_directory,
                      level=logging.WARNING)
-            return (404, f"no file '{file_name}' in {self.record_list_directory}")
+            return (404, f"no '{file_name}' in {self.record_list_directory}")
 
         handler = df_r.RecordHandler(data_file_path, transform_func=df_r.row_to_record)
         next_record = handler.next_record(requested_state)
@@ -185,7 +182,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         data_file_path = self.get_data_file(data_file)
         if data_file_path is None:
             self.log('%s not found', data_file_path, level=logging.ERROR)
-            return (404, f"file not found: {data_file_path}")
+            return (404, f"{data_file_path} not found")
         try:
             handler = df_r.RecordHandler(data_file_path)
             if isinstance(in_data, dict):
@@ -201,7 +198,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
             self.log(msg)
             return (200, msg)
         except RuntimeError as _rer:
-            msg = f"set {in_ident} to {in_state} in '{data_file_path}' failed: {_rer.args[0]}"
+            msg = f"set {in_ident} to {in_state} in {data_file_path} failed: {_rer.args[0]}"
             self.log(msg, level=logging.ERROR)
             return (500, msg)
 
