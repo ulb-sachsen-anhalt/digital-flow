@@ -166,7 +166,7 @@ class RecordHandler:
         # read datasets
         if not state:
             state = self.mark['lock']
-        if identifier in self.index.keys():
+        if identifier in self.index:
             (idx_raw, idx_data) = self.index[identifier]
             dict_row = self.data[idx_data]
             right_now = time.strftime(df_r.STATETIME_FORMAT)
@@ -179,9 +179,7 @@ class RecordHandler:
 
         # if not existing_id:
         else:
-            raise RuntimeError(
-                'No Record for {} in {}! Cannot save state!'
-                .format(identifier, self.data_path))
+            raise RuntimeError(f'No Record for {identifier} in {self.data_path}! Cant save state!')
 
         # store actual state
         self._save_file()
@@ -257,12 +255,9 @@ class RecordHandler:
             if sort_by in self.header:
                 the_rows = sorted(the_rows, key=lambda r: r[sort_by])
             else:
-                raise RuntimeError("invalid sort by {}! only {} permitted!".format(
-                    sort_by, self.header
-                ))
+                raise RuntimeError(f"invalid sort by {sort_by}! only {self.header} permitted!")
 
-        file_name_out = "{}_{:02d}_{:02d}.{}".format(
-            file_name, org_start, end_frame, file_ext)
+        file_name_out = f"{file_name}_{org_start:02d}_{end_frame:02d}.{file_ext}"
         path_out = os.path.join(path_dir, file_name_out)
         with open(path_out, 'w', encoding='UTF-8') as writer:
             csv_writer = csv.DictWriter(

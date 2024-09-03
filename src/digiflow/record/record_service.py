@@ -104,7 +104,8 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
     def do_POST(self):
         """handle POST request"""
         client_name = self.address_string()
-        self.log('url path %s from %s', self.path, client_name)
+        self.log('url path %s from %s', self.path, client_name,
+                 level=logging.INFO)
         command, file_name = self._parse_request_path()
         if command is None:
             return
@@ -227,8 +228,7 @@ class Client(df.FallbackLogger):
             response = requests.get(f'{self.oai_server_url}/next',
                                     timeout=self.timeout_secs, headers=the_headers)
         except requests.exceptions.RequestException as err:
-            if self._logger is not None:
-                self._logger.error("Connection failure: %s", err)
+            self.log("Connection failure: %s", err, level=logging.ERROR)
             raise RecordsServiceException(f"Connection failure: {err}") from err
         status = response.status_code
         result = response.content
@@ -239,7 +239,7 @@ class Client(df.FallbackLogger):
 
         if status != 200:
             self.log("server connection status: %s -> %s", status, result,
-                     logging.ERROR)
+                     level=logging.ERROR)
             raise RecordsServiceException(f"Record service error {status} - {result}")
 
         # otherwise response ok
@@ -248,7 +248,8 @@ class Client(df.FallbackLogger):
 
     def update(self, status, oai_urn, **kwargs):
         """Store status update && send message to OAI Service"""
-        self.log("set status '%s' for urn '%s'", status, oai_urn, logging.DEBUG)
+        self.log("set status '%s' for urn '%s'", status, oai_urn,
+                 level=logging.DEBUG)
         self.record = df_r.Record(oai_urn)
         self.record.state = status
         # if we have to report somethin' new, then append it
@@ -260,7 +261,8 @@ class Client(df.FallbackLogger):
                                    self.record.identifier,
                                    attr_err.args[0],
                                    self.record.info, kwargs)
-        self.log("update record %s url %s", self.record, self.oai_server_url, logging.DEBUG)
+        self.log("update record %s url %s", self.record, self.oai_server_url,
+                 level=logging.DEBUG)
         return requests.post(f'{self.oai_server_url}/update', json=self.record.dict(), timeout=60)
 
 

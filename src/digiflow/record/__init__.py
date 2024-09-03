@@ -9,7 +9,9 @@ from .record_criteria import (
     Datetime,
 )
 from .record_service import (
-    Client, HandlerInformation, 
-	RecordsExhaustedException, RecordsServiceException,
+    Client, HandlerInformation,
+	RecordRequestHandler,
+	RecordsExhaustedException,
+	RecordsServiceException,
 	run_server
 )
