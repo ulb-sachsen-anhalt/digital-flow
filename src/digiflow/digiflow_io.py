@@ -15,6 +15,17 @@ from lxml import etree as ET
 import digiflow.common as dfc
 import digiflow.digiflow_metadata as df_md
 
+# please pylinter
+# pylint:disable=c-extension-no-member
+
+OAI_KWARG_FGROUP_IMG = "fgroup_images"
+DEFAULT_FGROUP_IMG = "MAX"
+OAI_KWARG_FGROUP_OCR = "fgroup_ocr"
+DEFAULT_FGROUP_OCR = "FULLTEXT"
+OAI_KWARG_POSTFUNC = "post_oai"
+OAI_KWARG_REQUESTS = "request_kwargs"
+REQUESTS_DEFAULT_TIMEOUT = 20
+
 
 class LoadException(Exception):
     """Load of OAI Data failed"""
@@ -36,12 +47,6 @@ class ContentException(LoadException):
     or even missing complete record"""
 
 
-OAI_KWARG_FGROUP_IMG = "fgroup_images"
-DEFAULT_FGROUP_IMG = "MAX"
-OAI_KWARG_FGROUP_OCR = "fgroup_ocr"
-DEFAULT_FGROUP_OCR = "FULLTEXT"
-OAI_KWARG_POSTFUNC = "post_oai"
-OAI_KWARG_REQUESTS = "request_kwargs"
 class OAILoader:
     """
     Load OAI Records with corresponding metadata
@@ -140,24 +145,22 @@ class OAILoader:
             if stored_path:
                 if not force_load:
                     return None
-                else:
-                    # force update:
-                    # 1. rename existing data
-                    file_name = os.path.basename(stored_path)
-                    file_dir = os.path.dirname(stored_path)
-                    mets_ctime = str(int(os.stat(stored_path).st_mtime))
-                    bkp_mets = file_name.replace('mets', mets_ctime)
-                    os.rename(stored_path, os.path.join(file_dir, bkp_mets))
-                    # 2. download again anyway
-                    data_path = self.load_resource(res_url, res_path, post_func)
-                    if data_path:
-                        self.store.put(data_path)
-                return res_path
-            else:
+                # force update:
+                # 1. rename existing data
+                file_name = os.path.basename(stored_path)
+                file_dir = os.path.dirname(stored_path)
+                mets_ctime = str(int(os.stat(stored_path).st_mtime))
+                bkp_mets = file_name.replace('mets', mets_ctime)
+                os.rename(stored_path, os.path.join(file_dir, bkp_mets))
+                # 2. download again anyway
                 data_path = self.load_resource(res_url, res_path, post_func)
                 if data_path:
                     self.store.put(data_path)
                 return res_path
+            data_path = self.load_resource(res_url, res_path, post_func)
+            if data_path:
+                self.store.put(data_path)
+            return res_path
         else:
             return self.load_resource(res_url, res_path, post_func)
 
@@ -202,7 +205,7 @@ class OAILoader:
         except LoadException as load_exc:
             raise load_exc
         except Exception as exc:
-            msg = "processing '{}': {}".format(url, exc)
+            msg = f"load {url} exception: {exc}"
             raise RuntimeError(msg) from exc
 
 
@@ -212,11 +215,11 @@ class OAIFileSweeper:
         parse *.mets.xml to identify files to be deleted
     """
 
-    def __init__(self, path_store, pattern='mets.xml', filegroups=['MAX', ]):
+    def __init__(self, path_store, pattern='mets.xml', filegroups=None):
         self.work_dir = path_store
         self.pattern = pattern
         self.filegroups = filegroups if isinstance(filegroups, list)\
-            else list(filegroups)
+            else ["MAX"]
 
     def sweep(self):
         """remove OAI-Resources from given dir, if any contained"""
@@ -258,13 +261,12 @@ class OAIFileSweeper:
                                    len(list(_parent.iterdir())) == 0:
                                     _parent.rmdir()
                             except PermissionError:
-                                return 'cannot delete {} (insuff. permission)'\
-                                    .format(pth)
-        return (work_dir, total, "{} Mb".format(size >> 20))
+                                return f"cannot delete {pth} due insuff. perm."
+        return (work_dir, total, f"{(size >> 20)} Mb")
 
     def _get_files(self, mets_xml, filegroup):
         xml_root = ET.parse(str(mets_xml)).getroot()
-        xpath = ".//mets:fileGrp[@USE='{}']/mets:file/mets:FLocat".format(filegroup)
+        xpath = f".//mets:fileGrp[@USE='{filegroup}']/mets:file/mets:FLocat"
         locats = xml_root.findall(xpath, {"mets": "http://www.loc.gov/METS/"})
         links = [xl.get('{http://www.w3.org/1999/xlink}href') for xl in locats]
         return [Path(ln).stem for ln in links]
@@ -360,29 +362,29 @@ def request_resource(url: str, path_local: Path, **kwargs):
     status = 0
     result = None
     try:
-        response = requests.get(url, **kwargs)
+        the_timeout = REQUESTS_DEFAULT_TIMEOUT
+        if "timeout" in kwargs:
+            the_timeout = kwargs["timeout"]
+            del kwargs["timeout"]
+        response = requests.get(url, timeout=the_timeout, **kwargs)
         status = response.status_code
         if status >= 400:
-            _inf = "url '{}' returned '{}'".format(url, status)
+            the_info = f"{url} status {status}"
             if status < 500:
-                raise ClientError(_inf)
-            else:
-                raise ServerError(_inf)
+                raise ClientError(the_info)
+            raise ServerError(the_info)
         if status == 200:
             content_type = response.headers['Content-Type']
-
             # textual xml data
             if 'text' in content_type or 'xml' in content_type:
                 result = response.content
                 xml_root = ET.fromstring(result)
                 check_error = xml_root.find('.//error', xml_root.nsmap)
                 if check_error is not None:
-                    msg = "the download of {} fails due to: '{}'".format(
-                        url, check_error.text)
+                    msg = f"request {url} failed due {check_error.text}"
                     raise LoadException(msg)
                 path_local = _sanitize_local_file_extension(
                     path_local, content_type)
-
             # catch other content types by MIMI sub_type
             # split "<application|image>/<sub_type>"
             elif content_type.split('/')[-1] in ['jpg', 'jpeg', 'pdf', 'png']:
@@ -391,15 +393,13 @@ def request_resource(url: str, path_local: Path, **kwargs):
                 if not isinstance(path_local, Path):
                     path_local = Path(path_local)
                 path_local.write_bytes(response.content)
-
             # if we went this far, something unexpected has been returned
             else:
-                msg = "download {} with unhandled content-type {}".format(
-                    url, content_type)
+                msg = f"download {url} with unhandled content-type {content_type}"
                 raise ContentException(msg)
         return (path_local, result, content_type)
     except (OSError) as exc:
-        msg = "fail to download '{}' to '{}'".format(url, path_local)
+        msg = f"fail to download {url} to {path_local}"
         raise RuntimeError(msg) from exc
 
 

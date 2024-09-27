@@ -432,7 +432,7 @@ def test_response_404(mock_requests: unittest.mock.Mock):
 
     # assert
     assert exc.typename == 'ClientError'
-    assert "url 'http://foo.bar' returned '417'" == exc.value.args[0]
+    assert "http://foo.bar status 417" == exc.value.args[0]
 
 
 @unittest.mock.patch('requests.get')
@@ -494,7 +494,7 @@ def test_oai_load_exception_for_server_error(mock_504: unittest.mock.Mock, tmp_p
     # assert
     assert exc.typename == 'ServerError'
     a_msg = exc.value.args[0]
-    assert a_msg == "url 'opendata.uni-halle.de/oai/dd?verb=GetRecord&metadataPrefix=mets&identifier=foo' returned '504'"
+    assert a_msg == "opendata.uni-halle.de/oai/dd?verb=GetRecord&metadataPrefix=mets&identifier=foo status 504"
 
 
 def test_call_requests_kwargs_invalid_str(tmp_path):
