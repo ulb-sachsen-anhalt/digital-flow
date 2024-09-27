@@ -1,5 +1,6 @@
-# -*- coding: utf-8 -*-
+"""I/O related helpers"""
 
+import ast
 import email.utils
 import email.mime.text
 import os
@@ -35,6 +36,12 @@ class ContentException(LoadException):
     or even missing complete record"""
 
 
+OAI_KWARG_FGROUP_IMG = "fgroup_images"
+DEFAULT_FGROUP_IMG = "MAX"
+OAI_KWARG_FGROUP_OCR = "fgroup_ocr"
+DEFAULT_FGROUP_OCR = "FULLTEXT"
+OAI_KWARG_POSTFUNC = "post_oai"
+OAI_KWARG_REQUESTS = "request_kwargs"
 class OAILoader:
     """
     Load OAI Records with corresponding metadata
@@ -54,16 +61,32 @@ class OAILoader:
         self.base_url = base_url
         self.groups = {}
         self.path_mets = None
-        self.key_images = kwargs['group_images']\
-            if 'group_images' in kwargs else 'MAX'
-        self.post_oai = kwargs['post_oai'] if 'post_oai' in kwargs else None
+        self.key_images = kwargs[OAI_KWARG_FGROUP_IMG] \
+            if OAI_KWARG_FGROUP_IMG in kwargs else DEFAULT_FGROUP_IMG
+        self.key_ocr = kwargs[OAI_KWARG_FGROUP_OCR] \
+            if OAI_KWARG_FGROUP_OCR in kwargs else DEFAULT_FGROUP_OCR
+        self.post_oai = kwargs[OAI_KWARG_POSTFUNC] \
+            if OAI_KWARG_POSTFUNC in kwargs else None
         self.groups[self.key_images] = []
-        self.key_ocr = kwargs['group_ocr']\
-            if 'group_ocr' in kwargs else 'FULLTEXT'
-        self.request_kwargs = kwargs['request_kwargs']\
-            if 'request_kwargs' in kwargs else {}
+        self.request_kwargs = self._sanitize_kwargs(kwargs)
         self.groups[self.key_ocr] = []
         self.store = None
+
+    def _sanitize_kwargs(self, in_kwargs):
+        top_dict = {}
+        if OAI_KWARG_REQUESTS in in_kwargs:
+            raw_kwargs = in_kwargs[OAI_KWARG_REQUESTS]
+            if isinstance(raw_kwargs, dict):
+                return raw_kwargs
+            top_tokens = [r.strip() for r in raw_kwargs.split(",")]
+            for t in top_tokens:
+                k, v = t.split("=", maxsplit=1)
+                try:
+                    top_dict[k] = ast.literal_eval(v)
+                except ValueError as val_err:
+                    msg = f"Can't use {top_dict} to load: {val_err.args[0]}"
+                    raise LoadException(msg) from val_err
+        return top_dict
 
     def load(self, record_identifier, local_dst, mets_digital_object_identifier=None,
              skip_resources=False, force_update=False, metadata_format='mets') -> int:
@@ -81,8 +104,8 @@ class OAILoader:
         loaded = 0
 
         # sanitize url
-        res_url = "{}?verb=GetRecord&metadataPrefix={}&identifier={}".format(
-            self.base_url, metadata_format, record_identifier)
+        ctx = f"verb=GetRecord&metadataPrefix={metadata_format}&identifier={record_identifier}"
+        res_url = f"{self.base_url}?{ctx}"
         self.path_mets = local_dst
         path_res = self._handle_load(res_url, self.path_mets, self.post_oai, force_update)
         if path_res:

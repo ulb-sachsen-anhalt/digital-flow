@@ -1,5 +1,6 @@
 """Specification for IO API"""
 
+import ast
 import os
 import shutil
 import unittest.mock
@@ -11,17 +12,8 @@ import pytest
 
 import lxml.etree as ET
 
-from digiflow import (
-    OAIFileSweeper,
-    LoadException,
-    OAILoader,
-    LocalStore,
-    extract_mets,
-    request_resource,
-    smtp_note,
-    write_xml_file,
-)
-
+import digiflow.digiflow_io as df_io
+import digiflow.digiflow_metadata as df_md
 import digiflow.record as df_r
 
 from .conftest import TEST_RES
@@ -51,7 +43,7 @@ def test_intermediate_dirs_created_with_path(tmp_path):
     xml = ET.parse(src_path)
 
     # act
-    write_xml_file(xml.getroot(), path_dst)
+    df_md.write_xml_file(xml.getroot(), path_dst)
 
     assert os.path.isfile(path_dst)
 
@@ -65,7 +57,7 @@ def test_intermediate_dirs_created_with_tmpdir(tmpdir):
     xml = ET.parse(src_path)
 
     # act
-    write_xml_file(xml.getroot(), str(path_dst))
+    df_md.write_xml_file(xml.getroot(), str(path_dst))
 
     assert os.path.isfile(str(path_dst))
 
@@ -76,7 +68,7 @@ def test_write_xml_defaults(tmp_path):
     txt = '<parent><child name="foo">bar</child></parent>'
     xml_tree = ET.fromstring(txt)
     outpath = tmp_path / "write_foo.xml"
-    write_xml_file(xml_tree, str(outpath))
+    df_md.write_xml_file(xml_tree, str(outpath))
 
     assert os.path.isfile(str(outpath))
     assert open(str(outpath), encoding='utf8').read().startswith(
@@ -89,7 +81,7 @@ def test_write_xml_without_preamble(tmp_path):
     txt = '<parent><child name="foo">bar</child></parent>'
     xml_tree = ET.fromstring(txt)
     outpath = tmp_path / "write_foo.xml"
-    write_xml_file(xml_tree, str(outpath), preamble=None)
+    df_md.write_xml_file(xml_tree, str(outpath), preamble=None)
 
     assert os.path.isfile(str(outpath))
     assert open(str(outpath), encoding='utf8').read().startswith('<parent>\n')
@@ -153,25 +145,25 @@ def test_oai_load_vd16_with_localstore(mock_request_vd16_997508, tmp_path):
     mock_request_vd16_997508.side_effect = fixture_request_results
     ident = 'oai:digitale.bibliothek.uni-halle.de/vd16:997508'
     record = df_r.Record(ident)
-    _id = record.local_identifier
-    local_dir = tmp_path / "WORKDIR" / _id
-    store_dir = tmp_path / "STORE" / "dd" / _id
+    the_id = record.local_identifier
+    local_dir = tmp_path / "WORKDIR" / the_id
+    store_dir = tmp_path / "STORE" / "dd" / the_id
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
     key_images = 'MAX'
-    local_dst = str(local_dir) + '/' + _id + '.xml'
+    local_dst = str(local_dir) + '/' + the_id + '.xml'
 
     # act
-    loader = OAILoader(local_dir, base_url='digitale.bibliothek.uni-halle.de/vd16/oai',
-                       group_images=key_images,
-                       post_oai=extract_mets)
-    loader.store = LocalStore(store_dir, local_dir)
+    loader = df_io.OAILoader(local_dir, base_url='digitale.bibliothek.uni-halle.de/vd16/oai',
+                             group_images=key_images,
+                             post_oai=df_md.extract_mets)
+    loader.store = df_io.LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst, 'md997508')
 
     # assert first download of 1 xml + 12 image resources
     assert number == 13
     assert mock_request_vd16_997508.call_count == 13
-    assert os.path.isfile(str(local_dir / (_id + ".xml")))
+    assert os.path.isfile(str(local_dir / (the_id + ".xml")))
     assert os.path.isfile(str(local_dir / "MAX" / "1019932.jpg"))
 
     # ensure no subsequent re-load took place
@@ -188,26 +180,26 @@ def test_oai_load_opendata_with_localstore(
     mock_request_1981185920_36020.side_effect = fixture_request_results
     ident = 'oai:opendata.uni-halle.de:1981185920/36020'
     record = df_r.Record(ident)
-    _id = record.local_identifier
-    local_dir = tmp_path / "WORKDIR" / _id
-    store_dir = tmp_path / "STORE" / "dd" / _id
+    the_id = record.local_identifier
+    local_dir = tmp_path / "WORKDIR" / the_id
+    store_dir = tmp_path / "STORE" / "dd" / the_id
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
     key_images = 'MAX'
-    local_dst = str(local_dir) + '/' + _id + '.xml'
+    local_dst = str(local_dir) + '/' + the_id + '.xml'
 
     # act
-    loader = OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
-                       group_images=key_images,
-                       post_oai=extract_mets)
-    loader.store = LocalStore(store_dir, local_dir)
+    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+                             group_images=key_images,
+                             post_oai=df_md.extract_mets)
+    loader.store = df_io.LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst)
 
     # assert
     assert number == 12
     assert os.path.isdir(str(local_dir))
     assert os.path.isdir(str(local_dir / "MAX"))
-    assert os.path.isfile(str(local_dir / (_id + ".xml")))
+    assert os.path.isfile(str(local_dir / (the_id + ".xml")))
     assert os.path.isfile(str(local_dir / "MAX" / "00000011.jpg"))
 
     # check cache
@@ -226,28 +218,28 @@ def test_oai_load_opendata_request_kwargs(
     mock_request_1981185920_36020.side_effect = fixture_request_results
     ident = 'oai:opendata.uni-halle.de:1981185920/36020'
     record = df_r.Record(ident)
-    _id = record.local_identifier
-    local_dir = tmp_path / "WORKDIR" / _id
-    store_dir = tmp_path / "STORE" / "dd" / _id
+    the_id = record.local_identifier
+    local_dir = tmp_path / "WORKDIR" / the_id
+    store_dir = tmp_path / "STORE" / "dd" / the_id
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
     key_images = 'MAX'
-    local_dst = str(local_dir) + '/' + _id + '.xml'
+    local_dst = str(local_dir) + '/' + the_id + '.xml'
     request_kwargs = dict(headers={'User-Agent': 'Smith'})
 
     # act
-    loader = OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
-                       group_images=key_images,
-                       post_oai=extract_mets,
-                       request_kwargs=request_kwargs)
-    loader.store = LocalStore(store_dir, local_dir)
+    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+                             group_images=key_images,
+                             post_oai=df_md.extract_mets,
+                             request_kwargs=request_kwargs)
+    loader.store = df_io.LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst)
 
     # assert
     assert number == 12
     assert os.path.isdir(str(local_dir))
     assert os.path.isdir(str(local_dir / "MAX"))
-    assert os.path.isfile(str(local_dir / (_id + ".xml")))
+    assert os.path.isfile(str(local_dir / (the_id + ".xml")))
     assert os.path.isfile(str(local_dir / "MAX" / "00000011.jpg"))
 
     # check cache
@@ -296,24 +288,24 @@ def test_oai_load_vls_zd1_with_ocr(mock_request, tmp_path):
     mock_request.side_effect = fixture_request_vls_zd1_16359609
     ident = 'oai:digitale.bibliothek.uni-halle.de/zd:16359609'
     record = df_r.Record(ident)
-    _id = record.local_identifier
-    local_dir = tmp_path / "WORKDIR" / _id
-    store_dir = tmp_path / "STORE" / "zd" / _id
+    the_id = record.local_identifier
+    local_dir = tmp_path / "WORKDIR" / the_id
+    store_dir = tmp_path / "STORE" / "zd" / the_id
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
-    local_dst = str(local_dir) + '/' + _id + '.xml'
+    local_dst = str(local_dir) + '/' + the_id + '.xml'
 
     # act
-    loader = OAILoader(local_dir, base_url=OAI_BASE_URL_ZD,
-                       post_oai=extract_mets)
-    loader.store = LocalStore(store_dir, local_dir)
+    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_ZD,
+                             post_oai=df_md.extract_mets)
+    loader.store = df_io.LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst)
 
     # assert
     assert number == 17
     assert os.path.isdir(str(local_dir))
     assert os.path.isdir(str(local_dir / "MAX"))
-    assert os.path.isfile(str(local_dir / (_id + ".xml")))
+    assert os.path.isfile(str(local_dir / (the_id + ".xml")))
     assert os.path.isfile(str(local_dir / "MAX" / "16331052.jpg"))
 
     # check cache
@@ -339,7 +331,7 @@ def _fixture_migration_img_sweeper(tmp_path):
 def test_migration_sweeper_img(migration_sweeper_img_fixture):
     """Test cleanup images and renaming of mets file"""
 
-    OAIFileSweeper(migration_sweeper_img_fixture).sweep()
+    df_io.OAIFileSweeper(migration_sweeper_img_fixture).sweep()
 
     for item in Path(migration_sweeper_img_fixture).iterdir():
         if str(item.name) == 'MAX':
@@ -369,7 +361,7 @@ def _fixture_migration_pdf_sweeper(tmp_path):
 def test_migration_sweeper_pdf(migration_sweeper_pdf_fixture):
     """Test cleanup images and renaming of mets file"""
 
-    oais = OAIFileSweeper(
+    oais = df_io.OAIFileSweeper(
         migration_sweeper_pdf_fixture, pattern=".xml", filegroups=['DOWNLOAD'])
     oais.sweep()
 
@@ -394,7 +386,7 @@ def test_send_mail(mock_smtp):
     random_message = uuid.uuid4().hex
 
     # act
-    mess = smtp_note(
+    mess = df_io.smtp_note(
         'localhost:25',
         subject='test',
         message=random_message,
@@ -412,31 +404,31 @@ def test_send_mail(mock_smtp):
 def mock_response(**kwargs):
     """Create custum mock object"""
 
-    _response = unittest.mock.MagicMock()
-    _response.reason = 'testing reason'
+    the_response = unittest.mock.MagicMock()
+    the_response.reason = 'testing reason'
     if 'reason' in kwargs:
-        _response.reason = kwargs['reason']
+        the_response.reason = kwargs['reason']
     if 'status_code' in kwargs:
-        _response.status_code = int(kwargs['status_code'])
+        the_response.status_code = int(kwargs['status_code'])
     if 'headers' in kwargs:
-        _response.headers = kwargs['headers']
+        the_response.headers = kwargs['headers']
     if 'data_path' in kwargs:
         with open(kwargs['data_path'], encoding="utf-8") as xml:
-            _response.content = xml.read().encode()
-    return _response
+            the_response.content = xml.read().encode()
+    return the_response
 
 
 @unittest.mock.patch('requests.get')
-def test_response_404(mock_requests):
+def test_response_404(mock_requests: unittest.mock.Mock):
     """test request ends up with 417"""
 
     # arrange
-    _req = mock_response(status_code=417)
-    mock_requests.return_value = _req
+    the_response = mock_response(status_code=417)
+    mock_requests.return_value = the_response
 
     # act
-    with pytest.raises(LoadException) as exc:
-        request_resource('http://foo.bar', Path())
+    with pytest.raises(df_io.LoadException) as exc:
+        df_io.request_resource('http://foo.bar', Path())
 
     # assert
     assert exc.typename == 'ClientError'
@@ -444,25 +436,25 @@ def test_response_404(mock_requests):
 
 
 @unittest.mock.patch('requests.get')
-def test_response_200_with_error_content(mock_requests):
+def test_response_200_with_error_content(mock_requests: unittest.mock.Mock):
     """test request results into OAILoadException"""
 
     # arrange
     data_path = os.path.join(str(ROOT), 'tests/resources/opendata/id_not_exist.xml')
-    _req = mock_response(status_code=200,
-                         headers={'Content-Type': 'text/xml;charset=UTF-8'},
-                         data_path=data_path)
-    mock_requests.return_value = _req
+    a_response = mock_response(status_code=200,
+                               headers={'Content-Type': 'text/xml;charset=UTF-8'},
+                               data_path=data_path)
+    mock_requests.return_value = a_response
 
     # act
-    with pytest.raises(LoadException) as exc:
-        request_resource('http://foo.bar', Path())
+    with pytest.raises(df_io.LoadException) as exc:
+        df_io.request_resource('http://foo.bar', Path())
 
     assert 'verb requires' in str(exc.value)
 
 
 @unittest.mock.patch('requests.get')
-def test_oai_load_exception_for_server_error(mock_504, tmp_path):
+def test_oai_load_exception_for_server_error(mock_504: unittest.mock.Mock, tmp_path):
     """Ensure OAILoadException for Response status_code
     which indicates internal Server-Errors gets properly
     propagated upstream to caller.
@@ -476,24 +468,24 @@ def test_oai_load_exception_for_server_error(mock_504, tmp_path):
 
     # arrange
     # arrange
-    _req = mock_response(status_code=504)
-    mock_504.return_value = _req
+    the_response_req = mock_response(status_code=504)
+    mock_504.return_value = the_response_req
     record = df_r.Record('foo')
-    _id = record.local_identifier
-    local_dir = tmp_path / "WORKDIR" / _id
-    store_dir = tmp_path / "STORE" / "dd" / _id
+    the_id = record.local_identifier
+    local_dir = tmp_path / "WORKDIR" / the_id
+    store_dir = tmp_path / "STORE" / "dd" / the_id
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
     key_images = 'MAX'
-    local_dst = str(local_dir) + '/' + _id + '.xml'
+    local_dst = str(local_dir) + '/' + the_id + '.xml'
     request_kwargs = dict(headers={'User-Agent': 'Smith'})
 
     # act
-    loader = OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
-                       group_images=key_images,
-                       post_oai=extract_mets,
-                       request_kwargs=request_kwargs)
-    loader.store = LocalStore(store_dir, local_dir)
+    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+                             group_images=key_images,
+                             post_oai=df_md.extract_mets,
+                             request_kwargs=request_kwargs)
+    loader.store = df_io.LocalStore(store_dir, local_dir)
 
     # act
     with pytest.raises(Exception) as exc:
@@ -501,5 +493,97 @@ def test_oai_load_exception_for_server_error(mock_504, tmp_path):
 
     # assert
     assert exc.typename == 'ServerError'
-    _msg = exc.value.args[0]
-    assert _msg == "url 'opendata.uni-halle.de/oai/dd?verb=GetRecord&metadataPrefix=mets&identifier=foo' returned '504'"
+    a_msg = exc.value.args[0]
+    assert a_msg == "url 'opendata.uni-halle.de/oai/dd?verb=GetRecord&metadataPrefix=mets&identifier=foo' returned '504'"
+
+
+def test_call_requests_kwargs_invalid_str(tmp_path):
+    """Explore behavior when trying to pass kwargs
+    Please note: pylint would warn also if active
+    """
+
+    # arrange
+    the_url = "https://dumy.com"
+    the_kwargs = 'timeout=20, headers={"User-Agent": "ulbbot+IT-WF-OCR-VD17"}'
+
+    # act
+    with pytest.raises(TypeError) as terr:
+        # pylint:disable=not-a-mapping
+        df_io.request_resource(the_url, path_local=tmp_path, **the_kwargs)
+
+    # assert
+    assert "argument after ** must be a mapping" in terr.value.args[0]
+
+
+@unittest.mock.patch("requests.get")
+def test_call_requests_kwargs_empty(mock_requests: unittest.mock.Mock, tmp_path):
+    """Behavior when passinf empty dict
+    Still raises error due mocked request response
+    (which is not important this time)
+    """
+
+    # arrange
+    mock_requests.return_value.status_code = 200
+    mock_requests.return_value.status_code = 200
+    the_url = "https://dumy.com"
+    the_kwargs = {}
+
+    # act
+    with pytest.raises(df_io.ContentException) as strange:
+        df_io.request_resource(the_url, path_local=tmp_path, **the_kwargs)
+
+    # assert
+    assert "unhandled content-type" in strange.value.args[0]
+    assert mock_requests.call_count == 1
+
+
+@unittest.mock.patch("requests.get")
+def test_call_requests_kwargs_valid(mock_requests: unittest.mock.Mock, tmp_path):
+    """Behavior when trying to pass valid kwargs
+    Still raises error due mocked request response
+    (which is not important this time)
+    """
+
+    # arrange
+    mock_requests.return_value.status_code = 200
+    mock_requests.return_value.status_code = 200
+    the_url = "https://dumy.com"
+    raw_kwargs = 'timeout=20, headers={"User-Agent": "ulbbot+IT-WF-OCR-VD17"}'
+    top_tokens = raw_kwargs.split(",")
+    the_kwargs = {}
+    for t in top_tokens:
+        k, v = t.split("=", maxsplit=1)
+        the_kwargs[k] = ast.literal_eval(v)
+
+    # act
+    with pytest.raises(df_io.ContentException) as strange:
+        df_io.request_resource(the_url, path_local=tmp_path, **the_kwargs)
+
+    # assert
+    assert "unhandled content-type" in strange.value.args[0]
+    assert mock_requests.call_count == 1
+
+
+@unittest.mock.patch("requests.get")
+def test_oailoader_with_string_requests_kwargs(mock_requests: unittest.mock.Mock, tmp_path):
+    """Behavior when using the regular OAILoader with
+    string kwargs from a configuration
+    Still raises error due mocked request response
+    (which is not important this time)
+    """
+
+    # arrange
+    mock_requests.return_value.status_code = 200
+    mock_requests.return_value.status_code = 200
+    the_url = "https://dumy.com"
+    raw_kwargs = {
+        df_io.OAI_KWARG_REQUESTS: 'timeout=20, headers={"User-Agent": "ulbbot+IT-WF-OCR-VD17"}'}
+    loader = df_io.OAILoader(tmp_path, the_url, **raw_kwargs)
+
+    # act
+    with pytest.raises(df_io.ContentException) as strange:
+        loader.load_resource(the_url, tmp_path, None)
+
+    # assert
+    assert "unhandled content-type" in strange.value.args[0]
+    assert mock_requests.call_count == 1
