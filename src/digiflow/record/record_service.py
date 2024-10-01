@@ -15,9 +15,16 @@ import digiflow.record.common as df_rc
 import digiflow.record as df_r
 
 
+_MIME_TXT = "text/plain"
+_MIME_JSON = "application/json"
+DEFAULT_HEADER = {
+    "Content-Type": _MIME_JSON
+}
+TEXT_HEADER = {
+    "Content-Type": _MIME_TXT
+}
 DEFAULT_COMMAND_NEXT = 'next'
 DEFAULT_COMMAND_UPDATE = 'update'
-_MIME_TXT = 'text/plain'
 DEFAULT_MARK_BUSY = 'busy'
 
 X_HEADER_GET_STATE = 'X-GET-STATE'
@@ -37,6 +44,7 @@ class HandlerInformation:
 
     data_path: Path
     logger: logging.Logger
+    client_ips = []
 
     def __init__(self, data_path, logger):
         """Enforce proper types"""
@@ -57,6 +65,8 @@ class RecordsServiceException(df_rc.RecordDataException):
     """Mark generic exception state"""
 
 
+# make pylint accept names like "do_POST"
+# pylint:disable=invalid-name
 class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                            df.FallbackLogger):
     """Simple handler for POST and GET requests
@@ -67,6 +77,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                  *args,
                  **kwargs):
         self.record_list_directory: Path = start_info.data_path
+        self.client_ips = start_info.client_ips
         self.command_next = DEFAULT_COMMAND_NEXT
         self.command_update = DEFAULT_COMMAND_UPDATE
         self._logger = start_info.logger
@@ -76,27 +87,45 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         try:
             _, file_name, command = self.path.split('/')
             return command, file_name
-        except ValueError:
-            self._set_headers(state=400, mime_type=_MIME_TXT)
+        except (ValueError, TypeError):
+            self._respond(state=400, headers=TEXT_HEADER)
             self.wfile.write(
                 b'provide file name and command, e.g.: /<file_name>/<command>')
             self.log("unable to parse '%s'", self.path, level=logging.ERROR)
+        return None
+
+    def _client_allowed(self):
+        """check incomming requests verso list of allowed
+        client ips if available"""
+        if self.client_ips is not None and len(self.client_ips) > 0:
+            client_name = self.address_string()
+            is_allowed = client_name in self.client_ips
+            if not is_allowed:
+                self._respond(state=404, headers={})
+                # self.wfile.write()
+                return False
+        return True
 
     def do_GET(self):
         """handle GET request"""
         client_name = self.address_string()
+        if not self._client_allowed():
+            self.log("request from %s rejected", self.address_string(), level=logging.WARNING)
+            return
         get_record_state = self.headers.get(X_HEADER_GET_STATE)
         set_record_state = self.headers.get(X_HEADER_SET_STATE)
-        command, file_name = self._parse_request_path()
-        if command is not None and command == DEFAULT_COMMAND_NEXT:
-            state, data = self.get_next_record(file_name, client_name,
+        parsed_request = self._parse_request_path()
+        if isinstance(parsed_request, tuple):
+            command, file_name = parsed_request
+            if command is not None and command == DEFAULT_COMMAND_NEXT:
+                state, data = self.get_next_record(file_name, client_name,
                                                get_record_state, set_record_state)
-            if isinstance(data, str):
-                self._set_headers(state, _MIME_TXT)
-                self.wfile.write(data.encode('utf-8'))
-            else:
-                self._set_headers(state)
-                self.wfile.write(json.dumps(data, default=df_r.Record.dict).encode('utf-8'))
+                if isinstance(data, str):
+                    self._respond(state, _MIME_TXT)
+                    self.wfile.write(data.encode('utf-8'))
+                else:
+                    self._respond(state)
+                    self.wfile.write(json.dumps(data, default=df_r.Record.dict).encode('utf-8'))
 
     def log_request(self, _):
         """silence internal logger"""
@@ -104,32 +133,40 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
     def do_POST(self):
         """handle POST request"""
         client_name = self.address_string()
+        if not self._client_allowed():
+            self.log("request from %s rejected", self.address_string(), level=logging.WARNING)
+            return
         self.log('url path %s from %s', self.path, client_name,
                  level=logging.INFO)
-        command, file_name = self._parse_request_path()
-        if command is None:
-            return
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-        data_dict = json.loads(post_data)
-        ident = data_dict.get(df_r.FIELD_IDENTIFIER)
-        if command == DEFAULT_COMMAND_UPDATE:
-            self.log('update %s in %s: %s', ident, self.path, data_dict)
-            if ident:
-                state, data = self.update_record(file_name, data_dict)
-                if isinstance(data, str):
-                    self._set_headers(state, _MIME_TXT)
-                    self.wfile.write(data.encode('utf-8'))
+        parsed_request = self._parse_request_path()
+        if isinstance(parsed_request, tuple):
+            command, file_name = parsed_request
+            if command is None:
+                return
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data_dict = json.loads(post_data)
+            ident = data_dict.get(df_r.FIELD_IDENTIFIER)
+            if DEFAULT_COMMAND_UPDATE == command:
+                self.log('update %s in %s: %s', ident, self.path, data_dict)
+                if ident:
+                    state, data = self.update_record(file_name, data_dict)
+                    if isinstance(data, str):
+                        self._respond(state, TEXT_HEADER)
+                        self.wfile.write(data.encode('utf-8'))
+                    else:
+                        self._respond(state)
+                        self.wfile.write(json.dumps(data, default=data.dict).encode('utf-8'))
                 else:
-                    self._set_headers(state)
-                    self.wfile.write(json.dumps(data, default=data.dict).encode('utf-8'))
-            else:
-                self._set_headers(404, _MIME_TXT)
-                self.wfile.write(f"no {ident} in {file_name}!".encode('utf-8'))
+                    self._respond(404, TEXT_HEADER)
+                    self.wfile.write(f"no {ident} in {file_name}!".encode('utf-8'))
 
-    def _set_headers(self, state=200, mime_type='application/json') -> None:
+    def _respond(self, state=200, headers=None) -> None:
         self.send_response(state)
-        self.send_header('Content-type', mime_type)
+        if headers is None:
+            headers = DEFAULT_HEADER
+        for k, v in headers.items():
+            self.send_header(k, v)
         self.end_headers()
 
     def get_data_file(self, file_name: str):
@@ -146,6 +183,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                 return data_file
         self.log("no file %s in %s", file_name, self.record_list_directory,
                  level=logging.CRITICAL)
+        return None
 
     def get_next_record(self, file_name, client_name, requested_state, set_state) -> tuple:
         """Deliver next record data if both
@@ -238,6 +276,8 @@ class Client(df.FallbackLogger):
                 raise RecordsExhaustedException(result.decode(encoding='utf-8'))
 
         if status != 200:
+            if result is None or len(result) == 0:
+                result = df.UNSET_LABEL
             self.log("server connection status: %s -> %s", status, result,
                      level=logging.ERROR)
             raise RecordsServiceException(f"Record service error {status} - {result}")
@@ -272,6 +312,8 @@ def run_server(host, port, start_data: HandlerInformation):
 
     the_logger = start_data.logger
     the_logger.info("listen at: %s:%s for files from %s", host, port, start_data.data_path)
+    if start_data.client_ips and len(start_data.client_ips) > 0:
+        the_logger.info("accept requests only from %s", start_data.client_ips)
     the_logger.info("next data: %s:%s/<record-file>/next", host, port)
     the_logger.info("post data: %s:%s/<record-file>/update", host, port)
     the_logger.info("to stop server, press CTRL+C")
