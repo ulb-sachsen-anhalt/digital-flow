@@ -1,6 +1,7 @@
 """Common record attributes"""
 
 import ast
+import json
 import time
 import typing
 
@@ -122,7 +123,10 @@ class Record:
 
     def dict(self, dict_map=None) -> typing.Dict:
         """Serialize Record into Python dict
-        as input for JSON load
+        as input for JSON load.
+        Please note: Tries to dump deep structures
+            and yields exception if record unlikely
+            to be JSON serializable
         """
         as_dict = {}
         if dict_map is None:
@@ -130,6 +134,11 @@ class Record:
         for label, field in dict_map.items():
             if hasattr(self, label):
                 as_dict[field] = getattr(self, label)
+        try:
+            json.dumps(as_dict)
+        except TypeError as struct_err:
+            err_msg = f"{struct_err.args[0]} => {self.info}"
+            raise RecordDataException(err_msg) from struct_err
         return as_dict
 
     @property
@@ -171,7 +180,7 @@ class Record:
                 self._info.update(any_value)
             elif isinstance(self._info, tuple):
                 self._info[-1].update(any_value)
-        except (AttributeError,SyntaxError, ValueError):
+        except (AttributeError, SyntaxError, ValueError):
             self._info = any_value
 
 
