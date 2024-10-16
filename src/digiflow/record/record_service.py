@@ -15,13 +15,11 @@ import digiflow.record.common as df_rc
 import digiflow.record as df_r
 
 
-_MIME_TXT = "text/plain"
-_MIME_JSON = "application/json"
 DEFAULT_HEADER = {
-    "Content-Type": _MIME_JSON
+    "Content-Type": "application/json"
 }
 TEXT_HEADER = {
-    "Content-Type": _MIME_TXT
+    "Content-Type": "text/plain"
 }
 DEFAULT_COMMAND_NEXT = 'next'
 DEFAULT_COMMAND_UPDATE = 'update'
@@ -121,7 +119,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                 state, data = self.get_next_record(file_name, client_name,
                                                get_record_state, set_record_state)
                 if isinstance(data, str):
-                    self._respond(state, _MIME_TXT)
+                    self._respond(state, headers=TEXT_HEADER)
                     self.wfile.write(data.encode('utf-8'))
                 else:
                     self._respond(state)
