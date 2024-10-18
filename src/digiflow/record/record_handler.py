@@ -1,5 +1,6 @@
 """Record API"""
 
+import ast
 import csv
 import collections
 import os
@@ -371,9 +372,15 @@ class RecordHandler:
 
 
 def _merge(self_record, other_record):
-    self_record[df_r.FIELD_INFO] = other_record[df_r.FIELD_INFO]
     self_record[df_r.FIELD_STATE] = other_record[df_r.FIELD_STATE]
     self_record[df_r.FIELD_STATETIME] = other_record[df_r.FIELD_STATETIME]
+    try:
+        self_info = ast.literal_eval(self_record[df_r.FIELD_INFO])
+        other_info = ast.literal_eval(other_record[df_r.FIELD_INFO])
+        self_info.update(other_info)
+        self_record[df_r.FIELD_INFO] = str(self_info)
+    except (SyntaxError, ValueError):
+        self_record[df_r.FIELD_INFO] = other_record[df_r.FIELD_INFO]
 
 
 def _is_unset(self_record):

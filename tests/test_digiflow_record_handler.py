@@ -797,3 +797,47 @@ def test_record_handler_with_broken_row(tmp_path):
         handler.next_record(state='foo')  # dummy state to provoke error
 
     assert "line:003 no STATE field " in handl_exc.value.args[0]
+
+
+def test_record_handler_merge_info_dicts(tmp_path):
+    """Two lists merged into one and result
+    info field was merged too since it's a literal 
+    python dict.
+
+    Please note:
+    This merge will only work if both INFO fields
+    can the evaluated to dictionaries!
+    """
+
+    # arrange
+    path_oai_list_a = tmp_path / 'oai_list_a'
+    data_fresh = [
+        "123\tn.a.\t2015-08-25T20:00:35Z\t{'pages':23, 'ods_created':'1984-10-03'}\tu.a.\tn.a.\n"
+        "124\tn.a.\t2015-08-25T20:00:35Z\t{'pages':24, 'ods_created':'1985-05-05'}\tn.a.\tn.a.\n"
+    ]
+    write_datalist(path_oai_list_a, data_fresh, LEGACY_HEADER_STR)
+    dst_hndlr = df_r.RecordHandler(
+        path_oai_list_a,
+        data_fields=df_r.LEGACY_HEADER,
+        transform_func=df_r.row_to_record)
+
+    list_merge = tmp_path / 'oai_list_b'
+    data2 = [
+        "123\tn.a.\t2015-08-25T20:00:35Z\t{'pages':23, 'n_ocr':20}\tocr_done\t2024-10-18_11:12:00\n",
+    ]
+    write_datalist(list_merge, data2, LEGACY_HEADER_STR)
+
+    # act: must *not* set ignore_state=None,
+    # otherwise first record from second list erases
+    # existing data from list a
+    results = dst_hndlr.merges(list_merge, dry_run=False)
+    merged_record: df_r.Record = dst_hndlr.next_record(state='ocr_done')
+
+    # no merge since state 'n.a.' from list b
+    # first record of list b ignored
+    # to preserve existing data from list a
+    assert results['merges'] == 1
+    assert results['ignores'] == 0
+    assert results['appendeds'] == 0
+    assert dst_hndlr.total_len == 2
+    assert merged_record.info == {'n_ocr': 20, 'pages': 23, 'ods_created':'1984-10-03'}
