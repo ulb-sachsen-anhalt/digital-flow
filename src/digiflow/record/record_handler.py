@@ -11,6 +11,7 @@ import digiflow.record as df_r
 
 RECORD_STATE_MASK_FRAME = 'other_load'
 SETSPEC_SPLITTER = '##'
+STRING_QUOTES = "\"'"
 
 
 class RecordHandlerException(Exception):
@@ -375,12 +376,22 @@ def _merge(self_record, other_record):
     self_record[df_r.FIELD_STATE] = other_record[df_r.FIELD_STATE]
     self_record[df_r.FIELD_STATETIME] = other_record[df_r.FIELD_STATETIME]
     try:
-        self_info = ast.literal_eval(self_record[df_r.FIELD_INFO])
-        other_info = ast.literal_eval(other_record[df_r.FIELD_INFO])
+        self_info = ast.literal_eval(_clear_trailing_quotes(self_record[df_r.FIELD_INFO]))
+        other_info = ast.literal_eval(_clear_trailing_quotes(other_record[df_r.FIELD_INFO]))
         self_info.update(other_info)
         self_record[df_r.FIELD_INFO] = str(self_info)
     except (SyntaxError, ValueError):
         self_record[df_r.FIELD_INFO] = other_record[df_r.FIELD_INFO]
+
+def _clear_trailing_quotes(raw_string:str):
+    """Remove evil trailing chars like double/single 
+    quotation marks"""
+
+    if raw_string[0] in STRING_QUOTES:
+        raw_string = raw_string[1:]
+    if raw_string[-1] in STRING_QUOTES:
+        raw_string = raw_string[:-1]
+    return raw_string
 
 
 def _is_unset(self_record):
