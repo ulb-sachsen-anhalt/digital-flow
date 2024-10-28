@@ -1,9 +1,12 @@
 """Metadata module regarding METS/MODS"""
 
 # -*- coding: utf-8 -*-
+
 import abc
+import dataclasses
 import os
 import time
+import typing
 
 from collections import (
     defaultdict
@@ -129,6 +132,14 @@ def extract_mets(path_mets, the_data):
     xml_root = ET.fromstring(the_data)
     mets_tree = _post_oai_extract_metsdata(xml_root)
     write_xml_file(mets_tree, path_mets, preamble=None)
+
+
+@dataclasses.dataclass
+class METSFileInfo:
+    """Represents filGrp/file entry"""
+    file_id: str
+    file_type: str
+    loc_url: str
 
 
 class XMLProcessor(abc.ABC):
@@ -448,7 +459,7 @@ class MetsReader(MetsProcessor):
         if self._report is None:
             self._report = MetsReaderReport()
             self._report.identifiers = self.get_identifiers()
-            self._report.system_identifiers = self._system_identifiers()
+            self._report.system_identifiers = self._ulb_digi_system_identifier()
             self._report.languages = self.get_language_information()
             outcome = self.get_type_and_hierarchy()
             if outcome:
@@ -606,7 +617,7 @@ class MetsReader(MetsProcessor):
             _identifiers[rec.attrib['source']] = rec.text
         return _identifiers
 
-    def _system_identifiers(self) -> dict:
+    def _ulb_digi_system_identifier(self) -> dict:
         """Determine system identifier(s)
         * use METS-agent-information, if available
 
@@ -615,13 +626,14 @@ class MetsReader(MetsProcessor):
         than one system id present: actual plus 
         legacy _identifiers
         """
-        _idents = {}
+        ident_dict = {}
+        repositories = []
         # inspect mets header
         _mhdrs = self.xpath('//mets:metsHdr')
         if len(_mhdrs) == 1:
             _mhdr = _mhdrs[0]
-            _repos = self.xpath('mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()', _mhdr)
-        _repo = _repos[0] if len(_repos) == 1 else MARK_AGENT_LEGACY.split(':', maxsplit=1)[0]
+            repositories = self.xpath('mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()', _mhdr)
+        repo_one = repositories[0] if len(repositories) == 1 else MARK_AGENT_LEGACY.split(':', maxsplit=1)[0]
         # legacy migrated record found?
         _legacy_marks = self.xpath(f'//mets:note[contains(text(), "{MARK_AGENT_LEGACY}")]/text()')
         if len(_legacy_marks) == 1:
@@ -630,38 +642,33 @@ class MetsReader(MetsProcessor):
                 _legacy_ident = _id.rsplit(':', maxsplit=1)[1].strip()
                 _legacy_ident = _legacy_ident[2:] if _legacy_ident.startswith(
                     'md') else _legacy_ident
-                _idents[_repo] = _legacy_ident
+                ident_dict[repo_one] = _legacy_ident
             else:
-                _idents[_repo] = _id
+                ident_dict[repo_one] = _id
         _vls_marks = self.xpath(f'//mets:note[contains(text(), "{MARK_AGENT_VLID}")]/text()')
         if len(_vls_marks) == 1:
             _id = _vls_marks[0][len(MARK_AGENT_VLID):].strip()
-            _idents[_repo] = _id
+            ident_dict[repo_one] = _id
         # legacy vls record which is not mapped by now?
-        if _repo and ('digital' in _repo or 'menadoc' in _repo) and _repo not in _idents:
+        if repo_one and ('digital' in repo_one or 'menadoc' in repo_one) and repo_one not in ident_dict:
             _legacy_id = self.dmd_id[2:] if self.dmd_id.startswith('md') else self.dmd_id
-            _idents[_repo] = _legacy_id
+            ident_dict[repo_one] = _legacy_id
         # legacy kitodo2 source _without_ OAI envelope
         _creators = self.tree.xpath(
             '//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name', namespaces=dfc.XMLNS)
         if len(_creators) == 1 and 'kitodo-ugh' in _creators[0].text.lower():
-            _idents[MARK_KITODO2] = None
+            ident_dict[MARK_KITODO2] = None
         # kitodo3 metsDocumentID?
         _doc_ids = self.xpath('//mets:metsDocumentID/text()', _mhdr)
         if len(_doc_ids) == 1:
-            _idents[MARK_KITODO3] = _doc_ids[0]
+            ident_dict[MARK_KITODO3] = _doc_ids[0]
         # once migrated, now hosted at opendata
-        _pres = self.tree.xpath(
+        viewer_pres = self.tree.xpath(
             './/dv:presentation[contains(./text(), "://opendata")]/text()', namespaces=dfc.XMLNS)
-        if len(_pres) == 1 and 'simple-search' not in _pres[0]:
-            _idents[_pres[0].split('/')[2]] = _pres[0]
-        if self._report and len(self._report.system_identifiers) > 0:
-            _idents = {**_idents, **self._report.system_identifiers}
-        if len(_idents) > 0:
-            return _idents
-
-        # we quit, no ideas left
-        raise RuntimeError(f"No System _identifiers n {self.tree.base}!")
+        if len(viewer_pres) == 1 and 'simple-search' not in viewer_pres[0]:
+            ident_dict[viewer_pres[0].split('/')[2]] = viewer_pres[0]
+        # return what has been learned
+        return {**ident_dict, **self.report.system_identifiers}
 
     def _validate_identifier_types(self, _identifiers: dict):
         """Transform all known _identifiers to match configuration
@@ -696,12 +703,22 @@ class MetsReader(MetsProcessor):
         xpr_signature = f'.//mets:dmdSec[@ID="{self._prime_mods_id}"]//mods:shelfLocator/text()'
         return self.tree.xpath(xpr_signature, namespaces=dfc.XMLNS)
 
-    def get_filegrp_links(self, group='MAX'):
-        """Gather resource links for given filegroup"""
+    def get_filegrp_info(self, group='MAX') -> typing.List[METSFileInfo]:
+        """Gather resource information for given filegroup
+        concerning URL, MIMETYPE and container ID"""
 
         xpath = f'.//mets:fileGrp[@USE="{group}"]/mets:file/mets:FLocat'
-        resources = self.tree.findall(xpath, dfc.XMLNS)
-        return [res.attrib[XLINK_HREF] for res in resources]
+        the_files = self.tree.findall(xpath, dfc.XMLNS)
+        the_info = []
+        for a_file in the_files:
+            the_parent = a_file.getparent()
+            parent_id = the_parent.attrib["ID"]
+            the_type = the_parent.get("MIMETYPE", "image/jpg")
+            the_loc = a_file.attrib[XLINK_HREF]
+            the_info.append(METSFileInfo(file_id=parent_id,
+                                         file_type=the_type,
+                                         loc_url=the_loc))
+        return the_info
 
     def get_invalid_physical_structs(self):
         """

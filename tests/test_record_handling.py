@@ -231,6 +231,40 @@ def test_oai_load_opendata_request_kwargs(
     assert os.path.exists(str(store_dir))
 
 
+@unittest.mock.patch("digiflow.requests.get")
+def test_oai_load_opendata_file_identifier(
+        mock_request_1981185920_36020, tmp_path):
+    """Ensure OAI Loader switches behavior and renames 
+    downloaded resources according to FILE@ID rather
+    """
+
+    # arrange
+    mock_request_1981185920_36020.side_effect = fixture_request_results
+    ident = 'oai:opendata.uni-halle.de:1981185920/36020'
+    record = df_r.Record(ident)
+    the_id = record.local_identifier
+    local_dir: Path = tmp_path / "WORKDIR" / the_id
+    store_dir: Path = tmp_path / "STORE" / "dd" / the_id
+    local_dir.mkdir(parents=True)
+    store_dir.mkdir(parents=True)
+    key_images = 'MAX'
+    dst_path = local_dir / f"{the_id}.xml"
+
+    # act
+    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+                             group_images=key_images,
+                             post_oai=df_md.extract_mets)
+    loader.store = df_io.LocalStore(store_dir, local_dir)
+    number = loader.load(record.identifier, str(dst_path),
+                         use_file_id=True)
+
+    # assert
+    assert number == 12
+    assert dst_path.is_file()
+    assert (local_dir / "MAX" / "FILE_0001_MAX.jpg").is_file()
+    assert (local_dir / "MAX" / "FILE_0011_MAX.jpg").is_file()
+
+
 def fixture_request_vls_zd1_16359609(*args, **kwargs):
     """
     Provide local copies for corresponding download request

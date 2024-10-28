@@ -313,6 +313,7 @@ class BaseDerivansManager(ABC):
             raise RuntimeError(f"[DerivansManager] config missing: {path_configuration}!")
         self.path_mets_file = path_mets_file
         self.path_configuration = path_configuration
+        self.images = None
 
     @abstractmethod
     def init(self) -> None:
@@ -405,6 +406,8 @@ class DerivansManager(BaseDerivansManager):
         cmd = f'{path_exec}{self.xargs} -jar {self.path_binary} {self.path_mets_file}'
         if self.path_configuration:
             cmd += f' -c {self.path_configuration}'
+        if self.images:
+            cmd += f" -i {self.images}"
         # disable pylint due it is not able to recognize
         # output being created by decorator
         time_duration, label, result = self._execute_derivans(
@@ -508,6 +511,9 @@ class ContainerDerivansManager(BaseDerivansManager):
                 mounts.append(Mount(source=config_dir, target=DERIVANS_CNT_CONF_DIR, type='bind'))
                 command.append('-c')
                 command.append(target_config_file)
+                if self.images:
+                    command.append("-i")
+                    command.append(self.images)
         if self._path_logging:
             _log_dir = self._path_logging
             mounts.append(Mount(source=_log_dir, target=DERIVANS_CNT_LOGG_DIR, type='bind'))

@@ -615,7 +615,7 @@ def test_metsreader_zd2_issue_18680621():
         'urn': 'urn:nbn:de:gbv:3:1-171133730-102163406918680621-11',
         'kxp-ppn': '102163406918680621',
     }
-    assert mets_reader._system_identifiers() == {'kitodo3': '4583'}
+    assert mets_reader._ulb_digi_system_identifier() == {'kitodo3': '4583'}
     _pica, _type, _tree = mets_reader.get_type_and_hierarchy()
     assert _pica == 'AB'
     assert _type == 'issue'
@@ -831,3 +831,12 @@ def test_metadata_processor_contains_multiple_fgroup():
 
     _proc = df.MetsProcessor(TEST_RES / 'k2_mets_morbio_1748529021.xml')
     assert _proc.contains_group(['MAX'])
+
+
+def test_mets_reader_some_sbb_mets():
+    """Explore SBB METS/MODS"""
+
+    the_reader = df.MetsReader(TEST_RES / "mets" / "SBB_PPN1000056597.xml")
+    the_report = the_reader.report
+    assert the_report.type == "monograph"
+    assert the_report.languages == ["ger"]

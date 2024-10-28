@@ -26,6 +26,8 @@ OAI_KWARG_POSTFUNC = "post_oai"
 OAI_KWARG_REQUESTS = "request_kwargs"
 REQUESTS_DEFAULT_TIMEOUT = 20
 
+_MIME_TYPE_JPG = "image/jpg"
+
 
 class LoadException(Exception):
     """Load of OAI Data failed"""
@@ -94,7 +96,8 @@ class OAILoader:
         return top_dict
 
     def load(self, record_identifier, local_dst, mets_digital_object_identifier=None,
-             skip_resources=False, force_update=False, metadata_format='mets') -> int:
+             skip_resources=False, force_update=False, metadata_format='mets',
+             use_file_id=False) -> int:
         """
         load metadata from OAI with optional caching in-between
         request additional linked resources if required
@@ -124,17 +127,20 @@ class OAILoader:
 
         # get linked resources
         for k in self.groups:
-            self.groups[k] = mets_reader.get_filegrp_links(group=k)
+            self.groups[k] = mets_reader.get_filegrp_info(group=k)
 
         # if exist, download them too
         post_func = None
-        for k, linked_res_urls in self.groups.items():
+        for k, file_entries in self.groups.items():
             if k == self.key_ocr:
                 post_func = post_oai_store_ocr
-            for linked_res_url in linked_res_urls:
-                res_val_end = linked_res_url.split('/')[-1]
-                res_val_path = self._calculate_path(k, res_val_end)
-                if self._handle_load(linked_res_url, res_val_path, post_func):
+            for mets_file in file_entries:
+                res_url = mets_file.loc_url
+                url_final_token = res_url.split('/')[-1]
+                if use_file_id:
+                    url_final_token = mets_file.file_id
+                local_path = self._calculate_path(mets_file.file_type, k, url_final_token)
+                if self._handle_load(res_url, local_path, post_func):
                     loaded += 1
         return loaded
 
@@ -164,15 +170,19 @@ class OAILoader:
         else:
             return self.load_resource(res_url, res_path, post_func)
 
-    def _calculate_path(self, *args):
+    def _calculate_path(self, mime_type, *args):
         """
         calculate final path depending on some heuristics which
         fileGrp has been used - 'MAX' means images, not means 'xml'
         """
         res_path = os.path.join(str(self.dir_local), os.sep.join(list(args)))
+        if mime_type == _MIME_TYPE_JPG and not res_path.endswith('.jpg'):
+            res_path += ".jpg"
         if '/MAX/' in res_path and not res_path.endswith('.jpg'):
             res_path += '.jpg'
-        elif '/FULLTEXT/' in res_path and not res_path.endswith('.xml'):
+        if "xml" in mime_type and not res_path.endswith('.xml'):
+            res_path += ".xml"
+        if '/FULLTEXT/' in res_path and not res_path.endswith('.xml'):
             res_path += '.xml'
         return res_path
 
