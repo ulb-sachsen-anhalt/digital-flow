@@ -135,4 +135,20 @@ def test_mets_with_two_invalids(tmp_path):
     _msg = exc.value.args[0]
     assert len(_msg) == 1
     assert "recordIdentifier': This element is not expected" in str(_msg[0])
-    
+
+
+def test_most_rectent_mods38(tmp_path):
+    """Ensure we recognise MODS 3.8 from 2022
+    data includes brand new mods:displayDate"""
+
+    # arrange
+    path_src = os.path.join(TEST_RES, "1877049026_Aa_valid.xml")
+
+    tmp_dst = tmp_path / '1877049026.xml'
+    shutil.copyfile(path_src, tmp_dst)
+
+    # act
+    validation_result = dfv.validate_xml(tmp_dst)
+
+    # assert
+    assert validation_result is True
