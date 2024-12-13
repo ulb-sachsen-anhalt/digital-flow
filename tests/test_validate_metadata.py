@@ -142,7 +142,7 @@ def test_most_rectent_mods38(tmp_path):
     data includes brand new mods:displayDate"""
 
     # arrange
-    path_src = os.path.join(TEST_RES, "1877049026_Aa_valid.xml")
+    path_src = os.path.join(TEST_RES, "1877049026_Aa_mods38.xml")
 
     tmp_dst = tmp_path / '1877049026.xml'
     shutil.copyfile(path_src, tmp_dst)
