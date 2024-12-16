@@ -177,7 +177,7 @@ def test_utils_profile_class_context():
 
 
 @mock.patch('docker.models.images.ImageCollection.pull')
-def test_derivans_manager_with_container(mock_coll, tmp_path):
+def test_derivans_manager_with_container(mock_pull, tmp_path):
     """Check init phase of containerized
     Derivans execution context tries to
     pull required default container image"""
@@ -188,20 +188,44 @@ def test_derivans_manager_with_container(mock_coll, tmp_path):
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
         fh_mets.write(DUMMY_METS)
-    dmanager = ContainerDerivansManager(
-        mets_file,
-    )
+    dmanager = ContainerDerivansManager(mets_file)
 
     # act
     dmanager.init()
 
     # assert
-    assert mock_coll.call_count == 1
-    _call_args = mock_coll.call_args.args
-    assert len(_call_args) == 2
-    _image_label = DEFAULT_DERIVANS_IMAGE.split(':', maxsplit=1)[0]
-    assert _call_args[0] == f'{_image_label}'
-    assert _call_args[1] == 'latest'
+    assert mock_pull.call_count == 1
+    call_args = mock_pull.call_args.args
+    assert len(call_args) == 2
+    image_label = DEFAULT_DERIVANS_IMAGE.split(':', maxsplit=1)[0]
+    assert call_args[0] == f'{image_label}'
+    assert call_args[1] == 'latest'
+
+
+@mock.patch("docker.models.containers.ContainerCollection.run")
+@mock.patch('docker.models.images.ImageCollection.pull')
+def test_derivans_additional_args(mock_pull, mock_run, tmp_path):
+    """Check init phase of containerized
+    Derivans execution context tries to
+    pull required default container image"""
+
+    # arrange
+    test_project_root = tmp_path / 'migrationtest'
+    test_project_root.mkdir()
+    mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
+    with open(mets_file, 'w', encoding='utf-8') as fh_mets:
+        fh_mets.write(DUMMY_METS)
+    dmanager = ContainerDerivansManager(mets_file)
+    dmanager.additional_args = "-f /data/conf/my_footer.png"
+
+    # act
+    dmanager.init()
+    dmanager.start()
+
+    # assert
+    assert mock_pull.call_count == 1
+    assert mock_run.call_count == 1
+    assert dmanager.run_command.endswith(" -f /data/conf/my_footer.png")
 
 
 def test_derivans_manager_with_path_bin_dir(tmp_path):
@@ -404,7 +428,7 @@ Exception in thread "main" java.awt.AWTError: Can't connect to X11 window server
         path_mvn_project=path_mvn_project)
     mock_check.return_value = str(test_project_bin)
     dmanager.path_configuration = '/path/to/derivans.ini'
-    dmanager.xargs = '-Djava.awt.headless=true'
+    dmanager.additional_args = '-Djava.awt.headless=true'
     mock_call.side_effect = _forward_derivans_call(0.1)
 
     # act
@@ -413,4 +437,4 @@ Exception in thread "main" java.awt.AWTError: Can't connect to X11 window server
 
     # assert
     assert mock_call.call_count == 1
-    assert ' -Djava.awt.headless=true ' in result.command
+    assert ' -Djava.awt.headless=true' in result.command

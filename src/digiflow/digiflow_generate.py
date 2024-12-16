@@ -173,10 +173,6 @@ def generate_structure(
         gens=None,
         number=10
 ) -> List[str]:
-
-    if gens is None:
-        gens = [ResourceGenerator(DEFAULT_STRUCTURE_DIR)]
-
     """
     Generate test data layouts using a list of Generators for
     * Kitodo2 metadata        (<id>/images/<title>_media/*.tif)
@@ -187,11 +183,11 @@ def generate_structure(
     * SAF creation Workspace  (<several-subdirs>)
     """
 
+    if gens is None:
+        gens = [ResourceGenerator(DEFAULT_STRUCTURE_DIR)]
     generated = []
-
     if not os.path.isdir(str(start_dir)):
-        raise RuntimeError(
-            "Invalid start_dir '{}' provided!".format(start_dir))
+        raise RuntimeError(f"Invalid start_dir '{start_dir}' provided!")
 
     for gen in gens:
         gen.start_dir = start_dir
@@ -261,6 +257,7 @@ def run_command(cmd, timeout) -> subprocess.CompletedProcess:
 
 @dataclass(frozen=True)
 class DerivansResult:
+    """Encapsulate Derivans outcome"""
     command: str
     duration: float
     result: str | ContainerProcResult | None
@@ -280,7 +277,7 @@ class BaseDerivansManager(ABC):
 
     @staticmethod
     def create(
-            path_mets_file: str,
+            path_input: str,
             container_image_name: str = None,
             path_binary: str = None,
             path_mvn_project: str = None,
@@ -292,13 +289,13 @@ class BaseDerivansManager(ABC):
 
         if container_image_name is not None:
             return ContainerDerivansManager(
-                path_mets_file=path_mets_file,
+                path_mets_file=path_input,
                 container_image=container_image_name,
                 path_configuration=path_configuration,
                 path_logging=path_logging,
             )
         return DerivansManager(
-            path_mets_file=path_mets_file,
+            path_mets_file=path_input,
             path_binary=path_binary,
             path_mvn_project=path_mvn_project,
             path_configuration=path_configuration,
@@ -314,6 +311,7 @@ class BaseDerivansManager(ABC):
         self.path_mets_file = path_mets_file
         self.path_configuration = path_configuration
         self.images = None
+        self.additional_args = ""
 
     @abstractmethod
     def init(self) -> None:
@@ -370,7 +368,6 @@ class DerivansManager(BaseDerivansManager):
         self._timeout = DEFAULT_DERIVANS_TIMEOUT
         self._label = DERIVANS_LABEL
         self.path_exec = None
-        self.xargs = ''
 
     def init(self):
         _path_derivans = self.path_binary
@@ -401,9 +398,7 @@ class DerivansManager(BaseDerivansManager):
         path_exec = self.path_exec
         if platform.system() not in ['Linux']:
             path_exec = f'"{path_exec}"'
-        if self.xargs and not self.xargs.startswith(' '):
-            self.xargs = ' ' + self.xargs
-        cmd = f'{path_exec}{self.xargs} -jar {self.path_binary} {self.path_mets_file}'
+        cmd = f'{path_exec} -jar {self.path_binary} {self.path_mets_file} {self.additional_args}'
         if self.path_configuration:
             cmd += f' -c {self.path_configuration}'
         if self.images:
@@ -483,6 +478,7 @@ class ContainerDerivansManager(BaseDerivansManager):
         self._container_image: str = container_image
         self._client: DockerClient = from_env()
         self._path_logging = path_logging
+        self.run_command = ""
 
     def init(self) -> None:
         repo, tag = self._container_image.split(':')
@@ -536,10 +532,13 @@ class ContainerDerivansManager(BaseDerivansManager):
                 f"--mount type={mount['Type']},source={mount['Source']},target={mount['Target']}"
             )
         full_command_equivalent.append(self._container_image)
+        if self.additional_args and len(self.additional_args.strip()) > 0:
+            command.append(self.additional_args)
         full_command_equivalent.append(" ".join(command))
         dur: float = time.perf_counter() - start_time
+        self.run_command = " ".join(full_command_equivalent)
         return DerivansResult(
-            command=" ".join(full_command_equivalent),
+            command=self.run_command,
             result=ContainerProcResult(exit_code=exit_code, logs=logs),
             duration=dur,
         )
