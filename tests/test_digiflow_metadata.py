@@ -532,6 +532,23 @@ def test_metsreader_opendata_inspect_migrated_record_origins():
                               ("digitization", "2013", "Halle (Saale)")]
 
 
+def test_metsreader_opendata_inspect_kitodo3_mono_origins():
+    """How to handle latest Kitodo 3 DMS export"""
+
+    # arrange
+    target_file = os.path.join(TEST_RES, "1906264740.kxp")
+    mets_reader = df.MetsReader(target_file)
+
+    # act
+    report = mets_reader.analyze()
+
+    # 3 origins, which is of course wrong
+    assert len(report.origins) == 2
+    assert report.origins == [("publication", "1560", "Wien"),
+                              ("digitization", "2025", "Halle (Saale)")]
+
+
+
 def test_metsreader_zd1_issue_16767392():
     """Check METS-Reader-output"""
 

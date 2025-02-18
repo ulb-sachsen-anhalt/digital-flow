@@ -1,0 +1,1133 @@
+<mets:mets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:kitodo="http://meta.kitodo.org/v1/"
+           xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:dv="http://dfg-viewer.de/"
+           xmlns:mods="http://www.loc.gov/mods/v3">
+   <mets:metsHdr CREATEDATE="2025-01-14T13:06:15.007+01:00"
+                 LASTMODDATE="2025-02-18T15:29:23.154+01:00">
+      <mets:metsDocumentID>131237</mets:metsDocumentID>
+   </mets:metsHdr>
+   <mets:dmdSec ID="uuid-066e0b40-6522-3df0-b9f7-e294f6d83af7">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+               <mods:typeOfResource>Text</mods:typeOfResource>
+               <mods:originInfo eventType="publication">
+                  <mods:dateIssued keyDate="yes" encoding="iso8601">1560</mods:dateIssued>
+                  <mods:place>
+                     <mods:placeTerm type="text">Wien</mods:placeTerm>
+                  </mods:place>
+                  <mods:place>
+                     <mods:placeTerm type="text" valueURI="http://d-nb.info/gnd/4066009-6">Wien</mods:placeTerm>
+                  </mods:place>
+                  <mods:publisher>Singriener, Johann d.J.</mods:publisher>
+               </mods:originInfo>
+               <mods:originInfo eventType="digitization">
+                  <mods:dateCaptured encoding="iso8601">2025</mods:dateCaptured>
+                  <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+                  <mods:place>
+                     <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+                  </mods:place>
+                  <mods:edition>Electronic ed.</mods:edition>
+               </mods:originInfo>
+               <mods:titleInfo>
+                  <mods:title>... mischer\ Auch zů Hun=||gern/ vnd Behaim ꝛc. Khünig=||klicher Mayestat/ Ertzherzogen zů Os=||terreich #[et]c. Newe Müntzordnung.|| Sampt Valuierung der || Gulden vnd Silberin Mün=||tzen/ Vnd darauff eruolgtem Edict/|| zů Wienn alles im Jar || M. D. LII. auf=||gericht vnd auß=||gangen.||</mods:title>
+               </mods:titleInfo>
+               <mods:titleInfo type="uniform">
+                  <mods:title>Neue Münzordnung</mods:title>
+               </mods:titleInfo>
+               <mods:name type="personal" valueURI="http://d-nb.info/gnd/119832704">
+                  <mods:namePart type="family">Singriener</mods:namePart>
+                  <mods:namePart type="given">Johann</mods:namePart>
+                  <mods:namePart type="date">????-1562</mods:namePart>
+                  <mods:displayForm>Singriener, Johann</mods:displayForm>
+                  <mods:role>
+                     <mods:roleTerm authority="marcrelator" type="code">prt</mods:roleTerm>
+                  </mods:role>
+               </mods:name>
+               <mods:name type="personal" valueURI="http://d-nb.info/gnd/118532502">
+                  <mods:namePart type="given">Ferdinand</mods:namePart>
+                  <mods:namePart type="termsOfAddress">Heiliges Römisches Reich, Kaiser, I.Heiliges Römisches Reich, Kaiser</mods:namePart>
+                  <mods:namePart type="date">1503-1564</mods:namePart>
+                  <mods:displayForm>Ferdinand, Heiliges Römisches Reich, Kaiser</mods:displayForm>
+                  <mods:role>
+                     <mods:roleTerm authority="marcrelator" type="code">oth</mods:roleTerm>
+                  </mods:role>
+               </mods:name>
+               <mods:name type="corporate" valueURI="http://d-nb.info/">
+                  <mods:role>
+                     <mods:roleTerm authority="marcrelator" type="code">oth</mods:roleTerm>
+                  </mods:role>
+               </mods:name>
+               <mods:identifier type="urn">urn:nbn:de:gbv:3:1-ha32-171133730-1906264740-17</mods:identifier>
+               <mods:identifier type="vd16">ZV 33435</mods:identifier>
+               <mods:identifier type="ID">vd16idnVD0376883</mods:identifier>
+               <mods:identifier type="eki">BVB:VD0376883</mods:identifier>
+               <mods:recordInfo>
+                  <mods:recordIdentifier source="gvk-ppn">1906264740</mods:recordIdentifier>
+                  <mods:recordCreationDate encoding="marc">17-10-24</mods:recordCreationDate>
+                  <mods:recordChangeDate encoding="marc">13-01-25</mods:recordChangeDate>
+               </mods:recordInfo>
+               <mods:note type="source note">Variante zu VD16 O 500. Erkennungslesart: am Textende signiert von "Ludwig Perr."</mods:note>
+               <mods:note type="source note">Der Titelholzschnitt ist ein Wappen.</mods:note>
+               <mods:note type="source note">Aufnahme nach unvollständigem Exemplar der Marienbibliothek Halle: Titelblatt beschädigt, Textanfang nicht mehr lesbar.</mods:note>
+               <mods:note type="source note">Bemerkung zum Impressum: Am Textende datiert und signiert: "... Geben inn Vnnsers Khayser Ferdinandi Statt Wien[n]/ am Ersten tag des Monats Augusti/ Nach Christi Vnser lieben herrn gepurt/ im Fünffzehenhundert vnd Sechtzigsten ...", handschriftlich: "Ferdinand", "V. Seld", gedruckt: "Ludwig Peer."</mods:note>
+               <mods:note type="source note">Vorlageform der Veröffentlichungsangabe: Gedruckt zů Wienn in Osterreich/|| durch Hanns Syngriener.||[um 1560]</mods:note>
+               <mods:language>
+                  <mods:languageTerm type="code" authority="iso639-2b">ger</mods:languageTerm>
+               </mods:language>
+               <mods:physicalDescription>
+                  <mods:extent>[1] Bl., XXXIII S.; 4°</mods:extent>
+                  <mods:extent>Titelholzschn., Ill. (Holzschn.)</mods:extent>
+               </mods:physicalDescription>
+               <mods:genre authority="aad">Geldwesen</mods:genre>
+               <mods:genre authority="aad">Verordnung</mods:genre>
+               <mods:subject>
+                  <mods:topic valueURI="http://d-nb.info/gnd/5228564-9">Marienbibliothek Halle</mods:topic>
+               </mods:subject>
+               <mods:extension>
+                  <ulb:externalType recordSyntax="pica">Aa</ulb:externalType>
+                  <ulb:contentType>
+                     <ulb:text>Text</ulb:text>
+                     <ulb:code>txt</ulb:code>
+                  </ulb:contentType>
+                  <ulb:footer>dfg_logo</ulb:footer>
+                  <ulb:collection>1516514412012/2</ulb:collection>
+                  <ulb:placepublisher>
+                     <ulb:publisher>Singriener, Johann d.J.</ulb:publisher>
+                     <ulb:place>Wien</ulb:place>
+                  </ulb:placepublisher>
+               </mods:extension>
+               <mods:location>
+                  <mods:physicalLocation>Marienbibliothek Halle</mods:physicalLocation>
+                  <mods:shelfLocator>H 364 (1)</mods:shelfLocator>
+               </mods:location>
+               <mods:classification authority="ddc">090</mods:classification>
+               <mods:accessCondition type="use and reproduction"
+                                     xlink:href="https://creativecommons.org/publicdomain/mark/1.0/">Public Domain Mark 1.0</mods:accessCondition>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="uuid-33a7cbe3-1748-3daa-95a1-432caeb3b583">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+               <mods:titleInfo>
+                  <mods:title>newe Müntz Ordnung.</mods:title>
+               </mods:titleInfo>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:dmdSec ID="uuid-cabf2756-b009-3e12-8ffb-2a3383127206">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+               <mods:titleInfo>
+                  <mods:title>Unnd seindt die Stuck der newen Silberin Müntz/ hieoben in diser Unserer Ordnung bestimbt/ mit iren Circumferentzen/ Gepreg/ Ziffer/ unnd umbschrifften/ hieunden nechst nacheinander verzeichnet.</mods:title>
+               </mods:titleInfo>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:amdSec ID="admd1">
+      <mets:rightsMD ID="uuid-be7f5aa4-e9b5-378c-9d03-a5ce5f540873">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+            <mets:xmlData>
+               <dv:rights xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+                  <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+                  <dv:ownerLogo>Share_it</dv:ownerLogo>
+                  <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+                  <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+               </dv:rights>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:rightsMD>
+      <mets:digiprovMD ID="uuid-05570a5d-ea0e-345d-9255-a5cea29024ed">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+            <mets:xmlData>
+               <dv:links xmlns:zvdd="https:/zvdd" xmlns:ulb="https://bibliothek.uni-halle.de">
+                  <dv:presentation>Share_it</dv:presentation>
+                  <dv:reference>http://opac.bibliothek.uni-halle.de/DB=1/CLK?IKT=12&amp;TRM=1906264740</dv:reference>
+               </dv:links>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:digiprovMD>
+   </mets:amdSec>
+   <mets:fileSec>
+      <mets:fileGrp USE="DEFAULT">
+         <mets:file ID="uuid-ee5a85f2-c0b1-4716-afa8-3b8cb60ef851" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000001.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-7f60c824-1c14-4de9-94e7-49596c8140e7" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000002.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-1c7f74a5-ba69-4a3d-bea2-6b82316f4671" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000003.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-e73826c2-a696-407d-b865-2edeab730309" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000004.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-4398596e-24fa-4cc8-9063-757e8b1c61b1" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000005.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-b9d71302-59dc-4999-a975-3273d1ca8100" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000006.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-78e5b9d4-5471-4f6c-84bf-e584ee9393ce" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000007.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-a9833c8e-da86-47d5-925d-aa9c6ba73769" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000008.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-c54edca8-548c-4327-8cfd-58ab0c5db52e" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000009.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-a28e3f0d-006f-4382-b481-3c3b6fefb1ab" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000010.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-49841322-429e-44f4-b740-81c2556a0dc5" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000011.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-cc4c1d6b-c867-449b-92cd-f72502e6b6d9" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000012.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-0c0398da-79ed-4d5c-ab68-95aa9eee9cfc" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000013.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-f3763d7a-fc81-4e1b-bbdf-6f59b29676f2" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000014.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-0bca0f1e-034f-43ea-a807-134e0e3c721e" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000015.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-1f3c32cd-de13-4201-b1ac-da1af1c362dc" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000016.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-86f32ab0-e244-4cdd-b127-5f79a852186e" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000017.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-46374df5-cf10-4741-8823-9c3354bf6c83" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000018.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-34a93ce4-d72b-4050-a447-61506bc423f7" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000019.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-c891fb62-d70d-40b4-9c81-eb2916dd24d7" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000020.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-02d667f0-ac2e-480e-bc6c-192304379460" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000021.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-5f9a916d-1fb1-4d23-bb91-e8c92bbdab6f" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000022.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-189e972f-fffc-44fb-8867-39444bd967f9" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000023.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-df5a0a9c-f129-4203-89c6-9c3f775b38eb" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000024.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-fa06a215-5280-4c86-8aff-b36a2d9c8cf4" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000025.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-82420e39-8f4c-4868-a850-5dafa4d824b1" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000026.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-e3b2fdff-e72f-4850-bf12-bcb19c04de5e" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000027.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-9fead4f6-9ebf-4a92-ba24-3b0345b55954" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000028.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-9351edea-e79d-4ffd-b561-c377d7473c00" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000029.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-4977454b-77ab-4b6e-8f18-fa02021efd8d" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000032.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-950971e0-3a33-4f0d-b450-9aee3fd997b8" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000033.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-613787d9-e587-4a17-a735-613f01cf146c" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000034.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-4baa7fc7-b659-41f1-9681-7aa906fe6ade" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000035.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-bcdc1822-1623-4ff8-83af-a6de04ae5c3a" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000036.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-486c3e48-16e8-4794-ae32-ac17e0ec158c" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000037.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-54a0614f-efa8-4f2c-af33-03c0ed67d381" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000038.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-6a36f7bd-157c-4221-b3f8-5460dc79d861" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000039.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-c3927297-1ab5-40f9-aae9-ead85c25645d" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000040.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-30571e73-b8d9-41b2-9745-cdaa0b5f0ebb" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000041.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-4a6dd0fe-4c64-411a-bf16-8eb56bdf9652" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000042.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-798ddef4-182c-428f-962b-1034c857996a" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000043.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-c85ace25-c208-46c9-829c-7e2ca069d1b9" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000044.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-25f655a3-40bd-4ec0-9144-9b6356058a80" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000045.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-20cb42e4-1352-4ca7-ade6-81d6fc1e8b77" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000046.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-25254627-cb1d-4bfd-b294-63fa0c69580a" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000047.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-67f17f16-7859-40ef-9444-a249208c9807" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000048.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-b7f2ad6c-777f-48ce-a195-0133ed3187aa" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000049.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-60179c9f-58fd-4a6e-b9f8-ba1686d7a667" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000050.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-44a05cf3-5ff5-45c9-9f56-f4c0a85b42b1" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000051.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-14715248-0898-4e05-a67a-b702d7775c81" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000052.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-2def7310-ffdc-478a-ada1-4f6396dd2511" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000053.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-b4ffb1df-4274-48da-bfcf-17ba82b2e59e" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000054.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-9d8f8fe7-4e1a-42e8-8f7e-1e517abef060" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000055.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-b230f1d5-0ab9-453d-bd0c-90a19bb1626d" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000056.jpg"/>
+         </mets:file>
+         <mets:file ID="uuid-df1253de-a118-4419-a15e-42b764fd8612" MIMETYPE="image/jpeg">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000057.jpg"/>
+         </mets:file>
+      </mets:fileGrp>
+      <mets:fileGrp USE="MAX">
+         <mets:file ID="uuid-c0c4990a-886d-4764-8a32-31a02ebc46b2" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000001.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-c9ee8181-6e03-43df-9a3f-7443fff68589" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000002.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-700327a8-f6be-4905-ba23-5a2252714eb4" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000003.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-8d9356a0-80ad-4ac1-aded-7a21d38cb2a2" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000004.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-a2c350d6-82ee-49c6-8dc1-115c135b81bc" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000005.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-9caad88c-d3c4-481c-85d1-389037a9a3b1" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000006.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-073792b3-f6d4-4db3-877f-41900ff695a1" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000007.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-1b95df63-42d5-446a-b6f7-0761f21dc70c" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000008.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-7f485d34-3e00-45a4-ba7c-81ff5688faef" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000009.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-2f877732-99cd-46ac-88e8-4e49097797c5" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000010.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-b6b3945d-4a2b-4abb-b2fb-66e4fa1b34a3" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000011.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-dd69d261-5351-4fae-9304-511da878acb7" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000012.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-c356cb0c-0d8e-43c7-b0e5-ed3a4111c651" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000013.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-389a91c7-2e32-4e42-965d-89347e3e03fc" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000014.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-b8c20fad-0d6a-45ed-94e4-3a96eef42f54" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000015.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-72fd2e34-5ba6-4900-9c33-49897c834bf6" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000016.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-d78c6f4c-1426-4566-bef7-d00e6b3e2622" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000017.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-6c9a49bc-9136-4019-9215-3efd27abb847" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000018.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-97ebe7f1-d6db-43a7-b60e-93433236980c" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000019.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-b29f2206-39bd-4440-8001-56614192112a" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000020.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-46f2c5ad-dd99-4dc6-a2c0-5327a721c872" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000021.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-5bd33e2a-2130-4029-a0df-43213c4d5ab2" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000022.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-a05996b3-5be9-44ad-977b-6bc5eae15c86" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000023.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-557ee30d-bf2d-4b10-be1b-7fab10b4096a" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000024.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-b59f08f4-0eca-412c-b063-d1088d5eaf97" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000025.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-ce70ebad-c71b-4710-ac37-85cb62117bb0" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000026.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-33f7579c-2f98-44e5-a9be-056a6f307f8c" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000027.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-f85044bf-86e2-409b-b01b-4678023d981d" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000028.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-c5fac094-a800-4e55-80f9-1aa5c128472b" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000029.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-7e45c3cc-024d-4737-9be3-4a9e98bb0ec0" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000032.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-7eaf42c8-41af-4c09-8cd8-0506520176a7" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000033.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-d5172bc2-b6a1-46ee-8b99-6136fb694d3e" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000034.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-0cc8fca1-be1a-4185-a64d-2c41537e3120" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000035.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-c917ea33-c828-4443-91b8-3329602895ce" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000036.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-24bf7129-9f88-4bee-8521-eaa868039565" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000037.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-5c5ab6af-8bb1-4abc-8faa-133bfa9a99fe" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000038.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-58ef238a-e2b3-4f87-b8b3-32ed8dd0e352" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000039.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-2f772267-cbab-4c51-9254-ec7093977a2d" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000040.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-c242334f-922e-408d-b351-53c4f64bc61c" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000041.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-4b455fdd-bad3-4c5e-87e9-0b371619b95c" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000042.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-bac43a2e-601a-486a-81ce-e5b8c718a901" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000043.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-7e70aaae-ef50-4dd4-9bfd-311a1e540c52" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000044.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-acf33e61-6216-4405-9ece-975d603e8f99" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000045.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-9b9083c0-2197-4fec-a0da-cd877f288697" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000046.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-73cdcdf3-4a1e-4eee-80ba-313d0785146a" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000047.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-6835d779-fd9a-43f1-bee3-50828db91b57" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000048.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-283143d9-41c3-4619-b510-2a24255c6324" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000049.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-7a0c31a8-8706-48e6-a969-dbb78d279308" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000050.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-f4ab09d1-0bb7-4669-9889-36bad7e819cf" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000051.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-df9e706a-da57-492b-b3ee-527d1ad0e070" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000052.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-49480903-6bb6-49e3-8fe8-82d28d6a433b" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000053.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-5c105155-8736-41fa-9246-d2ecad772d97" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000054.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-13d44c03-b1cc-4184-9c19-eb474c21d517" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000055.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-536b6547-d613-4237-8b2e-3711b8e9235c" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000056.tif"/>
+         </mets:file>
+         <mets:file ID="uuid-cd66202d-74e6-48fc-8989-89305860615b" MIMETYPE="image/tiff">
+            <mets:FLocat LOCTYPE="URL" xlink:href="00000057.tif"/>
+         </mets:file>
+      </mets:fileGrp>
+   </mets:fileSec>
+   <mets:structMap TYPE="PHYSICAL">
+      <mets:div TYPE="physSequence" ID="uuid-7b9607d3-3f9e-4ee6-86c1-8030e9243775">
+         <mets:div ID="uuid-51b470b9-2a73-4164-8624-03b0e5542bd7"
+                   TYPE="page"
+                   ORDER="1"
+                   ORDERLABEL="[Seite 1]">
+            <mets:fptr FILEID="uuid-c0c4990a-886d-4764-8a32-31a02ebc46b2"/>
+            <mets:fptr FILEID="uuid-ee5a85f2-c0b1-4716-afa8-3b8cb60ef851"/>
+         </mets:div>
+         <mets:div ID="uuid-834b75b4-d9ec-4710-bd9e-a3fd58484a36"
+                   TYPE="page"
+                   ORDER="2"
+                   ORDERLABEL="[Seite 2]">
+            <mets:fptr FILEID="uuid-c9ee8181-6e03-43df-9a3f-7443fff68589"/>
+            <mets:fptr FILEID="uuid-7f60c824-1c14-4de9-94e7-49596c8140e7"/>
+         </mets:div>
+         <mets:div ID="uuid-0af57802-115b-4923-93c4-a4e3752e39e3"
+                   TYPE="page"
+                   ORDER="3"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-700327a8-f6be-4905-ba23-5a2252714eb4"/>
+            <mets:fptr FILEID="uuid-1c7f74a5-ba69-4a3d-bea2-6b82316f4671"/>
+         </mets:div>
+         <mets:div ID="uuid-17c69117-f208-4492-978b-370f04ea824d"
+                   TYPE="page"
+                   ORDER="4"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-8d9356a0-80ad-4ac1-aded-7a21d38cb2a2"/>
+            <mets:fptr FILEID="uuid-e73826c2-a696-407d-b865-2edeab730309"/>
+         </mets:div>
+         <mets:div ID="uuid-51a496b8-87b3-4f75-ad9c-a3f6e443ca23"
+                   TYPE="page"
+                   ORDER="5"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-a2c350d6-82ee-49c6-8dc1-115c135b81bc"/>
+            <mets:fptr FILEID="uuid-4398596e-24fa-4cc8-9063-757e8b1c61b1"/>
+         </mets:div>
+         <mets:div ID="uuid-f5510408-c686-4dcf-b748-293af31ee479"
+                   TYPE="page"
+                   ORDER="6"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-9caad88c-d3c4-481c-85d1-389037a9a3b1"/>
+            <mets:fptr FILEID="uuid-b9d71302-59dc-4999-a975-3273d1ca8100"/>
+         </mets:div>
+         <mets:div ID="uuid-6b17607f-1ce7-4efa-a18a-307450e61537"
+                   TYPE="page"
+                   ORDER="7"
+                   ORDERLABEL="[Seite 7]">
+            <mets:fptr FILEID="uuid-073792b3-f6d4-4db3-877f-41900ff695a1"/>
+            <mets:fptr FILEID="uuid-78e5b9d4-5471-4f6c-84bf-e584ee9393ce"/>
+         </mets:div>
+         <mets:div ID="uuid-7f2a951b-e0f1-42b4-a03a-f4c643dae3e0"
+                   TYPE="page"
+                   ORDER="8"
+                   ORDERLABEL="[Seite 8]">
+            <mets:fptr FILEID="uuid-1b95df63-42d5-446a-b6f7-0761f21dc70c"/>
+            <mets:fptr FILEID="uuid-a9833c8e-da86-47d5-925d-aa9c6ba73769"/>
+         </mets:div>
+         <mets:div ID="uuid-c065a4c7-5c5c-4a50-bde2-decc8115f8f2"
+                   TYPE="page"
+                   ORDER="9"
+                   ORDERLABEL="Blatt XVIIr">
+            <mets:fptr FILEID="uuid-7f485d34-3e00-45a4-ba7c-81ff5688faef"/>
+            <mets:fptr FILEID="uuid-c54edca8-548c-4327-8cfd-58ab0c5db52e"/>
+         </mets:div>
+         <mets:div ID="uuid-2f072d9b-2220-4585-8586-91e311964bcc"
+                   TYPE="page"
+                   ORDER="10"
+                   ORDERLABEL="Blatt XVIIv">
+            <mets:fptr FILEID="uuid-2f877732-99cd-46ac-88e8-4e49097797c5"/>
+            <mets:fptr FILEID="uuid-a28e3f0d-006f-4382-b481-3c3b6fefb1ab"/>
+         </mets:div>
+         <mets:div ID="uuid-e00b63e3-cc94-4ef7-85a3-27170c7fc887"
+                   TYPE="page"
+                   ORDER="11"
+                   ORDERLABEL="Blatt XVIIIr">
+            <mets:fptr FILEID="uuid-b6b3945d-4a2b-4abb-b2fb-66e4fa1b34a3"/>
+            <mets:fptr FILEID="uuid-49841322-429e-44f4-b740-81c2556a0dc5"/>
+         </mets:div>
+         <mets:div ID="uuid-e81af8c4-0e88-42d9-9da3-cda662315bb4"
+                   TYPE="page"
+                   ORDER="12"
+                   ORDERLABEL="Blatt XVIIIv">
+            <mets:fptr FILEID="uuid-dd69d261-5351-4fae-9304-511da878acb7"/>
+            <mets:fptr FILEID="uuid-cc4c1d6b-c867-449b-92cd-f72502e6b6d9"/>
+         </mets:div>
+         <mets:div ID="uuid-895e6c21-7c8b-47fc-9498-9d18d5fc66af"
+                   TYPE="page"
+                   ORDER="13"
+                   ORDERLABEL="Blatt XIXr">
+            <mets:fptr FILEID="uuid-c356cb0c-0d8e-43c7-b0e5-ed3a4111c651"/>
+            <mets:fptr FILEID="uuid-0c0398da-79ed-4d5c-ab68-95aa9eee9cfc"/>
+         </mets:div>
+         <mets:div ID="uuid-c43309a0-0200-424e-9b8f-cec59eb00d30"
+                   TYPE="page"
+                   ORDER="14"
+                   ORDERLABEL="Blatt XIXv">
+            <mets:fptr FILEID="uuid-389a91c7-2e32-4e42-965d-89347e3e03fc"/>
+            <mets:fptr FILEID="uuid-f3763d7a-fc81-4e1b-bbdf-6f59b29676f2"/>
+         </mets:div>
+         <mets:div ID="uuid-babe902b-654a-4c7b-b393-00ee8d2021c3"
+                   TYPE="page"
+                   ORDER="15"
+                   ORDERLABEL="Blatt XXr">
+            <mets:fptr FILEID="uuid-b8c20fad-0d6a-45ed-94e4-3a96eef42f54"/>
+            <mets:fptr FILEID="uuid-0bca0f1e-034f-43ea-a807-134e0e3c721e"/>
+         </mets:div>
+         <mets:div ID="uuid-2a4f56a3-f19e-4ee8-a606-d4679b30812a"
+                   TYPE="page"
+                   ORDER="16"
+                   ORDERLABEL="Blatt XXv">
+            <mets:fptr FILEID="uuid-72fd2e34-5ba6-4900-9c33-49897c834bf6"/>
+            <mets:fptr FILEID="uuid-1f3c32cd-de13-4201-b1ac-da1af1c362dc"/>
+         </mets:div>
+         <mets:div ID="uuid-ecc42a76-bfd8-4122-b7d7-fed5a74de31a"
+                   TYPE="page"
+                   ORDER="17"
+                   ORDERLABEL="Blatt XXIr">
+            <mets:fptr FILEID="uuid-d78c6f4c-1426-4566-bef7-d00e6b3e2622"/>
+            <mets:fptr FILEID="uuid-86f32ab0-e244-4cdd-b127-5f79a852186e"/>
+         </mets:div>
+         <mets:div ID="uuid-634d361a-e365-444d-b5fa-1491a82ce6be"
+                   TYPE="page"
+                   ORDER="18"
+                   ORDERLABEL="Blatt XXIv">
+            <mets:fptr FILEID="uuid-6c9a49bc-9136-4019-9215-3efd27abb847"/>
+            <mets:fptr FILEID="uuid-46374df5-cf10-4741-8823-9c3354bf6c83"/>
+         </mets:div>
+         <mets:div ID="uuid-01bc3a4e-9b90-47c2-93b2-83f959260d81"
+                   TYPE="page"
+                   ORDER="19"
+                   ORDERLABEL="Blatt XXIIr">
+            <mets:fptr FILEID="uuid-97ebe7f1-d6db-43a7-b60e-93433236980c"/>
+            <mets:fptr FILEID="uuid-34a93ce4-d72b-4050-a447-61506bc423f7"/>
+         </mets:div>
+         <mets:div ID="uuid-075e62d6-3044-4a7d-97f4-6d1eea881d8d"
+                   TYPE="page"
+                   ORDER="20"
+                   ORDERLABEL="Blatt XXIIv">
+            <mets:fptr FILEID="uuid-b29f2206-39bd-4440-8001-56614192112a"/>
+            <mets:fptr FILEID="uuid-c891fb62-d70d-40b4-9c81-eb2916dd24d7"/>
+         </mets:div>
+         <mets:div ID="uuid-3c9e99a2-838e-49e3-9dec-efbb917bd59b"
+                   TYPE="page"
+                   ORDER="21"
+                   ORDERLABEL="Blatt XXIIIr">
+            <mets:fptr FILEID="uuid-46f2c5ad-dd99-4dc6-a2c0-5327a721c872"/>
+            <mets:fptr FILEID="uuid-02d667f0-ac2e-480e-bc6c-192304379460"/>
+         </mets:div>
+         <mets:div ID="uuid-2ee7044d-c5aa-481f-b285-ff2294f10f63"
+                   TYPE="page"
+                   ORDER="22"
+                   ORDERLABEL="Blatt XXIIIv">
+            <mets:fptr FILEID="uuid-5bd33e2a-2130-4029-a0df-43213c4d5ab2"/>
+            <mets:fptr FILEID="uuid-5f9a916d-1fb1-4d23-bb91-e8c92bbdab6f"/>
+         </mets:div>
+         <mets:div ID="uuid-52a262ab-7531-451a-ad1e-e3324fa98aa7"
+                   TYPE="page"
+                   ORDER="23"
+                   ORDERLABEL="Blatt XXIIIIr">
+            <mets:fptr FILEID="uuid-a05996b3-5be9-44ad-977b-6bc5eae15c86"/>
+            <mets:fptr FILEID="uuid-189e972f-fffc-44fb-8867-39444bd967f9"/>
+         </mets:div>
+         <mets:div ID="uuid-578f9db4-772d-4d00-b4cd-8d13212b931d"
+                   TYPE="page"
+                   ORDER="24"
+                   ORDERLABEL="Blatt XXIIIIv">
+            <mets:fptr FILEID="uuid-557ee30d-bf2d-4b10-be1b-7fab10b4096a"/>
+            <mets:fptr FILEID="uuid-df5a0a9c-f129-4203-89c6-9c3f775b38eb"/>
+         </mets:div>
+         <mets:div ID="uuid-0733b64a-3b60-4dbe-8bd4-c68580ff28e7"
+                   TYPE="page"
+                   ORDER="25"
+                   ORDERLABEL="Blatt XXVr">
+            <mets:fptr FILEID="uuid-b59f08f4-0eca-412c-b063-d1088d5eaf97"/>
+            <mets:fptr FILEID="uuid-fa06a215-5280-4c86-8aff-b36a2d9c8cf4"/>
+         </mets:div>
+         <mets:div ID="uuid-d5b5668d-25aa-473f-8397-cfc9482bd887"
+                   TYPE="page"
+                   ORDER="26"
+                   ORDERLABEL="Blatt XXVv">
+            <mets:fptr FILEID="uuid-ce70ebad-c71b-4710-ac37-85cb62117bb0"/>
+            <mets:fptr FILEID="uuid-82420e39-8f4c-4868-a850-5dafa4d824b1"/>
+         </mets:div>
+         <mets:div ID="uuid-00230cc5-1512-46c0-8044-cc49d5dbf41e"
+                   TYPE="page"
+                   ORDER="27"
+                   ORDERLABEL="Blatt XXVIr">
+            <mets:fptr FILEID="uuid-33f7579c-2f98-44e5-a9be-056a6f307f8c"/>
+            <mets:fptr FILEID="uuid-e3b2fdff-e72f-4850-bf12-bcb19c04de5e"/>
+         </mets:div>
+         <mets:div ID="uuid-eee0be8a-9f99-4d53-866c-d5148fda76ca"
+                   TYPE="page"
+                   ORDER="28"
+                   ORDERLABEL="Blatt XXVIv">
+            <mets:fptr FILEID="uuid-f85044bf-86e2-409b-b01b-4678023d981d"/>
+            <mets:fptr FILEID="uuid-9fead4f6-9ebf-4a92-ba24-3b0345b55954"/>
+         </mets:div>
+         <mets:div ID="uuid-dc6fd3d3-325a-489d-8d46-9e590a914676"
+                   TYPE="page"
+                   ORDER="29"
+                   ORDERLABEL="Blatt XXVIIr">
+            <mets:fptr FILEID="uuid-c5fac094-a800-4e55-80f9-1aa5c128472b"/>
+            <mets:fptr FILEID="uuid-9351edea-e79d-4ffd-b561-c377d7473c00"/>
+         </mets:div>
+         <mets:div ID="uuid-873632b0-0ef6-4169-90b2-99ab5e364e63"
+                   TYPE="page"
+                   ORDER="30"
+                   ORDERLABEL="Blatt XXVIIv">
+            <mets:fptr FILEID="uuid-7e45c3cc-024d-4737-9be3-4a9e98bb0ec0"/>
+            <mets:fptr FILEID="uuid-4977454b-77ab-4b6e-8f18-fa02021efd8d"/>
+         </mets:div>
+         <mets:div ID="uuid-c8ddf513-83fc-4432-b508-e31ec5c9e35a"
+                   TYPE="page"
+                   ORDER="31"
+                   ORDERLABEL="Blatt XXVIIIr">
+            <mets:fptr FILEID="uuid-7eaf42c8-41af-4c09-8cd8-0506520176a7"/>
+            <mets:fptr FILEID="uuid-950971e0-3a33-4f0d-b450-9aee3fd997b8"/>
+         </mets:div>
+         <mets:div ID="uuid-5e263ae9-9857-4e62-8849-34c3ef2d9b0b"
+                   TYPE="page"
+                   ORDER="32"
+                   ORDERLABEL="Blatt XXVIIIv">
+            <mets:fptr FILEID="uuid-d5172bc2-b6a1-46ee-8b99-6136fb694d3e"/>
+            <mets:fptr FILEID="uuid-613787d9-e587-4a17-a735-613f01cf146c"/>
+         </mets:div>
+         <mets:div ID="uuid-d360a38b-2e67-427b-9e54-c59e8356f21a"
+                   TYPE="page"
+                   ORDER="33"
+                   ORDERLABEL="Blatt XXIXr">
+            <mets:fptr FILEID="uuid-0cc8fca1-be1a-4185-a64d-2c41537e3120"/>
+            <mets:fptr FILEID="uuid-4baa7fc7-b659-41f1-9681-7aa906fe6ade"/>
+         </mets:div>
+         <mets:div ID="uuid-cf2f6b1e-7d23-4f62-be7d-aeb0455d4abe"
+                   TYPE="page"
+                   ORDER="34"
+                   ORDERLABEL="Blatt XXIXv">
+            <mets:fptr FILEID="uuid-c917ea33-c828-4443-91b8-3329602895ce"/>
+            <mets:fptr FILEID="uuid-bcdc1822-1623-4ff8-83af-a6de04ae5c3a"/>
+         </mets:div>
+         <mets:div ID="uuid-2f9fc997-555c-43a7-85cb-b7e5d462da1b"
+                   TYPE="page"
+                   ORDER="35"
+                   ORDERLABEL="Blatt XXXr">
+            <mets:fptr FILEID="uuid-24bf7129-9f88-4bee-8521-eaa868039565"/>
+            <mets:fptr FILEID="uuid-486c3e48-16e8-4794-ae32-ac17e0ec158c"/>
+         </mets:div>
+         <mets:div ID="uuid-15ecb0e7-0f58-4934-8fa8-c8d0af1319a9"
+                   TYPE="page"
+                   ORDER="36"
+                   ORDERLABEL="Illustration XXXv">
+            <mets:fptr FILEID="uuid-5c5ab6af-8bb1-4abc-8faa-133bfa9a99fe"/>
+            <mets:fptr FILEID="uuid-54a0614f-efa8-4f2c-af33-03c0ed67d381"/>
+         </mets:div>
+         <mets:div ID="uuid-7c200c69-95e1-4197-b8d8-8b3129401c32"
+                   TYPE="page"
+                   ORDER="37"
+                   ORDERLABEL="Illustration XXXIr">
+            <mets:fptr FILEID="uuid-58ef238a-e2b3-4f87-b8b3-32ed8dd0e352"/>
+            <mets:fptr FILEID="uuid-6a36f7bd-157c-4221-b3f8-5460dc79d861"/>
+         </mets:div>
+         <mets:div ID="uuid-94196983-3415-49c7-992a-1138608786e2"
+                   TYPE="page"
+                   ORDER="38"
+                   ORDERLABEL="Illustration XXXIv">
+            <mets:fptr FILEID="uuid-2f772267-cbab-4c51-9254-ec7093977a2d"/>
+            <mets:fptr FILEID="uuid-c3927297-1ab5-40f9-aae9-ead85c25645d"/>
+         </mets:div>
+         <mets:div ID="uuid-a31a9c13-2b61-4e01-85bd-e7d55fdc5d89"
+                   TYPE="page"
+                   ORDER="39"
+                   ORDERLABEL="Illustration XXXIIr">
+            <mets:fptr FILEID="uuid-c242334f-922e-408d-b351-53c4f64bc61c"/>
+            <mets:fptr FILEID="uuid-30571e73-b8d9-41b2-9745-cdaa0b5f0ebb"/>
+         </mets:div>
+         <mets:div ID="uuid-49e9edf8-9855-4541-8567-850624574c4b"
+                   TYPE="page"
+                   ORDER="40"
+                   ORDERLABEL="Illustration XXXIIv">
+            <mets:fptr FILEID="uuid-4b455fdd-bad3-4c5e-87e9-0b371619b95c"/>
+            <mets:fptr FILEID="uuid-4a6dd0fe-4c64-411a-bf16-8eb56bdf9652"/>
+         </mets:div>
+         <mets:div ID="uuid-9cab9941-81c3-4516-a96d-0d6a195b22c6"
+                   TYPE="page"
+                   ORDER="41"
+                   ORDERLABEL="Illustration XXXIIIr">
+            <mets:fptr FILEID="uuid-bac43a2e-601a-486a-81ce-e5b8c718a901"/>
+            <mets:fptr FILEID="uuid-798ddef4-182c-428f-962b-1034c857996a"/>
+         </mets:div>
+         <mets:div ID="uuid-11b2b26c-5670-41b4-b5d0-f009d55a603a"
+                   TYPE="page"
+                   ORDER="42"
+                   ORDERLABEL="Blatt XXXIIIv">
+            <mets:fptr FILEID="uuid-7e70aaae-ef50-4dd4-9bfd-311a1e540c52"/>
+            <mets:fptr FILEID="uuid-c85ace25-c208-46c9-829c-7e2ca069d1b9"/>
+         </mets:div>
+         <mets:div ID="uuid-9513c756-ad2d-49d3-8fce-6279f0a5f6db"
+                   TYPE="page"
+                   ORDER="43"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-acf33e61-6216-4405-9ece-975d603e8f99"/>
+            <mets:fptr FILEID="uuid-25f655a3-40bd-4ec0-9144-9b6356058a80"/>
+         </mets:div>
+         <mets:div ID="uuid-4c146ea2-8e0a-4940-b58d-e782c4542dcf"
+                   TYPE="page"
+                   ORDER="44"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-9b9083c0-2197-4fec-a0da-cd877f288697"/>
+            <mets:fptr FILEID="uuid-20cb42e4-1352-4ca7-ade6-81d6fc1e8b77"/>
+         </mets:div>
+         <mets:div ID="uuid-99552645-fd56-4902-96f7-4007c19ed1b5"
+                   TYPE="page"
+                   ORDER="45"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-73cdcdf3-4a1e-4eee-80ba-313d0785146a"/>
+            <mets:fptr FILEID="uuid-25254627-cb1d-4bfd-b294-63fa0c69580a"/>
+         </mets:div>
+         <mets:div ID="uuid-d647714c-6670-4d9a-a219-811394fc177a"
+                   TYPE="page"
+                   ORDER="46"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-6835d779-fd9a-43f1-bee3-50828db91b57"/>
+            <mets:fptr FILEID="uuid-67f17f16-7859-40ef-9444-a249208c9807"/>
+         </mets:div>
+         <mets:div ID="uuid-c3a16c89-d922-4917-9f80-05fa7302c948"
+                   TYPE="page"
+                   ORDER="47"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-283143d9-41c3-4619-b510-2a24255c6324"/>
+            <mets:fptr FILEID="uuid-b7f2ad6c-777f-48ce-a195-0133ed3187aa"/>
+         </mets:div>
+         <mets:div ID="uuid-f91208f8-891c-4fb3-815c-7845f74dc6f9"
+                   TYPE="page"
+                   ORDER="48"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-7a0c31a8-8706-48e6-a969-dbb78d279308"/>
+            <mets:fptr FILEID="uuid-60179c9f-58fd-4a6e-b9f8-ba1686d7a667"/>
+         </mets:div>
+         <mets:div ID="uuid-e59516bf-60c8-46a9-9280-8ff028f59301"
+                   TYPE="page"
+                   ORDER="49"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-f4ab09d1-0bb7-4669-9889-36bad7e819cf"/>
+            <mets:fptr FILEID="uuid-44a05cf3-5ff5-45c9-9f56-f4c0a85b42b1"/>
+         </mets:div>
+         <mets:div ID="uuid-7ef1890d-2548-45e9-b513-a9c7bdf3f2f8"
+                   TYPE="page"
+                   ORDER="50"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-df9e706a-da57-492b-b3ee-527d1ad0e070"/>
+            <mets:fptr FILEID="uuid-14715248-0898-4e05-a67a-b702d7775c81"/>
+         </mets:div>
+         <mets:div ID="uuid-40ab9d5e-1ab0-406e-b769-afa849a1929b"
+                   TYPE="page"
+                   ORDER="51"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-49480903-6bb6-49e3-8fe8-82d28d6a433b"/>
+            <mets:fptr FILEID="uuid-2def7310-ffdc-478a-ada1-4f6396dd2511"/>
+         </mets:div>
+         <mets:div ID="uuid-aaf4f184-eb0e-48b7-a673-d1863323fdaa"
+                   TYPE="page"
+                   ORDER="52"
+                   ORDERLABEL="[Leerseite]">
+            <mets:fptr FILEID="uuid-5c105155-8736-41fa-9246-d2ecad772d97"/>
+            <mets:fptr FILEID="uuid-b4ffb1df-4274-48da-bfcf-17ba82b2e59e"/>
+         </mets:div>
+         <mets:div ID="uuid-bbfdca71-af53-44c8-a3ef-fb6928d43437"
+                   TYPE="page"
+                   ORDER="53"
+                   ORDERLABEL="[Seite 55]">
+            <mets:fptr FILEID="uuid-13d44c03-b1cc-4184-9c19-eb474c21d517"/>
+            <mets:fptr FILEID="uuid-9d8f8fe7-4e1a-42e8-8f7e-1e517abef060"/>
+         </mets:div>
+         <mets:div ID="uuid-54939758-f501-4d27-aee1-ee033914d26a"
+                   TYPE="page"
+                   ORDER="54"
+                   ORDERLABEL="[Seite 56]">
+            <mets:fptr FILEID="uuid-536b6547-d613-4237-8b2e-3711b8e9235c"/>
+            <mets:fptr FILEID="uuid-b230f1d5-0ab9-453d-bd0c-90a19bb1626d"/>
+         </mets:div>
+         <mets:div ID="uuid-2a16cc6f-77b1-410b-a9f0-2cc3e3d082a7"
+                   TYPE="page"
+                   ORDER="55"
+                   ORDERLABEL="[Colorchecker]">
+            <mets:fptr FILEID="uuid-cd66202d-74e6-48fc-8989-89305860615b"/>
+            <mets:fptr FILEID="uuid-df1253de-a118-4419-a15e-42b764fd8612"/>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+   <mets:structMap TYPE="LOGICAL">
+      <mets:div ADMID="admd1"
+                ID="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"
+                DMDID="uuid-066e0b40-6522-3df0-b9f7-e294f6d83af7"
+                TYPE="Monograph"
+                LABEL="... mischer\ Auch zů Hun=||gern/ vnd Behaim ꝛc. Khünig=||klicher Mayestat/ Ertzherzogen zů Os=||terreich #[et]c. Newe Müntzordnung.|| Sampt Valuierung der || Gulden vnd Silberin Mün=||tzen/ Vnd darauff eruolgtem Edict/|| zů Wienn alles im Jar || M. D. LII. auf=||gericht vnd auß=||gangen.||">
+         <mets:div ID="uuid-7316e010-4a72-468e-9106-01e980173f7f"
+                   TYPE="cover_front"
+                   ORDER="1"/>
+         <mets:div ID="uuid-1bdeb5e5-0d1e-4b60-9208-58400b59f06f"
+                   TYPE="title_page"
+                   ORDER="2"/>
+         <mets:div ID="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"
+                   DMDID="uuid-33a7cbe3-1748-3daa-95a1-432caeb3b583"
+                   TYPE="section"
+                   ORDER="3"
+                   LABEL="newe Müntz Ordnung."/>
+         <mets:div ID="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"
+                   DMDID="uuid-cabf2756-b009-3e12-8ffb-2a3383127206"
+                   TYPE="section"
+                   ORDER="4"
+                   LABEL="Unnd seindt die Stuck der newen Silberin Müntz/ hieoben in diser Unserer Ordnung bestimbt/ mit iren Circumferentzen/ Gepreg/ Ziffer/ unnd umbschrifften/ hieunden nechst nacheinander verzeichnet."/>
+         <mets:div ID="uuid-083f22a9-a428-443e-bcfc-e13032a92f72"
+                   TYPE="cover_back"
+                   ORDER="5"/>
+      </mets:div>
+   </mets:structMap>
+   <mets:structLink>
+      <mets:smLink xlink:to="uuid-51b470b9-2a73-4164-8624-03b0e5542bd7"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-834b75b4-d9ec-4710-bd9e-a3fd58484a36"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-0af57802-115b-4923-93c4-a4e3752e39e3"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-17c69117-f208-4492-978b-370f04ea824d"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-51a496b8-87b3-4f75-ad9c-a3f6e443ca23"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-f5510408-c686-4dcf-b748-293af31ee479"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-6b17607f-1ce7-4efa-a18a-307450e61537"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-7f2a951b-e0f1-42b4-a03a-f4c643dae3e0"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-c065a4c7-5c5c-4a50-bde2-decc8115f8f2"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-2f072d9b-2220-4585-8586-91e311964bcc"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-e00b63e3-cc94-4ef7-85a3-27170c7fc887"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-e81af8c4-0e88-42d9-9da3-cda662315bb4"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-895e6c21-7c8b-47fc-9498-9d18d5fc66af"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-c43309a0-0200-424e-9b8f-cec59eb00d30"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-babe902b-654a-4c7b-b393-00ee8d2021c3"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-2a4f56a3-f19e-4ee8-a606-d4679b30812a"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-ecc42a76-bfd8-4122-b7d7-fed5a74de31a"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-634d361a-e365-444d-b5fa-1491a82ce6be"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-01bc3a4e-9b90-47c2-93b2-83f959260d81"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-075e62d6-3044-4a7d-97f4-6d1eea881d8d"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-3c9e99a2-838e-49e3-9dec-efbb917bd59b"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-2ee7044d-c5aa-481f-b285-ff2294f10f63"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-52a262ab-7531-451a-ad1e-e3324fa98aa7"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-578f9db4-772d-4d00-b4cd-8d13212b931d"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-0733b64a-3b60-4dbe-8bd4-c68580ff28e7"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-d5b5668d-25aa-473f-8397-cfc9482bd887"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-00230cc5-1512-46c0-8044-cc49d5dbf41e"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-eee0be8a-9f99-4d53-866c-d5148fda76ca"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-dc6fd3d3-325a-489d-8d46-9e590a914676"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-873632b0-0ef6-4169-90b2-99ab5e364e63"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-c8ddf513-83fc-4432-b508-e31ec5c9e35a"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-5e263ae9-9857-4e62-8849-34c3ef2d9b0b"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-d360a38b-2e67-427b-9e54-c59e8356f21a"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-cf2f6b1e-7d23-4f62-be7d-aeb0455d4abe"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-2f9fc997-555c-43a7-85cb-b7e5d462da1b"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-15ecb0e7-0f58-4934-8fa8-c8d0af1319a9"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-7c200c69-95e1-4197-b8d8-8b3129401c32"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-94196983-3415-49c7-992a-1138608786e2"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-a31a9c13-2b61-4e01-85bd-e7d55fdc5d89"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-49e9edf8-9855-4541-8567-850624574c4b"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-9cab9941-81c3-4516-a96d-0d6a195b22c6"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-11b2b26c-5670-41b4-b5d0-f009d55a603a"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-9513c756-ad2d-49d3-8fce-6279f0a5f6db"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-4c146ea2-8e0a-4940-b58d-e782c4542dcf"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-99552645-fd56-4902-96f7-4007c19ed1b5"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-d647714c-6670-4d9a-a219-811394fc177a"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-c3a16c89-d922-4917-9f80-05fa7302c948"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-f91208f8-891c-4fb3-815c-7845f74dc6f9"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-e59516bf-60c8-46a9-9280-8ff028f59301"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-7ef1890d-2548-45e9-b513-a9c7bdf3f2f8"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-40ab9d5e-1ab0-406e-b769-afa849a1929b"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-aaf4f184-eb0e-48b7-a673-d1863323fdaa"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-bbfdca71-af53-44c8-a3ef-fb6928d43437"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-54939758-f501-4d27-aee1-ee033914d26a"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-2a16cc6f-77b1-410b-a9f0-2cc3e3d082a7"
+                   xlink:from="uuid-d52cf174-7ebd-4451-888d-2ba5e6ad59bc"/>
+      <mets:smLink xlink:to="uuid-51b470b9-2a73-4164-8624-03b0e5542bd7"
+                   xlink:from="uuid-7316e010-4a72-468e-9106-01e980173f7f"/>
+      <mets:smLink xlink:to="uuid-834b75b4-d9ec-4710-bd9e-a3fd58484a36"
+                   xlink:from="uuid-7316e010-4a72-468e-9106-01e980173f7f"/>
+      <mets:smLink xlink:to="uuid-0af57802-115b-4923-93c4-a4e3752e39e3"
+                   xlink:from="uuid-7316e010-4a72-468e-9106-01e980173f7f"/>
+      <mets:smLink xlink:to="uuid-17c69117-f208-4492-978b-370f04ea824d"
+                   xlink:from="uuid-7316e010-4a72-468e-9106-01e980173f7f"/>
+      <mets:smLink xlink:to="uuid-51a496b8-87b3-4f75-ad9c-a3f6e443ca23"
+                   xlink:from="uuid-7316e010-4a72-468e-9106-01e980173f7f"/>
+      <mets:smLink xlink:to="uuid-f5510408-c686-4dcf-b748-293af31ee479"
+                   xlink:from="uuid-7316e010-4a72-468e-9106-01e980173f7f"/>
+      <mets:smLink xlink:to="uuid-6b17607f-1ce7-4efa-a18a-307450e61537"
+                   xlink:from="uuid-1bdeb5e5-0d1e-4b60-9208-58400b59f06f"/>
+      <mets:smLink xlink:to="uuid-7f2a951b-e0f1-42b4-a03a-f4c643dae3e0"
+                   xlink:from="uuid-1bdeb5e5-0d1e-4b60-9208-58400b59f06f"/>
+      <mets:smLink xlink:to="uuid-c065a4c7-5c5c-4a50-bde2-decc8115f8f2"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-2f072d9b-2220-4585-8586-91e311964bcc"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-e00b63e3-cc94-4ef7-85a3-27170c7fc887"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-e81af8c4-0e88-42d9-9da3-cda662315bb4"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-895e6c21-7c8b-47fc-9498-9d18d5fc66af"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-c43309a0-0200-424e-9b8f-cec59eb00d30"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-babe902b-654a-4c7b-b393-00ee8d2021c3"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-2a4f56a3-f19e-4ee8-a606-d4679b30812a"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-ecc42a76-bfd8-4122-b7d7-fed5a74de31a"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-634d361a-e365-444d-b5fa-1491a82ce6be"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-01bc3a4e-9b90-47c2-93b2-83f959260d81"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-075e62d6-3044-4a7d-97f4-6d1eea881d8d"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-3c9e99a2-838e-49e3-9dec-efbb917bd59b"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-2ee7044d-c5aa-481f-b285-ff2294f10f63"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-52a262ab-7531-451a-ad1e-e3324fa98aa7"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-578f9db4-772d-4d00-b4cd-8d13212b931d"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-0733b64a-3b60-4dbe-8bd4-c68580ff28e7"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-d5b5668d-25aa-473f-8397-cfc9482bd887"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-00230cc5-1512-46c0-8044-cc49d5dbf41e"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-eee0be8a-9f99-4d53-866c-d5148fda76ca"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-dc6fd3d3-325a-489d-8d46-9e590a914676"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-873632b0-0ef6-4169-90b2-99ab5e364e63"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-c8ddf513-83fc-4432-b508-e31ec5c9e35a"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-5e263ae9-9857-4e62-8849-34c3ef2d9b0b"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-d360a38b-2e67-427b-9e54-c59e8356f21a"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-cf2f6b1e-7d23-4f62-be7d-aeb0455d4abe"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-2f9fc997-555c-43a7-85cb-b7e5d462da1b"
+                   xlink:from="uuid-5df5d2be-0621-4a5c-b04f-3f3f436bcc11"/>
+      <mets:smLink xlink:to="uuid-15ecb0e7-0f58-4934-8fa8-c8d0af1319a9"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-7c200c69-95e1-4197-b8d8-8b3129401c32"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-94196983-3415-49c7-992a-1138608786e2"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-a31a9c13-2b61-4e01-85bd-e7d55fdc5d89"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-49e9edf8-9855-4541-8567-850624574c4b"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-9cab9941-81c3-4516-a96d-0d6a195b22c6"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-11b2b26c-5670-41b4-b5d0-f009d55a603a"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-9513c756-ad2d-49d3-8fce-6279f0a5f6db"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-4c146ea2-8e0a-4940-b58d-e782c4542dcf"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-99552645-fd56-4902-96f7-4007c19ed1b5"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-d647714c-6670-4d9a-a219-811394fc177a"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-c3a16c89-d922-4917-9f80-05fa7302c948"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-f91208f8-891c-4fb3-815c-7845f74dc6f9"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-e59516bf-60c8-46a9-9280-8ff028f59301"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-7ef1890d-2548-45e9-b513-a9c7bdf3f2f8"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-40ab9d5e-1ab0-406e-b769-afa849a1929b"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-aaf4f184-eb0e-48b7-a673-d1863323fdaa"
+                   xlink:from="uuid-b4deb5a0-6793-47c6-8501-a154bc02ce0f"/>
+      <mets:smLink xlink:to="uuid-bbfdca71-af53-44c8-a3ef-fb6928d43437"
+                   xlink:from="uuid-083f22a9-a428-443e-bcfc-e13032a92f72"/>
+      <mets:smLink xlink:to="uuid-54939758-f501-4d27-aee1-ee033914d26a"
+                   xlink:from="uuid-083f22a9-a428-443e-bcfc-e13032a92f72"/>
+      <mets:smLink xlink:to="uuid-2a16cc6f-77b1-410b-a9f0-2cc3e3d082a7"
+                   xlink:from="uuid-083f22a9-a428-443e-bcfc-e13032a92f72"/>
+   </mets:structLink>
+</mets:mets>

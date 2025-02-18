@@ -750,14 +750,14 @@ class MetsReader(MetsProcessor):
 
         xp_origins = "mods:originInfo"
         xp_place_term = "mods:place/mods:placeTerm/text()"
-        xp_year = "mods:dateIssued"
+        xp_year = "*[local-name()='dateIssued' or local-name()='dateCaptured']"
         origins = self.primary_dmd.findall(xp_origins, dfc.XMLNS)
 
         infos = []
         for origin in origins:
             an_event = origin.get('eventType', default="publication")
             a_year = dfc.UNSET_LABEL
-            all_years = origin.findall(xp_year, dfc.XMLNS)
+            all_years = origin.xpath(xp_year, namespaces=dfc.XMLNS)
             for y in all_years:
                 if "keyDate" in y.attrib:
                     a_year = y.text
