@@ -470,7 +470,7 @@ class MetsReader(MetsProcessor):
                 self._report.hierarchy = outcome[2]
             self._report.links = self.get_invalid_physical_structs()
             self._report.locations = self.get_location_shelfs()
-            self._report.origins = self.get_origin_infos()
+            self._report.origins = self.get_origins()
         return self._report
 
     def analyze(self):
@@ -745,21 +745,30 @@ class MetsReader(MetsProcessor):
 
         return miss_targets
 
-    def get_origin_infos(self):
+    def get_origins(self):
         """Gather informations about origin places"""
 
-        xp_origins = 'mods:originInfo'
-        xp_place_term = 'mods:place/mods:placeTerm/text()'
+        xp_origins = "mods:originInfo"
+        xp_place_term = "mods:place/mods:placeTerm/text()"
+        xp_year = "mods:dateIssued"
         origins = self.primary_dmd.findall(xp_origins, dfc.XMLNS)
 
         infos = []
         for origin in origins:
-            place_labels = origin.xpath(xp_place_term, namespaces=dfc.XMLNS)
-            for place_label in place_labels:
-                if 'eventType' in origin.attrib:
-                    infos.append((origin.attrib['eventType'], place_label))
-                else:
-                    infos.append(('n.a.', place_label))
+            an_event = origin.get('eventType', default="publication")
+            a_year = dfc.UNSET_LABEL
+            all_years = origin.findall(xp_year, dfc.XMLNS)
+            for y in all_years:
+                if "keyDate" in y.attrib:
+                    a_year = y.text
+                    break
+            if a_year == dfc.UNSET_LABEL and len(all_years) > 0:
+                a_year = all_years[0].text
+            a_place = dfc.UNSET_LABEL
+            place_labels = set(origin.xpath(xp_place_term, namespaces=dfc.XMLNS))
+            if len(place_labels) == 1:
+                a_place = place_labels.pop()
+            infos.append((an_event, a_year, a_place))
         return infos
 
     @property

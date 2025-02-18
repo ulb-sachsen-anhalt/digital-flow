@@ -527,8 +527,9 @@ def test_metsreader_opendata_inspect_migrated_record_origins():
     report = mets_reader.analyze()
 
     # 3 origins, which is of course wrong
-    assert report.origins == [('n.a.', 'Freiberg'), ('n.a.', 'Freiberg'),
-                              ('digitization', 'Halle (Saale)')]
+    assert len(report.origins) == 2
+    assert report.origins == [("publication", "1574", "Freiberg"),
+                              ("digitization", "2013", "Halle (Saale)")]
 
 
 def test_metsreader_zd1_issue_16767392():
