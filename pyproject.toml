@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "digiflow"
-version = "5.8.9"
+version = "5.8.10"
 description = "Father's Little Digitization Workflow Helper"
 readme = "README.md"
 requires-python = ">=3.8"
