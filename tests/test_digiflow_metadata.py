@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+"""specification for handling of metadata METS/MODS DFG-flavour"""
 
 import os
 import shutil
@@ -15,11 +15,14 @@ import digiflow.validate as dfv
 
 from .conftest import TEST_RES, LIB_RES
 
+# pylint:disable=c-extension-no-member
 
 
-def test_metsreader_kitodo2_mvw():
-    """
-    Correct primary mods?
+def test_metsreader_kitodo2_volume():
+    """Got correct primary mods for F-stage?
+
+    Modified with 6x: as F-stage got single parent
+    further hierarchy contains 1 entry
     """
 
     # arrange
@@ -28,21 +31,29 @@ def test_metsreader_kitodo2_mvw():
     reader = df.MetsReader(path)
 
     # act
-    report = reader.analyze()
+    mets_report: df.MetsReport = reader.analyze()
+    prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
-    assert report.languages == ['ger']
-    assert not report.images
-    assert report.type == 'Af'
-    assert 'gvk-ppn' in report.identifiers
-    assert report.identifiers['gvk-ppn'] == '183475917'
-    assert report.hierarchy == [('DMDLOG_0001', 'volume'), ('183475631', 'multivolume_work')]
-    assert report.locations == ['Nr 83 (6)']
+    assert not mets_report.files
+    assert mets_report.hierarchy == [('183475631', 'multivolume_work')]
+    assert prime_report.languages == ['ger']
+    assert prime_report.type == 'Af'
+    assert 'gvk-ppn' in prime_report.identifiers
+    assert prime_report.identifiers['gvk-ppn'] == '183475917'
+    assert prime_report.locations == 'Nr 83 (6)'
+    assert prime_report.licence == ("use and reproduction",
+                                    "http://rightsstatements.org/vocab/InC/1.0/",
+                                    "Urheberrechtsschutz 1.0")
+    assert prime_report.related == ('host', 'gvk-ppn', '183475631')
 
 
 def test_metsreader_report_vd18_cstage():
     """
     Are correct informations extracted for c-stage?
+
+    Modified with 6x: as C-stage has no parents
+    further hierarchy is empty
     """
 
     # arrange
@@ -51,20 +62,28 @@ def test_metsreader_report_vd18_cstage():
     reader = df.MetsReader(path, 'md9427342')
 
     # act
-    report = reader.analyze()
+    mets_report: df.MetsReport = reader.analyze()
+    prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
-    assert report.languages == ['ger']
-    assert not report.images
-    assert report.type == 'Ac'
-    assert report.identifiers['ulbhalvd18'] == '211999504'
-    assert report.hierarchy == [('9427342', 'multivolume_work')]
-    assert not report.locations
+    assert not mets_report.files
+    assert mets_report.hierarchy == []
+    assert prime_report.type == 'Ac'
+    assert prime_report.languages == ['ger']
+    assert prime_report.identifiers['ulbhalvd18'] == '211999504'
+    assert not prime_report.locations
 
 
 def test_metsreader_report_vd18_fstage():
     """
     Correct informations extracted for f-stage?
+    Please note:
+        this shelf is located somewhat different =>
+        mods:location/mods:holdinSimple/mods:copyInformation/mods:shelfLocator
+        This one looks evil, since a shelfLocator is *no* hint for copying ;)
+
+    Modified with 6x: as F-stage got single parent
+    further hierarchy contains 1 entry
     """
 
     # arrange
@@ -73,22 +92,25 @@ def test_metsreader_report_vd18_fstage():
     reader = df.MetsReader(path, 'md9427337')
 
     # act
-    report = reader.analyze()
+    mets_report: df.MetsReport = reader.analyze()
+    prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
-    assert report.languages == ['ger']
-    assert not report.images
-    assert report.type == 'Af'
-    assert report.identifiers['ulbhalvd18'] == '211999628'
-    assert report.hierarchy == [
-        ('9427337', 'volume'), ('9427342', 'multivolume_work')]
-    assert report.locations == ['Lb 712 a (3,2)']
+    assert not mets_report.files
+    assert mets_report.hierarchy == [('9427342', 'multivolume_work')]
+    assert prime_report.type == 'Af'
+    assert prime_report.identifiers['ulbhalvd18'] == '211999628'
+    assert prime_report.languages == ['ger']
+    assert prime_report.locations == 'Lb 712 a (3,2)'
 
 
 def test_metsreader_report_vd17_fstage_pica_case():
     """
     Correct informations extracted for VD17 F-stage?
     Is the second letter from PICA preserved?
+
+    Modified with 6x: as F-stage got single parent
+    further hierarchy contains 1 entry
     """
 
     # arrange
@@ -99,21 +121,24 @@ def test_metsreader_report_vd17_fstage_pica_case():
     reader = df.MetsReader(path, 'md14591176')
 
     # act
-    report = reader.analyze()
+    report: df.MetsReport = reader.analyze()
+    prime_report: df.DmdReport = report.prime_report
 
     # assert
-    assert report.languages == ['ger']
-    assert not report.images
-    assert report.type == 'AF'
-    assert report.identifiers['pon'] == '008499756'
-    assert report.hierarchy == [
-        ('14591176', 'volume'), ('14591136', 'multivolume_work')]
-    assert report.locations == ['TM0904 (5)']
+    assert not report.files
+    assert report.hierarchy == [('14591136', 'multivolume_work')]
+    assert prime_report.type == 'AF'
+    assert prime_report.identifiers['pon'] == '008499756'
+    assert prime_report.languages == ['ger']
+    assert prime_report.locations == 'TM0904 (5)'
 
 
 def test_metsreader_report_hd_monography():
     """
     Correct extractions for hd monography?
+
+    Modified with 6x: Since monograph stands alone,
+    further hierarchy is empty
     """
 
     # arrange
@@ -125,21 +150,25 @@ def test_metsreader_report_hd_monography():
     reader = df.MetsReader(path, 'md10595')
 
     # act
-    report = reader.analyze()
+    report: df.MetsReport = reader.analyze()
+    prime_report: df.DmdReport = report.prime_report
 
     # assert
-    assert report.languages == ['ger']
-    assert not report.images
-    assert report.type == 'Aa'
-    assert report.identifiers['ulbhaldod'] == '187143188'
-    assert report.hierarchy == [('10595', 'monograph')]
-    assert len(report.locations) == 2
-    assert report.locations == ['Pon IIg 694, FK', 'Pon IIg 689, 4° (2)']
+    assert not report.files
+    assert report.hierarchy == []
+    assert prime_report.type == 'Aa'
+    assert prime_report.languages == ['ger']
+    assert prime_report.identifiers['ulbhaldod'] == '187143188'
+    assert len(prime_report.locations) == 2
+    assert prime_report.locations == ['Pon IIg 694, FK', 'Pon IIg 689, 4° (2)']
 
 
 def test_metsreader_report_kitodo2_export_monography():
     """
     Correct extractions for hd monography?
+
+    Modified with 6x: Since monograph stands alone,
+    further hierarchy is empty
     """
 
     # arrange
@@ -148,20 +177,21 @@ def test_metsreader_report_kitodo2_export_monography():
     reader = df.MetsReader(path, 'DMDLOG_0000')
 
     # act
-    report = reader.analyze()
+    report: df.MetsReport = reader.analyze()
+    prime_report: df.DmdReport = report.prime_report
     # need to set this manually since
     # we do not know the kitodo ID from METS
-    report.system_identifiers[df.MARK_KITODO2] = '1234'
+    report.system_identifier = 'kitodo2:1234'
 
     # assert
-    assert report.languages == ['ger']
-    assert not report.images
-    assert report.type == 'Aa'
-    assert report.identifiers['gvk-ppn'] == '147638674'
-    assert len(report.identifiers) == 3
-    assert report.system_identifiers == {'kitodo2' : '1234'}
-    assert report.hierarchy == [('DMDLOG_0000', 'monograph')]
-    assert report.locations == ['Pon Za 5950, QK']
+    assert not report.files
+    assert report.system_identifier == "kitodo2:1234"
+    assert report.hierarchy == []
+    assert prime_report.languages == ['ger']
+    assert prime_report.type == 'Aa'
+    assert prime_report.identifiers['gvk-ppn'] == '147638674'
+    assert len(prime_report.identifiers) == 3
+    assert prime_report.locations == 'Pon Za 5950, QK'
 
 
 def test_metsreader_logical_type_1686755_is_document():
@@ -169,6 +199,9 @@ def test_metsreader_logical_type_1686755_is_document():
     Check digital object 1686755
     * logical type is 'document'
     * no external PICA-type present (=None)
+
+    Modified with 6x: Since document stands alone,
+    further hierarchy is empty
     """
 
     # arrange
@@ -179,7 +212,7 @@ def test_metsreader_logical_type_1686755_is_document():
 
     # assert
     outcome = mets_reader.get_type_and_hierarchy()
-    assert outcome == (None, 'document', [('1686755', 'document')])
+    assert outcome == ("document", [])
 
 
 def test_metsreader_type_pica_monography():
@@ -191,7 +224,7 @@ def test_metsreader_type_pica_monography():
     # act
     mets_reader = df.MetsReader(mets, 'md201517')
 
-    assert "Aa" in mets_reader.get_type_and_hierarchy()
+    assert "monograph" in mets_reader.get_type_and_hierarchy()
 
 
 def test_metsreader_wrong_logical_type():
@@ -199,6 +232,9 @@ def test_metsreader_wrong_logical_type():
     What happens when encountered an invalid c-stage oai-response?
     Extended Test due data errors from OCR-D-Pilotproject
     => logical type monograph should be multivolume
+
+    Modified with 6x: Since monograph stands alone,
+    further hierarchy is empty
     """
 
     # arrange
@@ -211,7 +247,7 @@ def test_metsreader_wrong_logical_type():
     # f-stage 424336
     # f-stage 415691
     outcome = mets_reader.get_type_and_hierarchy()
-    assert outcome == (None, 'monograph', [('416811', 'monograph')])
+    assert outcome == ('monograph', [])
 
 
 @pytest.fixture(name="monograph_hd_invalid_physlinks")
@@ -245,19 +281,23 @@ def test_metsreader_report_for_10595(monograph_hd_invalid_physlinks):
     reader = df.MetsReader(monograph_hd_invalid_physlinks, 'md10595')
 
     # act
-    report = reader.analyze()
+    mets_report: df.MetsReport = reader.analyze()
+    report: df.DmdReport = mets_report.prime_report
 
     # assert
     assert 'Aa' in report.type
     assert report.languages == ['ger']
     assert report.identifiers['ulbhaldod'] == '187143188'
-    assert len(report.links) == 26
+    assert len(mets_report.links) == 26
 
 
 def test_metsreader_logical_type_is_multivolume():
     """
     Check that a multivolume_work with 4 volumes is
     correct recognized as pica 'Ac' and 'multivolume_work'
+
+    Modified with 6x: Since C-Stage stands alone,
+    further hierarchy is empty
     """
 
     # arrange
@@ -269,14 +309,16 @@ def test_metsreader_logical_type_is_multivolume():
 
     # assert
     outcome = mets_reader.get_type_and_hierarchy()
-    assert outcome == ('Ac', 'multivolume_work', [
-                       ('9427342', 'multivolume_work')])
+    assert outcome == ('multivolume_work', [])
 
 
 def test_metsreader_logical_type_is_tome():
     """
     Check that a part of a multivolume_work, 9427334,
     is VL 'tome' and pica 'Af'
+
+    Modified with 6x: as F-stage got single parent
+    further hierarchy contains 1 entry
     """
 
     # arrange
@@ -288,14 +330,17 @@ def test_metsreader_logical_type_is_tome():
 
     # assert
     outcome = mets_reader.get_type_and_hierarchy()
-    assert outcome == (
-        'Af', 'tome', [('9427334', 'tome'), ('9427342', 'multivolume_work')])
+    assert outcome == ('tome', [('9427342', 'multivolume_work')])
 
 
 def test_metsreader_ambigious_recordinfo():
     """
     Handle strange cornercase in HD collection where digital objects
     posses several recordInfo elements but first match is empty
+
+
+    Modified with 6x: Since monograph stands alone,
+    further hierarchy is empty
     """
 
     # arrange
@@ -307,7 +352,7 @@ def test_metsreader_ambigious_recordinfo():
 
     # assert
     outcome = mets_reader.get_type_and_hierarchy()
-    assert outcome == (None, 'monograph', [('369765', 'monograph')])
+    assert outcome == ('monograph', [])
 
 
 def test_metsreader_clear_agents(tmp_path):
@@ -366,7 +411,8 @@ def test_metsreader_enrich_first_agent(tmp_path):
 
     # assert
     assert Path(result_path).exists()
-    dfv.validate_xml(ET.parse(result_path).getroot()) # no Exception plz
+    dfv.validate_xml(ET.parse(result_path).getroot())  # no Exception plz
+
 
 def test_metsreader_enrich_another_agent(tmp_path):
     """
@@ -397,7 +443,7 @@ def test_metsreader_enrich_another_agent(tmp_path):
 
     # assert
     assert Path(result_path).exists()
-    dfv.validate_xml(ET.parse(result_path).getroot()) # no Exception plz
+    dfv.validate_xml(ET.parse(result_path).getroot())  # no Exception plz
 
 
 def test_metsreader_enrich_agent_kwargs(tmp_path):
@@ -430,7 +476,7 @@ def test_metsreader_enrich_agent_kwargs(tmp_path):
     # assert
     assert Path(result_path).exists()
     result_root = ET.parse(result_path).getroot()
-    dfv.validate_xml(result_root) # no Exception plz
+    dfv.validate_xml(result_root)  # no Exception plz
     assert result_root.xpath('.//mets:agent[@TYPE="INDIVIDUAL"]/mets:name/text()',
                              namespaces=df.XMLNS)[0] == 'Agent Smith'
 
@@ -446,13 +492,13 @@ def test_metsreader_log_hierarchy_menadoc_oai_record_section():
     target_file = os.path.join(TEST_RES, 'migration/20586.mets.xml')
 
     # act
-    _mreader = df.MetsReader(target_file)
-    with pytest.raises(RuntimeError) as rer:
-        _report = _mreader.report
-    assert 'no record _identifiers' in rer.value.args[0]
+    mreader = df.MetsReader(target_file)
+    with pytest.raises(df.DigiflowMetadataException) as rer:
+        _ = mreader.report
+    assert 'no identifiers' in rer.value.args[0]
 
     # assert - no, this is not happening!
-    #assert _report.identifiers['menadoc.bibliothek.uni-halle.de/dmg'] == '20586'
+    # assert _report.identifiers['menadoc.bibliothek.uni-halle.de/dmg'] == '20586'
 
 
 def test_metsreader_opendata2_inspect_migrated_record_identifiers():
@@ -471,19 +517,20 @@ def test_metsreader_opendata2_inspect_migrated_record_identifiers():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report = mets_reader.analyze()
+    report: df.MetsReport = mets_reader.analyze()
+    dmd_report: df.DmdReport = report.prime_report
 
     # assert
     assert mets_reader.dmd_id == 'md998423'
-    assert len(report.identifiers) == 5
-    assert report.identifiers == {
+    assert len(dmd_report.identifiers) == 5
+    assert dmd_report.identifiers == {
         'urn': 'urn:nbn:de:gbv:3:1-507459',
         'vd16': 'ZV 932',
         'bvb': 'VD0034491',
         'gvk-ppn': '567526844',
         'doi': 'doi:10.25673/opendata2-4398'
     }
-    assert report.system_identifiers == {
+    assert report.system_identifier == {
         'legacy vlid': '998423',
         'opendata2.uni-halle.de': 'https://opendata2.uni-halle.de//handle/1516514412012/4400',
     }
@@ -498,19 +545,20 @@ def test_metsreader_opendata_migrated_record_with_doi():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report = mets_reader.analyze()
+    report: df.MetsReport = mets_reader.analyze()
+    dmd_report: df.DmdReport = report.prime_report
 
     # assert
     assert mets_reader.dmd_id == 'md1177525'
-    assert len(report.identifiers) == 5
-    assert report.identifiers == {
+    assert len(dmd_report.identifiers) == 5
+    assert dmd_report.identifiers == {
         'urn': 'urn:nbn:de:gbv:3:1-132151',
         'gvk-ppn': '216311322',
         'doi': 'doi:10.25673/41099',
         'gbv': '216311322',
         'vd18': '10078320',
     }
-    assert report.system_identifiers == {
+    assert report.system_identifier == {
         'legacy vlid': '1177525',
         'opendata.uni-halle.de': 'https://opendata.uni-halle.de//handle/1981185920/43053',
     }
@@ -524,7 +572,7 @@ def test_metsreader_opendata_inspect_migrated_record_origins():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report = mets_reader.analyze()
+    report: df.DmdReport = mets_reader.analyze().prime_report
 
     # 3 origins, which is of course wrong
     assert len(report.origins) == 2
@@ -540,7 +588,7 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report = mets_reader.analyze()
+    report: df.DmdReport = mets_reader.analyze().prime_report
 
     # 3 origins, which is of course wrong
     assert len(report.origins) == 2
@@ -548,18 +596,20 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
                               ("digitization", "2025", "Halle (Saale)")]
 
 
-
 def test_metsreader_zd1_issue_16767392():
-    """Check METS-Reader-output"""
+    """Check METS-Reader-output for digital object
+    with logical type issue"""
 
     # arrange
     mets = os.path.join(TEST_RES, 'vls/zd/zd1-16767392.oai.xml')
 
     # act
-    mets_reader = df.MetsReader(mets, 'md16767392')
+    mets_reader: df.MetsReader = df.MetsReader(mets, 'md16767392')
+    mods_reader: df.ModsReader = df.ModsReader(mets_reader.primary_dmd, "md16767392")
 
-    assert "16767392" in mets_reader.get_identifiers()['local']
-    assert "issue" in mets_reader.get_type_and_hierarchy()
+    assert "16767392" in mods_reader.get_identifiers()['local']
+    the_tree = mets_reader.get_type_and_hierarchy()
+    assert ('issue', [('16602862', 'year'), ('16289662', 'newspaper')]) == the_tree
 
 
 def test_metsreader_zd1_issue_16359609():
@@ -569,9 +619,10 @@ def test_metsreader_zd1_issue_16359609():
     mets = os.path.join(TEST_RES, 'vls/zd/zd1-16359609.mets.xml')
 
     # act
-    mets_reader = df.MetsReader(mets)
+    mets_reader: df.MetsReader = df.MetsReader(mets)
+    dmd_report: df.DmdReport = mets_reader.report.prime_report
 
-    assert "ulbhalvd:16359609" == mets_reader.get_identifiers()['local']
+    assert "ulbhalvd:16359609" == dmd_report.identifiers['local']
     assert "issue" in mets_reader.get_type_and_hierarchy()
 
 
@@ -612,7 +663,7 @@ def test_metsprocessor_clear_filegroups_odem_ocrd(tmp_path):
     # act
     mets_proc.clear_filegroups(black_list=['DOWNLOAD', 'DEFAULT', 'THUMBS', 'FULLTEXT'])
     mets_proc.write()
-    
+
     # assert
     new_tree = ET.parse(dst)
     dfv.validate_xml(new_tree.getroot())
@@ -626,22 +677,22 @@ def test_metsreader_zd2_issue_18680621():
     mets = os.path.join(TEST_RES, 'kitodo3-zd2/1021634069-18680621.xml')
 
     # act
-    mets_reader = df.MetsReader(mets)
+    mets_reader: df.MetsReader = df.MetsReader(mets)
+    mods_reader: df.ModsReader = df.ModsReader(mets_reader.primary_dmd, mets_reader.dmd_id)
 
-    _idents = mets_reader.get_identifiers()
-    assert _idents == {
+    the_idents = mods_reader.get_identifiers()
+    assert the_idents == {
         'urn': 'urn:nbn:de:gbv:3:1-171133730-102163406918680621-11',
         'kxp-ppn': '102163406918680621',
     }
-    assert mets_reader._ulb_digi_system_identifier() == {'kitodo3': '4583'}
-    _pica, _type, _tree = mets_reader.get_type_and_hierarchy()
-    assert _pica == 'AB'
-    assert _type == 'issue'
-    assert _tree == [('uuid-bb586c88-d9b1-3cef-9a91-4e9f4fa5cc8a', 'issue'),
-                     ('n.a.', 'day'),
-                     ('n.a.', 'month'),
-                     ('1021634069_1868', 'year'),
-                     ('1021634069', 'newspaper')]
+    assert mets_reader.ulb_digi_system_identifier() == {'kitodo3': '4583'}
+    log_type, hierarchy = mets_reader.get_type_and_hierarchy()
+    assert mods_reader.get_type() == 'AB'
+    assert log_type == 'issue'
+    assert hierarchy == [("uuid-b1b11d08-e2d6-45bd-84ef-0b4495013cff", 'day'),
+                         ("uuid-479b0e34-6221-4e61-bfa4-4558a185d1bf", 'month'),
+                         ('1021634069_1868', 'year'),
+                         ('1021634069', 'newspaper')]
 
 
 @pytest.mark.parametrize(["mets_path", "dmd_id"], [
@@ -654,12 +705,13 @@ def test_metsreader_zd2_issue_18680621():
     (os.path.join(TEST_RES, 'opendata/123456789_27949.xml'), 'md1180329'),
 ])
 def test_metsreader_identify_prime_dmd_section(mets_path, dmd_id):
+    """Ensure hit proper primaray MODS DMD section"""
 
     # act
     mets_reader = df.MetsReader(mets_path)
 
     # assert
-    assert mets_reader._prime_mods_id == dmd_id
+    assert mets_reader.dmd_id == dmd_id
 
 
 def test_metsprocessor_remove_elements_and_close_tags(tmp_path):
@@ -689,7 +741,7 @@ def test_metsprocessor_remove_elements_and_close_tags(tmp_path):
 
 def test_metsprocessor_remove_elements_no_keyerror(tmp_path):
     """Ensure legacy namespaces don't cause trouble anymore
-    
+
     Test Target: Prevent regression
     """
 
@@ -725,13 +777,12 @@ def test_metsreader_logical_hierachy_newspaper_issue():
     mets_reader = df.MetsReader(mets, 'md16359603')
 
     # act
-    pica, log_typ, hierachy = mets_reader.get_type_and_hierarchy()
+    log_typ, hierachy = mets_reader.get_type_and_hierarchy()
 
     # assert
-    assert not pica
     assert log_typ == 'issue'
-    assert hierachy[1:] == [('day0322', 'day'), ('month03', 'month'),
-                            ('17308997', 'year'), ('16289661', 'newspaper')]
+    assert hierachy == [('day0322', 'day'), ('month03', 'month'),
+                        ('17308997', 'year'), ('16289661', 'newspaper')]
 
 
 def test_metsreader_missing_struct_mapping():
@@ -749,7 +800,7 @@ def test_metsreader_missing_struct_mapping():
     assert mets_reader.dmd_id == 'md1177525'
 
     # act
-    with pytest.raises(RuntimeError) as _runtime_error:
+    with pytest.raises(df.DigiflowMetadataException) as _runtime_error:
         mets_reader.check()
 
     # assert
@@ -762,60 +813,61 @@ DIGIFLOW_CONFIG = LIB_RES / 'digilife.ini'
 def test_metsreader3_report_vd18_cstage():
     """
     Are correct informations extracted for c-stage?
+    * no more further METS hierarchy
+    * no related-something in primary MODS
     """
 
     # arrange
     path = os.path.join(TEST_RES, 'migration', '9427342.mets.xml')
     assert os.path.exists(path)
     reader = df.MetsReader(path, 'md9427342')
-    reader.config = DIGIFLOW_CONFIG
-    _identifier_opts = reader.config.options('identifier')
-    assert len(_identifier_opts) == 14
 
     # act
-    _report = reader.report
+    report = reader.report
+    dmd_report: df.DmdReport = report.prime_report
 
     # assert
-    assert _report.languages == ['ger']
-    assert not _report.images
-    assert _report.system_identifiers == {'digitale.bibliothek.uni-halle.de/vd18': '9427342'}
-    assert _report.identifiers == {'gbv': '211999504',
-                                   'ulbhalvd18': '211999504',
-                                   'urn': 'urn:nbn:de:gbv:3:1-636051',
-                                   'vd18': '11228628'}
-    assert _report.type == 'Ac'
-    assert _report.hierarchy == [('9427342', 'multivolume_work')]
-    assert not _report.locations
+    assert not report.files
+    assert report.system_identifier == {'digitale.bibliothek.uni-halle.de/vd18': '9427342'}
+    assert report.hierarchy == []
+    assert dmd_report.languages == ['ger']
+    assert dmd_report.identifiers == {'gbv': '211999504',
+                                      'ulbhalvd18': '211999504',
+                                      'urn': 'urn:nbn:de:gbv:3:1-636051',
+                                      'vd18': '11228628'}
+    assert dmd_report.type == 'Ac'
+    assert not dmd_report.locations
+    assert dmd_report.related == []
 
 
 def test_metsreader3_report_vd18_fstage():
     """
     Correct informations extracted for f-stage?
+
+    Modified with 6x: as F-stage got single parent
+    further hierarchy contains 1 entry
     """
 
     # arrange
     path = os.path.join(TEST_RES, 'migration', '9427337.mets.xml')
     assert os.path.exists(path)
     reader = df.MetsReader(path, 'md9427337')
-    reader.config = DIGIFLOW_CONFIG
 
     # act
-    _report = reader.report
+    mets_report = reader.report
+    dmd_report: df.DmdReport = mets_report.prime_report
 
     # assert
-    assert _report.languages == ['ger']
-    assert not _report.images
-    assert _report.type == 'Af'
-    assert _report.system_identifiers == {
-        'digitale.bibliothek.uni-halle.de/vd18': '9427337'  
-    }
-    assert _report.identifiers == {'gbv': '211999628',
-                                   'ulbhalvd18': '211999628',
-                                   'urn': 'urn:nbn:de:gbv:3:1-635986',
-                                   'vd18': '90311817'}
-    assert _report.hierarchy == [
-        ('9427337', 'volume'), ('9427342', 'multivolume_work')]
-    assert _report.locations == ['Lb 712 a (3,2)']
+    assert dmd_report.languages == ['ger']
+    assert not mets_report.files
+    assert mets_report.type == "volume"
+    assert mets_report.hierarchy == [('9427342', 'multivolume_work')]
+    assert mets_report.system_identifier == {'digitale.bibliothek.uni-halle.de/vd18': '9427337'}
+    assert dmd_report.identifiers == {'gbv': '211999628',
+                                      'ulbhalvd18': '211999628',
+                                      'urn': 'urn:nbn:de:gbv:3:1-635986',
+                                      'vd18': '90311817'}
+    assert dmd_report.locations == 'Lb 712 a (3,2)'
 
 
 def test_metsreader_kitodo2_mena_periodical_volume_dmd_id():
@@ -856,5 +908,6 @@ def test_mets_reader_some_sbb_mets():
 
     the_reader = df.MetsReader(TEST_RES / "mets" / "SBB_PPN1000056597.xml")
     the_report = the_reader.report
+    dmd_report: df.DmdReport = the_report.prime_report
     assert the_report.type == "monograph"
-    assert the_report.languages == ["ger"]
+    assert dmd_report.languages == ["ger"]

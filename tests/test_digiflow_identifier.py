@@ -602,4 +602,4 @@ def test_get_identifiers_from_elder_datasets(tmp_path):
     report = _reader.report
 
     # assert
-    assert report.system_identifiers == {'digital.bibliothek.uni-halle.de/hd': '737429'}
+    assert report.system_identifier == {'digital.bibliothek.uni-halle.de/hd': '737429'}

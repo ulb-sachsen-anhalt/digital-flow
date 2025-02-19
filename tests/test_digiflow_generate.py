@@ -177,7 +177,7 @@ def test_utils_profile_class_context():
 
 
 @mock.patch('docker.models.images.ImageCollection.pull')
-def test_derivans_manager_with_container(mock_pull, tmp_path):
+def test_derivans_containermanager(mock_pull, tmp_path):
     """Check init phase of containerized
     Derivans execution context tries to
     pull required default container image"""
@@ -204,7 +204,7 @@ def test_derivans_manager_with_container(mock_pull, tmp_path):
 
 @mock.patch("docker.models.containers.ContainerCollection.run")
 @mock.patch('docker.models.images.ImageCollection.pull')
-def test_derivans_additional_args(mock_pull, mock_run, tmp_path):
+def test_derivans_containermanager_additional_args(mock_pull, mock_run, tmp_path):
     """Check init phase of containerized
     Derivans execution context tries to
     pull required default container image"""

@@ -5,14 +5,27 @@
 
 Father's little helper for internal library digitalization workflows running on Linux-Systems. Use at own risk.
 
-## Tests with toxic container
+## Local installation
 
-Execute `tox` in a closed environment:
+Create python environment and activate 
 
 ```bash
-setup_tox.sh your-python-tox-image
-docker build --tag <your-test-image> --build-arg BASE_IMAGE=<your-python-tox-image> -f Dockerfile.tox .
-docker run --rm <your-test-image> tox
+# install via PyPi
+python -m pip install digiflow
+
+# run tests
+python -m pip install -r tests/test_requirements.txt
+python -m pytest
+```
+
+## Tests with toxic container
+
+Execute `tox` in a closed environment (and keep track of docker's socket connection):
+
+```bash
+#setup_tox.sh your-python-tox-image
+docker build --tag <your-test-image> -f Dockerfile.tox .
+docker run --rm  -v /var/run/docker.sock:/var/run/docker.sock <yout-test-image> tox
 ```
 
 ## License
