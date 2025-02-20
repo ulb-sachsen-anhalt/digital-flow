@@ -42,9 +42,13 @@ def test_metsreader_kitodo2_volume():
     assert 'gvk-ppn' in prime_report.identifiers
     assert prime_report.identifiers['gvk-ppn'] == '183475917'
     assert prime_report.locations == 'Nr 83 (6)'
-    assert prime_report.licence == ("use and reproduction",
-                                    "http://rightsstatements.org/vocab/InC/1.0/",
-                                    "Urheberrechtsschutz 1.0")
+    assert len(prime_report.licence) == 2
+    assert prime_report.licence[0] == ("use and reproduction",
+                                       "http://rightsstatements.org/vocab/InC/1.0/",
+                                       "Urheberrechtsschutz 1.0")
+    assert prime_report.licence[1] == ("out of print work",
+                                       "n.a.",
+                                       "Wahrnehmung der Rechte durch die VG WORT (§ 51 VGG)")
     assert prime_report.related == ('host', 'gvk-ppn', '183475631')
 
 
@@ -211,7 +215,7 @@ def test_metsreader_logical_type_1686755_is_document():
     mets_reader = df.MetsReader(mets, 'md1686755')
 
     # assert
-    outcome = mets_reader.get_type_and_hierarchy()
+    outcome = mets_reader.inspect_logical_struct()
     assert outcome == ("document", [])
 
 
@@ -224,7 +228,7 @@ def test_metsreader_type_pica_monography():
     # act
     mets_reader = df.MetsReader(mets, 'md201517')
 
-    assert "monograph" in mets_reader.get_type_and_hierarchy()
+    assert "monograph" in mets_reader.inspect_logical_struct()
 
 
 def test_metsreader_wrong_logical_type():
@@ -246,7 +250,7 @@ def test_metsreader_wrong_logical_type():
     # in this case it should be "multivolume_work"
     # f-stage 424336
     # f-stage 415691
-    outcome = mets_reader.get_type_and_hierarchy()
+    outcome = mets_reader.inspect_logical_struct()
     assert outcome == ('monograph', [])
 
 
@@ -308,7 +312,7 @@ def test_metsreader_logical_type_is_multivolume():
     mets_reader.analyze()
 
     # assert
-    outcome = mets_reader.get_type_and_hierarchy()
+    outcome = mets_reader.inspect_logical_struct()
     assert outcome == ('multivolume_work', [])
 
 
@@ -329,7 +333,7 @@ def test_metsreader_logical_type_is_tome():
     mets_reader.analyze()
 
     # assert
-    outcome = mets_reader.get_type_and_hierarchy()
+    outcome = mets_reader.inspect_logical_struct()
     assert outcome == ('tome', [('9427342', 'multivolume_work')])
 
 
@@ -351,7 +355,7 @@ def test_metsreader_ambigious_recordinfo():
     mets_reader.analyze()
 
     # assert
-    outcome = mets_reader.get_type_and_hierarchy()
+    outcome = mets_reader.inspect_logical_struct()
     assert outcome == ('monograph', [])
 
 
@@ -584,7 +588,7 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     """How to handle latest Kitodo 3 DMS export"""
 
     # arrange
-    target_file = os.path.join(TEST_RES, "1906264740.kxp")
+    target_file = os.path.join(TEST_RES, "kitodo3", "1906264740.kxp")
     mets_reader = df.MetsReader(target_file)
 
     # act
@@ -594,6 +598,9 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     assert len(report.origins) == 2
     assert report.origins == [("publication", "1560", "Wien"),
                               ("digitization", "2025", "Halle (Saale)")]
+    assert report.licence == ('use and reproduction',
+                              'https://creativecommons.org/publicdomain/mark/1.0/',
+                              'Public Domain Mark 1.0')
 
 
 def test_metsreader_zd1_issue_16767392():
@@ -608,7 +615,7 @@ def test_metsreader_zd1_issue_16767392():
     mods_reader: df.ModsReader = df.ModsReader(mets_reader.primary_dmd, "md16767392")
 
     assert "16767392" in mods_reader.get_identifiers()['local']
-    the_tree = mets_reader.get_type_and_hierarchy()
+    the_tree = mets_reader.inspect_logical_struct()
     assert ('issue', [('16602862', 'year'), ('16289662', 'newspaper')]) == the_tree
 
 
@@ -623,7 +630,7 @@ def test_metsreader_zd1_issue_16359609():
     dmd_report: df.DmdReport = mets_reader.report.prime_report
 
     assert "ulbhalvd:16359609" == dmd_report.identifiers['local']
-    assert "issue" in mets_reader.get_type_and_hierarchy()
+    assert "issue" in mets_reader.inspect_logical_struct()
 
 
 def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
@@ -685,8 +692,8 @@ def test_metsreader_zd2_issue_18680621():
         'urn': 'urn:nbn:de:gbv:3:1-171133730-102163406918680621-11',
         'kxp-ppn': '102163406918680621',
     }
-    assert mets_reader.ulb_digi_system_identifier() == {'kitodo3': '4583'}
-    log_type, hierarchy = mets_reader.get_type_and_hierarchy()
+    assert mets_reader.ulb_system_identifier() == {'kitodo3': '4583'}
+    log_type, hierarchy = mets_reader.inspect_logical_struct()
     assert mods_reader.get_type() == 'AB'
     assert log_type == 'issue'
     assert hierarchy == [("uuid-b1b11d08-e2d6-45bd-84ef-0b4495013cff", 'day'),
@@ -777,7 +784,7 @@ def test_metsreader_logical_hierachy_newspaper_issue():
     mets_reader = df.MetsReader(mets, 'md16359603')
 
     # act
-    log_typ, hierachy = mets_reader.get_type_and_hierarchy()
+    log_typ, hierachy = mets_reader.inspect_logical_struct()
 
     # assert
     assert log_typ == 'issue'
@@ -801,7 +808,7 @@ def test_metsreader_missing_struct_mapping():
 
     # act
     with pytest.raises(df.DigiflowMetadataException) as _runtime_error:
-        mets_reader.check()
+        mets_reader.inspect_logical_struct_links()
 
     # assert
     assert " no link for logical section:'log1646693'" in _runtime_error.value.args[0]

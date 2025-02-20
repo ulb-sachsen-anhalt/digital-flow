@@ -458,10 +458,10 @@ class MetsReader(MetsProcessor):
         """Top level analysis"""
         if self._report is None:
             self._report = MetsReport()
-            self._report.system_identifier = self.ulb_digi_system_identifier()
+            self._report.system_identifier = self.ulb_system_identifier()
             prime_reader = ModsReader(self.primary_dmd, self._prime_mods_id)
             prime_report: DmdReport = prime_reader.report
-            self._report.type, self._report.hierarchy = self.get_type_and_hierarchy()
+            self._report.type, self._report.hierarchy = self.inspect_logical_struct()
             self._report.links = self.get_invalid_physical_structs()
             self._report.dmd_reports.append(prime_report)
             self._report.prime_report = prime_report
@@ -477,63 +477,33 @@ class MetsReader(MetsProcessor):
         if text_content:
             new_el.text = text_content
 
-    def check(self):
-        """Ensure certain invariants
+    def inspect_logical_struct_links(self):
+        """Ensure each logical section is at least connected to a physical
+        container. If not, this means an orphan logical sections. Although
+        it only yields a DDB-validation warning, Derivans will die if
+        it tries to create a PDF outline.
 
-        * each logical section is at least connected to a physical container
-          if not, this means empty logical sections => DDB warning, Derivans death
+        Done by traversing logical structure below current main logical
+        section, identified by primary descriptive section.
 
-        Traverse only logical structure below current main logical struct 
-        identified by primary descriptive section.
-
-        raises: RuntimeError if any check fails
+        raises: DigiflowMetadataException if any check fails
         """
 
-        self._check_logical_interlinking()
-
-    def _check_logical_interlinking(self):
-        _log_ids = self.root.xpath(f'.//mets:div[@DMDID="{self.dmd_id}"]/mets:div/@ID',
+        log_ids = self.root.xpath(f'.//mets:div[@DMDID="{self.dmd_id}"]/mets:div/@ID',
                                    namespaces=dfc.XMLNS)
-        for _log_id in _log_ids:
-            _links = self.root.findall(f'.//mets:smLink[@{XLINK_FROM}="{_log_id}"]', dfc.XMLNS)
-            if not _links:
+        for log_id in log_ids:
+            all_links = self.root.findall(f'.//mets:smLink[@{XLINK_FROM}="{log_id}"]', dfc.XMLNS)
+            if not all_links:
                 raise DigiflowMetadataException(
-                    f"{self.root.base} no link for logical section:'{_log_id}'!")
+                    f"{self.root.base} no link for logical section:'{log_id}'!")
 
-    # def get_type_and_hierarchy(self) -> typing.Tuple:
-    #     """
-    #     """
+    def inspect_logical_struct(self) -> typing.Tuple:
+        """Determine logical type of digital object and optional 
+        hierarchy level up to farthest logical parent node (=mets:structMap)
+        by inspecting the TYPE attribute of each container.
 
-    #     # inspect logical structure
-    #     return self._get_logical_struct()
-
-        # # inspect according dmd section
-        # pica_type = self._determine_by_dmd()
-
-        # return (pica_type, log_type, hierarchy)
-
-    # def _determine_by_dmd(self):
-    #     """
-    #     plain top-root .//*[@recordSyntax] will fail for multivolume single volumes because
-    #     they might have a mods:relatedItem[@type="host"] that would also match
-    #     """
-
-    #     xp_vls_ext_type = 'mods:extension/*[@recordSyntax="pica"]'
-    #     record_el = self.primary_dmd.find(xp_vls_ext_type, dfc.XMLNS)
-    #     if record_el is not None:
-    #         if 'code' in record_el.attrib:
-    #             pica_code = record_el.attrib['code']
-    #         else:
-    #             pica_code = record_el.text
-    #         return pica_code[0].upper() + pica_code[1:]
-    #     return None
-
-    def get_type_and_hierarchy(self) -> typing.Tuple:
-        """
-        Determine logical type for source and hierarchy level
-        up to farthest logical parent node (=mets:structMap)
-        by inspecting the TYPE attribute
-          https://www.dnb.de/SharedDocs/Downloads/EN/Professionell/Metadatendienste/linkedDataModellierungTiteldaten.pdf
+        For actual labelling cf.
+        https://www.dnb.de/SharedDocs/Downloads/EN/Professionell/Metadatendienste/linkedDataModellierungTiteldaten.pdf
         """
 
         xpath = f'.//*[@DMDID="{self._prime_mods_id}"]'
@@ -587,7 +557,7 @@ class MetsReader(MetsProcessor):
                 return migration_note[0].split()[2]
         return None
 
-    def ulb_digi_system_identifier(self) -> dict:
+    def ulb_system_identifier(self) -> dict:
         """Determine system identifier(s)
         * use METS-agent-information, if available
 
@@ -807,13 +777,17 @@ class ModsReader(XMLProcessor):
     def get_licence(self):
         """licence information if external link exists"""
 
-        xpr_signature = "mods:accessCondition[@href]"
+        xpr_signature = "mods:accessCondition"
         accesses = self.root.findall(xpr_signature, dfc.XMLNS)
         licences = []
         if len(accesses) > 0:
             for a in accesses:
                 the_type = a.get("type", default=dfc.UNSET_LABEL)
-                the_link = a.get("href", default=dfc.UNSET_LABEL)
+                the_link = dfc.UNSET_LABEL
+                if XLINK_HREF in a.attrib:
+                    the_link = a.get(XLINK_HREF)
+                elif "href" in a.attrib:
+                    the_link = a.get("href")
                 the_txt = a.text
                 licences.append((the_type, the_link, the_txt))
         return licences
