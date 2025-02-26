@@ -2,9 +2,12 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.dynamic]
+version = {attr = "digiflow.__version__"}
+
 [project]
 name = "digiflow"
-version = "6.0.1"
+dynamic = ["version"]
 description = "Father's Little Digitization Workflow Helper"
 readme = "README.md"
 requires-python = ">=3.8"
