@@ -1,10 +1,18 @@
 """API for handling records with server/client mechanics"""
 
+import argparse
+import configparser
 import dataclasses
 import functools
 import http.server
 import json
 import logging
+import logging.config
+import logging.handlers
+import os
+import sys
+import tempfile
+import typing
 
 from pathlib import Path
 
@@ -30,8 +38,12 @@ X_HEADER_SET_STATE = 'X-SET-STATE'
 
 STATETIME_FORMAT = '%Y-%m-%d_%H:%M:%S'
 
-DATA_EXHAUSTED_PREFIX = 'no records '
-DATA_EXHAUSTED_MARK = DATA_EXHAUSTED_PREFIX + '{} in {}'
+DATA_EXHAUSTED_PREFIX = "no records "
+DATA_EXHAUSTED_MARK = DATA_EXHAUSTED_PREFIX + "{} in {}"
+
+LOG_FORMATTER = logging.Formatter(
+    "%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%dT%H:%M:%S")
 
 
 @dataclasses.dataclass
@@ -100,7 +112,6 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
             is_allowed = client_name in self.client_ips
             if not is_allowed:
                 self._respond(state=404, headers={})
-                # self.wfile.write()
                 return False
         return True
 
@@ -110,14 +121,24 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         if not self._client_allowed():
             self.log("request from %s rejected", self.address_string(), level=logging.WARNING)
             return
-        get_record_state = self.headers.get(X_HEADER_GET_STATE)
+        get_record_state = self.headers.get(X_HEADER_GET_STATE, failobj=df.UNSET_LABEL)
         set_record_state = self.headers.get(X_HEADER_SET_STATE)
         parsed_request = self._parse_request_path()
         if isinstance(parsed_request, tuple):
             command, file_name = parsed_request
             if command is not None and command == DEFAULT_COMMAND_NEXT:
                 state, data = self.get_next_record(file_name, client_name,
-                                               get_record_state, set_record_state)
+                                                   get_record_state, set_record_state)
+                if state != 200:
+                    self._respond(state)
+                    self.wfile.write(data.encode('utf-8'))
+                    return
+                if isinstance(data, df_r.Record):
+                    ident = data.identifier
+                elif isinstance(data, dict):
+                    ident = data.get(df_r.FIELD_IDENTIFIER)
+                self.log("set record %s in %s to %s (load: '%s')",
+                         ident, self.path, client_name, data)
                 if isinstance(data, str):
                     self._respond(state, headers=TEXT_HEADER)
                     self.wfile.write(data.encode('utf-8'))
@@ -125,7 +146,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                     self._respond(state)
                     self.wfile.write(json.dumps(data, default=df_r.Record.dict).encode('utf-8'))
 
-    def log_request(self, _):
+    def log_request(self, *_):
         """silence internal logger"""
 
     def do_POST(self):
@@ -146,7 +167,8 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
             data_dict = json.loads(post_data)
             ident = data_dict.get(df_r.FIELD_IDENTIFIER)
             if DEFAULT_COMMAND_UPDATE == command:
-                self.log('update %s in %s: %s', ident, self.path, data_dict)
+                self.log("set record %s in %s by %s (load: '%s')",
+                         ident, self.path, client_name, data_dict)
                 if ident:
                     state, data = self.update_record(file_name, data_dict)
                     if isinstance(data, str):
@@ -180,7 +202,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
                 data_file = self.record_list_directory / a_file.name
                 return data_file
         self.log("no file %s in %s", file_name, self.record_list_directory,
-                 level=logging.CRITICAL)
+                 level=logging.WARNING)
         return None
 
     def get_next_record(self, file_name, client_name, requested_state, set_state) -> tuple:
@@ -192,7 +214,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         data_file_path = self.get_data_file(file_name)
         # no match results in 404 - resources not available after all
         if data_file_path is None:
-            self.log("no %s found in %s", file_name, self.record_list_directory,
+            self.log("no file %s found in %s", file_name, self.record_list_directory,
                      level=logging.WARNING)
             return (404, f"no '{file_name}' in {self.record_list_directory}")
 
@@ -322,3 +344,108 @@ def run_server(host, port, start_data: HandlerInformation):
         except KeyboardInterrupt:
             the_server.shutdown()
     the_logger.info("shutdown record server (%s:%s)", host, port)
+
+
+def _set_file_handler(logfile_path: Path):
+    try:
+        file_handler = logging.handlers.RotatingFileHandler(
+            logfile_path, maxBytes=1_048_576)
+    except (PermissionError, FileNotFoundError):
+        tmp_log_file = os.path.join(tempfile.gettempdir(), logfile_path)
+        file_handler = logging.handlers.RotatingFileHandler(
+            tmp_log_file, maxBytes=10_485_760)
+    file_handler.setFormatter(LOG_FORMATTER)
+    return file_handler
+
+
+if __name__ == "__main__":
+    ARGP = argparse.ArgumentParser()
+    ARGP.add_argument("-c", "--config", required=False)
+    ARGP.add_argument("--host", required=False)
+    ARGP.add_argument("--port", required=False)
+    ARGP.add_argument("--log_dir", required=False)
+    ARGP.add_argument("--log_filename", required=False)
+    ARGP.add_argument("--log_config", required=False)
+    ARGP.add_argument("--logger_name", required=False)
+    ARGP.add_argument("--accepted_ips", required=False)
+    ARGP.add_argument("--resources_dir", required=False)
+    THE_ARGS: typing.Dict = vars(ARGP.parse_args())
+
+    THE_CONFIG = configparser.ConfigParser()
+    THE_CONFIG.add_section("log")
+    THE_CONFIG.add_section("server")
+    READ_CONFIG_FILES = []
+    if THE_ARGS["config"] is not None:
+        CFG_FILE = Path(THE_ARGS["config"])
+        if not CFG_FILE.is_file():
+            raise RuntimeError(f"config file missing: {CFG_FILE.resolve()}")
+        READ_CONFIG_FILES = THE_CONFIG.read(CFG_FILE)
+    if THE_ARGS["log_dir"] is not None:
+        THE_CONFIG.set("log", "log_dir", THE_ARGS["log_dir"])
+    if THE_ARGS["log_filename"] is not None:
+        THE_CONFIG.set("log", "log_filename", THE_ARGS["log_filename"])
+    if THE_ARGS["log_config"] is not None:
+        THE_CONFIG.set("log", "log_config", THE_ARGS["log_config"])
+    if THE_ARGS["logger_name"] is not None:
+        THE_CONFIG.set("log", "logger_name", THE_ARGS["logger_name"])
+    if THE_ARGS["host"] is not None:
+        THE_CONFIG.set("server", "host", THE_ARGS["host"])
+    if THE_ARGS["port"] is not None:
+        THE_CONFIG.set("server", "port", THE_ARGS["port"])
+    if THE_ARGS["accepted_ips"] is not None:
+        THE_CONFIG.set("server", "accepted_ips", THE_ARGS["accepted_ips"])
+    if THE_ARGS["resources_dir"] is not None:
+        THE_CONFIG.set("server", "resources_dir", THE_ARGS["resources_dir"])
+
+    # all options present?
+    try:
+        RAW_LOG_DIR = THE_CONFIG.get("log", "log_dir")
+        LOG_FILENAME = THE_CONFIG.get("log", "log_filename")
+        LOGGER_NAME = THE_CONFIG.get("log", "logger_name")
+        RES_DIR = THE_CONFIG.get("server", "resources_dir")
+    except configparser.NoOptionError as err:
+        raise RuntimeError(f"Configuration option missing: {err.args[0]}") from err
+
+    # check pre-conditions
+    if not os.access(RAW_LOG_DIR, os.F_OK and os.W_OK):
+        raise RuntimeError(f"cant store log files at non-writeable directory: {RAW_LOG_DIR}")
+    LOG_DIR = Path(RAW_LOG_DIR)
+    LOG_PATH = (LOG_DIR / LOG_FILENAME).resolve()
+    # foster record directory path
+    if '~' in RES_DIR:
+        RES_DIR = Path(RES_DIR).expanduser()
+    RES_DIR = Path(RES_DIR).absolute().resolve()
+
+    # now initialize server side logging
+    USED_LOGGING_CONF = None
+    if THE_ARGS["log_config"] is not None:
+        LOG_CONFIG_FILE = Path(THE_ARGS["log_config"]).resolve()
+        CFG_DICT = {'logname': str(LOG_PATH)}
+        logging.config.fileConfig(str(LOG_CONFIG_FILE), defaults=CFG_DICT)
+        USED_LOGGING_CONF = LOG_CONFIG_FILE
+    LOGGER = logging.getLogger(LOGGER_NAME)
+    if USED_LOGGING_CONF is None:
+        console_handler = logging.StreamHandler(sys.stdout)
+        console_handler.setFormatter(LOG_FORMATTER)
+        file_handler = _set_file_handler(LOG_PATH)
+        LOGGER.addHandler(console_handler)
+        LOGGER.addHandler(file_handler)
+        LOGGER.setLevel(logging.DEBUG)
+    LOG_TAG = Path(__file__).stem
+    if len(READ_CONFIG_FILES) > 0:
+        LOGGER.debug("[%s] uses module configuration %s", LOG_TAG, READ_CONFIG_FILES)
+    if USED_LOGGING_CONF is not None:
+        LOGGER.debug("[%s] uses logging configuration %s", LOG_TAG, USED_LOGGING_CONF)
+    LOGGER.info("[%s] manage record files from %s", LOG_TAG, RES_DIR)
+
+    # evaluate configured server data, if any
+    HOST = THE_CONFIG.get("server", "host", fallback="127.0.0.1")
+    PORT = THE_CONFIG.getint("server", "port", fallback=8081)
+    _RAW_IPS = THE_CONFIG.get("server", "accepted_ips", fallback="")
+    CLIENT_IPS = [c.strip() for c in _RAW_IPS.split(",") if len(c.strip()) > 0]
+
+    # forward to request handler
+    START_DATA: HandlerInformation = HandlerInformation(RES_DIR, LOGGER)
+    START_DATA.client_ips = CLIENT_IPS
+
+    run_server(HOST, PORT, START_DATA)
