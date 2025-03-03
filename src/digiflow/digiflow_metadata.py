@@ -536,10 +536,13 @@ class MetsReader(MetsProcessor):
                     the_id = nxt_prnt.attrib['ID'].strip('log')
                 else:
                     mptr_curr = nxt_prnt.findall('mets:mptr', dfc.XMLNS)
-                    # exported METS from kitodo3
+                    # exported METS from kitodo
                     # using mptr to link parents
                     if len(mptr_curr) == 1:
-                        the_id = mptr_curr[0].attrib[XLINK_HREF]
+                        if XLINK_HREF in mptr_curr[0].attrib:
+                            raw_link = mptr_curr[0].attrib[XLINK_HREF]
+                            if len(raw_link.strip()) > 0:
+                                the_id = raw_link.strip()
                 nxt_ntr.append((the_id, log_type))
                 nxt_prnt = nxt_prnt.getparent()
             return (curr_log_type, nxt_ntr)
@@ -560,50 +563,48 @@ class MetsReader(MetsProcessor):
     def ulb_system_identifier(self) -> dict:
         """Determine system identifier(s)
         * use METS-agent-information, if available
-
         Please note:
-        Due migrations there can be more
-        than one system id present: actual plus 
-        legacy identifiers
+            Due migration efforts can be several system ids since the
+            digital object wandered from system to system of old
         """
         ident_dict = {}
         repositories = []
         # inspect mets header
-        _mhdrs = self.xpath('//mets:metsHdr')
-        if len(_mhdrs) == 1:
-            _mhdr = _mhdrs[0]
-            repositories = self.xpath('mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()', _mhdr)
+        mets_hdrs = self.xpath('//mets:metsHdr')
+        if len(mets_hdrs) == 1:
+            mets_hdr = mets_hdrs[0]
+            repositories = self.xpath('mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()', mets_hdr)
         repo_one = repositories[0] if len(
             repositories) == 1 else MARK_AGENT_LEGACY.split(':', maxsplit=1)[0]
         # legacy migrated record found?
-        _legacy_marks = self.xpath(f'//mets:note[contains(text(), "{MARK_AGENT_LEGACY}")]/text()')
-        if len(_legacy_marks) == 1:
-            _id = _legacy_marks[0]
-            if ':' in _id:
-                _legacy_ident = _id.rsplit(':', maxsplit=1)[1].strip()
-                _legacy_ident = _legacy_ident[2:] if _legacy_ident.startswith(
-                    'md') else _legacy_ident
-                ident_dict[repo_one] = _legacy_ident
+        legacy_marks = self.xpath(f'//mets:note[contains(text(), "{MARK_AGENT_LEGACY}")]/text()')
+        if len(legacy_marks) == 1:
+            legacy_id = legacy_marks[0]
+            if ':' in legacy_id:
+                legacy_ident = legacy_id.rsplit(':', maxsplit=1)[1].strip()
+                legacy_ident = legacy_ident[2:] if legacy_ident.startswith(
+                    'md') else legacy_ident
+                ident_dict[repo_one] = legacy_ident
             else:
-                ident_dict[repo_one] = _id
-        _vls_marks = self.xpath(f'//mets:note[contains(text(), "{MARK_AGENT_VLID}")]/text()')
-        if len(_vls_marks) == 1:
-            _id = _vls_marks[0][len(MARK_AGENT_VLID):].strip()
-            ident_dict[repo_one] = _id
+                ident_dict[repo_one] = legacy_id
+        legacy_vls_marks = self.xpath(f'//mets:note[contains(text(), "{MARK_AGENT_VLID}")]/text()')
+        if len(legacy_vls_marks) == 1:
+            legacy_id = legacy_vls_marks[0][len(MARK_AGENT_VLID):].strip()
+            ident_dict[repo_one] = legacy_id
         # legacy vls record which is not mapped by now?
         if repo_one and ('digital' in repo_one or 'menadoc' in repo_one) and repo_one not in ident_dict:
-            _legacy_id = self.dmd_id[2:] if self.dmd_id.startswith('md') else self.dmd_id
-            ident_dict[repo_one] = _legacy_id
+            legacy_id = self.dmd_id[2:] if self.dmd_id.startswith('md') else self.dmd_id
+            ident_dict[repo_one] = legacy_id
         # legacy kitodo2 source _without_ OAI envelope
-        _creators = self.root.xpath(
+        agent_creators = self.root.xpath(
             '//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name', namespaces=dfc.XMLNS)
-        if len(_creators) == 1 and 'kitodo-ugh' in _creators[0].text.lower():
+        if len(agent_creators) == 1 and 'kitodo-ugh' in agent_creators[0].text.lower():
             ident_dict[MARK_KITODO2] = None
         # kitodo3 metsDocumentID?
-        _doc_ids = self.xpath('//mets:metsDocumentID/text()', _mhdr)
-        if len(_doc_ids) == 1:
-            ident_dict[MARK_KITODO3] = _doc_ids[0]
-        # once migrated, now hosted at opendata
+        k3_doc_ids = self.xpath('//mets:metsDocumentID/text()', mets_hdr)
+        if len(k3_doc_ids) == 1:
+            ident_dict[MARK_KITODO3] = k3_doc_ids[0]
+        # once migrated of old, now hosted at opendata
         viewer_pres = self.root.xpath(
             './/dv:presentation[contains(./text(), "://opendata")]/text()', namespaces=dfc.XMLNS)
         if len(viewer_pres) == 1 and 'simple-search' not in viewer_pres[0]:
@@ -678,7 +679,8 @@ class ModsReader(XMLProcessor):
             dmd_report.identifiers = self.get_identifiers()
             dmd_report.languages = self.get_language_information()
             the_shelfs = self.get_location_shelfs()
-            dmd_report.locations = the_shelfs[0] if len(the_shelfs) == 1 else the_shelfs
+            if the_shelfs:
+                dmd_report.locations = the_shelfs[0] if len(the_shelfs) == 1 else the_shelfs
             dmd_report.origins = self.get_origins()
             the_lics = self.get_licence()
             dmd_report.licence = the_lics[0] if len(the_lics) == 1 else the_lics
@@ -689,8 +691,10 @@ class ModsReader(XMLProcessor):
 
     def get_type(self):
         """
-        plain top-root .//*[@recordSyntax] will fail for multivolume single volumes because
-        they might have a mods:relatedItem[@type="host"] that would also match
+        Get PICA type if present in mods:extension.
+        Please note: Plain .//*[@recordSyntax] will fail for multivolume single volumes because
+            they might have a mods:relatedItem[@type="host"] that would also match.
+        Inspect further custom goobi:metadata@name=PICAType if present and no match so far.
         """
 
         xp_vls_ext_type = 'mods:extension/*[@recordSyntax="pica"]'
@@ -701,10 +705,16 @@ class ModsReader(XMLProcessor):
             else:
                 pica_code = record_el.text
             return pica_code[0].upper() + pica_code[1:]
+        # alternative goobi extension (Kitodo 2)
+        goobi_picas = self.root.xpath("mods:extension//*[@name='PICAType']/text()",
+                                      namespaces=dfc.XMLNS)
+        if len(goobi_picas) == 1:
+            return goobi_picas[0]
         return None
 
     def get_identifiers(self):
         """Read different kind-o-identifiers from DMD MODS
+        and respect custom Kitodo goobi-elements
         """
         idents = {}
         top_idents = self.root.findall("mods:identifier", dfc.XMLNS)
@@ -713,7 +723,28 @@ class ModsReader(XMLProcessor):
         record_infos = self.root.findall("mods:recordInfo/mods:recordIdentifier", dfc.XMLNS)
         for rec in record_infos:
             idents[rec.attrib['source']] = rec.text
-
+        goobi_srcs = self.root.xpath("mods:extension//*[@name='CatalogIDSource' and not(@anchorId)]/text()",
+                                     namespaces=dfc.XMLNS)
+        if len(goobi_srcs) > 0:
+            idents["goobi:CatalogSourceID"] = goobi_srcs[0]
+        goobi_parents = self.root.xpath("mods:extension//*[@name='CatalogIDSource' and @anchorId]/text()",
+                                     namespaces=dfc.XMLNS)
+        if len(goobi_parents) == 1:
+            idents["goobi:anchorID"] = goobi_parents[0]
+        goobi_vds = self.root.xpath("mods:extension//*[starts-with(@name, 'VD')]",
+                                    namespaces=dfc.XMLNS)
+        if len(goobi_vds) > 0:
+            for vd in goobi_vds:
+                vd_key = vd.get("name")
+                vd_val = str(vd.text).strip()
+                idents[vd_key] = vd_val
+        goobi_urns = self.root.xpath("mods:extension//*[contains(@name, 'urn')]/text()",
+                                     namespaces=dfc.XMLNS)
+        if len(goobi_urns) == 1:
+            key = "urn"
+            if ":nbn:" in goobi_urns[0]:
+                key = "urn:nbn"
+            idents[key] = goobi_urns[0].strip()
         if len(idents) < 1:
             raise DigiflowMetadataException(f"no identifiers in {self.dmd_id} of {self.root.base}!")
         return idents
@@ -745,8 +776,14 @@ class ModsReader(XMLProcessor):
         in trees like holdingSimple/copyInformation/shelfLocator
         """
 
-        xpr_signature = "mods:location//mods:shelfLocator/text()"
-        return self.root.xpath(xpr_signature, namespaces=dfc.XMLNS)
+        langs = self.root.xpath("mods:location//mods:shelfLocator/text()",
+                                namespaces=dfc.XMLNS)
+        if len(langs) > 0:
+            return langs
+        goobi_doclangs = self.root.xpath("mods:extension//*[@name='DocLanguage']",
+                                         namespaces=dfc.XMLNS)
+        if len(goobi_doclangs) > 0:
+            return goobi_doclangs
 
     def get_origins(self):
         """Gather informations about origin places"""

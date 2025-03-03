@@ -31,7 +31,7 @@ def test_metsreader_kitodo2_volume():
     reader = df.MetsReader(path)
 
     # act
-    mets_report: df.MetsReport = reader.analyze()
+    mets_report: df.MetsReport = reader.report
     prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
@@ -66,7 +66,7 @@ def test_metsreader_report_vd18_cstage():
     reader = df.MetsReader(path, 'md9427342')
 
     # act
-    mets_report: df.MetsReport = reader.analyze()
+    mets_report: df.MetsReport = reader.report
     prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
@@ -96,7 +96,7 @@ def test_metsreader_report_vd18_fstage():
     reader = df.MetsReader(path, 'md9427337')
 
     # act
-    mets_report: df.MetsReport = reader.analyze()
+    mets_report: df.MetsReport = reader.report
     prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
@@ -106,6 +106,26 @@ def test_metsreader_report_vd18_fstage():
     assert prime_report.identifiers['ulbhalvd18'] == '211999628'
     assert prime_report.languages == ['ger']
     assert prime_report.locations == 'Lb 712 a (3,2)'
+
+
+def test_metsreader_report_k2_goobi_mets():
+    """Ensure Kitodo 2 legacy METS to be archived
+    is still properly recognized"""
+
+    # tests/resources/mets/k2_meta_10261.xml
+    path = os.path.join(TEST_RES, "mets", "k2_meta_10261.xml")
+    assert os.path.exists(path)
+    reader = df.MetsReader(path)
+
+    # act
+    report: df.MetsReport = reader.report
+
+    # assert
+    assert report.hierarchy == [('LOG_0002', 'MultiVolumeWork')]
+    prime_report: df.DmdReport = report.prime_report
+    assert prime_report.identifiers["goobi:CatalogSourceID"] == "153142537"
+    assert prime_report.identifiers["goobi:anchorID"] == "153142340"
+    assert prime_report.identifiers["urn:nbn"] == "urn:nbn:de:gbv:3:1-1192015415-153142537-13"
 
 
 def test_metsreader_report_vd17_fstage_pica_case():
@@ -125,7 +145,7 @@ def test_metsreader_report_vd17_fstage_pica_case():
     reader = df.MetsReader(path, 'md14591176')
 
     # act
-    report: df.MetsReport = reader.analyze()
+    report: df.MetsReport = reader.report
     prime_report: df.DmdReport = report.prime_report
 
     # assert
@@ -154,7 +174,7 @@ def test_metsreader_report_hd_monography():
     reader = df.MetsReader(path, 'md10595')
 
     # act
-    report: df.MetsReport = reader.analyze()
+    report: df.MetsReport = reader.report
     prime_report: df.DmdReport = report.prime_report
 
     # assert
@@ -181,7 +201,7 @@ def test_metsreader_report_kitodo2_export_monography():
     reader = df.MetsReader(path, 'DMDLOG_0000')
 
     # act
-    report: df.MetsReport = reader.analyze()
+    report: df.MetsReport = reader.report
     prime_report: df.DmdReport = report.prime_report
     # need to set this manually since
     # we do not know the kitodo ID from METS
@@ -285,7 +305,7 @@ def test_metsreader_report_for_10595(monograph_hd_invalid_physlinks):
     reader = df.MetsReader(monograph_hd_invalid_physlinks, 'md10595')
 
     # act
-    mets_report: df.MetsReport = reader.analyze()
+    mets_report: df.MetsReport = reader.report
     report: df.DmdReport = mets_report.prime_report
 
     # assert
@@ -309,7 +329,7 @@ def test_metsreader_logical_type_is_multivolume():
     mets_reader = df.MetsReader(mets, 'md9427342')
 
     # act
-    mets_reader.analyze()
+    mets_reader.report
 
     # assert
     outcome = mets_reader.inspect_logical_struct()
@@ -330,7 +350,7 @@ def test_metsreader_logical_type_is_tome():
     mets_reader = df.MetsReader(mets, 'md9427334')
 
     # act
-    mets_reader.analyze()
+    mets_reader.report
 
     # assert
     outcome = mets_reader.inspect_logical_struct()
@@ -352,7 +372,7 @@ def test_metsreader_ambigious_recordinfo():
     mets_reader = df.MetsReader(mets, 'md369765')
 
     # act
-    mets_reader.analyze()
+    mets_reader.report
 
     # assert
     outcome = mets_reader.inspect_logical_struct()
@@ -521,7 +541,7 @@ def test_metsreader_opendata2_inspect_migrated_record_identifiers():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report: df.MetsReport = mets_reader.analyze()
+    report: df.MetsReport = mets_reader.report
     dmd_report: df.DmdReport = report.prime_report
 
     # assert
@@ -549,7 +569,7 @@ def test_metsreader_opendata_migrated_record_with_doi():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report: df.MetsReport = mets_reader.analyze()
+    report: df.MetsReport = mets_reader.report
     dmd_report: df.DmdReport = report.prime_report
 
     # assert
@@ -576,7 +596,7 @@ def test_metsreader_opendata_inspect_migrated_record_origins():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report: df.DmdReport = mets_reader.analyze().prime_report
+    report: df.DmdReport = mets_reader.report.prime_report
 
     # 3 origins, which is of course wrong
     assert len(report.origins) == 2
@@ -592,7 +612,7 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     mets_reader = df.MetsReader(target_file)
 
     # act
-    report: df.DmdReport = mets_reader.analyze().prime_report
+    report: df.DmdReport = mets_reader.report.prime_report
 
     # 3 origins, which is of course wrong
     assert len(report.origins) == 2
