@@ -42,6 +42,7 @@ def test_record_local_identifiers(urn, local_identifier):
     # act
     record = df_r.Record(urn)
     assert record.local_identifier == local_identifier
+    assert record.info == {}
 
 
 def test_record_update_info_set_input():

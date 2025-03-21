@@ -76,7 +76,7 @@ class Record:
         self.system_handle = UNSET_LABEL
         self.set = UNSET_LABEL
         self.created_time = UNSET_LABEL
-        self._info = UNSET_LABEL
+        self._info = {}
         self._state = UNSET_LABEL
         self.state_time = UNSET_LABEL
 
