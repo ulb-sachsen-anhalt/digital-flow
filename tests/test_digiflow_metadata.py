@@ -938,3 +938,14 @@ def test_mets_reader_some_sbb_mets():
     dmd_report: df.DmdReport = the_report.prime_report
     assert the_report.type == "monograph"
     assert dmd_report.languages == ["ger"]
+
+
+def test_mets_reader_newspaper_year_1921():
+    """Behavior if year METS encountered"""
+
+    the_reader = df.MetsReader(TEST_RES / "mets" / "newspaper" /
+                               "1516514412012_175735_year_1921.xml")
+    the_report = the_reader.report
+    dmd_report: df.DmdReport = the_report.prime_report
+    assert the_report.type == "year"
+    assert dmd_report.languages == ["ger"]
