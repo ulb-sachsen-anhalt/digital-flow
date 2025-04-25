@@ -286,7 +286,8 @@ class Reporter:
         self.digi_type = digi_type
         self._report: typing.Optional[Report] = None
         path_xslt = PATH_MEDIA_XSL
-        if self.digi_type[1] == 'Z':
+        if (len(self.digi_type) < 5 and self.digi_type[1] == 'Z') or \
+            self.digi_type.lower() in ["issue", "additional"]:
             path_xslt = PATH_NEWSP_XSL
         self.transformer = DDBTransformer(path_input,
                                           path_xslt,

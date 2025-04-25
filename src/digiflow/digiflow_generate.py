@@ -510,6 +510,8 @@ class ContainerDerivansManager(BaseDerivansManager):
                 if self.images:
                     command.append("-i")
                     command.append(self.images)
+        if self.additional_args and len(self.additional_args.strip()) > 0:
+            command.append(self.additional_args)
         if self._path_logging:
             _log_dir = self._path_logging
             mounts.append(Mount(source=_log_dir, target=DERIVANS_CNT_LOGG_DIR, type='bind'))
@@ -520,6 +522,7 @@ class ContainerDerivansManager(BaseDerivansManager):
             command=command,
             user=os.getuid(),
             mounts=mounts,
+            auto_remove=True,
             detach=True
         )
         exit_code: int = container.wait()['StatusCode']
@@ -532,8 +535,6 @@ class ContainerDerivansManager(BaseDerivansManager):
                 f"--mount type={mount['Type']},source={mount['Source']},target={mount['Target']}"
             )
         full_command_equivalent.append(self._container_image)
-        if self.additional_args and len(self.additional_args.strip()) > 0:
-            command.append(self.additional_args)
         full_command_equivalent.append(" ".join(command))
         dur: float = time.perf_counter() - start_time
         self.run_command = " ".join(full_command_equivalent)

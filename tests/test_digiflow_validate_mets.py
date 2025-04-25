@@ -10,16 +10,9 @@ from pathlib import (
 
 import pytest
 
-from digiflow.validate.metadata_ddb import (
-    IGNORE_DDB_RULES_ULB,
-    DDBRole,
-    Report,
-    Reporter,
-)
+import digiflow.validate.metadata_ddb as df_vddb
 
-from .conftest import (
-    TEST_RES
-)
+from .conftest import TEST_RES
 
 # switch off saxon if not available
 SAXON_PY_ENABLED = True
@@ -32,23 +25,23 @@ except ModuleNotFoundError:
 def test_role_order():
     """Ensure roles order matters"""
 
-    assert DDBRole.FATAL > DDBRole.ERROR
-    assert DDBRole.INFO < DDBRole.FATAL
-    assert DDBRole.FATAL >= DDBRole.FATAL
+    assert df_vddb.DDBRole.FATAL > df_vddb.DDBRole.ERROR
+    assert df_vddb.DDBRole.INFO < df_vddb.DDBRole.FATAL
+    assert df_vddb.DDBRole.FATAL >= df_vddb.DDBRole.FATAL
 
 
 @pytest.mark.parametrize(
     "input_string,expected_obj", [
-        ('caution', DDBRole.CAUTION),
-        ('error', DDBRole.ERROR),
-        ('fatal', DDBRole.FATAL),
+        ('caution', df_vddb.DDBRole.CAUTION),
+        ('error', df_vddb.DDBRole.ERROR),
+        ('fatal', df_vddb.DDBRole.FATAL),
         ('foo', None),
         (None, None),
     ])
 def test_role_for_label(input_string, expected_obj):
     """Ensure enum objects found for given input"""
 
-    assert DDBRole.from_label(input_string) is expected_obj
+    assert df_vddb.DDBRole.from_label(input_string) is expected_obj
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -62,15 +55,33 @@ def test_ddb_report_newspaper_headlines(tmp_path):
     mets_source = Path(TEST_RES) / file_name
     mets_target = os.path.join(tmp_path, file_name)
     shutil.copy(str(mets_source), str(mets_target))
-    reporter = Reporter(mets_target, digi_type='OZ')
+    reporter = df_vddb.Reporter(mets_target, digi_type='OZ')
 
     # act
-    whats_up: Report = reporter.get()
+    whats_up: df_vddb.Report = reporter.get()
 
     # assert
     assert len(whats_up.ddb_meldungen) == 2
     assert ('error', 'amdSec_04') == whats_up.read()[0]
     assert ('warn', 'structMapLogical_12') == whats_up.read()[1]
+
+
+@pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
+def test_ddb_report_newspaper_type_issue(tmp_path):
+    """Simple MWE to trigger transformation including
+    schematron failures => none in this case, all fine
+    """
+
+    # arrange
+    file_name = 'vls_digitale_9633116.zmets.xml'
+    mets_source = Path(TEST_RES) / file_name
+    mets_target = os.path.join(tmp_path, file_name)
+    shutil.copy(str(mets_source), str(mets_target))
+    reporter = df_vddb.Reporter(mets_target, digi_type='issue')
+
+    # assert
+    assert str(df_vddb.PATH_MEDIA_XSL.name) not in str(reporter.transformer.path_xslt)
+    assert str(df_vddb.PATH_NEWSP_XSL.name) in str(reporter.transformer.path_xslt)
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
@@ -84,10 +95,10 @@ def test_ddb_report_newspaper_longform(tmp_path):
     mets_source = Path(TEST_RES) / file_name
     mets_target = os.path.join(tmp_path, file_name)
     shutil.copy(str(mets_source), str(mets_target))
-    reporter = Reporter(mets_target, digi_type='OZ')
+    reporter = df_vddb.Reporter(mets_target, digi_type='OZ')
 
     # act
-    whats_up: Report = reporter.get()
+    whats_up: df_vddb.Report = reporter.get()
 
     # assert
     assert len(whats_up.ddb_meldungen) == 2
@@ -108,6 +119,15 @@ def _fixture_share_it_monography(tmp_path):
     return str(mets_target)
 
 
+def test_ddb_validate_opendata_44046_xslt(share_it_monography):
+    """assert proper internal transformation used"""
+    # act
+    reporter = df_vddb.Reporter(share_it_monography)
+
+    assert str(df_vddb.PATH_NEWSP_XSL.name) not in str(reporter.transformer.path_xslt)
+    assert str(df_vddb.PATH_MEDIA_XSL.name) in str(reporter.transformer.path_xslt)
+
+
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason='no saxon binary')
 def test_ddb_validate_opendata_44046_defaults(share_it_monography):
     """Schematron validation with common monography (Aa)
@@ -120,8 +140,8 @@ def test_ddb_validate_opendata_44046_defaults(share_it_monography):
     """
 
     # act
-    reporter = Reporter(share_it_monography)
-    whats_up: Report = reporter.get(min_ddb_level='info')
+    reporter = df_vddb.Reporter(share_it_monography)
+    whats_up: df_vddb.Report = reporter.get(min_ddb_level='info')
 
     # assert
     assert not whats_up.alert()         # nothing very bad per se
@@ -136,7 +156,7 @@ def test_opendata_44046_defaults_not_conform(share_it_monography):
     """XSD validation yields null problemo"""
 
     # act
-    reporter = Reporter(share_it_monography)
+    reporter = df_vddb.Reporter(share_it_monography)
     _ = reporter.get()
 
     # assert
@@ -150,7 +170,7 @@ def test_ddb_validate_opendata_44046_ignore_ident01(share_it_monography):
     simple monography (Aa)"""
 
     # act
-    whats_up: Report = Reporter(share_it_monography).get(ignore_ddb_rule_ids=['identifier_01'])
+    whats_up: df_vddb.Report = df_vddb.Reporter(share_it_monography).get(ignore_ddb_rule_ids=['identifier_01'])
     assert not whats_up.alert()
     assert len(whats_up.ddb_meldungen) == 0
 
@@ -174,8 +194,8 @@ def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    reporter = Reporter(mets_source)
-    whats_up: Report = reporter.get()
+    reporter = df_vddb.Reporter(mets_source)
+    whats_up: df_vddb.Report = reporter.get()
 
     # assert
     loads = whats_up.read()
@@ -207,7 +227,7 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(ignore_ddb_rule_ids=['fileSec_02'])
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get(ignore_ddb_rule_ids=['fileSec_02'])
 
     # assert
     assert not result.alert()
@@ -234,7 +254,7 @@ def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(min_ddb_level='info')
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get(min_ddb_level='info')
 
     # assert
     loads = result.read()
@@ -263,7 +283,7 @@ def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(min_ddb_level='info')
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get(min_ddb_level='info')
 
     # assert
     loads = result.read()
@@ -286,8 +306,8 @@ def test_ddb_validate_kitodo2_vd18_153142537(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    reporter = Reporter(mets_source)
-    result: Report = reporter.get(ignore_ddb_rule_ids=IGNORE_DDB_RULES_ULB,
+    reporter = df_vddb.Reporter(mets_source)
+    result: df_vddb.Report = reporter.get(ignore_ddb_rule_ids= df_vddb.IGNORE_DDB_RULES_ULB,
                                   min_ddb_level='info')
 
     # assert
@@ -315,8 +335,8 @@ def test_ddb_validate_kitodo2_vd18_153142537_curated(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    ignore_them = IGNORE_DDB_RULES_ULB
-    result: Report = Reporter(mets_source).get(ignore_them, 'error')
+    ignore_them = df_vddb.IGNORE_DDB_RULES_ULB
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get(ignore_them, 'error')
 
     # assert
     loads = result.read()
@@ -342,7 +362,7 @@ def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get()
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get()
 
     # assert
     loads = result.read()
@@ -366,7 +386,7 @@ def test_ddb_validate_kitodo2_vd18_153142340(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get(min_ddb_level='error')
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get(min_ddb_level='error')
 
     # assert
     loads = result.read()
@@ -397,7 +417,7 @@ def test_report_about_kitodo2_morbio_1748529021_ddb(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get()
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get()
 
     # assert
     loads = result.read()
@@ -422,7 +442,7 @@ def test_report_about_kitodo2_morbio_1748529021_xsd(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source).get()
+    result: df_vddb.Report = df_vddb.Reporter(mets_source).get()
 
     # assert
     assert result.alert()
@@ -447,7 +467,7 @@ def test_ddb_validate_newspaper(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source, digi_type='OZ').get(min_ddb_level='warn')
+    result: df_vddb.Report = df_vddb.Reporter(mets_source, digi_type='OZ').get(min_ddb_level='warn')
 
     # assert
     loads = result.read()
@@ -468,7 +488,7 @@ def test_ddb_validate_newspaper_02(tmp_path):
     shutil.copy(str(mets_source), str(mets_target))
 
     # act
-    result: Report = Reporter(mets_source, digi_type='OZ').get()
+    result: df_vddb.Report = df_vddb.Reporter(mets_source, digi_type='OZ').get()
 
     # assert
     assert len(result.ddb_meldungen) == 0
@@ -491,8 +511,8 @@ def test_ddb_validate_opendata_origin_info_mystery():
     ignore_these = ['identifier_01', 'originInfo_06']
 
     # act
-    reporter = Reporter(mets_path, digi_type='AF')
-    report: Report = reporter.get(ignore_ddb_rule_ids=ignore_these)
+    reporter = df_vddb.Reporter(mets_path, digi_type='AF')
+    report: df_vddb.Report = reporter.get(ignore_ddb_rule_ids=ignore_these)
 
     # assert
     assert not report.alert()
