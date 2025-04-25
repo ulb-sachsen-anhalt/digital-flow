@@ -522,7 +522,6 @@ class ContainerDerivansManager(BaseDerivansManager):
             command=command,
             user=os.getuid(),
             mounts=mounts,
-            auto_remove=True,
             detach=True
         )
         exit_code: int = container.wait()['StatusCode']
