@@ -1,6 +1,7 @@
 """Common record attributes"""
 
 import ast
+import dataclasses
 import json
 import time
 import typing
@@ -52,6 +53,19 @@ class RecordDataException(Exception):
     """
 
 
+@dataclasses.dataclass
+class Context:
+    """Provide some more Context"""
+    position: int
+    total_len: int
+    data_path: str
+
+    def __init__(self, position=0, len=0, data_path=""):
+        self.position = position
+        self.total_len = len
+        self.data_path = data_path
+
+
 class Record:
     """
     Record based on valid OAI-URN-Identifier with optional setspec data
@@ -79,6 +93,7 @@ class Record:
         self._info = {}
         self._state = UNSET_LABEL
         self.state_time = UNSET_LABEL
+        self.context: Context = Context()
 
     @property
     def local_identifier(self):
@@ -180,8 +195,32 @@ class Record:
                 self._info.update(any_value)
             elif isinstance(self._info, tuple):
                 self._info[-1].update(any_value)
-        except (AttributeError, SyntaxError, ValueError):
-            self._info = any_value
+        except (AttributeError, SyntaxError, ValueError) as exc:
+             # try to foster multiple quotes at value
+            if isinstance(exc, SyntaxError) and isinstance(any_value, str) and ":" in any_value:
+                processed = []
+                open_quote = False
+                for i, c in enumerate(any_value):
+                    curr = c
+                    if curr != '"':
+                        processed.append(curr)
+                    else:
+                        succ = any_value[i+1]
+                        if curr == '"' and not open_quote:
+                            open_quote = True
+                            processed.append(curr)
+                            continue
+                        if open_quote and (succ in ":,}"):
+                            processed.append('"') # literal quote
+                            open_quote = False
+                        else:
+                            processed.append('\\"') # in-between quote
+                try:
+                    self._info = ast.literal_eval("".join(processed))
+                except SyntaxError:
+                    self._info = any_value # because of weired legacy mixtures
+            else:
+                self._info = any_value
 
 
 def row_to_record(row: typing.Dict):

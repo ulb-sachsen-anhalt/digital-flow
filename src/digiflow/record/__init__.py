@@ -4,9 +4,10 @@ from .record_handler import (
     RecordHandlerException,
 )
 from .record_criteria import (
-    Text,
-    State,
     Datetime,
+	Identifier,
+    State,
+    Text,
 )
 from .record_service import (
     Client, HandlerInformation,

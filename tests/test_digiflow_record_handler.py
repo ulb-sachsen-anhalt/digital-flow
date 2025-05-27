@@ -13,13 +13,9 @@ from pathlib import Path
 
 import pytest
 
+import digiflow as df
 import digiflow.record as df_r
 
-from digiflow import (
-    LoadException,
-    get_enclosed,
-    request_resource,
-)
 
 from .conftest import TEST_RES, LEGACY_HEADER_STR, write_datalist
 
@@ -53,7 +49,7 @@ def test_record_local_identifiers(urn, local_identifier):
     assert urn in str(record)
 
 
-def test_invalid_input_data(tmp_path):
+def test_invalid_input_data_01(tmp_path):
     """Invalid input data format raises an exception"""
 
     # arrange
@@ -67,6 +63,26 @@ def test_invalid_input_data(tmp_path):
         df_r.RecordHandler(invalid_path, data_fields=[df_r.FIELD_IDENTIFIER, df_r.FIELD_STATE])
 
     assert "invalid fields" in str(exc.value)
+
+
+def test_tricky_info_data_01(tmp_path):
+    """Info is partially invalid dictionary, i.e. not parseable by Python's ast
+    Encountered at migration QA when deleting resources"""
+
+    # arrange
+    invalid_path_dir = tmp_path / 'invalid_data'
+    invalid_path_dir.mkdir()
+    invalid_path = invalid_path_dir / 'invalid.tsv'
+    data = ["123\t{\"issue\":\"148 (29.6.1898)\"}\tn.a.\tn.a.\n",
+            "124\t{\"issue\": \"[149] (29.6.1898) Festzeitung des \"General-Anzeiger\" zur 200jährigen Jubelfeier der Francke'schen Stiftungen zu Halle a. S./16559052\"}\tn.a.\tn.a.\n"]
+    write_datalist(invalid_path, data, headers="IDENTIFIER\tINFO\tSTATE\tSTATE_TIME")
+
+    handler = df_r.RecordHandler(invalid_path, data_fields=df_r.RECORD_HEADER)
+
+    r1: df_r.Record = handler.next_record(new_state="busy")
+    assert r1.info["issue"] == "148 (29.6.1898)"
+    r2: df_r.Record = handler.next_record()
+    assert r2.info["issue"] == "[149] (29.6.1898) Festzeitung des \"General-Anzeiger\" zur 200jährigen Jubelfeier der Francke'schen Stiftungen zu Halle a. S./16559052"
 
 
 @pytest.fixture(name="valid_datasets")
@@ -98,14 +114,14 @@ def test_migrate_state_saved(valid_datasets):
 
     # arrange
     handler = df_r.RecordHandler(valid_datasets, mark_lock='ocr_done')
-    a_set = handler.next_record()
+    a_set: df_r.Record = handler.next_record()
     assert a_set.identifier == 'oai:myhost.de/dod:123'
 
     # act
     handler.save_record_state(a_set.identifier, state='ocr_done', INFO='444')
 
     # assert
-    next_dataset = handler.next_record()
+    next_dataset: df_r.Record = handler.next_record()
     assert next_dataset.identifier == 'oai:myhost.de/dod:124'
 
     # act
@@ -145,16 +161,18 @@ def test_migration_dataset_vl_formats(vl_datasets):
 
     # arrange
     handler = df_r.RecordHandler(vl_datasets)
-    a_set = handler.next_record()
+    a_set: df_r.Record = handler.next_record()
 
     # assert
-    assert handler.position == "0001/0002"
+    assert a_set.context.position == 1
+    assert a_set.context.total_len == 2
+    assert a_set.context.data_path == vl_datasets
     assert a_set.local_identifier == '1416976'
     assert a_set.set == 'menalib'
     handler.save_record_state(a_set.identifier, 'busy')
 
-    a_set = handler.next_record()
-    assert handler.position == "0002/0002"
+    a_set: df_r.Record = handler.next_record()
+    assert a_set.context.position == 2
     assert a_set.local_identifier == '696'
     assert a_set.set == 'pon##book'
 
@@ -213,7 +231,7 @@ def test_statelist_ocr_hdz(tmp_path):
 
     # act
     record = handler.next_record()
-    assert handler.position == '0001/0001'
+    assert record.context.position == 1
     assert record[df_r.FIELD_IDENTIFIER] == 'oai:digitale.bibliothek.uni-halle.de/zd:123'
     handler.save_record_state(record[df_r.FIELD_IDENTIFIER])
 
@@ -235,7 +253,7 @@ def test_statelist_use_n_a_properly(oai_record_list):
 
     # act
     record = handler.next_record()
-    assert handler.position == '0006/0006'
+    assert record.context.position == 6
     assert record.identifier == 'oai:digitale.bibliothek.uni-halle.de/zd:9510508'
     handler.save_record_state(record.identifier)
 
@@ -525,8 +543,8 @@ def test_response_200_with_error_content(mock_requests):
     mock_requests.return_value = _req
 
     # act
-    with pytest.raises(LoadException) as exc:
-        request_resource('http://foo.bar', Path())
+    with pytest.raises(df.LoadException) as exc:
+        df.request_resource('http://foo.bar', Path())
 
     assert 'verb requires' in str(exc.value)
 
@@ -670,7 +688,7 @@ def test_record_handler_quotation_fixed_json(tmp_path):
     # act
     _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
-    _info_token = get_enclosed(_next_rec.info)
+    _info_token = df.get_enclosed(_next_rec.info)
     _last_info = json.loads(_info_token)['info']
     assert 'processing https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg' in _last_info
 
@@ -693,7 +711,7 @@ def test_record_handler_quotation_fixed_ast(tmp_path):
     # act
     _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
-    _info_token = get_enclosed(_next_rec.info)
+    _info_token = df.get_enclosed(_next_rec.info)
     _last_info = ast.literal_eval(_info_token)['info']
     assert 'processing https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg' in _last_info
 
@@ -720,7 +738,7 @@ def test_record_handler_quotation_mixture_ast(tmp_path):
     # act
     _next_rec = handler.next_record(state='ocr_fail')
     assert _next_rec.info.startswith('141.48.10.202@2023-01-17_15:55:49')
-    _info_token = get_enclosed(_next_rec.info)
+    _info_token = df.get_enclosed(_next_rec.info)
     _last_info = ast.literal_eval(_info_token)['info']
     assert "processing 'https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg'" in _last_info
 
@@ -744,7 +762,7 @@ def test_record_handler_quotation_mixture_ast_639763(tmp_path):
 
     # act
     _next_rec = handler.next_record(state='ocr_busy')
-    _info_token = get_enclosed(_next_rec.info)
+    _info_token = df.get_enclosed(_next_rec.info)
     with pytest.raises(SyntaxError) as _decode_err:
         ast.literal_eval(_info_token)
     assert 'invalid syntax' in _decode_err.value.args[0]
@@ -770,7 +788,7 @@ def test_record_handler_quotation_mixture_ast_639763_python_310(tmp_path):
 
     # act
     _next_rec = handler.next_record(state='ocr_busy')
-    _info_token = get_enclosed(_next_rec.info)
+    _info_token = df.get_enclosed(_next_rec.info)
     with pytest.raises(SyntaxError) as _decode_err:
         ast.literal_eval(_info_token)
     assert "unmatched '}'" in _decode_err.value.args[0]
@@ -778,8 +796,8 @@ def test_record_handler_quotation_mixture_ast_639763_python_310(tmp_path):
 
 def test_record_handler_with_broken_row(tmp_path):
     """
-    Behavior when encountering broken rows
-    Pevent KeyError: 'STATE'
+    Behavior when encountering broken data row No4
+    Prevent KeyError: 'STATE'
     """
 
     # arrange
@@ -796,7 +814,7 @@ def test_record_handler_with_broken_row(tmp_path):
     with pytest.raises(df_r.RecordHandlerException) as handl_exc:
         handler.next_record(state='foo')  # dummy state to provoke error
 
-    assert "line:003 no STATE field " in handl_exc.value.args[0]
+    assert "line:004 no STATE field " in handl_exc.value.args[0]
 
 
 def test_record_handler_merge_info_dicts(tmp_path):

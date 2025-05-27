@@ -5,7 +5,7 @@ import csv
 import collections
 import os
 import time
-
+import typing
 
 import digiflow.record as df_r
 
@@ -34,16 +34,16 @@ class RecordHandler:
     """
 
     def __init__(self, data_path, data_fields=None,
-                 ident_field=0,
+                 ident_col=0,
                  mark_open=df_r.UNSET_LABEL, mark_lock='busy',
                  transform_func=df_r.row_to_record):
         self.data_path = str(data_path)
         self.mark = {'open': mark_open, 'lock': mark_lock}
-        self.position = None
-        self.header = None
+        self._cursor = 1
+        self.schema = None
         self.transform_func = transform_func
         self._raw_lines = []
-        # read raw lines
+        # read raw lines with data and comments
         with open(self.data_path, encoding='utf-8') as tmp:
             self._raw_lines = tmp.readlines()
         # pick rows containing *real* data
@@ -52,14 +52,16 @@ class RecordHandler:
                       for line in self._raw_lines
                       if self._is_data_row(line)]
         # check data format if possible
-        self._restore_header(data_lines[0])
+        self._set_schema(data_lines[0])
         if data_fields:
             self._validate_header(data_fields)
-            self.header = data_fields
-        # inspect data integrity
-        self.ident_field = self.header[ident_field]
-        self.state_field = self.header[-2]
-        self.state_ts_field = self.header[-1]
+            self.schema = data_fields
+        # ensure data integrity
+        if not hasattr(self, "schema"):
+            raise RecordHandlerException("Cant set valid schema")
+        self.ident_field = self.schema[ident_col]
+        self.state_field = self.schema[-2]
+        self.state_ts_field = self.schema[-1]
         # build data
         self.index = {}
         self.data = []
@@ -72,20 +74,20 @@ class RecordHandler:
         return len(self.data)
 
     def _build_data(self):
-        """Transform raw_lines into meaningful data and build index
-        for faster access time.
+        """Transform raw_lines into meaningful data and 
+        build index for fast access
 
         with 0 = index of _raw_line_data
              1 = index of data dictionary
         """
-        for i, _raw_row in enumerate(self._raw_lines):
-            if self._is_data_row(_raw_row) and \
-                    not self._is_header_row(_raw_row):
-                _data = self._to_dict(_raw_row)
-                _data_idx = len(self.data)
-                self.data.append(_data)
-                the_ident = _data[self.ident_field]
-                self.index[the_ident] = (i, _data_idx)
+        for i, raw_row in enumerate(self._raw_lines[1:]):
+            if self._is_data_row(raw_row) and \
+                    not self._is_header_row(raw_row):
+                data_entry = self._to_dict(raw_row)
+                data_idx = len(self.data)
+                self.data.append(data_entry)
+                the_ident = data_entry[self.ident_field]
+                self.index[the_ident] = (i, data_idx)
 
     def _to_dict(self, row_as_str):
         """
@@ -93,7 +95,7 @@ class RecordHandler:
         """
 
         splits = row_as_str.strip().split('\t')
-        return collections.OrderedDict(zip(self.header, splits))
+        return collections.OrderedDict(zip(self.schema, splits))
 
     @staticmethod
     def _to_str_nl(dict_row):
@@ -109,23 +111,23 @@ class RecordHandler:
         return False
 
     def _is_header_row(self, row_str):
-        if self.header:
-            return row_str.startswith(self.header[0])
+        if self.schema:
+            return row_str.startswith(self.schema[0])
         return False
 
-    def _restore_header(self, first_line):
-        _header = [h.strip() for h in first_line.split('\t')]
-        if not _header:
-            _header = df_r.LEGACY_HEADER
-        self.header = _header
+    def _set_schema(self, first_line):
+        d_header = [h.strip() for h in first_line.split('\t')]
+        if not d_header:
+            d_header = df_r.LEGACY_HEADER
+        self.schema = d_header
 
     def _validate_header(self, data_fields):
         """validate header fields presence and order"""
-        if self.header != data_fields:
-            msg = f"invalid fields: '{self.header}', expect: '{data_fields}'"
+        if self.schema != data_fields:
+            msg = f"invalid fields: '{self.schema}', expect: '{data_fields}'"
             raise RecordHandlerException(msg)
 
-    def next_record(self, state=None):
+    def next_record(self, state=None, new_state=None) -> typing.Optional[df_r.Record]:
         """
         Get *NEXT* Record with given state
         if any exist, otherwise None
@@ -133,17 +135,22 @@ class RecordHandler:
 
         if not state:
             state = self.mark['open']
-        for i, row in enumerate(self.data):
+        for i, row in enumerate(self.data, self._cursor):
             if self.state_field not in row:
                 what = f"line:{i:03d} no {self.state_field} field {row}!"
+                self._cursor = 0
                 raise RecordHandlerException(what)
             if state == row[self.state_field]:
-                self.position = f"{(i+1):04d}/{(self.total_len):04d}"
-                return self.transform_func(row)
+                self._cursor = i
+                record: df_r.Record = self.transform_func(row)
+                record.context = df_r.Context(i, self.total_len, self.data_path)
+                if new_state is not None:
+                    self.save_record_state(record.identifier, new_state)
+                return record
         return None
 
-    def get(self, identifier, exact_match=True):
-        """Read data for first Record with
+    def get(self, identifier, exact_match=True) -> typing.Optional[df_r.Record]:
+        """Read data to get *first* Record with
         given identifier *without* changing state
 
         Args:
@@ -152,17 +159,17 @@ class RecordHandler:
                                  must match exaclty (default: True)
         """
         for i, row in enumerate(self.data):
-            _ident = row[self.ident_field]
+            ident = row[self.ident_field]
             if exact_match:
-                if _ident == identifier:
+                if ident == identifier:
                     return self.transform_func(row)
             else:
-                if str(_ident).endswith(identifier):
+                if str(ident).endswith(identifier):
                     return self.transform_func(row)
-                elif identifier in _ident:
+                elif identifier in ident:
                     return self.transform_func(row)
 
-    def save_record_state(self, identifier, state=None, **kwargs):
+    def save_record_state(self, identifier, state=None, append_on_error=False, **kwargs):
         """Mark Record state"""
 
         # read datasets
@@ -177,7 +184,16 @@ class RecordHandler:
                     dict_row[k] = v
             dict_row[self.state_field] = state
             dict_row[self.state_ts_field] = right_now
-            self._raw_lines[idx_raw] = RecordHandler._to_str_nl(dict_row)
+            result_string = RecordHandler._to_str_nl(dict_row)
+            self._raw_lines[idx_raw] = result_string
+            if append_on_error:
+                new_row = dict(self.data[idx_data])
+                new_row[self.state_field] = df_r.UNSET_LABEL
+                new_row[self.state_ts_field] = df_r.UNSET_LABEL
+                new_str = RecordHandler._to_str_nl(new_row)
+                self._raw_lines.append(new_str)
+                self.index[identifier] = new_row
+                self.index[identifier+right_now] = result_string
 
         # if not existing_id:
         else:
@@ -191,12 +207,12 @@ class RecordHandler:
                 as handle_write:
             handle_write.writelines(self._raw_lines)
 
-    def states(self, criterias: list, set_state=df_r.UNSET_LABEL,
+    def states(self, criterias, set_state=df_r.UNSET_LABEL,
                dry_run=True, verbose=False):
         """Process record states according certain criterias.
 
         Args:
-            criterias (list): List of RecordCriteria where each record
+            criterias (list): List of Criterias where each record
                 must match all provided criterias. Defaults to a list 
                 only containing RecordCriteriaState(RECORD_STATE_UNSET).
             set_state (_type_, optional): Record state to set, if provided,
@@ -207,7 +223,7 @@ class RecordHandler:
                 counting numbers. Defaults to False.
         """
         total_matches = []
-        if len(criterias) == 0:
+        if criterias is None or len(criterias) == 0:
             criterias = [df_r.State(df_r.UNSET_LABEL)]
         for record in self.data:
             if all(map(lambda c, d=record: c.matched(d), criterias)):
@@ -228,7 +244,7 @@ class RecordHandler:
         create record frame with start (inclusive)
         and opt frame_size (how many records from start)
         *please note*
-        record count starts with "1", although intern represented as list
+        record count starts with "1", although internally represented as list
         """
 
         file_ext = None
@@ -254,16 +270,16 @@ class RecordHandler:
 
         # optional: sort by
         if sort_by is not None:
-            if sort_by in self.header:
+            if sort_by in self.schema:
                 the_rows = sorted(the_rows, key=lambda r: r[sort_by])
             else:
-                raise RuntimeError(f"invalid sort by {sort_by}! only {self.header} permitted!")
+                raise RuntimeError(f"invalid sort by {sort_by}! only {self.schema} permitted!")
 
         file_name_out = f"{file_name}_{org_start:02d}_{end_frame:02d}.{file_ext}"
         path_out = os.path.join(path_dir, file_name_out)
         with open(path_out, 'w', encoding='UTF-8') as writer:
             csv_writer = csv.DictWriter(
-                writer, delimiter='\t', fieldnames=self.header)
+                writer, delimiter='\t', fieldnames=self.schema)
             csv_writer.writeheader()
             for row in the_rows:
                 csv_writer.writerow(row)
@@ -309,11 +325,11 @@ class RecordHandler:
         other_records = []
         if not isinstance(other_handler, RecordHandler):
             other_handler = RecordHandler(other_handler,
-                                          data_fields=self.header)
+                                          data_fields=self.schema)
         # check precondition
-        if self.header != other_handler.header:
+        if self.schema != other_handler.schema:
             raise RecordHandlerException(
-                f"Missmatch headers {self.header} != {other_handler.header}")
+                f"Missmatch headers {self.schema} != {other_handler.schema}")
 
         other_records = other_handler.data
         # what might be integrated

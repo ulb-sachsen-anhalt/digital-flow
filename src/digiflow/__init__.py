@@ -1,6 +1,6 @@
 """digital flow API"""
 
-__version__ = "6.2.6"
+__version__ = "6.3.6"
 
 
 from .digiflow_identifier import *
@@ -51,5 +51,4 @@ from .validate import (
     validate_tiff,
 	validate_xml,
 )
-
 from .common import UNSET_LABEL, XMLNS, FallbackLogger
