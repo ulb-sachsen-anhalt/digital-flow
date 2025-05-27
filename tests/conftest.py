@@ -21,7 +21,7 @@ RECORD_HEADER_STR = '\t'.join(df_r.RECORD_HEADER) + '\n'
 def write_datalist(path_data_list, data, headers=LEGACY_HEADER_STR):
     with open(str(path_data_list), 'w', encoding='utf8') as handle:
         if headers:
-            handle.write(headers+"\n")
+            handle.write(headers)
         handle.writelines(data)
 
 

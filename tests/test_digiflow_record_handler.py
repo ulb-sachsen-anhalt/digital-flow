@@ -75,7 +75,7 @@ def test_tricky_info_data_01(tmp_path):
     invalid_path = invalid_path_dir / 'invalid.tsv'
     data = ["123\t{\"issue\":\"148 (29.6.1898)\"}\tn.a.\tn.a.\n",
             "124\t{\"issue\": \"[149] (29.6.1898) Festzeitung des \"General-Anzeiger\" zur 200jährigen Jubelfeier der Francke'schen Stiftungen zu Halle a. S./16559052\"}\tn.a.\tn.a.\n"]
-    write_datalist(invalid_path, data, headers="IDENTIFIER\tINFO\tSTATE\tSTATE_TIME")
+    write_datalist(invalid_path, data, headers="IDENTIFIER\tINFO\tSTATE\tSTATE_TIME\n")
 
     handler = df_r.RecordHandler(invalid_path, data_fields=df_r.RECORD_HEADER)
 

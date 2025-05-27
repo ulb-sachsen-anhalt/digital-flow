@@ -79,7 +79,7 @@ class RecordHandler:
         with 0 = index of _raw_line_data
              1 = index of data dictionary
         """
-        for i, raw_row in enumerate(self._raw_lines[1:]):
+        for i, raw_row in enumerate(self._raw_lines):
             if self._is_data_row(raw_row) and \
                     not self._is_header_row(raw_row):
                 data_entry = self._to_dict(raw_row)
