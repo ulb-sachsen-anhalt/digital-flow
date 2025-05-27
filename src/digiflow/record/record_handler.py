@@ -39,7 +39,6 @@ class RecordHandler:
                  transform_func=df_r.row_to_record):
         self.data_path = str(data_path)
         self.mark = {'open': mark_open, 'lock': mark_lock}
-        self._cursor = 1
         self.schema = None
         self.transform_func = transform_func
         self._raw_lines = []
@@ -135,13 +134,11 @@ class RecordHandler:
 
         if not state:
             state = self.mark['open']
-        for i, row in enumerate(self.data, self._cursor):
+        for i, row in enumerate(self.data, 1):
             if self.state_field not in row:
                 what = f"line:{i:03d} no {self.state_field} field {row}!"
-                self._cursor = 0
                 raise RecordHandlerException(what)
             if state == row[self.state_field]:
-                self._cursor = i
                 record: df_r.Record = self.transform_func(row)
                 record.context = df_r.Context(i, self.total_len, self.data_path)
                 if new_state is not None:

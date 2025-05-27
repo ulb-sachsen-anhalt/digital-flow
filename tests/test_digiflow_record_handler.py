@@ -670,6 +670,29 @@ def test_record_handler_quotation_mixture_json(tmp_path):
     assert 'Extra data: line 1 column 7 (char 6)' in _decode_err.value.args[0]
 
 
+def test_record_handler_set_next_new_state(tmp_path):
+    """
+    Fix behavior when setting new state for next entry
+    Start at position 3, since first 2 entries already done
+    """
+
+    # arrange
+    path_list_sample = os.path.join(TEST_RES, 'migration-qa-images.csv')
+    path_oai_list1 = tmp_path / 'migration-qa-images.csv'
+    shutil.copy(path_list_sample, path_oai_list1)
+    handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
+
+    # act
+    next_01 = handler.next_record(new_state="busy")
+    assert next_01.context.position == 3
+    assert next_01.context.total_len == 16
+    next_02 = handler.next_record(new_state="busy")
+    assert next_02.context.position == 4
+    next_03 = handler.next_record(new_state="busy")
+    assert next_03.context.position == 5
+    assert next_03.context.total_len == 16
+
+
 def test_record_handler_quotation_fixed_json(tmp_path):
     """
     Fix behavior when encountering data which
