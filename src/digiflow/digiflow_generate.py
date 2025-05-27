@@ -1,38 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-import itertools
 import os
-import pathlib
 import platform
 import re
 import shutil
 import subprocess
 import time
+import typing
+
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
-
 from pathlib import Path
 
-from typing import (
-    List,
-    Tuple,
-    Union,
-    Final,
-    Callable,
-    TypeVar,
-)
-
-from PIL import (
-    Image
-)
-
-import numpy as np
-
-from docker import (
-    DockerClient,
-    from_env
-)
+import docker
 from docker.models.containers import Container
 from docker.types import Mount
 
@@ -43,9 +24,9 @@ DEFAULT_STRUCTURE_DIR = 'MAX'
 DEFAULT_DERIVANS_IMAGE = "ghcr.io/ulb-sachsen-anhalt/digital-derivans:latest"
 DEFAULT_DERIVANS_TIMEOUT = 10800
 DERIVANS_LABEL = 'derivans'
-DERIVANS_CNT_DATA_DIR: Final[str] = "/usr/derivans/data"
-DERIVANS_CNT_CONF_DIR: Final[str] = "/usr/derivans/config"
-DERIVANS_CNT_LOGG_DIR: Final[str] = "/usr/derivans/log"
+DERIVANS_CNT_DATA_DIR: typing.Final[str] = "/usr/derivans/data"
+DERIVANS_CNT_CONF_DIR: typing.Final[str] = "/usr/derivans/config"
+DERIVANS_CNT_LOGG_DIR: typing.Final[str] = "/usr/derivans/log"
 
 
 def id_generator(
@@ -81,139 +62,18 @@ def id_generator(
         yield number
 
 
-def create_grayscale_data(dim):
-    arr_floats = np.random.rand(dim[1], dim[0]) * 255
-    arr_ints = arr_floats.astype(np.uint8)
-    return arr_ints
+_T = typing.TypeVar('_T')
+_FuncWrapperResult = typing.Tuple[float, str, _T]
+RunProfiledResult = typing.Callable[[], _FuncWrapperResult[_T]]
 
 
-def create_sample_text():
-    return 'some foo text'
-
-
-class Blueprint():
-
-    def __init__(self,
-                 ext='.tif',
-                 batch=True,
-                 content_func=create_grayscale_data,
-                 **kwargs):
-        self.ext = ext
-        self.batch = batch
-        self.content_func = content_func
-        self.dimension = None
-        self.header = None
-        if 'header' in kwargs:
-            self.header = kwargs['header']
-        self.dimension = kwargs['dimension'] if 'dimension' in kwargs else (
-            200, 300)
-
-    def write(self, path):
-        if self.ext in ('.tif', '.jpg'):
-            self.create_image(path, params=self.header)
-
-    def create_image(self, path_image, params=None):
-        """
-        Create artificial greyscale images
-        """
-
-        data = self.content_func(self.dimension)
-        im = Image.fromarray(data)
-        store_format = 'TIFF' if self.ext == '.tif' else 'JPEG'
-        im.save(path_image, format=store_format, params=params)
-        return path_image
-
-
-class ResourceGenerator:
-
-    def __init__(self, path, blueprint=Blueprint('.jpg'), number=10):
-        self.path = path
-        self.blueprint = blueprint
-        self.content_func = create_sample_text
-        self.number = number
-        self.start_dir = None
-
-    def get_batch(self, start=0, padded=8):
-        paths = self._get_paths(start, self.number, padded)
-        aggregated_paths = []
-        for path in paths:
-            path_dir = self._make_dirs(path)
-            path_file = os.path.basename(path)
-            real_path = os.path.join(str(path_dir), str(path_file))
-            self.blueprint.write(real_path)
-            aggregated_paths.append(real_path)
-        return aggregated_paths
-
-    def get(self):
-        path_dir = self._make_dirs(self.path)
-        path_file = os.path.basename(self.path)
-        real_path = os.path.join(str(path_dir), str(path_file))
-        self.write_single(real_path)
-        return real_path
-
-    def write_single(self, path):
-        with open(path, 'w') as fhd:
-            fhd.write(self.content_func())
-
-    def _make_dirs(self, path):
-        the_dir = pathlib.Path(os.path.dirname(path))
-        path_dir = os.path.join(str(self.start_dir), str(the_dir))
-        os.makedirs(path_dir, exist_ok=True)
-        return path_dir
-
-    def _get_paths(self, start, number, padded=8, previous_value=None):
-        self.name_generator = id_generator(
-            start, previous_value=previous_value, padded=padded)
-        names = list(itertools.islice(self.name_generator, number))
-        return [os.path.join(self.path, n + self.blueprint.ext) for n in names]
-
-
-def generate_structure(
-        start_dir,
-        gens=None,
-        number=10
-) -> List[str]:
-    """
-    Generate test data layouts using a list of Generators for
-    * Kitodo2 metadata        (<id>/images/<title>_media/*.tif)
-    * Kitodo2 export          (<title>/jpeg/*.jpg)
-    * Archivierung            (<title>/content/ ,
-                               <title>/metadata/images/<title>_media/*.tif)
-    * Migration OAI Workspace (MAX/*.jpg)
-    * SAF creation Workspace  (<several-subdirs>)
-    """
-
-    if gens is None:
-        gens = [ResourceGenerator(DEFAULT_STRUCTURE_DIR)]
-    generated = []
-    if not os.path.isdir(str(start_dir)):
-        raise RuntimeError(f"Invalid start_dir '{start_dir}' provided!")
-
-    for gen in gens:
-        gen.start_dir = start_dir
-        if gen.blueprint and gen.blueprint.batch:
-            resouces = gen.get_batch()
-            for res in resouces:
-                resource_path = res
-                generated.append(resource_path)
-        else:
-            generated.append(gen.get())
-
-    return generated
-
-
-_T = TypeVar('_T')
-_FuncWrapperResult = Tuple[float, str, _T]
-RunProfiledResult = Callable[[], _FuncWrapperResult[_T]]
-
-
-def run_profiled(func: Callable) -> RunProfiledResult:
+def run_profiled(func: typing.Callable) -> RunProfiledResult:
     """
     Decorator to profile method execution time
     in seconds as float with 2 decimal digits
     """
 
-    def _get_func_name(_func: Callable) -> str:
+    def _get_func_name(_func: typing.Callable) -> str:
         _label = str(_func)
         match = re.match(r'.*function ([\w.]+) *', _label)
         if match:
@@ -476,7 +336,7 @@ class ContainerDerivansManager(BaseDerivansManager):
             path_configuration=path_configuration,
         )
         self._container_image: str = container_image
-        self._client: DockerClient = from_env()
+        self._client: docker.DockerClient = docker.from_env()
         self._path_logging = path_logging
         self.run_command = ""
 
@@ -485,8 +345,8 @@ class ContainerDerivansManager(BaseDerivansManager):
         self._client.images.pull(repo, tag)
 
     def start(self) -> DerivansResult:
-        mounts: List[Mount] = []
-        command: List[str] = []
+        mounts: typing.List[Mount] = []
+        command: typing.List[str] = []
         mets_path: Path = Path(self.path_mets_file).absolute()
         if mets_path.is_dir():
             command.append(DERIVANS_CNT_DATA_DIR)
@@ -498,7 +358,7 @@ class ContainerDerivansManager(BaseDerivansManager):
             command.append(target_mets_file)
             mounts.append(Mount(source=mets_dir, target=DERIVANS_CNT_DATA_DIR, type='bind'))
         if self.path_configuration is not None:
-            config_path: Union[Path, None] = Path(self.path_configuration)
+            config_path: typing.Union[Path, None] = Path(self.path_configuration)
             if config_path.exists() and config_path.is_file():
                 config_file_name: str = config_path.name
                 config_dir: str = str(config_path.parent.absolute())
@@ -528,7 +388,7 @@ class ContainerDerivansManager(BaseDerivansManager):
         logs: str = container.logs().decode('utf-8')
         container.remove()
 
-        full_command_equivalent: List[str] = ['docker run -rm']
+        full_command_equivalent: typing.List[str] = ['docker run -rm']
         for mount in mounts:
             full_command_equivalent.append(
                 f"--mount type={mount['Type']},source={mount['Source']},target={mount['Target']}"

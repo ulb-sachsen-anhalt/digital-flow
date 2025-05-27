@@ -49,6 +49,7 @@ from .validate import (
     group_can_read,
     group_can_write,
     validate_tiff,
+	validate_xml,
 )
 
 from .common import UNSET_LABEL, XMLNS, FallbackLogger

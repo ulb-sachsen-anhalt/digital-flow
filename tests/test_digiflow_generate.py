@@ -11,10 +11,7 @@ from unittest import (
 import pytest
 
 from digiflow import (
-    Blueprint,
-    ResourceGenerator,
     DerivansManager,
-    generate_structure,
     run_profiled,
     id_generator,
     ContainerDerivansManager,
@@ -22,64 +19,7 @@ from digiflow import (
 )
 
 
-DUMMY_METS = '<xml/>'
-
-
-def test_generate_migration_start_structure_layout(tmp_path):
-    """Create default structure using DEFAULT_STRUCTURE_DIR"""
-
-    # act
-    created = generate_structure(tmp_path)
-
-    # assert
-    assert 10 == len(created)
-    for res in created:
-        assert os.path.isfile(os.path.join(tmp_path, res))
-
-
-def test_generate_kitodo2_metadata_layout(tmp_path):
-    """Create structure like kitodo2"""
-
-    # arrange
-    gen_tifs = ResourceGenerator(
-        '1064/images/100384256_media', Blueprint('.tif'))
-    gen_jpgs = ResourceGenerator('100384256/jpg')
-
-    # act
-    created = generate_structure(tmp_path, [gen_tifs, gen_jpgs])
-
-    # assert
-    assert 20 == len(created)
-    for res in created:
-        assert os.path.isfile(os.path.join(tmp_path, res))
-
-
-def test_generate_archivierung_layout(tmp_path):
-    """Create structure like kitodo2"""
-
-    # arrange
-    gen_tifs = ResourceGenerator(
-        '1003841856/metadata/images/1003841856_media',
-        Blueprint('.tif'), number=383)
-    gen_jpgs = ResourceGenerator('1003841856/content/jpg', number=383)
-    gen_mark = ResourceGenerator('1003841856/zkw_open', blueprint=None)
-
-    # act
-    created = generate_structure(tmp_path, [gen_tifs, gen_jpgs, gen_mark])
-
-    # assert
-    assert len(created) >= 21
-    for res in created:
-        assert os.path.isfile(os.path.join(tmp_path, res))
-    assert os.path.isfile(
-        os.path.join(str(tmp_path), '1003841856', 'zkw_open'))
-
-
-def test_generate_invalid_startdir():
-    with pytest.raises(RuntimeError) as exc:
-        generate_structure('foo/bar')
-
-    assert 'Invalid start_dir \'foo/bar\' provided' in str(exc.value)
+_DUMMY_METS = '<xml/>'
 
 
 def test_generator_with_prefix_and_suffix():
@@ -187,7 +127,7 @@ def test_derivans_containermanager(mock_pull, tmp_path):
     test_project_root.mkdir()
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
     dmanager = ContainerDerivansManager(mets_file)
 
     # act
@@ -214,7 +154,7 @@ def test_derivans_containermanager_additional_args(mock_pull, mock_run, tmp_path
     test_project_root.mkdir()
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
     dmanager = ContainerDerivansManager(mets_file)
     dmanager.additional_args = "-f /data/conf/my_footer.png"
 
@@ -243,7 +183,7 @@ def test_derivans_manager_with_path_bin_dir(tmp_path):
     test_project_bin.mkdir()
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
 
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
@@ -270,7 +210,7 @@ def test_derivans_manager_none_path_binary(tmp_path):
     test_project_root.mkdir()
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
 
     # act
     with pytest.raises(RuntimeError) as exc:
@@ -303,7 +243,7 @@ def test_derivans_start_set_exec(mock_check, mock_call, tmp_path):
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
@@ -336,7 +276,7 @@ def test_derivans_start_default(mock_check, mock_call, tmp_path):
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
@@ -371,7 +311,7 @@ def test_derivans_start_with_additional_config(mock_check, mock_call, tmp_path):
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
@@ -421,7 +361,7 @@ Exception in thread "main" java.awt.AWTError: Can't connect to X11 window server
     # create some dummy file
     mets_file = os.path.join(str(test_project_root), 'mets_mods.xml')
     with open(mets_file, 'w', encoding='utf-8') as fh_mets:
-        fh_mets.write(DUMMY_METS)
+        fh_mets.write(_DUMMY_METS)
     path_mvn_project = str(test_project_root / 'digital-derivans')
     dmanager = DerivansManager(
         mets_file, path_binary=str(test_project_bin),
