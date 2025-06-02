@@ -147,7 +147,7 @@ class Image:
     file_size = 0
     time_stamp = None
     profile = dfc.UNSET_LABEL
-    image_checksum = dfc.UNSET_LABEL
+    check_sum_512 = dfc.UNSET_LABEL
     metadata: ImageMetadata = None
     invalids = []
 
@@ -157,13 +157,12 @@ class Image:
             dt_object = datetime.datetime.now()
             self.time_stamp = dt_object.strftime(DATETIME_SRC_FORMAT)
             self.file_size = os.path.getsize(self.local_path)
-            # open resource
-            pil_img: TiffImageFile = PILImage.open(self.local_path)
-            # due PIL.TiffImagePlugin problems to handle
-            # tag STRIPOFFSETS properly
-            image_bytes = pil_img.tobytes()
-            self.image_checksum = hashlib.sha512(image_bytes).hexdigest()
+            hash_val = hashlib.sha512()
+            with open(self.local_path, "rb") as freader:
+                hash_val.update(freader.read())
+            self.check_sum_512 = hash_val.hexdigest()
             # read information from TIF TAG V2 section
+            pil_img: TiffImageFile = PILImage.open(self.local_path)
             meta_data: ImageMetadata = self._read(pil_img)
             meta_data.color_space = pil_img.mode
 
@@ -203,7 +202,7 @@ class Image:
                             profile_name = ImageCms.getProfileDescription(profile_cms)
                             if profile_name:
                                 name_stripped = profile_name.strip()
-                            self.profile = name_stripped
+                                self.profile = name_stripped
         return image_md
 
     def __str__(self):
@@ -212,7 +211,7 @@ class Image:
         mds_res = f"({img_md.xRes},{img_md.yRes},{img_md.resolution_unit})"
         img_mds = f"\t{mds_res}\t{img_md.created}\t{img_md.artist}\t{img_md.copyright}\t{img_md.model}\t{img_md.software}\t{self.profile}"
         invalids = f"INVALID{self.invalids}" if len(self.invalids) > 0 else 'VALID'
-        return f"{self.url}\t{self.image_checksum}\t{img_fsize}\t{self.metadata.width}x{self.metadata.height}\t{img_mds}\t{self.time_stamp}\t{invalids}"
+        return f"{self.url}\t{self.check_sum_512}\t{img_fsize}\t{self.metadata.width}x{self.metadata.height}\t{img_mds}\t{self.time_stamp}\t{invalids}"
 
 
 class ScanValidatorFile(Validator):
