@@ -27,6 +27,9 @@ OAI_KWARG_REQUESTS = "request_kwargs"
 REQUESTS_DEFAULT_TIMEOUT = 20
 
 _MIME_TYPE_JPG = "image/jpg"
+_MIME_TYPE_JPEG = "image/jpeg"
+
+_JPG_MIMES = [_MIME_TYPE_JPG, _MIME_TYPE_JPEG]
 
 
 class LoadException(Exception):
@@ -167,16 +170,15 @@ class OAILoader:
             if data_path:
                 self.store.put(data_path)
             return res_path
-        else:
-            return self.load_resource(res_url, res_path, post_func)
+        return self.load_resource(res_url, res_path, post_func)
 
     def _calculate_path(self, mime_type, *args):
         """
-        calculate final path depending on some heuristics which
-        fileGrp has been used - 'MAX' means images, not means 'xml'
+        calculate final path depending on used fileGrp
+        'MAX' means images, not means 'xml'
         """
         res_path = os.path.join(str(self.dir_local), os.sep.join(list(args)))
-        if mime_type == _MIME_TYPE_JPG and not res_path.endswith('.jpg'):
+        if mime_type in _JPG_MIMES and not res_path.endswith('.jpg'):
             res_path += ".jpg"
         if '/MAX/' in res_path and not res_path.endswith('.jpg'):
             res_path += '.jpg'
@@ -184,7 +186,7 @@ class OAILoader:
             res_path += ".xml"
         if '/FULLTEXT/' in res_path and not res_path.endswith('.xml'):
             res_path += '.xml'
-        return res_path
+        return Path(res_path)
 
     def load_resource(self, url, path_local, post_func):
         """
@@ -200,14 +202,14 @@ class OAILoader:
             if post_func and data:
                 # divide METS from XML (OCR-ALTO)
                 # in rather brute force fashion
-                _snippet = data[:512]
+                data_snippet = data[:512]
                 # propably sanitize data, as it might originate
                 # from test-data or *real* requests
-                if not isinstance(_snippet, str):
-                    _snippet = _snippet.decode('utf-8')
-                if dfc.XMLNS['mets'] in _snippet or dfc.XMLNS['oai'] in _snippet:
+                if not isinstance(data_snippet, str):
+                    data_snippet = data_snippet.decode('utf-8')
+                if dfc.XMLNS['mets'] in data_snippet or dfc.XMLNS['oai'] in data_snippet:
                     data = post_func(self.path_mets, data)
-                elif 'http://www.loc.gov/standards/alto' in _snippet:
+                elif 'http://www.loc.gov/standards/alto' in data_snippet:
                     data = post_func(local_path, data)
                 else:
                     raise LoadException(f"Can't handle {content_type} from {url}!")
@@ -383,15 +385,18 @@ def request_resource(url: str, path_local: Path, **kwargs):
             if status < 500:
                 raise ClientError(the_info)
             raise ServerError(the_info)
+        content_type = None
         if status == 200:
             content_type = response.headers['Content-Type']
             # textual xml data
             if 'text' in content_type or 'xml' in content_type:
                 result = response.content
                 xml_root = ET.fromstring(result)
-                check_error = xml_root.find('.//error', xml_root.nsmap)
-                if check_error is not None:
-                    msg = f"request {url} failed due {check_error.text}"
+                check_error = xml_root.xpath(".//*[local-name() = 'error']",
+                                             namespaces=dfc.XMLNS)
+                if len(check_error) > 0:
+                    texts = "".join(e.text for e in check_error)
+                    msg = f"request {url} failed: {texts}"
                     raise LoadException(msg)
                 path_local = _sanitize_local_file_extension(
                     path_local, content_type)
@@ -413,17 +418,17 @@ def request_resource(url: str, path_local: Path, **kwargs):
         raise RuntimeError(msg) from exc
 
 
-def _sanitize_local_file_extension(path_local, content_type):
-    if not isinstance(path_local, str):
-        path_local = str(path_local)
-    if 'xml' in content_type and not path_local.endswith('.xml'):
-        path_local += '.xml'
-    elif 'jpeg' in content_type and not path_local.endswith('.jpg'):
-        path_local += '.jpg'
-    elif 'png' in content_type and not path_local.endswith('.png'):
-        path_local += '.png'
-    elif 'pdf' in content_type and not path_local.endswith('.pdf'):
-        path_local += '.pdf'
+def _sanitize_local_file_extension(path_local: Path, content_type):
+    if not isinstance(path_local, Path):
+        path_local = Path(path_local).absolute()
+    if 'xml' in content_type and path_local.suffix != '.xml':
+        path_local = path_local.with_suffix('.xml')
+    elif 'jpeg' in content_type and path_local.suffix != '.jpg':
+        path_local = path_local.with_suffix('.jpg')
+    elif 'png' in content_type and path_local.suffix != '.png':
+        path_local = path_local.with_suffix('.png')
+    elif 'pdf' in content_type and path_local.suffix != '.pdf':
+        path_local = path_local.with_suffix('.pdf')
     return path_local
 
 

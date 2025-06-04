@@ -6,6 +6,7 @@ import json.decoder
 import os
 import shutil
 import sys
+import typing
 import unittest.mock
 
 from pathlib import Path
@@ -17,7 +18,7 @@ import digiflow as df
 import digiflow.record as df_r
 
 
-from .conftest import TEST_RES, LEGACY_HEADER_STR, write_datalist
+from .conftest import TEST_RES, LEGACY_HEADER_STR, mock_response, write_datalist
 
 ROOT = Path(__file__).parents[1]
 
@@ -79,7 +80,8 @@ def test_tricky_info_data_01(tmp_path):
 
     handler = df_r.RecordHandler(invalid_path, data_fields=df_r.RECORD_HEADER)
 
-    r1: df_r.Record = handler.next_record(new_state="busy")
+    r1: typing.Optional[df_r.Record] = handler.next_record(new_state="busy")
+    assert r1 is not None
     assert r1.info["issue"] == "148 (29.6.1898)"
     r2: df_r.Record = handler.next_record()
     assert r2.info["issue"] == "[149] (29.6.1898) Festzeitung des \"General-Anzeiger\" zur 200jährigen Jubelfeier der Francke'schen Stiftungen zu Halle a. S./16559052"
@@ -121,7 +123,7 @@ def test_migrate_state_saved(valid_datasets):
     handler.save_record_state(a_set.identifier, state='ocr_done', INFO='444')
 
     # assert
-    next_dataset: df_r.Record = handler.next_record()
+    next_dataset: typing.Optional[df_r.Record] = handler.next_record()
     assert next_dataset.identifier == 'oai:myhost.de/dod:124'
 
     # act
@@ -514,29 +516,12 @@ def test_records_default_header_from_file(oai_record_list):
     assert frame_handler.states([c_state]) == 2
 
 
-def mock_response(**kwargs):
-    """Create custum mock object"""
-
-    _response = unittest.mock.MagicMock()
-    _response.reason = 'testing reason'
-    if 'reason' in kwargs:
-        _response.reason = kwargs['reason']
-    if 'status_code' in kwargs:
-        _response.status_code = int(kwargs['status_code'])
-    if 'headers' in kwargs:
-        _response.headers = kwargs['headers']
-    if 'data_path' in kwargs:
-        with open(kwargs['data_path'], encoding="utf-8") as xml:
-            _response.content = xml.read().encode()
-    return _response
-
-
 @unittest.mock.patch('requests.get')
 def test_response_200_with_error_content(mock_requests):
     """test request results into OAILoadException"""
 
     # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/opendata/id_not_exist.xml')
+    data_path = os.path.join(str(ROOT), 'tests/resources/oai-invalid-request.xml')
     _req = mock_response(status_code=200,
                          headers={'Content-Type': 'text/xml;charset=UTF-8'},
                          data_path=data_path)

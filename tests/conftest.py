@@ -1,4 +1,7 @@
+"""Common test implementations"""
+
 import os
+import unittest.mock
 
 from pathlib import Path
 
@@ -17,8 +20,10 @@ LEGACY_HEADER_STR = '\t'.join(df_r.LEGACY_HEADER) + '\n'
 RECORD_HEADER_STR = '\t'.join(df_r.RECORD_HEADER) + '\n'
 
 
-
-def write_datalist(path_data_list, data, headers=LEGACY_HEADER_STR):
+def write_datalist(path_data_list, data, headers=None):
+    """Helper to create temporary test data list"""
+    if headers is None:
+        headers = LEGACY_HEADER_STR
     with open(str(path_data_list), 'w', encoding='utf8') as handle:
         if headers:
             handle.write(headers)
@@ -26,7 +31,7 @@ def write_datalist(path_data_list, data, headers=LEGACY_HEADER_STR):
 
 
 @pytest.fixture(name="oai_record_list")
-def fixture_oai_record_list(tmp_path):
+def _fixture_oai_record_list(tmp_path):
     path_state_list = tmp_path / 'ocr_list'
     data = [
         "oai:digitale.bibliothek.uni-halle.de/zd:8853011\tn.a.\t2015-08-25T20:00:35Z\tn.a.\tocr_skip\t2021-08-03_15:03:56\n",
@@ -38,3 +43,20 @@ def fixture_oai_record_list(tmp_path):
     ]
     write_datalist(path_state_list, data, LEGACY_HEADER_STR)
     return path_state_list
+
+
+def mock_response(**kwargs):
+    """Create custum mock object"""
+
+    the_response = unittest.mock.MagicMock()
+    the_response.reason = 'testing reason'
+    if 'reason' in kwargs:
+        the_response.reason = kwargs['reason']
+    if 'status_code' in kwargs:
+        the_response.status_code = int(kwargs['status_code'])
+    if 'headers' in kwargs:
+        the_response.headers = kwargs['headers']
+    if 'data_path' in kwargs:
+        with open(kwargs['data_path'], encoding="utf-8") as xml:
+            the_response.content = xml.read().encode()
+    return the_response

@@ -15,7 +15,7 @@ import lxml.etree as ET
 import digiflow.digiflow_io as df_io
 import digiflow.digiflow_metadata as df_md
 
-from .conftest import TEST_RES
+from .conftest import TEST_RES, mock_response
 
 ROOT = Path(__file__).parents[1]
 
@@ -210,23 +210,6 @@ def test_send_mail(mock_smtp):
     assert mock_smtp.mock_calls[1][0] == '().send_message'
 
 
-def mock_response(**kwargs):
-    """Create custum mock object"""
-
-    the_response = unittest.mock.MagicMock()
-    the_response.reason = 'testing reason'
-    if 'reason' in kwargs:
-        the_response.reason = kwargs['reason']
-    if 'status_code' in kwargs:
-        the_response.status_code = int(kwargs['status_code'])
-    if 'headers' in kwargs:
-        the_response.headers = kwargs['headers']
-    if 'data_path' in kwargs:
-        with open(kwargs['data_path'], encoding="utf-8") as xml:
-            the_response.content = xml.read().encode()
-    return the_response
-
-
 @unittest.mock.patch('requests.get')
 def test_response_404(mock_requests: unittest.mock.Mock):
     """test request ends up with 417"""
@@ -245,11 +228,11 @@ def test_response_404(mock_requests: unittest.mock.Mock):
 
 
 @unittest.mock.patch('requests.get')
-def test_response_200_with_error_content(mock_requests: unittest.mock.Mock):
+def test_response_200_with_error_code_response(mock_requests: unittest.mock.Mock):
     """test request results into OAILoadException"""
 
     # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/opendata/id_not_exist.xml')
+    data_path = os.path.join(str(ROOT), 'tests/resources/oai-invalid-request.xml')
     a_response = mock_response(status_code=200,
                                headers={'Content-Type': 'text/xml;charset=UTF-8'},
                                data_path=data_path)
@@ -260,6 +243,24 @@ def test_response_200_with_error_content(mock_requests: unittest.mock.Mock):
         df_io.request_resource('http://foo.bar', Path())
 
     assert 'verb requires' in str(exc.value)
+
+
+@unittest.mock.patch('requests.get')
+def test_response_200_with_no_record_response(mock_requests: unittest.mock.Mock):
+    """test request results into OAILoadException"""
+
+    # arrange
+    data_path = os.path.join(str(ROOT), 'tests/resources/oai-record-missing.xml')
+    a_response = mock_response(status_code=200,
+                               headers={'Content-Type': 'text/xml;charset=UTF-8'},
+                               data_path=data_path)
+    mock_requests.return_value = a_response
+
+    # act
+    with pytest.raises(df_io.LoadException) as exc:
+        df_io.request_resource('http://foo.bar', Path())
+
+    assert 'The given id does not exis' in str(exc.value)
 
 
 def test_call_requests_kwargs_invalid_str(tmp_path):

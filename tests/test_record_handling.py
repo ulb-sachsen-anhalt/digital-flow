@@ -12,7 +12,7 @@ import digiflow.digiflow_io as df_io
 import digiflow.digiflow_metadata as df_md
 import digiflow.record as df_r
 
-from .conftest import TEST_RES
+from .conftest import mock_response
 
 ROOT = Path(__file__).parents[1]
 
@@ -137,7 +137,7 @@ def test_oai_load_vd16_with_localstore(mock_request_vd16_997508, tmp_path):
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
     key_images = 'MAX'
-    local_dst = str(local_dir) + '/' + the_id + '.xml'
+    local_dst = local_dir / (the_id + '.xml')
 
     # act
     loader = df_io.OAILoader(local_dir, base_url='digitale.bibliothek.uni-halle.de/vd16/oai',
@@ -172,7 +172,7 @@ def test_oai_load_opendata_with_localstore(
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
     key_images = 'MAX'
-    local_dst = str(local_dir) + '/' + the_id + '.xml'
+    local_dst =local_dir / (the_id + '.xml')
 
     # act
     loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
@@ -210,7 +210,7 @@ def test_oai_load_opendata_request_kwargs(
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
     key_images = 'MAX'
-    local_dst = str(local_dir) + '/' + the_id + '.xml'
+    local_dst = local_dir / (the_id + '.xml')
     request_kwargs = dict(headers={'User-Agent': 'Smith'})
 
     # act
@@ -266,7 +266,7 @@ def test_oai_load_opendata_file_identifier(
     assert (local_dir / "MAX" / "FILE_0011_MAX.jpg").is_file()
 
 
-def fixture_request_vls_zd1_16359609(*args, **kwargs):
+def mock_request_vls_zd1_16359609(*args, **kwargs):
     """
     Provide local copies for corresponding download request
     Data: oai:digitale.bibliothek.uni-halle.de/zd:16359609
@@ -305,7 +305,7 @@ def test_oai_load_vls_zd1_with_ocr(mock_request, tmp_path):
     """
 
     # arrange
-    mock_request.side_effect = fixture_request_vls_zd1_16359609
+    mock_request.side_effect = mock_request_vls_zd1_16359609
     ident = 'oai:digitale.bibliothek.uni-halle.de/zd:16359609'
     record = df_r.Record(ident)
     the_id = record.local_identifier
@@ -313,7 +313,7 @@ def test_oai_load_vls_zd1_with_ocr(mock_request, tmp_path):
     store_dir = tmp_path / "STORE" / "zd" / the_id
     local_dir.mkdir(parents=True)
     store_dir.mkdir(parents=True)
-    local_dst = str(local_dir) + '/' + the_id + '.xml'
+    local_dst = local_dir / (the_id + '.xml')
 
     # act
     loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_ZD,
@@ -330,23 +330,6 @@ def test_oai_load_vls_zd1_with_ocr(mock_request, tmp_path):
 
     # check cache
     assert os.path.exists(str(store_dir))
-
-
-def mock_response(**kwargs):
-    """Create custum mock object"""
-
-    the_response = unittest.mock.MagicMock()
-    the_response.reason = 'testing reason'
-    if 'reason' in kwargs:
-        the_response.reason = kwargs['reason']
-    if 'status_code' in kwargs:
-        the_response.status_code = int(kwargs['status_code'])
-    if 'headers' in kwargs:
-        the_response.headers = kwargs['headers']
-    if 'data_path' in kwargs:
-        with open(kwargs['data_path'], encoding="utf-8") as xml:
-            the_response.content = xml.read().encode()
-    return the_response
 
 
 @unittest.mock.patch('requests.get')
@@ -391,3 +374,42 @@ def test_oai_load_exception_for_server_error(mock_504: unittest.mock.Mock, tmp_p
     assert exc.typename == 'ServerError'
     a_msg = exc.value.args[0]
     assert a_msg == "opendata.uni-halle.de/oai/dd?verb=GetRecord&metadataPrefix=mets&identifier=foo status 504"
+
+
+@unittest.mock.patch('requests.get')
+def test_oai_load_missing_record(mock_requests: unittest.mock.Mock, tmp_path):
+    """Fix behavior if record requested which is no longer avaiable
+    Example: oai:opendata2.uni-halle.de:1516514412012/175735
+    """
+
+    # arrange
+    data_path = os.path.join(str(ROOT), 'tests/resources/oai-record-missing.xml')
+    a_response = mock_response(status_code=200,
+                               headers={'Content-Type': 'text/xml;charset=UTF-8'},
+                               data_path=data_path)
+    mock_requests.return_value = a_response
+    record = df_r.Record("oai:opendata2.uni-halle.de:1516514412012/175735")
+    the_id = record.local_identifier
+    local_dir = tmp_path / "WORKDIR" / the_id
+    store_dir = tmp_path / "STORE" / "dd" / the_id
+    local_dir.mkdir(parents=True)
+    store_dir.mkdir(parents=True)
+    key_images = 'MAX'
+    local_dst = local_dir / (the_id + '.xml')
+    request_kwargs = dict(headers={'User-Agent': 'Smith'})
+
+    # act
+    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+                             group_images=key_images,
+                             post_oai=df_md.extract_mets,
+                             request_kwargs=request_kwargs)
+    loader.store = df_io.LocalStore(store_dir, local_dir)
+
+    # act
+    with pytest.raises(df_io.LoadException) as exc:
+        loader.load(record.identifier, local_dst, 'foo')
+
+    # assert
+    assert exc.typename == 'LoadException'
+    a_msg = exc.value.args[0]
+    assert "The given id does not exist" in a_msg
