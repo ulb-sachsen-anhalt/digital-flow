@@ -15,7 +15,7 @@ authors = [
 	{name = "Universitäts- und Landesbibliothek Sachsen-Anhalt", email = "development@bibliothek.uni-halle.de"}
 ]
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
 	"License :: OSI Approved :: MIT License"
 ]
 dependencies = [
