@@ -10,7 +10,7 @@ name = "digiflow"
 dynamic = ["version"]
 description = "Father's Little Digitization Workflow Helper"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 authors = [
 	{name = "Universitäts- und Landesbibliothek Sachsen-Anhalt", email = "development@bibliothek.uni-halle.de"}
 ]
