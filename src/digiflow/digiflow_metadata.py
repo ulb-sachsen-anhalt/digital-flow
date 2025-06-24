@@ -68,7 +68,7 @@ class DigiflowMetadataException(Exception):
 
 def write_xml_file(xml_root,
                    outfile,
-                   preamble='<?xml version="1.0" encoding="UTF-8"?>'):
+                   preamble: str | None ='<?xml version="1.0" encoding="UTF-8"?>'):
     """write xml root prettified to outfile
     with default preamble for file usage
     create export dir if not exists and writeable
@@ -82,20 +82,20 @@ def write_xml_file(xml_root,
         file_handler.write(_prettified)
 
 
-def _pretty_xml(xml_root, preamble='<?xml version="1.0" encoding="UTF-8"?>'):
+def _pretty_xml(xml_root, preamble: str | None ='<?xml version="1.0" encoding="UTF-8"?>'):
     """XML root as prettified string
     witd cleared namespace declarations
     and default preamble like for XML files
 
     disable preamble by setting it to 'None'
     """
-    _as_string = ET.tostring(ET.ElementTree(xml_root), pretty_print=True, encoding='UTF-8')
-    _pretty_parser = ET.XMLParser(resolve_entities=False,
+    as_string = ET.tostring(ET.ElementTree(xml_root), pretty_print=True, encoding='UTF-8') # pyright: ignore[reportCallIssue]
+    pretty_parser = ET.XMLParser(resolve_entities=False,
                                   strip_cdata=False,
                                   remove_blank_text=True)
-    _root = ET.fromstring(_as_string, _pretty_parser)
-    ET.cleanup_namespaces(_root, top_nsmap=dfc.XMLNS)
-    _formatted = ET.tostring(_root, pretty_print=True, encoding='UTF-8').decode('UTF-8')
+    the_root = ET.fromstring(as_string, pretty_parser)
+    ET.cleanup_namespaces(the_root, top_nsmap=dfc.XMLNS) # pyright: ignore[reportCallIssue]
+    _formatted = ET.tostring(the_root, pretty_print=True, encoding='UTF-8').decode('UTF-8') # pyright: ignore[reportCallIssue]
     if preamble:
         formatted_file_content = f'{preamble}\n{_formatted}'
     else:
@@ -119,9 +119,9 @@ def _post_oai_extract_metsdata(xml_tree):
 def extract_mets(path_mets, the_data):
     """Just extract METS from OAI body"""
 
-    xml_root = ET.fromstring(the_data)
+    xml_root = ET.fromstring(the_data) # pyright: ignore[reportCallIssue]
     mets_tree = _post_oai_extract_metsdata(xml_root)
-    write_xml_file(mets_tree, path_mets, preamble=None)
+    write_xml_file(mets_tree, path_mets, preamble=None) # pyright: ignore[reportCallIssue]
 
 
 @dataclasses.dataclass
@@ -136,7 +136,7 @@ class XMLProcessor(abc.ABC):
     """Basic XML-Processing"""
 
     def __init__(self, input_xml, xmlns=None):
-        self.root = None
+        self.root: ET._Element
         self.path_xml = dfc.UNSET_LABEL
         if isinstance(input_xml, ET._Element):
             self.root = input_xml
@@ -153,7 +153,7 @@ class XMLProcessor(abc.ABC):
             self._parse()
 
     def _parse(self):
-        self.root = ET.parse(self.path_xml).getroot()
+        self.root = ET.parse(self.path_xml).getroot() # pyright: ignore[reportCallIssue]
 
     def remove(self, tags):
         """remove elements by tagname"""
@@ -167,7 +167,8 @@ class XMLProcessor(abc.ABC):
                 if len(parent.getchildren()) == 0 and parent.text:
                     parent.text = ''
 
-    def findall(self, expression, element=None, get_all=True):
+    def findall(self, expression, element: None | ET._Element = None,
+                get_all=True) -> list[ET._Element] | ET._Element:
         """wrap search by xpath-expression"""
         els = None
         if element is not None:
@@ -231,10 +232,10 @@ class MetsProcessor(XMLProcessor):
                 next_agent_id = i
         if kwargs is None or len(kwargs) == 0:
             kwargs = {'TYPE': 'OTHER', 'ROLE': 'OTHER', 'OTHERTYPE': 'SOFTWARE'}
-        agent_smith = ET.Element('{http://www.loc.gov/METS/}agent', kwargs)
-        the_name = ET.SubElement(agent_smith, '{http://www.loc.gov/METS/}name')
+        agent_smith = ET.Element('{http://www.loc.gov/METS/}agent', kwargs) # pyright: ignore[reportCallIssue]
+        the_name = ET.SubElement(agent_smith, '{http://www.loc.gov/METS/}name') # pyright: ignore[reportCallIssue]
         the_name.text = agent_name
-        the_note = ET.SubElement(agent_smith, '{http://www.loc.gov/METS/}note')
+        the_note = ET.SubElement(agent_smith, '{http://www.loc.gov/METS/}note') # pyright: ignore[reportCallIssue]
         if agent_note is None:
             agent_note = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
         the_note.text = agent_note
@@ -248,16 +249,18 @@ class MetsProcessor(XMLProcessor):
         """
 
         agents = self.findall('.//mets:metsHdr/mets:agent')
+        if not isinstance(agents, list):
+            return
         for agent in agents:
             if filter_by_attr in agent.keys():
                 filter_attr = agent.attrib[filter_by_attr]
                 if filter_attr:
                     for black in black_list:
                         if black in filter_attr:
-                            parent = agent.getparent()
+                            parent: ET._Element = agent.getparent()
                             parent.remove(agent)
 
-    def contains_group(self, group: str) -> bool:
+    def contains_group(self, group: str | list) -> bool:
         """Test if a certain fileGroup exists"""
 
         if isinstance(group, list):
@@ -315,25 +318,40 @@ class DmdReport:
     dmd_id: str
     is_prime: bool
     type = None
-    licence = None
-    identifiers = {}
-    related = []
-    languages = []
-    locations = []
-    origins = []
+    licence: list | None = None
+    identifiers: dict | None  = None
+    related: list | None = None
+    languages: list | None = None
+    locations: list | None = None
+    origins: list | None = None
+
+    def __init__(self, dmd_id, is_prime):
+        self.dmd_id = dmd_id
+        self.is_prime = is_prime
+        self.identifiers = {}
+        self.related = []
+        self.languages = []
+        self.locations = []
+        self.origins = []
 
 
 @dataclasses.dataclass
 class MetsReport:
     """Information about digital object"""
 
-    system_identifier = None
+    system_identifier: dict | None = None
     type = None
-    prime_report = None
-    dmd_reports = []
-    hierarchy = []
-    links = None
-    files = {}
+    prime_report: DmdReport | None = None
+    dmd_reports: list | None = None
+    hierarchy: list | None = None
+    links: list | None = None
+    files: dict | None = None
+
+    def __init__(self):
+        self.prime_report = None
+        self.dmd_reports = []
+        self.hierarchy = []
+        self.files = {}
 
 
 PREFIX_VLS = 'md'
@@ -360,14 +378,14 @@ class MetsReader(MetsProcessor):
     * Kitodo3 objects use UUIDs
     """
 
-    def __init__(self, input_mets, dmd_id: str = None):
+    def __init__(self, input_mets, dmd_id: str | None = None):
         super().__init__(input_mets)
-        self.primary_dmd = None
+        self.primary_dmd: ET._Element | None = None
         self._prime_mods_id = dmd_id
         if self._prime_mods_id is None:
             self._find_prime_mods_id()
         self._set_prime_dmd()
-        self._report: typing.Optional[MetsReport] = None
+        self._report: MetsReport | None = None
         self._config = None
 
     def _find_prime_mods_id(self):
@@ -399,16 +417,16 @@ class MetsReader(MetsProcessor):
         if log_struct is None:
             raise DigiflowMetadataException(f"No logical struct in {self.root.base}!")
         first_level = log_struct.getchildren()
-        _raw_id = None
+        raw_id = None
         if len(first_level) == 1:
             the_type: str = first_level[0].attrib['TYPE'].lower()
             if the_type in DEFAULT_FLAT_STRUCTS:
-                _raw_id = first_level[0].attrib['DMDID']
+                raw_id = first_level[0].attrib['DMDID']
             elif the_type in DEFAULT_PARENT_STRUCTS:
                 # parent structs are considered not to have fileGroup for MAX images
                 # if not self.tree.findall('.//mets:fileGrp[@USE="MAX"]', XMLNS):
                 if not self.contains_group(CONTENT_FILE_GROUPS):
-                    _raw_id = first_level[0].attrib['DMDID']
+                    raw_id = first_level[0].attrib['DMDID']
                 else:
                     # a subsequent digital object (monograph, volume, issue) should have MAX images
                     # and further, it should posses a physical root mapping
@@ -434,11 +452,11 @@ class MetsReader(MetsProcessor):
                     _xpr_log = f'.//mets:structMap[@TYPE="LOGICAL"]//mets:div[@ID="{_log_id}"]'
                     _log = self.root.find(_xpr_log, dfc.XMLNS)
                     if _log is not None:
-                        _raw_id = _log.attrib['DMDID']
+                        raw_id = _log.attrib['DMDID']
         # if still no primary id found, go nuts
-        if not _raw_id:
+        if not raw_id:
             raise DigiflowMetadataException(f"Can't find primary dmd_id in {self.root.base}")
-        return _raw_id
+        return raw_id
 
     def _set_prime_dmd(self):
         """Encapsulated recognition of primary DMD section"""
@@ -463,8 +481,9 @@ class MetsReader(MetsProcessor):
             prime_report: DmdReport = prime_reader.report
             self._report.type, self._report.hierarchy = self.inspect_logical_struct()
             self._report.links = self.get_invalid_physical_structs()
-            self._report.dmd_reports.append(prime_report)
             self._report.prime_report = prime_report
+            if self._report.dmd_reports is not None:
+                self._report.dmd_reports.append(prime_report)
         return self._report
 
     def analyze(self):
@@ -473,7 +492,7 @@ class MetsReader(MetsProcessor):
 
     def insert_into_prime_mods(self, tag, attributes=None, text_content=None):
         """Insert element"""
-        new_el = ET.SubElement(self.primary_dmd, tag, attrib=attributes)
+        new_el = ET.SubElement(self.primary_dmd, tag, attrib=attributes) # pyright: ignore[reportCallIssue]
         if text_content:
             new_el.text = text_content
 
@@ -490,7 +509,7 @@ class MetsReader(MetsProcessor):
         """
 
         log_ids = self.root.xpath(f'.//mets:div[@DMDID="{self.dmd_id}"]/mets:div/@ID',
-                                   namespaces=dfc.XMLNS)
+                                  namespaces=dfc.XMLNS)
         for log_id in log_ids:
             all_links = self.root.findall(f'.//mets:smLink[@{XLINK_FROM}="{log_id}"]', dfc.XMLNS)
             if not all_links:
@@ -508,7 +527,7 @@ class MetsReader(MetsProcessor):
 
         xpath = f'.//*[@DMDID="{self._prime_mods_id}"]'
         log_el = self.findall(xpath, get_all=False)
-        if log_el is not None:
+        if isinstance(log_el, ET._Element) and self._prime_mods_id is not None:
             curr_log_type = log_el.attrib['TYPE']
             the_id: str = self._prime_mods_id
             if the_id.startswith('md'):
@@ -523,9 +542,9 @@ class MetsReader(MetsProcessor):
                 the_id = nxt_prnt.attrib["ID"]
                 if 'DMDID' in nxt_prnt.attrib:
                     the_id = nxt_prnt.attrib['DMDID']
-                    if the_id.startswith("md"): # strip from VLS dmdid
+                    if the_id.startswith("md"):  # strip from VLS dmdid
                         the_id = the_id[(len("md")):]
-                    if the_id.startswith("mdaslog"): # strip from VLS legacy menadoc
+                    if the_id.startswith("mdaslog"):  # strip from VLS legacy menadoc
                         the_id = the_id[(len("mdaslog")):]
                 # take special care of newspaper hierarchy
                 # which differs between vls:mets and vls:zmets
@@ -571,9 +590,11 @@ class MetsReader(MetsProcessor):
         repositories = []
         # inspect mets header
         mets_hdrs = self.xpath('//mets:metsHdr')
+        mets_hdr = None
         if len(mets_hdrs) == 1:
             mets_hdr = mets_hdrs[0]
-            repositories = self.xpath('mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()', mets_hdr)
+            repositories = self.xpath(
+                'mets:agent[@OTHERTYPE="REPOSITORY"]/mets:name/text()', mets_hdr)
         repo_one = repositories[0] if len(
             repositories) == 1 else MARK_AGENT_LEGACY.split(':', maxsplit=1)[0]
         # legacy migrated record found?
@@ -592,18 +613,21 @@ class MetsReader(MetsProcessor):
             legacy_id = legacy_vls_marks[0][len(MARK_AGENT_VLID):].strip()
             ident_dict[repo_one] = legacy_id
         # legacy vls record which is not mapped by now?
-        if repo_one and ('digital' in repo_one or 'menadoc' in repo_one) and repo_one not in ident_dict:
+        if repo_one and ('digital' in repo_one or 'menadoc' in repo_one)\
+             and repo_one not in ident_dict and self.dmd_id is not None:
             legacy_id = self.dmd_id[2:] if self.dmd_id.startswith('md') else self.dmd_id
             ident_dict[repo_one] = legacy_id
         # legacy kitodo2 source _without_ OAI envelope
         agent_creators = self.root.xpath(
-            '//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name', namespaces=dfc.XMLNS)
+            '//mets:agent[@OTHERTYPE="SOFTWARE" and @ROLE="CREATOR"]/mets:name',
+            namespaces=dfc.XMLNS)
         if len(agent_creators) == 1 and 'kitodo-ugh' in agent_creators[0].text.lower():
             ident_dict[MARK_KITODO2] = None
         # kitodo3 metsDocumentID?
-        k3_doc_ids = self.xpath('//mets:metsDocumentID/text()', mets_hdr)
-        if len(k3_doc_ids) == 1:
-            ident_dict[MARK_KITODO3] = k3_doc_ids[0]
+        if mets_hdr is not None:
+            k3_doc_ids = self.xpath('//mets:metsDocumentID/text()', mets_hdr)
+            if len(k3_doc_ids) == 1:
+                ident_dict[MARK_KITODO3] = k3_doc_ids[0]
         # once migrated of old, now hosted at opendata
         viewer_pres = self.root.xpath(
             './/dv:presentation[contains(./text(), "://opendata")]/text()', namespaces=dfc.XMLNS)
@@ -728,7 +752,7 @@ class ModsReader(XMLProcessor):
         if len(goobi_srcs) > 0:
             idents["goobi:CatalogSourceID"] = goobi_srcs[0]
         goobi_parents = self.root.xpath("mods:extension//*[@name='CatalogIDSource' and @anchorId]/text()",
-                                     namespaces=dfc.XMLNS)
+                                        namespaces=dfc.XMLNS)
         if len(goobi_parents) == 1:
             idents["goobi:anchorID"] = goobi_parents[0]
         goobi_vds = self.root.xpath("mods:extension//*[starts-with(@name, 'VD')]",

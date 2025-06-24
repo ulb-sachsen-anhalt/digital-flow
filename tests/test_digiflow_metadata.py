@@ -17,7 +17,6 @@ from .conftest import TEST_RES, LIB_RES
 
 # pylint:disable=c-extension-no-member
 
-
 def test_metsreader_kitodo2_volume():
     """Got correct primary mods for F-stage?
 
@@ -32,6 +31,7 @@ def test_metsreader_kitodo2_volume():
 
     # act
     mets_report: df.MetsReport = reader.report
+    assert mets_report.prime_report
     prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
@@ -39,9 +39,11 @@ def test_metsreader_kitodo2_volume():
     assert mets_report.hierarchy == [('183475631', 'multivolume_work')]
     assert prime_report.languages == ['ger']
     assert prime_report.type == 'Af'
+    assert prime_report.identifiers
     assert 'gvk-ppn' in prime_report.identifiers
     assert prime_report.identifiers['gvk-ppn'] == '183475917'
     assert prime_report.locations == 'Nr 83 (6)'
+    assert prime_report.licence
     assert len(prime_report.licence) == 2
     assert prime_report.licence[0] == ("use and reproduction",
                                        "http://rightsstatements.org/vocab/InC/1.0/",
@@ -67,6 +69,7 @@ def test_metsreader_report_vd18_cstage():
 
     # act
     mets_report: df.MetsReport = reader.report
+    assert mets_report.prime_report
     prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
@@ -74,6 +77,7 @@ def test_metsreader_report_vd18_cstage():
     assert mets_report.hierarchy == []
     assert prime_report.type == 'Ac'
     assert prime_report.languages == ['ger']
+    assert prime_report.identifiers
     assert prime_report.identifiers['ulbhalvd18'] == '211999504'
     assert not prime_report.locations
 
@@ -97,12 +101,14 @@ def test_metsreader_report_vd18_fstage():
 
     # act
     mets_report: df.MetsReport = reader.report
+    assert mets_report.prime_report
     prime_report: df.DmdReport = mets_report.prime_report
 
     # assert
     assert not mets_report.files
     assert mets_report.hierarchy == [('9427342', 'multivolume_work')]
     assert prime_report.type == 'Af'
+    assert prime_report.identifiers
     assert prime_report.identifiers['ulbhalvd18'] == '211999628'
     assert prime_report.languages == ['ger']
     assert prime_report.locations == 'Lb 712 a (3,2)'
@@ -122,7 +128,9 @@ def test_metsreader_report_k2_goobi_mets():
 
     # assert
     assert report.hierarchy == [('LOG_0002', 'MultiVolumeWork')]
+    assert report.prime_report
     prime_report: df.DmdReport = report.prime_report
+    assert prime_report.identifiers
     assert prime_report.identifiers["goobi:CatalogSourceID"] == "153142537"
     assert prime_report.identifiers["goobi:anchorID"] == "153142340"
     assert prime_report.identifiers["urn:nbn"] == "urn:nbn:de:gbv:3:1-1192015415-153142537-13"
@@ -146,12 +154,14 @@ def test_metsreader_report_vd17_fstage_pica_case():
 
     # act
     report: df.MetsReport = reader.report
+    assert report.prime_report
     prime_report: df.DmdReport = report.prime_report
 
     # assert
     assert not report.files
     assert report.hierarchy == [('14591136', 'multivolume_work')]
     assert prime_report.type == 'AF'
+    assert prime_report.identifiers
     assert prime_report.identifiers['pon'] == '008499756'
     assert prime_report.languages == ['ger']
     assert prime_report.locations == 'TM0904 (5)'
@@ -175,6 +185,7 @@ def test_metsreader_report_hd_monography():
 
     # act
     report: df.MetsReport = reader.report
+    assert report.prime_report
     prime_report: df.DmdReport = report.prime_report
 
     # assert
@@ -182,7 +193,9 @@ def test_metsreader_report_hd_monography():
     assert report.hierarchy == []
     assert prime_report.type == 'Aa'
     assert prime_report.languages == ['ger']
+    assert prime_report.identifiers
     assert prime_report.identifiers['ulbhaldod'] == '187143188'
+    assert prime_report.locations
     assert len(prime_report.locations) == 2
     assert prime_report.locations == ['Pon IIg 694, FK', 'Pon IIg 689, 4° (2)']
 
@@ -202,17 +215,19 @@ def test_metsreader_report_kitodo2_export_monography():
 
     # act
     report: df.MetsReport = reader.report
+    assert report.prime_report
     prime_report: df.DmdReport = report.prime_report
     # need to set this manually since
     # we do not know the kitodo ID from METS
-    report.system_identifier = 'kitodo2:1234'
+    report.system_identifier = {"kitodo2":"1234"}
 
     # assert
     assert not report.files
-    assert report.system_identifier == "kitodo2:1234"
+    assert report.system_identifier == {"kitodo2":"1234"}
     assert report.hierarchy == []
     assert prime_report.languages == ['ger']
     assert prime_report.type == 'Aa'
+    assert prime_report.identifiers
     assert prime_report.identifiers['gvk-ppn'] == '147638674'
     assert len(prime_report.identifiers) == 3
     assert prime_report.locations == 'Pon Za 5950, QK'
@@ -306,12 +321,16 @@ def test_metsreader_report_for_10595(monograph_hd_invalid_physlinks):
 
     # act
     mets_report: df.MetsReport = reader.report
+    assert mets_report.prime_report
     report: df.DmdReport = mets_report.prime_report
 
     # assert
+    assert report.type
     assert 'Aa' in report.type
     assert report.languages == ['ger']
+    assert report.identifiers
     assert report.identifiers['ulbhaldod'] == '187143188'
+    assert mets_report.links
     assert len(mets_report.links) == 26
 
 
@@ -329,7 +348,7 @@ def test_metsreader_logical_type_is_multivolume():
     mets_reader = df.MetsReader(mets, 'md9427342')
 
     # act
-    mets_reader.report
+    _ = mets_reader.report
 
     # assert
     outcome = mets_reader.inspect_logical_struct()
@@ -350,7 +369,7 @@ def test_metsreader_logical_type_is_tome():
     mets_reader = df.MetsReader(mets, 'md9427334')
 
     # act
-    mets_reader.report
+    _ = mets_reader.report
 
     # assert
     outcome = mets_reader.inspect_logical_struct()
@@ -372,7 +391,7 @@ def test_metsreader_ambigious_recordinfo():
     mets_reader = df.MetsReader(mets, 'md369765')
 
     # act
-    mets_reader.report
+    _ = mets_reader.report
 
     # assert
     outcome = mets_reader.inspect_logical_struct()
@@ -387,7 +406,7 @@ def test_metsreader_clear_agents(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/369765.mets.xml')
-    the_orig = ET.parse(mets)
+    the_orig = ET.parse(mets) # pyright: ignore[reportCallIssue]
     orig_agents = the_orig.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 4
     dst = tmp_path / '369765.mets.xml'
@@ -399,7 +418,7 @@ def test_metsreader_clear_agents(tmp_path):
     result_path = mets_reader.write('ulb')
 
     # assert
-    the_root = ET.parse(str(result_path))
+    the_root = ET.parse(str(result_path)) # pyright: ignore[reportCallIssue]
     agents = the_root.findall('.//mets:agent', dfc.XMLNS)
     assert len(agents) == 2
     for agent in agents:
@@ -422,7 +441,7 @@ def test_metsreader_enrich_first_agent(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
-    mets_input = ET.parse(mets)
+    mets_input = ET.parse(mets) # pyright: ignore[reportCallIssue]
     orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 0
     dst = tmp_path / 'mets.xml'
@@ -435,7 +454,7 @@ def test_metsreader_enrich_first_agent(tmp_path):
 
     # assert
     assert Path(result_path).exists()
-    dfv.validate_xml(ET.parse(result_path).getroot())  # no Exception plz
+    dfv.validate_xml(ET.parse(result_path).getroot())  # pyright: ignore[reportCallIssue]
 
 
 def test_metsreader_enrich_another_agent(tmp_path):
@@ -453,7 +472,7 @@ def test_metsreader_enrich_another_agent(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
-    mets_input = ET.parse(mets)
+    mets_input = ET.parse(mets) # pyright: ignore[reportCallIssue]
     orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 0
     dst = tmp_path / 'mets.xml'
@@ -467,7 +486,7 @@ def test_metsreader_enrich_another_agent(tmp_path):
 
     # assert
     assert Path(result_path).exists()
-    dfv.validate_xml(ET.parse(result_path).getroot())  # no Exception plz
+    dfv.validate_xml(ET.parse(result_path).getroot()) # pyright: ignore[reportCallIssue]
 
 
 def test_metsreader_enrich_agent_kwargs(tmp_path):
@@ -485,7 +504,7 @@ def test_metsreader_enrich_agent_kwargs(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
-    mets_input = ET.parse(mets)
+    mets_input = ET.parse(mets) # pyright: ignore[reportCallIssue]
     orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 0
     dst = tmp_path / '369765.mets.xml'
@@ -499,7 +518,7 @@ def test_metsreader_enrich_agent_kwargs(tmp_path):
 
     # assert
     assert Path(result_path).exists()
-    result_root = ET.parse(result_path).getroot()
+    result_root = ET.parse(result_path).getroot() # pyright: ignore[reportCallIssue]
     dfv.validate_xml(result_root)  # no Exception plz
     assert result_root.xpath('.//mets:agent[@TYPE="INDIVIDUAL"]/mets:name/text()',
                              namespaces=df.XMLNS)[0] == 'Agent Smith'
@@ -542,10 +561,12 @@ def test_metsreader_opendata2_inspect_migrated_record_identifiers():
 
     # act
     report: df.MetsReport = mets_reader.report
+    assert report.prime_report
     dmd_report: df.DmdReport = report.prime_report
 
     # assert
     assert mets_reader.dmd_id == 'md998423'
+    assert dmd_report.identifiers
     assert len(dmd_report.identifiers) == 5
     assert dmd_report.identifiers == {
         'urn': 'urn:nbn:de:gbv:3:1-507459',
@@ -570,10 +591,12 @@ def test_metsreader_opendata_migrated_record_with_doi():
 
     # act
     report: df.MetsReport = mets_reader.report
+    assert report.prime_report
     dmd_report: df.DmdReport = report.prime_report
 
     # assert
     assert mets_reader.dmd_id == 'md1177525'
+    assert dmd_report.identifiers
     assert len(dmd_report.identifiers) == 5
     assert dmd_report.identifiers == {
         'urn': 'urn:nbn:de:gbv:3:1-132151',
@@ -596,9 +619,12 @@ def test_metsreader_opendata_inspect_migrated_record_origins():
     mets_reader = df.MetsReader(target_file)
 
     # act
+    assert mets_reader.report
+    assert mets_reader.report.prime_report
     report: df.DmdReport = mets_reader.report.prime_report
 
     # 3 origins, which is of course wrong
+    assert report.origins
     assert len(report.origins) == 2
     assert report.origins == [("publication", "1574", "Freiberg"),
                               ("digitization", "2013", "Halle (Saale)")]
@@ -612,9 +638,12 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     mets_reader = df.MetsReader(target_file)
 
     # act
+    assert mets_reader.report
+    assert mets_reader.report.prime_report
     report: df.DmdReport = mets_reader.report.prime_report
 
     # 3 origins, which is of course wrong
+    assert report.origins
     assert len(report.origins) == 2
     assert report.origins == [("publication", "1560", "Wien"),
                               ("digitization", "2025", "Halle (Saale)")]
@@ -647,8 +676,11 @@ def test_metsreader_zd1_issue_16359609():
 
     # act
     mets_reader: df.MetsReader = df.MetsReader(mets)
+    assert mets_reader.report
+    assert mets_reader.report.prime_report
     dmd_report: df.DmdReport = mets_reader.report.prime_report
 
+    assert dmd_report.identifiers
     assert "ulbhalvd:16359609" == dmd_report.identifiers['local']
     assert "issue" in mets_reader.inspect_logical_struct()
 
@@ -658,7 +690,7 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/vd17-14591176.mets.xml')
-    the_orig = ET.parse(mets)
+    the_orig = ET.parse(mets) # pyright: ignore[reportCallIssue]
     orig_file_groups = the_orig.findall('.//mets:fileGrp', dfc.XMLNS)
     assert len(orig_file_groups) == 6
 
@@ -669,7 +701,7 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
     # act
     mets_proc.clear_filegroups(black_list=['TEASER', 'DOWNLOAD', 'DEFAULT', 'THUMBS', 'MIN'])
     mets_proc.write()
-    new_tree = ET.parse(str(dst))
+    new_tree = ET.parse(str(dst)) # pyright: ignore[reportCallIssue]
     assert len(new_tree.findall('.//mets:fileGrp', dfc.XMLNS)) == 1
     dfv.validate_xml(new_tree.getroot())
 
@@ -679,7 +711,7 @@ def test_metsprocessor_clear_filegroups_odem_ocrd(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'opendata/1981185920_38841.xml')
-    the_orig = ET.parse(mets)
+    the_orig = ET.parse(mets) # pyright: ignore[reportCallIssue]
     orig_file_groups = the_orig.findall('.//mets:fileGrp', dfc.XMLNS)
     assert len(orig_file_groups) == 5
 
@@ -692,7 +724,7 @@ def test_metsprocessor_clear_filegroups_odem_ocrd(tmp_path):
     mets_proc.write()
 
     # assert
-    new_tree = ET.parse(dst)
+    new_tree = ET.parse(dst) # pyright: ignore[reportCallIssue]
     dfv.validate_xml(new_tree.getroot())
     assert len(new_tree.findall('.//mets:fileGrp', dfc.XMLNS)) == 1
 
@@ -851,6 +883,7 @@ def test_metsreader3_report_vd18_cstage():
 
     # act
     report = reader.report
+    assert report.prime_report
     dmd_report: df.DmdReport = report.prime_report
 
     # assert
@@ -882,6 +915,7 @@ def test_metsreader3_report_vd18_fstage():
 
     # act
     mets_report = reader.report
+    assert mets_report.prime_report
     dmd_report: df.DmdReport = mets_report.prime_report
 
     # assert
@@ -935,6 +969,7 @@ def test_mets_reader_some_sbb_mets():
 
     the_reader = df.MetsReader(TEST_RES / "mets" / "SBB_PPN1000056597.xml")
     the_report = the_reader.report
+    assert the_report.prime_report
     dmd_report: df.DmdReport = the_report.prime_report
     assert the_report.type == "monograph"
     assert dmd_report.languages == ["ger"]
@@ -946,6 +981,47 @@ def test_mets_reader_newspaper_year_1921():
     the_reader = df.MetsReader(TEST_RES / "mets" / "newspaper" /
                                "1516514412012_175735_year_1921.xml")
     the_report = the_reader.report
+    assert the_report.prime_report
     dmd_report: df.DmdReport = the_report.prime_report
     assert the_report.type == "year"
     assert dmd_report.languages == ["ger"]
+
+
+def test_metsreader_kitodo2_058141367():
+    """Prevent undesired behavior: subsequent
+    calls created ever more dmd_reports!
+    """
+
+    # arrange
+    mets = TEST_RES / "k2-mets-058141367.k2x"
+    assert mets.is_file()
+
+    # act
+    mets_reader_01 = df.MetsReader(mets)
+    assert mets_reader_01.primary_dmd
+    mods_idents = mets_reader_01.primary_dmd.xpath(
+            'mods:recordInfo/mods:recordIdentifier/text()',
+            namespaces=df.XMLNS)
+
+    # assert
+    assert mods_idents[0] == "058141367"
+    assert mets_reader_01.report
+    assert mets_reader_01.report.dmd_reports
+    assert len(mets_reader_01.report.dmd_reports) == 1
+
+    # re-act
+    _ = df.MetsReader(mets).report # thouse created next dmd_report entry
+    mets_reader_02 = df.MetsReader(mets)
+    assert mets_reader_02.report
+    assert mets_reader_02.report.dmd_reports
+    assert len(mets_reader_02.report.dmd_reports) == 1
+
+
+def test_metsreader_dataclass():
+    """Ensure unset attribute exists and is
+    initialized with 'None' using Python 3.10+
+    and prevent ... object has no attribute ... AttributeErrors
+    """
+
+    report = df.MetsReport()
+    assert report.system_identifier is None
