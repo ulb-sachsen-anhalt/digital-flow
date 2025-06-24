@@ -998,7 +998,7 @@ def test_metsreader_kitodo2_058141367():
 
     # act
     mets_reader_01 = df.MetsReader(mets)
-    assert mets_reader_01.primary_dmd
+    assert mets_reader_01.primary_dmd is not None
     mods_idents = mets_reader_01.primary_dmd.xpath(
             'mods:recordInfo/mods:recordIdentifier/text()',
             namespaces=df.XMLNS)
