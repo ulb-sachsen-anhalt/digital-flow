@@ -789,7 +789,7 @@ def test_metsprocessor_remove_elements_and_close_tags(tmp_path):
     mets_proc = df.MetsProcessor(str(dst))
 
     # act
-    mets_proc.remove(['alto:Shape', 'alto:Processing'])
+    mets_proc.remove(['Shape', 'Processing'])
     path_result = mets_proc.write()
 
     # assert
@@ -812,7 +812,7 @@ def test_metsprocessor_remove_elements_no_keyerror(tmp_path):
     assert len(mets_proc.xpath('//vl:sourceinfo')) == 1
 
     # act
-    mets_proc.remove(['vl:sourceinfo'])
+    mets_proc.remove(['sourceinfo'])
     path_result = mets_proc.write()
 
     # assert

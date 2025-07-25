@@ -156,10 +156,11 @@ class XMLProcessor(abc.ABC):
         self.root = ET.parse(self.path_xml).getroot() # pyright: ignore[reportCallIssue]
 
     def remove(self, tags):
-        """remove elements by tagname"""
+        """remove elements by *local* tagname without namespace"""
 
         for tag in tags:
-            removals = self.root.findall(f'.//{tag}', self.xmlns)
+            removals = self.root.xpath(f'//*[local-name()="{tag}"]',
+                                       namespaces=self.xmlns)
             for rem in removals:
                 parent = rem.getparent()
                 parent.remove(rem)
