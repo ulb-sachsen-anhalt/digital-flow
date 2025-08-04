@@ -1,8 +1,17 @@
 """
-For the export of processes to share_it,
-the generated data should be enriched and packed into a SAF.
-The SAF file is a simple ZIP file,
-but it is structured according to a specified structure.
+Provides the functionality to export a single digital object
+from digitalization workflows as item_0000 suitable for DSpace.
+
+The format is SAF (Submission Archive Format), which is a simple ZIP file,
+but structured according to a specified structure, containing
+* a METS file, which describes the digital object,
+* a contents file, which lists the files in the archive,
+* a dublin_core.xml file, which acts as placeholder for DSpace
+* and the actual files of the digital object, such as images, PDFs, etc.
+
+Dependencies:
+- lxml
+- zipfile
 
 Implements task #5735
 """
@@ -44,6 +53,8 @@ CONTENTS_FILE_MAPPINGS = {
     SRC_MAX : ''
 }
 
+EXPORT_CMD_PATTERN = 'zip -q -r {} item_000'
+
 
 class DigiFlowExportError(Exception):
     """Mark Export Exception"""
@@ -53,9 +64,9 @@ class ExportMapping:
 
     def __init__(self, path_source, path_target, access_right=None):
         if not os.path.exists(path_source):
-            raise DigiFlowExportError("Invalid source path '{}'!'".format(path_source))
+            raise DigiFlowExportError(f"Invalid source path '{path_source}'!")
         if not os.path.isabs(path_source):
-            raise DigiFlowExportError("Source path '{}' is not absolute!".format(path_source))
+            raise DigiFlowExportError(f"Source path '{path_source}' is not absolute!")
         path_target_dir = os.path.dirname(path_target)
         if not os.path.exists(path_target_dir):
             os.makedirs(path_target_dir)
@@ -193,7 +204,7 @@ def _render_row(img_label, working_item_dir):
     1.jpg    bundle:MAX_IMAGE    virtual:BUNDLE_BRANDED_PREVIEW__1.jpg/preview;BUNDLE_THUMBNAIL__1.jpg/thumbnail
     """
     row = f"{img_label}\tbundle:MAX_IMAGE"
-    all_jpgs = [_i for _i in os.listdir(working_item_dir) 
+    all_jpgs = [_i for _i in os.listdir(working_item_dir)
                 if _i.endswith('.jpg')]
     previews = [_i for _i in all_jpgs if BUNDLE_PREVIEW in _i]
     thumbs = [_i for _i in all_jpgs if BUNDLE_THUMBNAIL in _i]
@@ -222,14 +233,17 @@ def compress(work_dir, archive_name):
     """
     zip_size = -1
     zip_file_path = os.path.join(os.path.dirname(work_dir), archive_name) + '.zip'
-    previous_dir = os.getcwd() 
+    previous_dir = os.getcwd()
     os.chdir(work_dir)
-    cmd = 'zip -q -r {} item_000'.format(zip_file_path)
-    subprocess.run(cmd, shell=True, check=True)
+    cmd = EXPORT_CMD_PATTERN.format(zip_file_path)
+    try:
+        subprocess.run(cmd, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        raise DigiFlowExportError(f"Export subprocess failed: {e}") from e
     os.chmod(zip_file_path, 0o666)
     zip_size = int(os.path.getsize(zip_file_path) / 1024 / 1024)
     os.chdir(previous_dir)
-    return (zip_file_path, "{}MB".format(zip_size))
+    return (zip_file_path, f"{zip_size}MB")
 
 
 def move_to_tmp_file(the_file_path, destination):
@@ -293,7 +307,7 @@ def _handle_dublin_core_derivates(work_dir):
 def _handle_collections_file(work_dir, collections):
     if collections:
         collections_path = os.path.join(work_dir, "collections")
-        with open(collections_path, 'a') as collections_file:
+        with open(collections_path, 'a', encoding='UTF-8') as collections_file:
             collections_file.write(collections)
     else:
         raise DigiFlowExportError("No collections data provided - invalid share_it export!")
@@ -303,13 +317,17 @@ def export_data_from(process_metafile_path,
                      collection,
                      saf_final_name,
                      export_dst,
-                     export_map=DEFAULT_EXPORT_MAPPINGS,
+                     export_map=None,
                      tmp_saf_dir=None):
     """
     Main entry point to prepare, create and export specified data
     related to provided digitalization item process metadatafile_path
     """
     source_path_dir = os.path.dirname(process_metafile_path)
+    if not os.path.exists(source_path_dir):
+        raise DigiFlowExportError(f"Source directory does not exist: {source_path_dir}")
+    if export_map is None:
+        export_map = DEFAULT_EXPORT_MAPPINGS
     tmp_dir = tempfile.gettempdir()
     prefix = 'opendata-working-'
     if tmp_saf_dir:

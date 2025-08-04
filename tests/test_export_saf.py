@@ -2,7 +2,7 @@
 
 import os
 import shutil
-from unittest.mock import DEFAULT
+import subprocess
 
 import pytest
 
@@ -15,6 +15,9 @@ from digiflow import (
     BUNDLE_PREVIEW as BP,
     BUNDLE_THUMBNAIL as BT,
 )
+
+import digiflow as df
+import digiflow.digiflow_export as dfx
 
 from .conftest import (
     TEST_RES
@@ -133,11 +136,11 @@ def test_export_kitodo2_inspect_saf_assets(monography_319696111):
         saf_final_name='319696111', export_dst=exp_dir)
 
     # respect intermediate ".processing" - suffix
-    # required for calling shutil - otherwise claims 
+    # required for calling shutil - otherwise claims
     # ".processing" is invalid archive format
     _tmp_saf_file_name = next(filter(lambda e: 'zip' in e, os.listdir(exp_dir)))
     _final_saf_file_name = _tmp_saf_file_name.replace('.processing', '')
-    os.rename(os.path.join(exp_dir, _tmp_saf_file_name), 
+    os.rename(os.path.join(exp_dir, _tmp_saf_file_name),
               os.path.join(exp_dir, _final_saf_file_name))
     final_saf_path = str(os.path.join(exp_dir, _final_saf_file_name))
     shutil.unpack_archive(final_saf_path, extract_dir=exp_dir)
@@ -164,11 +167,11 @@ def test_export_kitodo2_inspect_saf_contents_file(monography_319696111):
     # respect intermediate ".processing" - suffix
     # required for calling shutil - otherwise claims 
     # ".processing" is invalid archive format
-    _tmp_saf_file_name = next(filter(lambda e: 'zip' in e, os.listdir(exp_dir)))
-    _final_saf_file_name = _tmp_saf_file_name.replace('.processing', '')
-    os.rename(os.path.join(exp_dir, _tmp_saf_file_name), 
-              os.path.join(exp_dir, _final_saf_file_name))
-    final_saf_path = str(os.path.join(exp_dir, _final_saf_file_name))
+    tmp_saf_file_name = next(filter(lambda e: 'zip' in e, os.listdir(exp_dir)))
+    final_saf_file_name = tmp_saf_file_name.replace('.processing', '')
+    os.rename(os.path.join(exp_dir, tmp_saf_file_name), 
+              os.path.join(exp_dir, final_saf_file_name))
+    final_saf_path = str(os.path.join(exp_dir, final_saf_file_name))
     shutil.unpack_archive(final_saf_path, extract_dir=exp_dir)
 
     # check contents file
@@ -253,18 +256,18 @@ def test_export_re_ocr_with_text_bundle_mappings(re_ocr):
     """Do we have proper export mappings yet?"""
 
     # arrange
-    (_working, _export_dst) = re_ocr
-    _xport_map = DEFAULT_EXPORT_MAPPINGS
-    if '.xml' in _xport_map:
-        del _xport_map['.xml']
-    if '.pdf' in _xport_map:
-        del _xport_map['.pdf']
-    _xport_map[FAKE_METS] = THE_METS
-    _xport_map[FAKE_PDF] = None
-    _xport_map['.pdf.txt'] = None
+    (working, export_dst) = re_ocr
+    xport_map = DEFAULT_EXPORT_MAPPINGS
+    if '.xml' in xport_map:
+        del xport_map['.xml']
+    if '.pdf' in xport_map:
+        del xport_map['.pdf']
+    xport_map[FAKE_METS] = THE_METS
+    xport_map[FAKE_PDF] = None
+    xport_map['.pdf.txt'] = None
 
     # act
-    mappings = map_contents(_working, _export_dst, _xport_map)
+    mappings = map_contents(working, export_dst, xport_map)
 
     # assert 
     assert len(mappings) == 13
@@ -277,32 +280,32 @@ def test_export_re_ocr_with_text_bundle_contents_file(re_ocr):
     """
 
     # arrange
-    (_working, _export_dst) = re_ocr
-    _xport_map = DEFAULT_EXPORT_MAPPINGS
-    if '.xml' in _xport_map:
-        del _xport_map['.xml']
-    if '.pdf' in _xport_map:
-        del _xport_map['.pdf']
-    _xport_map[FAKE_METS] = THE_METS
-    _xport_map[FAKE_PDF] = None
-    _xport_map['.pdf.txt'] = None
-    
+    (work_dir, export_dst) = re_ocr
+    xport_map = DEFAULT_EXPORT_MAPPINGS
+    if '.xml' in xport_map:
+        del xport_map['.xml']
+    if '.pdf' in xport_map:
+        del xport_map['.pdf']
+    xport_map[FAKE_METS] = THE_METS
+    xport_map[FAKE_PDF] = None
+    xport_map['.pdf.txt'] = None
+
     # act
     export_data_from(
-        _working / FAKE_METS, SHARE_IT_EXPORT_COLLECTION,
-        export_map=_xport_map,
-        saf_final_name='12345678', export_dst=_export_dst)
-    
+        work_dir / FAKE_METS, SHARE_IT_EXPORT_COLLECTION,
+        export_map=xport_map,
+        saf_final_name='12345678', export_dst=export_dst)
+
     # respect intermediate ".processing" - suffix
     # required for calling shutil - otherwise claims 
     # ".processing" is invalid archive format
-    _tmp_saf_file_name = next(filter(lambda e: 'zip' in e, os.listdir(_export_dst)))
-    _final_saf_file_name = _tmp_saf_file_name.replace('.processing', '')
-    os.rename(os.path.join(_export_dst, _tmp_saf_file_name), 
-              os.path.join(_export_dst, _final_saf_file_name))
-    final_saf_path = str(os.path.join(_export_dst, _final_saf_file_name))
-    shutil.unpack_archive(final_saf_path, extract_dir=_export_dst)
-    yield os.path.join(_export_dst, 'item_000')
+    tmp_saf_file_name = next(filter(lambda e: 'zip' in e, os.listdir(export_dst)))
+    final_saf_file_name = tmp_saf_file_name.replace('.processing', '')
+    os.rename(os.path.join(export_dst, tmp_saf_file_name), 
+              os.path.join(export_dst, final_saf_file_name))
+    final_saf_path = str(os.path.join(export_dst, final_saf_file_name))
+    shutil.unpack_archive(final_saf_path, extract_dir=export_dst)
+    yield os.path.join(export_dst, 'item_000')
 
 
 def test_export_re_ocr_files(re_ocr_saf_item000):
@@ -379,7 +382,7 @@ def test_export_migration_derivates_mappings(monography_derivates):
     # act
     mappings = map_contents(_src, _export_dst, _xport_map)
 
-    # assert 
+    # assert
     assert len(mappings) == 32
 
 
@@ -391,9 +394,9 @@ def _fixture_monography_derivates_export(monography_derivates):
     export_data_from(
         _src / FAKE_METS, SHARE_IT_EXPORT_COLLECTION,
         saf_final_name='12345678', export_dst=_export_dst)
-    
+
     # respect intermediate ".processing" - suffix
-    # required for calling shutil - otherwise claims 
+    # required for calling shutil - otherwise claims
     # ".processing" is invalid archive format
     _tmp_saf_file_name = next(filter(lambda e: 'zip' in e, os.listdir(_export_dst)))
     _final_saf_file_name = _tmp_saf_file_name.replace('.processing', '')
@@ -441,3 +444,39 @@ def test_export_migration_derivates_contents_file(monography_derivates_export):
     assert 'mets.xml\tbundle:METS_BACKUP\n' in content_entries
     assert f"{FAKE_PDF}\n" in content_entries
     assert f'{_img1}\tbundle:MAX_IMAGE\tvirtual:{BP}{_img1}/preview;{BT}{_img1}/thumbnail\n' in content_entries
+
+
+def test_export_from_invalid_directory_fails(tmp_path):
+    """Ensure exporting from non-existing directory raises an error"""
+
+    # arrange
+    work_dir = tmp_path / 'WORKDIR' / 'non_existing'
+    archive_name = 'test_archive'
+
+    # act
+    with pytest.raises(df.DigiFlowExportError) as exc_info:
+        export_data_from(
+            str(work_dir), SHARE_IT_EXPORT_COLLECTION,
+            saf_final_name=archive_name, export_dst=tmp_path)
+    # assert
+    assert "Source directory does not exist" in str(exc_info.value)
+
+
+def test_export_compression_command_fails(tmp_path):
+    """Ensure export fails export if command invalid
+    Called tool not installed => error raised"""
+
+    # arrange
+    work_dir = tmp_path / 'WORKDIR' / 'some_directory'
+    work_dir.mkdir(parents=True, exist_ok=True)
+    archive_name = 'test_archive'
+
+    # act
+    with pytest.raises(df.DigiFlowExportError) as exc_info:
+        dfx.EXPORT_CMD_PATTERN = 'foozip -q -r {} item_000'
+        # Simulate a failure by using a command that will not work
+        dfx.compress(str(work_dir), archive_name)
+
+    # assert
+    assert "Command 'foozip -q -r " in str(exc_info.value)
+    assert "returned non-zero exit status" in str(exc_info.value)
