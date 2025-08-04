@@ -68,7 +68,7 @@ class DigiflowMetadataException(Exception):
 
 def write_xml_file(xml_root,
                    outfile,
-                   preamble: str | None ='<?xml version="1.0" encoding="UTF-8"?>'):
+                   preamble = '<?xml version="1.0" encoding="UTF-8"?>'):
     """write xml root prettified to outfile
     with default preamble for file usage
     create export dir if not exists and writeable
@@ -82,7 +82,7 @@ def write_xml_file(xml_root,
         file_handler.write(_prettified)
 
 
-def _pretty_xml(xml_root, preamble: str | None ='<?xml version="1.0" encoding="UTF-8"?>'):
+def _pretty_xml(xml_root, preamble = '<?xml version="1.0" encoding="UTF-8"?>'):
     """XML root as prettified string
     witd cleared namespace declarations
     and default preamble like for XML files
@@ -168,8 +168,8 @@ class XMLProcessor(abc.ABC):
                 if len(parent.getchildren()) == 0 and parent.text:
                     parent.text = ''
 
-    def findall(self, expression, element: None | ET._Element = None,
-                get_all=True) -> list[ET._Element] | ET._Element:
+    def findall(self, expression, element = None,
+                get_all=True):
         """wrap search by xpath-expression"""
         els = None
         if element is not None:
@@ -261,14 +261,16 @@ class MetsProcessor(XMLProcessor):
                             parent: ET._Element = agent.getparent()
                             parent.remove(agent)
 
-    def contains_group(self, group: str | list) -> bool:
+    def contains_group(self, group) -> bool:
         """Test if a certain fileGroup exists"""
 
         if isinstance(group, list):
             return any(self.root.findall(PATTERN_FILEGROUP_USE.format(g), dfc.XMLNS)
                        for g in group)
-        found_group = self.root.findall(PATTERN_FILEGROUP_USE.format(group), dfc.XMLNS)
-        return len(found_group) > 0
+        if isinstance(group, str):
+            found_group = self.root.findall(PATTERN_FILEGROUP_USE.format(group), dfc.XMLNS)
+            return len(found_group) > 0
+        return False
 
     def clear_filegroups(self, black_list=None):
         """Clear file Groups by blacklist"""
@@ -319,12 +321,12 @@ class DmdReport:
     dmd_id: str
     is_prime: bool
     type = None
-    licence: list | None = None
-    identifiers: dict | None  = None
-    related: list | None = None
-    languages: list | None = None
-    locations: list | None = None
-    origins: list | None = None
+    licence: typing.Optional[list] = None
+    identifiers: typing.Optional[dict] = None
+    related: typing.Optional[list] = None
+    languages: typing.Optional[list] = None
+    locations: typing.Optional[list] = None
+    origins: typing.Optional[list] = None
 
     def __init__(self, dmd_id, is_prime):
         self.dmd_id = dmd_id
@@ -340,13 +342,13 @@ class DmdReport:
 class MetsReport:
     """Information about digital object"""
 
-    system_identifier: dict | None = None
     type = None
-    prime_report: DmdReport | None = None
-    dmd_reports: list | None = None
-    hierarchy: list | None = None
-    links: list | None = None
-    files: dict | None = None
+    system_identifier: typing.Optional[dict] = None
+    prime_report: typing.Optional[DmdReport] = None
+    dmd_reports: typing.Optional[list] = None
+    hierarchy: typing.Optional[list] = None
+    links: typing.Optional[list] = None
+    files: typing.Optional[dict] = None
 
     def __init__(self):
         self.prime_report = None
@@ -379,14 +381,14 @@ class MetsReader(MetsProcessor):
     * Kitodo3 objects use UUIDs
     """
 
-    def __init__(self, input_mets, dmd_id: str | None = None):
+    def __init__(self, input_mets, dmd_id: typing.Optional[str] = None):
         super().__init__(input_mets)
-        self.primary_dmd: ET._Element | None = None
+        self.primary_dmd: typing.Optional[ET._Element] = None
         self._prime_mods_id = dmd_id
         if self._prime_mods_id is None:
             self._find_prime_mods_id()
         self._set_prime_dmd()
-        self._report: MetsReport | None = None
+        self._report: typing.Optional[MetsReport] = None
         self._config = None
 
     def _find_prime_mods_id(self):

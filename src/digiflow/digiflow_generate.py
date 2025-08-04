@@ -120,8 +120,8 @@ class DerivansResult:
     """Encapsulate Derivans outcome"""
     command: str
     duration: float
-    result: str | ContainerProcResult | None
-    label: str = None
+    result: typing.Optional[ContainerProcResult] = None
+    label: typing.Optional[str] = None
 
 
 @dataclass(frozen=True)
