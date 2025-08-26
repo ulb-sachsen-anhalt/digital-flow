@@ -17,6 +17,7 @@ from .conftest import TEST_RES, LIB_RES
 
 # pylint:disable=c-extension-no-member
 
+
 def test_metsreader_kitodo2_volume():
     """Got correct primary mods for F-stage?
 
@@ -219,11 +220,11 @@ def test_metsreader_report_kitodo2_export_monography():
     prime_report: df.DmdReport = report.prime_report
     # need to set this manually since
     # we do not know the kitodo ID from METS
-    report.system_identifier = {"kitodo2":"1234"}
+    report.system_identifier = {"kitodo2": "1234"}
 
     # assert
     assert not report.files
-    assert report.system_identifier == {"kitodo2":"1234"}
+    assert report.system_identifier == {"kitodo2": "1234"}
     assert report.hierarchy == []
     assert prime_report.languages == ['ger']
     assert prime_report.type == 'Aa'
@@ -406,7 +407,7 @@ def test_metsreader_clear_agents(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/369765.mets.xml')
-    the_orig = ET.parse(mets) # pyright: ignore[reportCallIssue]
+    the_orig = ET.parse(mets)  # pyright: ignore[reportCallIssue]
     orig_agents = the_orig.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 4
     dst = tmp_path / '369765.mets.xml'
@@ -418,7 +419,7 @@ def test_metsreader_clear_agents(tmp_path):
     result_path = mets_reader.write('ulb')
 
     # assert
-    the_root = ET.parse(str(result_path)) # pyright: ignore[reportCallIssue]
+    the_root = ET.parse(str(result_path))  # pyright: ignore[reportCallIssue]
     agents = the_root.findall('.//mets:agent', dfc.XMLNS)
     assert len(agents) == 2
     for agent in agents:
@@ -441,7 +442,7 @@ def test_metsreader_enrich_first_agent(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
-    mets_input = ET.parse(mets) # pyright: ignore[reportCallIssue]
+    mets_input = ET.parse(mets)  # pyright: ignore[reportCallIssue]
     orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 0
     dst = tmp_path / 'mets.xml'
@@ -472,7 +473,7 @@ def test_metsreader_enrich_another_agent(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
-    mets_input = ET.parse(mets) # pyright: ignore[reportCallIssue]
+    mets_input = ET.parse(mets)  # pyright: ignore[reportCallIssue]
     orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 0
     dst = tmp_path / 'mets.xml'
@@ -486,7 +487,7 @@ def test_metsreader_enrich_another_agent(tmp_path):
 
     # assert
     assert Path(result_path).exists()
-    dfv.validate_xml(ET.parse(result_path).getroot()) # pyright: ignore[reportCallIssue]
+    dfv.validate_xml(ET.parse(result_path).getroot())  # pyright: ignore[reportCallIssue]
 
 
 def test_metsreader_enrich_agent_kwargs(tmp_path):
@@ -504,7 +505,7 @@ def test_metsreader_enrich_agent_kwargs(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'k3_300896638-18490701.xml')
-    mets_input = ET.parse(mets) # pyright: ignore[reportCallIssue]
+    mets_input = ET.parse(mets)  # pyright: ignore[reportCallIssue]
     orig_agents = mets_input.findall('.//mets:agent', dfc.XMLNS)
     assert len(orig_agents) == 0
     dst = tmp_path / '369765.mets.xml'
@@ -518,7 +519,7 @@ def test_metsreader_enrich_agent_kwargs(tmp_path):
 
     # assert
     assert Path(result_path).exists()
-    result_root = ET.parse(result_path).getroot() # pyright: ignore[reportCallIssue]
+    result_root = ET.parse(result_path).getroot()  # pyright: ignore[reportCallIssue]
     dfv.validate_xml(result_root)  # no Exception plz
     assert result_root.xpath('.//mets:agent[@TYPE="INDIVIDUAL"]/mets:name/text()',
                              namespaces=df.XMLNS)[0] == 'Agent Smith'
@@ -690,7 +691,7 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'migration/vd17-14591176.mets.xml')
-    the_orig = ET.parse(mets) # pyright: ignore[reportCallIssue]
+    the_orig = ET.parse(mets)  # pyright: ignore[reportCallIssue]
     orig_file_groups = the_orig.findall('.//mets:fileGrp', dfc.XMLNS)
     assert len(orig_file_groups) == 6
 
@@ -701,7 +702,7 @@ def test_metsprocessor_clear_filegroups_migration_vd17(tmp_path):
     # act
     mets_proc.clear_filegroups(black_list=['TEASER', 'DOWNLOAD', 'DEFAULT', 'THUMBS', 'MIN'])
     mets_proc.write()
-    new_tree = ET.parse(str(dst)) # pyright: ignore[reportCallIssue]
+    new_tree = ET.parse(str(dst))  # pyright: ignore[reportCallIssue]
     assert len(new_tree.findall('.//mets:fileGrp', dfc.XMLNS)) == 1
     dfv.validate_xml(new_tree.getroot())
 
@@ -711,7 +712,7 @@ def test_metsprocessor_clear_filegroups_odem_ocrd(tmp_path):
 
     # arrange
     mets = os.path.join(TEST_RES, 'opendata/1981185920_38841.xml')
-    the_orig = ET.parse(mets) # pyright: ignore[reportCallIssue]
+    the_orig = ET.parse(mets)  # pyright: ignore[reportCallIssue]
     orig_file_groups = the_orig.findall('.//mets:fileGrp', dfc.XMLNS)
     assert len(orig_file_groups) == 5
 
@@ -724,7 +725,7 @@ def test_metsprocessor_clear_filegroups_odem_ocrd(tmp_path):
     mets_proc.write()
 
     # assert
-    new_tree = ET.parse(dst) # pyright: ignore[reportCallIssue]
+    new_tree = ET.parse(dst)  # pyright: ignore[reportCallIssue]
     dfv.validate_xml(new_tree.getroot())
     assert len(new_tree.findall('.//mets:fileGrp', dfc.XMLNS)) == 1
 
@@ -1000,8 +1001,8 @@ def test_metsreader_kitodo2_058141367():
     mets_reader_01 = df.MetsReader(mets)
     assert mets_reader_01.primary_dmd is not None
     mods_idents = mets_reader_01.primary_dmd.xpath(
-            'mods:recordInfo/mods:recordIdentifier/text()',
-            namespaces=df.XMLNS)
+        'mods:recordInfo/mods:recordIdentifier/text()',
+        namespaces=df.XMLNS)
 
     # assert
     assert mods_idents[0] == "058141367"
@@ -1010,7 +1011,7 @@ def test_metsreader_kitodo2_058141367():
     assert len(mets_reader_01.report.dmd_reports) == 1
 
     # re-act
-    _ = df.MetsReader(mets).report # thouse created next dmd_report entry
+    _ = df.MetsReader(mets).report  # thouse created next dmd_report entry
     mets_reader_02 = df.MetsReader(mets)
     assert mets_reader_02.report
     assert mets_reader_02.report.dmd_reports
@@ -1025,3 +1026,48 @@ def test_metsreader_dataclass():
 
     report = df.MetsReport()
     assert report.system_identifier is None
+
+
+TEST_XML_AS_STRING = '''
+<root>
+    <child>test xmlprocessing to initialize object text1</child>
+    <child>test xmlprocessing to initialize object text2</child>
+    <child>test xmlprocessing to initialize object text3</child>
+    <child>test xmlprocessing to initialize object text4</child>
+    <child>test xmlprocessing to initialize object text5</child>
+</root>
+'''
+
+
+@pytest.mark.parametrize("input_xml", [
+    (ET.fromstring('<root><child>text</child></root>')),
+    (TEST_RES / "mets" / "k2_meta_10261.xml"),
+    (TEST_XML_AS_STRING),
+    (bytes(TEST_XML_AS_STRING, encoding='utf-8'))
+])
+def test_xmlprocessor_init_with(input_xml):
+    """Test XMLProcessor initialization with various input types
+    Ensure correct root element is set, which is 'root' in
+    case of the above artificial test items or 'mets' for METS files
+    """
+    # arrange
+    proc = None
+
+    # act
+    proc = df.XMLProcessor(input_xml)
+
+    # assert
+    assert proc
+    assert proc.root
+    assert proc.root.tag in ['{http://www.loc.gov/METS/}mets', 'root']
+
+
+@pytest.mark.parametrize("input_xml", [
+    (Path('/not/existing/file.xml')),
+    (123456),
+    (None)
+])
+def test_xmlprocessor_init_with_invalid_input(input_xml):
+    """Test XMLProcessor raises exception for invalid input data"""
+    with pytest.raises(df.DigiflowMetadataException):
+        df.XMLProcessor(input_xml)

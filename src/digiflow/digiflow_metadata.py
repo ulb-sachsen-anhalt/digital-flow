@@ -9,7 +9,7 @@ import typing
 
 from pathlib import Path
 
-from lxml import etree as ET
+import lxml.etree as ET
 
 import digiflow.common as dfc
 
@@ -133,31 +133,43 @@ class METSFileInfo:
 
 
 class XMLProcessor(abc.ABC):
-    """Basic XML-Processing"""
+    """Basic XML-Processing for different input types"""
 
     def __init__(self, input_xml, xmlns=None):
-        self.root: ET._Element
-        self.path_xml = dfc.UNSET_LABEL
+        self.root: typing.Optional[ET._Element] = None
+        self.path_xml: typing.Optional[Path] = None
+        self.xmlns = xmlns
+        if not self.xmlns:
+            self.xmlns = dfc.XMLNS
         if isinstance(input_xml, ET._Element):
             self.root = input_xml
-        else:
-            if isinstance(input_xml, str):
-                input_xml = Path(input_xml)
+        elif isinstance(input_xml, Path):
+            input_xml = Path(input_xml)
             if not input_xml.is_file():
                 raise DigiflowMetadataException(f"{input_xml} considered to be a path but is not!")
             self.path_xml = input_xml
             self.xmlns = xmlns
             if not self.xmlns:
                 self.xmlns = dfc.XMLNS
-            self.path_xml_dir = os.path.dirname(input_xml)
-            self._parse()
-
-    def _parse(self):
-        self.root = ET.parse(self.path_xml).getroot() # pyright: ignore[reportCallIssue]
+            self.root = ET.parse(self.path_xml).getroot()
+        elif isinstance(input_xml, str):
+            if len(input_xml) > (2**8) and not os.path.isfile(input_xml):
+                # long strings are treated as XML content
+                self.root = ET.fromstring(input_xml)
+            else:
+                # short strings are treated as file paths
+                self.path_xml = Path(input_xml)
+                self.root = ET.parse(self.path_xml).getroot()
+        elif isinstance(input_xml, bytes):
+            self.root = ET.fromstring(input_xml.decode('utf-8'))
+        else:
+            raise DigiflowMetadataException(f"Failed to process input type {type(input_xml)}")
 
     def remove(self, tags):
         """remove elements by *local* tagname without namespace"""
 
+        if self.root is None:
+            raise DigiflowMetadataException(f'Failed to remove {tags} no XML root known!')
         for tag in tags:
             removals = self.root.xpath(f'//*[local-name()="{tag}"]',
                                        namespaces=self.xmlns)
@@ -175,6 +187,8 @@ class XMLProcessor(abc.ABC):
         if element is not None:
             els = element.findall(expression, dfc.XMLNS)
         else:
+            if self.root is None:
+                raise DigiflowMetadataException(f'Failed to find {expression} no XML root known!')
             els = self.root.findall(expression, dfc.XMLNS)
         if els is None:
             return []
@@ -186,11 +200,15 @@ class XMLProcessor(abc.ABC):
         """wrap xpath 1.0 calls"""
         if element is not None:
             return element.xpath(expression, namespaces=dfc.XMLNS)
+        if self.root is None:
+            raise DigiflowMetadataException(f'Failed to execute {expression} no XML root known!')
         return self.root.xpath(expression, namespaces=dfc.XMLNS)
 
     def write(self, ext='.xml', out_dir=None, suffix=None) -> str:
         """Write XML-Data to METS/MODS with optional suffix"""
 
+        if self.path_xml is None:
+            raise DigiflowMetadataException('no path known to write to!')
         file_name = self.path_xml
 
         # if suffix was set, trigger name creation logic below
@@ -203,7 +221,7 @@ class XMLProcessor(abc.ABC):
             else:
                 file_name += ext
 
-        mets_dir = self.path_xml_dir
+        mets_dir = self.path_xml.parent
         if out_dir:
             if not os.path.exists(out_dir):
                 raise DigiflowMetadataException(f'invalid write dir {out_dir}')
