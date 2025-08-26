@@ -39,7 +39,7 @@ def test_metsreader_kitodo2_volume():
     assert not mets_report.files
     assert mets_report.hierarchy == [('183475631', 'multivolume_work')]
     assert prime_report.languages == ['ger']
-    assert prime_report.type == 'Af'
+    assert prime_report.dmd_type == 'Af'
     assert prime_report.identifiers
     assert 'gvk-ppn' in prime_report.identifiers
     assert prime_report.identifiers['gvk-ppn'] == '183475917'
@@ -76,7 +76,7 @@ def test_metsreader_report_vd18_cstage():
     # assert
     assert not mets_report.files
     assert mets_report.hierarchy == []
-    assert prime_report.type == 'Ac'
+    assert prime_report.dmd_type == 'Ac'
     assert prime_report.languages == ['ger']
     assert prime_report.identifiers
     assert prime_report.identifiers['ulbhalvd18'] == '211999504'
@@ -108,7 +108,7 @@ def test_metsreader_report_vd18_fstage():
     # assert
     assert not mets_report.files
     assert mets_report.hierarchy == [('9427342', 'multivolume_work')]
-    assert prime_report.type == 'Af'
+    assert prime_report.dmd_type == 'Af'
     assert prime_report.identifiers
     assert prime_report.identifiers['ulbhalvd18'] == '211999628'
     assert prime_report.languages == ['ger']
@@ -161,7 +161,7 @@ def test_metsreader_report_vd17_fstage_pica_case():
     # assert
     assert not report.files
     assert report.hierarchy == [('14591136', 'multivolume_work')]
-    assert prime_report.type == 'AF'
+    assert prime_report.dmd_type == 'AF'
     assert prime_report.identifiers
     assert prime_report.identifiers['pon'] == '008499756'
     assert prime_report.languages == ['ger']
@@ -192,7 +192,7 @@ def test_metsreader_report_hd_monography():
     # assert
     assert not report.files
     assert report.hierarchy == []
-    assert prime_report.type == 'Aa'
+    assert prime_report.dmd_type == 'Aa'
     assert prime_report.languages == ['ger']
     assert prime_report.identifiers
     assert prime_report.identifiers['ulbhaldod'] == '187143188'
@@ -227,7 +227,7 @@ def test_metsreader_report_kitodo2_export_monography():
     assert report.system_identifier == {"kitodo2": "1234"}
     assert report.hierarchy == []
     assert prime_report.languages == ['ger']
-    assert prime_report.type == 'Aa'
+    assert prime_report.dmd_type == 'Aa'
     assert prime_report.identifiers
     assert prime_report.identifiers['gvk-ppn'] == '147638674'
     assert len(prime_report.identifiers) == 3
@@ -326,8 +326,8 @@ def test_metsreader_report_for_10595(monograph_hd_invalid_physlinks):
     report: df.DmdReport = mets_report.prime_report
 
     # assert
-    assert report.type
-    assert 'Aa' in report.type
+    assert report.dmd_type
+    assert 'Aa' in report.dmd_type
     assert report.languages == ['ger']
     assert report.identifiers
     assert report.identifiers['ulbhaldod'] == '187143188'
@@ -896,7 +896,7 @@ def test_metsreader3_report_vd18_cstage():
                                       'ulbhalvd18': '211999504',
                                       'urn': 'urn:nbn:de:gbv:3:1-636051',
                                       'vd18': '11228628'}
-    assert dmd_report.type == 'Ac'
+    assert dmd_report.dmd_type == 'Ac'
     assert not dmd_report.locations
     assert dmd_report.related == []
 
@@ -922,7 +922,7 @@ def test_metsreader3_report_vd18_fstage():
     # assert
     assert dmd_report.languages == ['ger']
     assert not mets_report.files
-    assert mets_report.type == "volume"
+    assert mets_report.logical_type == "volume"
     assert mets_report.hierarchy == [('9427342', 'multivolume_work')]
     assert mets_report.system_identifier == {'digitale.bibliothek.uni-halle.de/vd18': '9427337'}
     assert dmd_report.identifiers == {'gbv': '211999628',
@@ -972,7 +972,7 @@ def test_mets_reader_some_sbb_mets():
     the_report = the_reader.report
     assert the_report.prime_report
     dmd_report: df.DmdReport = the_report.prime_report
-    assert the_report.type == "monograph"
+    assert the_report.logical_type == "monograph"
     assert dmd_report.languages == ["ger"]
 
 
@@ -984,7 +984,7 @@ def test_mets_reader_newspaper_year_1921():
     the_report = the_reader.report
     assert the_report.prime_report
     dmd_report: df.DmdReport = the_report.prime_report
-    assert the_report.type == "year"
+    assert the_report.logical_type == "year"
     assert dmd_report.languages == ["ger"]
 
 

@@ -162,7 +162,7 @@ class XMLProcessor(abc.ABC):
                 self.root = ET.parse(self.path_xml).getroot()
         elif isinstance(input_xml, bytes):
             self.root = ET.fromstring(input_xml.decode('utf-8'))
-        else:
+        if self.root is None:
             raise DigiflowMetadataException(f"Failed to process input type {type(input_xml)}")
 
     def remove(self, tags):
@@ -336,9 +336,9 @@ class DmdReport:
     METS metadata sections alike MODS
     """
 
-    dmd_id: str
     is_prime: bool
-    type = None
+    dmd_id: str
+    dmd_type: typing.Optional[str] = None
     licence: typing.Optional[list] = None
     identifiers: typing.Optional[dict] = None
     related: typing.Optional[list] = None
@@ -360,7 +360,8 @@ class DmdReport:
 class MetsReport:
     """Information about digital object"""
 
-    type = None
+    logical_type: typing.Optional[str] = None
+    logical_identifier: typing.Optional[str] = None
     system_identifier: typing.Optional[dict] = None
     prime_report: typing.Optional[DmdReport] = None
     dmd_reports: typing.Optional[list] = None
@@ -404,12 +405,12 @@ class MetsReader(MetsProcessor):
         self.primary_dmd: typing.Optional[ET._Element] = None
         self._prime_mods_id = dmd_id
         if self._prime_mods_id is None:
-            self._find_prime_mods_id()
+            self._find_logical_root_id()
         self._set_prime_dmd()
         self._report: typing.Optional[MetsReport] = None
         self._config = None
 
-    def _find_prime_mods_id(self):
+    def _find_logical_root_id(self):
         """
         Inspect METS
         * if only single MODS present, take it
@@ -418,6 +419,8 @@ class MetsReader(MetsProcessor):
         * otherwise, guess prime by structure map
         """
 
+        if self.root is None:
+            raise DigiflowMetadataException(f"Failed to find prime MODS ID in {self.path_xml}: No root known!")
         dmd_candidates = self.root.findall(XPR_MODS_SEC, dfc.XMLNS)
         if len(dmd_candidates) == 1 and 'ID' in dmd_candidates[0].attrib:
             self._prime_mods_id = dmd_candidates[0].attrib['ID']
@@ -434,6 +437,8 @@ class MetsReader(MetsProcessor):
                 self._prime_mods_id = self._determine_prime_dmd_id_by_logical_struct()
 
     def _determine_prime_dmd_id_by_logical_struct(self) -> str:
+        if self.root is None:
+            raise DigiflowMetadataException(f"Fail to determine prime dmd in {self.path_xml}: No root element found!")
         log_struct = self.root.find('.//mets:structMap[@TYPE="LOGICAL"]', dfc.XMLNS)
         if log_struct is None:
             raise DigiflowMetadataException(f"No logical struct in {self.root.base}!")
@@ -451,29 +456,29 @@ class MetsReader(MetsProcessor):
                 else:
                     # a subsequent digital object (monograph, volume, issue) should have MAX images
                     # and further, it should posses a physical root mapping
-                    _xpr_root_link = f'.//mets:structLink/mets:smLink[@{XLINK_TO}="physroot"]'
-                    _root_link = self.root.find(_xpr_root_link, dfc.XMLNS)
-                    if _root_link is not None:
-                        _log_id = _root_link.attrib[f'{{{dfc.XMLNS["xlink"]}}}from']
+                    xpr_root_link = f'.//mets:structLink/mets:smLink[@{XLINK_TO}="physroot"]'
+                    root_link = self.root.find(xpr_root_link, dfc.XMLNS)
+                    if root_link is not None:
+                        log_id = root_link.attrib[f'{{{dfc.XMLNS["xlink"]}}}from']
                     # no physical root link found
                     # now map most frequent xlink:from reference
                     # this must be the logical root
                     else:
-                        _xpr_link = './/mets:structLink/mets:smLink'
-                        _links = self.root.findall(_xpr_link, dfc.XMLNS)
-                        _link_map = collections.defaultdict(int)
-                        for _link in _links:
-                            _from = _link.attrib[f'{{{dfc.XMLNS["xlink"]}}}from']
-                            _link_map[_from] += 1
+                        xpr_link = './/mets:structLink/mets:smLink'
+                        links = self.root.findall(xpr_link, dfc.XMLNS)
+                        link_map = collections.defaultdict(int)
+                        for lnk in links:
+                            link_from = lnk.attrib[f'{{{dfc.XMLNS["xlink"]}}}from']
+                            link_map[link_from] += 1
                         # now sort entries
                         # get first match which must be the "top-linker"
-                        _log_id = sorted(_link_map, key=lambda e: e[1])[0]
+                        log_id = sorted(link_map, key=lambda e: e[1])[0]
                     # ... so
                     # we shall know by now the top log id
-                    _xpr_log = f'.//mets:structMap[@TYPE="LOGICAL"]//mets:div[@ID="{_log_id}"]'
-                    _log = self.root.find(_xpr_log, dfc.XMLNS)
-                    if _log is not None:
-                        raw_id = _log.attrib['DMDID']
+                    xpr_log = f'.//mets:structMap[@TYPE="LOGICAL"]//mets:div[@ID="{log_id}"]'
+                    log_el = self.root.find(xpr_log, dfc.XMLNS)
+                    if log_el is not None:
+                        raw_id = log_el.attrib['DMDID']
         # if still no primary id found, go nuts
         if not raw_id:
             raise DigiflowMetadataException(f"Can't find primary dmd_id in {self.root.base}")
@@ -498,10 +503,11 @@ class MetsReader(MetsProcessor):
         if self._report is None:
             self._report = MetsReport()
             self._report.system_identifier = self.ulb_system_identifier()
+            self._report.logical_type, self._report.hierarchy = self.inspect_logical_struct()
+            self._report.logical_identifier = self._prime_mods_id
+            self._report.links = self.get_invalid_physical_structs()
             prime_reader = ModsReader(self.primary_dmd, self._prime_mods_id)
             prime_report: DmdReport = prime_reader.report
-            self._report.type, self._report.hierarchy = self.inspect_logical_struct()
-            self._report.links = self.get_invalid_physical_structs()
             self._report.prime_report = prime_report
             if self._report.dmd_reports is not None:
                 self._report.dmd_reports.append(prime_report)
@@ -529,6 +535,8 @@ class MetsReader(MetsProcessor):
         raises: DigiflowMetadataException if any check fails
         """
 
+        if self.root is None:
+            raise DigiflowMetadataException(f"Failed to inspect logical struct links in {self.path_xml}: No root known!")
         log_ids = self.root.xpath(f'.//mets:div[@DMDID="{self.dmd_id}"]/mets:div/@ID',
                                   namespaces=dfc.XMLNS)
         for log_id in log_ids:
@@ -712,7 +720,7 @@ class ModsReader(XMLProcessor):
         super().__init__(dmd_node)
         self.root = dmd_node
         self.dmd_id = dmd_id
-        self._report = None
+        self._report: typing.Optional[DmdReport] = None
 
     @property
     def report(self):
@@ -720,7 +728,7 @@ class ModsReader(XMLProcessor):
 
         if self._report is None:
             dmd_report: DmdReport = DmdReport(self.dmd_id, is_prime=True)
-            dmd_report.type = self.get_type()
+            dmd_report.dmd_type = self.get_type()
             dmd_report.identifiers = self.get_identifiers()
             dmd_report.languages = self.get_language_information()
             the_shelfs = self.get_location_shelfs()
@@ -761,6 +769,8 @@ class ModsReader(XMLProcessor):
         """Read different kind-o-identifiers from DMD MODS
         and respect custom Kitodo goobi-elements
         """
+        if self.root is None:
+            raise DigiflowMetadataException(f'Failed to get identifiers in {self.path_xml}: No root known!')
         idents = {}
         top_idents = self.root.findall("mods:identifier", dfc.XMLNS)
         for top_ident in top_idents:
