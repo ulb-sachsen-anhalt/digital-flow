@@ -13,7 +13,7 @@ import digiflow as df
 import digiflow.common as dfc
 import digiflow.validate as dfv
 
-from .conftest import TEST_RES, LIB_RES
+from .conftest import TEST_RES, LIB_RES, exchange_textline
 
 # pylint:disable=c-extension-no-member
 
@@ -624,12 +624,63 @@ def test_metsreader_opendata_inspect_migrated_record_origins():
     assert mets_reader.report.prime_report
     report: df.DmdReport = mets_reader.report.prime_report
 
-    # 3 origins, which is of course wrong
+    # without using set get 3 origins, which is unwanted
     assert report.origins
     assert len(report.origins) == 2
     assert report.origins == [("publication", "1574", "Freiberg"),
                               ("digitization", "2013", "Halle (Saale)")]
 
+
+def test_metsreader_opendata_inspect_publication():
+    """Determine behavior with several publication origins"""
+
+    # arrange
+    target_file = os.path.join(TEST_RES, 'k2_mets_vd18_147638674.xml')
+    mets_reader = df.MetsReader(target_file)
+
+    # act
+    assert mets_reader.report
+    assert mets_reader.report.prime_report
+    report: df.DmdReport = mets_reader.report.prime_report
+
+    # what happened to gnd-link?
+    assert report.origins
+    assert len(report.origins) == 2
+    assert report.origins == [("publication", "1720", "Dresden[http://d-nb.info/gnd/4012995-0]"),
+                              ("digitization", "2021", "Halle (Saale)")]
+
+
+def test_metsreader_opendata_manipulated_origin(tmp_path):
+    """Fix behavior for records with structs like
+           <mods:place>
+                <mods:placeTerm type="text">London</mods:placeTerm>
+            </mods:place>
+            <mods:place>
+                <mods:placeTerm type="code">XA-GB</mods:placeTerm>
+            </mods:place>
+    which before yielded no results at all
+    """
+
+    # arrange
+    target_file = os.path.join(TEST_RES, 'k2_mets_vd18_147638674.xml')
+    tmp_path = shutil.copyfile(target_file, os.path.join(tmp_path, '147638674.xml'))
+    exchange_textline(tmp_path, {
+        '<mods:placeTerm type="text" valueURI="http://d-nb.info/gnd/4012995-0">Dresden</mods:placeTerm>':
+        '<mods:placeTerm type="code">XA-GB</mods:placeTerm>'
+    })
+
+    # act
+    mets_reader = df.MetsReader(tmp_path)
+    assert mets_reader.report
+    assert mets_reader.report.prime_report
+    report: df.DmdReport = mets_reader.report.prime_report
+    assert report.origins
+    assert len(report.origins) == 2
+    assert report.origins == [("publication", "1720", "Dresden"),
+                              ("digitization", "2021", "Halle (Saale)")]
+
+
+# k2_mets_vd18_147638674
 
 def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     """How to handle latest Kitodo 3 DMS export"""
@@ -646,7 +697,7 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     # 3 origins, which is of course wrong
     assert report.origins
     assert len(report.origins) == 2
-    assert report.origins == [("publication", "1560", "Wien"),
+    assert report.origins == [("publication", "1560", "Wien[http://d-nb.info/gnd/4066009-6]"),
                               ("digitization", "2025", "Halle (Saale)")]
     assert report.licence == ('use and reproduction',
                               'https://creativecommons.org/publicdomain/mark/1.0/',

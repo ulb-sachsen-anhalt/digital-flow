@@ -844,7 +844,7 @@ class ModsReader(XMLProcessor):
         """Gather informations about origin places"""
 
         xp_origins = "mods:originInfo"
-        xp_place_term = "mods:place/mods:placeTerm/text()"
+        xp_place_term = "mods:place/mods:placeTerm"
         xp_year = "*[local-name()='dateIssued' or local-name()='dateCaptured']"
         origins = self.root.findall(xp_origins, dfc.XMLNS)
 
@@ -860,8 +860,20 @@ class ModsReader(XMLProcessor):
             if a_year == dfc.UNSET_LABEL and len(all_years) > 0:
                 a_year = all_years[0].text
             a_place = dfc.UNSET_LABEL
-            place_labels = set(origin.xpath(xp_place_term, namespaces=dfc.XMLNS))
-            if len(place_labels) == 1:
+            place_terms = origin.xpath(xp_place_term, namespaces=dfc.XMLNS)
+            place_labels = list()
+            for pt in place_terms:
+                if 'type' in pt.attrib and pt.get('type') == 'code':
+                    continue
+                if 'valueURI' in pt.attrib:
+                    curr_label = pt.text
+                    if curr_label in place_labels:
+                        place_labels.remove(curr_label)
+                    fmt_lbl = f'{curr_label}[{pt.attrib["valueURI"]}]'
+                    place_labels.append(fmt_lbl)
+                else:
+                    place_labels.append(pt.text)
+            if len(place_labels) > 0:
                 a_place = place_labels.pop()
             infos.append((an_event, a_year, a_place))
         return infos

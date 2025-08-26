@@ -60,3 +60,17 @@ def mock_response(**kwargs):
         with open(kwargs['data_path'], encoding="utf-8") as xml:
             the_response.content = xml.read().encode()
     return the_response
+
+
+def exchange_textline(res_path, exchange_mapping):
+    """Exchange text lines in the given file based on the mapping."""
+    with open(res_path, encoding='utf-8') as rdr:
+        lines_in = rdr.readlines()
+    modded = []
+    for i, line_in in enumerate(lines_in):
+        for k in exchange_mapping:
+            if k in line_in:
+                lines_in[i] = line_in.replace(k, exchange_mapping[k])
+        modded.append(lines_in[i])
+    with open(res_path, mode='w', encoding='utf-8') as a_writer:
+        a_writer.writelines(modded)
