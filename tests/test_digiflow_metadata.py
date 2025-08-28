@@ -646,7 +646,7 @@ def test_metsreader_opendata_inspect_publication():
     # what happened to gnd-link?
     assert report.origins
     assert len(report.origins) == 2
-    assert report.origins == [("publication", "1720", "Dresden[http://d-nb.info/gnd/4012995-0]"),
+    assert report.origins == [("publication", "1720", "[Dresden](http://d-nb.info/gnd/4012995-0)"),
                               ("digitization", "2021", "Halle (Saale)")]
 
 
@@ -697,7 +697,7 @@ def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     # 3 origins, which is of course wrong
     assert report.origins
     assert len(report.origins) == 2
-    assert report.origins == [("publication", "1560", "Wien[http://d-nb.info/gnd/4066009-6]"),
+    assert report.origins == [("publication", "1560", "[Wien](http://d-nb.info/gnd/4066009-6)"),
                               ("digitization", "2025", "Halle (Saale)")]
     assert report.licence == ('use and reproduction',
                               'https://creativecommons.org/publicdomain/mark/1.0/',

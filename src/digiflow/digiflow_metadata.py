@@ -861,7 +861,7 @@ class ModsReader(XMLProcessor):
                 a_year = all_years[0].text
             a_place = dfc.UNSET_LABEL
             place_terms = origin.xpath(xp_place_term, namespaces=dfc.XMLNS)
-            place_labels = list()
+            place_labels = []
             for pt in place_terms:
                 if 'type' in pt.attrib and pt.get('type') == 'code':
                     continue
@@ -869,7 +869,8 @@ class ModsReader(XMLProcessor):
                     curr_label = pt.text
                     if curr_label in place_labels:
                         place_labels.remove(curr_label)
-                    fmt_lbl = f'{curr_label}[{pt.attrib["valueURI"]}]'
+                    # use markdown notation to show links
+                    fmt_lbl = f'[{curr_label}]({pt.attrib["valueURI"]})'
                     place_labels.append(fmt_lbl)
                 else:
                     place_labels.append(pt.text)
