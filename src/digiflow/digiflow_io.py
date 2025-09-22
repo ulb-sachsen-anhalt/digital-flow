@@ -6,6 +6,7 @@ import email.mime.text
 import os
 import shutil
 import smtplib
+import urllib3.exceptions
 
 from pathlib import Path
 
@@ -205,17 +206,20 @@ class OAILoader:
                 data_snippet = data[:512]
                 # propably sanitize data, as it might originate
                 # from test-data or *real* requests
-                if not isinstance(data_snippet, str):
+                if isinstance(data_snippet, bytes):
                     data_snippet = data_snippet.decode('utf-8')
-                if dfc.XMLNS['mets'] in data_snippet or dfc.XMLNS['oai'] in data_snippet:
+                if dfc.XMLNS['mets'] in str(data_snippet) or dfc.XMLNS['oai'] in str(data_snippet):
                     data = post_func(self.path_mets, data)
-                elif 'http://www.loc.gov/standards/alto' in data_snippet:
+                elif 'http://www.loc.gov/standards/alto' in str(data_snippet):
                     data = post_func(local_path, data)
                 else:
                     raise LoadException(f"Can't handle {content_type} from {url}!")
             return local_path
         except LoadException as load_exc:
             raise load_exc
+        except urllib3.exceptions.ReadTimeoutError as read_timeout:
+            msg = f"load {url} read timeout: {read_timeout}"
+            raise LoadException(msg) from read_timeout
         except Exception as exc:
             msg = f"load {url} exception: {exc}"
             raise RuntimeError(msg) from exc
