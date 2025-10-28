@@ -76,8 +76,9 @@ class OAILoader:
             if OAI_KWARG_FGROUP_IMG in kwargs else DEFAULT_FGROUP_IMG
         self.key_ocr = kwargs[OAI_KWARG_FGROUP_OCR] \
             if OAI_KWARG_FGROUP_OCR in kwargs else DEFAULT_FGROUP_OCR
-        self.post_oai = kwargs[OAI_KWARG_POSTFUNC] \
-            if OAI_KWARG_POSTFUNC in kwargs else None
+        self.post_oai = df_md.extract_mets
+        if OAI_KWARG_POSTFUNC in kwargs:
+            self.post_oai = kwargs[OAI_KWARG_POSTFUNC]
         self.groups[self.key_images] = []
         self.request_kwargs = self._sanitize_kwargs(kwargs)
         self.groups[self.key_ocr] = []
@@ -215,6 +216,8 @@ class OAILoader:
                 else:
                     raise LoadException(f"Can't handle {content_type} from {url}!")
             return local_path
+        except df_md.DigiflowMetadataException as dfm_exc:
+            raise LoadException(dfm_exc) from dfm_exc
         except LoadException as load_exc:
             raise load_exc
         except urllib3.exceptions.ReadTimeoutError as read_timeout:
@@ -395,15 +398,6 @@ def request_resource(url: str, path_local: Path, **kwargs):
             # textual xml data
             if 'text' in content_type or 'xml' in content_type:
                 result = response.content
-                xml_root = ET.fromstring(result)
-                check_error = xml_root.xpath(".//*[local-name() = 'error']",
-                                             namespaces=dfc.XMLNS)
-                if len(check_error) > 0:
-                    texts = "".join(e.text for e in check_error)
-                    msg = f"request {url} failed: {texts}"
-                    raise LoadException(msg)
-                path_local = _sanitize_local_file_extension(
-                    path_local, content_type)
             # catch other content types by MIMI sub_type
             # split "<application|image>/<sub_type>"
             elif content_type.split('/')[-1] in ['jpg', 'jpeg', 'pdf', 'png']:
@@ -472,7 +466,7 @@ def post_oai_store_ocr(path_local, the_data):
     if isinstance(the_data, str):
         the_data = the_data.encode('utf-8')
     xml_root = ET.fromstring(the_data)
-    df_md.write_xml_file(xml_root, path_local, preamble=None)
+    df_md.write_xml_file(xml_root, path_local, preamble='')
 
 
 def get_enclosed(tokens_str: str, mark_end='}', mark_start='{', func_find='rfind') -> str:

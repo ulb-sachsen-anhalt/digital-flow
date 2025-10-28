@@ -32,21 +32,6 @@ OAI_BASE_URL_OPENDATA = 'opendata.uni-halle.de/oai/dd'
 
 # pylint: disable=c-extension-no-member, line-too-long
 
-
-@pytest.mark.skipif("sys.version_info < (3,6)")
-def test_intermediate_dirs_created_with_path(tmp_path):
-    """Test depends on PosixPath, only works with 3.6+"""
-
-    src_path = TEST_RES / "k2_mets_vd18_147638674.xml"
-    path_dst = tmp_path / "sub_dir" / "another_sub_dir" / "147638674.xml"
-    xml = ET.parse(src_path)
-
-    # act
-    df_md.write_xml_file(xml.getroot(), path_dst)
-
-    assert os.path.isfile(path_dst)
-
-
 def test_intermediate_dirs_created_with_tmpdir(tmpdir):
     """Test depends on PosixPath, only works with 3.6+"""
 
@@ -228,39 +213,46 @@ def test_response_404(mock_requests: unittest.mock.Mock):
 
 
 @unittest.mock.patch('requests.get')
-def test_response_200_with_error_code_response(mock_requests: unittest.mock.Mock):
+def test_response_200_with_error_code_response(mock_requests: unittest.mock.Mock, tmp_path):
     """test request results into OAILoadException"""
 
     # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/oai-invalid-request.xml')
+    data_path = os.path.join(str(ROOT), 'tests/resources/oai/oai-invalid-request.xml')
     a_response = mock_response(status_code=200,
                                headers={'Content-Type': 'text/xml;charset=UTF-8'},
                                data_path=data_path)
     mock_requests.return_value = a_response
+    loader = df_io.OAILoader(tmp_path, "https://dumy.com")
 
     # act
-    with pytest.raises(df_io.LoadException) as exc:
-        df_io.request_resource('http://foo.bar', Path())
+    with pytest.raises(df_io.LoadException) as load_exc:
+        loader.load('oai:opendata.uni-halle.de:1981185920/118701',
+                    tmp_path / 'mets.xml')
 
-    assert 'verb requires' in str(exc.value)
+    assert 'verb requires the use of the parameters' in str(load_exc.value)
 
 
 @unittest.mock.patch('requests.get')
-def test_response_200_with_no_record_response(mock_requests: unittest.mock.Mock):
+def test_response_200_with_no_record_response(mock_requests: unittest.mock.Mock, tmp_path):
     """test request results into OAILoadException"""
 
     # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/oai-record-missing.xml')
+    data_path = os.path.join(str(ROOT), 'tests/resources/oai/oai-record-missing.xml')
     a_response = mock_response(status_code=200,
                                headers={'Content-Type': 'text/xml;charset=UTF-8'},
                                data_path=data_path)
     mock_requests.return_value = a_response
+    loader = df_io.OAILoader(tmp_path, "https://dumy.com")
 
     # act
-    with pytest.raises(df_io.LoadException) as exc:
-        df_io.request_resource('http://foo.bar', Path())
+    with pytest.raises(df_io.LoadException) as load_exc:
+        loader.load('oai:opendata.uni-halle.de:1981185920/118701',
+                    tmp_path / 'mets.xml')
 
-    assert 'The given id does not exis' in str(exc.value)
+    # assert
+    assert 'The given id does not exist' in str(load_exc.value.args[0])
+    assert mock_requests.call_count == 1
+    assert not tmp_path.joinpath('mets.xml').is_file()
 
 
 def test_call_requests_kwargs_invalid_str(tmp_path):
@@ -353,3 +345,28 @@ def test_oailoader_with_string_requests_kwargs(mock_requests: unittest.mock.Mock
     # assert
     assert "unhandled content-type" in strange.value.args[0]
     assert mock_requests.call_count == 1
+
+
+@unittest.mock.patch("requests.get")
+def test_oai_record_deleted(mock_requests: unittest.mock.Mock, tmp_path):
+    """Test handling of deleted record in OAI response"""
+
+    # arrange
+    data_path = ROOT / 'tests' / 'resources' / 'oai' / 'oai_mets_1981185920_118701.xml'
+    a_response = mock_response(status_code=200,
+                               headers={'Content-Type': 'text/xml;charset=UTF-8'},
+                               data_path=data_path)
+    mock_requests.return_value = a_response
+    the_url = "https://opendata.uni-halle.de/oai/dd"
+    loader = df_io.OAILoader(tmp_path, the_url)
+
+    # act
+    with pytest.raises(df_io.LoadException) as load_exc:
+        loader.load('oai:opendata.uni-halle.de:1981185920/118701',
+            tmp_path / 'mets.xml',
+            None)
+
+    # assert
+    assert 'The record has been deleted' in str(load_exc.value.args[0])
+    assert mock_requests.call_count == 1
+    assert not tmp_path.joinpath('mets.xml').is_file()

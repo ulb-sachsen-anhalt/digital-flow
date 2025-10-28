@@ -383,7 +383,7 @@ def test_oai_load_missing_record(mock_requests: unittest.mock.Mock, tmp_path):
     """
 
     # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/oai-record-missing.xml')
+    data_path = os.path.join(str(ROOT), 'tests/resources/oai/oai-record-missing.xml')
     a_response = mock_response(status_code=200,
                                headers={'Content-Type': 'text/xml;charset=UTF-8'},
                                data_path=data_path)
@@ -412,4 +412,4 @@ def test_oai_load_missing_record(mock_requests: unittest.mock.Mock, tmp_path):
     # assert
     assert exc.typename == 'LoadException'
     a_msg = exc.value.args[0]
-    assert "The given id does not exist" in a_msg
+    assert "The given id does not exist" in str(a_msg)

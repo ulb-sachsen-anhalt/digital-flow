@@ -516,24 +516,6 @@ def test_records_default_header_from_file(oai_record_list):
     assert frame_handler.states([c_state]) == 2
 
 
-@unittest.mock.patch('requests.get')
-def test_response_200_with_error_content(mock_requests):
-    """test request results into OAILoadException"""
-
-    # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/oai-invalid-request.xml')
-    _req = mock_response(status_code=200,
-                         headers={'Content-Type': 'text/xml;charset=UTF-8'},
-                         data_path=data_path)
-    mock_requests.return_value = _req
-
-    # act
-    with pytest.raises(df.LoadException) as exc:
-        df.request_resource('http://foo.bar', Path())
-
-    assert 'verb requires' in str(exc.value)
-
-
 def test_records_sample_zd1_post_ocr():
     """Ensure proper state recognized"""
 

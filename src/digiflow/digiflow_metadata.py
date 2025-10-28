@@ -96,7 +96,7 @@ def _pretty_xml(xml_root, preamble = '<?xml version="1.0" encoding="UTF-8"?>'):
     the_root = ET.fromstring(as_string, pretty_parser)
     ET.cleanup_namespaces(the_root, top_nsmap=dfc.XMLNS) # pyright: ignore[reportCallIssue]
     _formatted = ET.tostring(the_root, pretty_print=True, encoding='UTF-8').decode('UTF-8') # pyright: ignore[reportCallIssue]
-    if preamble:
+    if preamble and len(preamble.strip()) > 0:
         formatted_file_content = f'{preamble}\n{_formatted}'
     else:
         formatted_file_content = f'{_formatted}'
@@ -113,6 +113,15 @@ def _post_oai_extract_metsdata(xml_tree):
         mets_root_el = xml_tree.find('.//mets:mets', dfc.XMLNS)
         if mets_root_el is not None:
             return ET.ElementTree(mets_root_el).getroot()
+        header_status = xml_tree.find('.//oai:header', dfc.XMLNS)
+        if header_status is not None and 'status' in header_status.attrib:
+            if header_status.attrib['status'] == 'deleted':
+                raise DigiflowMetadataException('The record has been deleted')
+        check_error = xml_tree.xpath(".//*[local-name() = 'error']",
+                                     namespaces=dfc.XMLNS)
+        if len(check_error) > 0:
+            texts = "".join(e.text for e in check_error)
+            raise DigiflowMetadataException(texts)
     return None
 
 
