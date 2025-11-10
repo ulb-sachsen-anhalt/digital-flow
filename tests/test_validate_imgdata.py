@@ -1,6 +1,7 @@
 """API for validation on file-system-level"""
 
 import shutil
+import typing
 
 from pathlib import Path
 
@@ -49,6 +50,30 @@ def test_tiff_resolution_invalid(tmp_path):
     outcomes: df_v.ScanValidatorCombined = df_v.validate_tiff(file_target)
 
     # assert
+    assert len(outcomes.invalids) == 4
+    assert str(outcomes.path_input).endswith(file_name)
+    assert f'{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_X}: 470.55' == outcomes.invalids[0].info
+    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55' == outcomes.invalids[1].info
+    assert f'{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: 470.55' == outcomes.invalids[2].info
+    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55' == outcomes.invalids[3].info
+
+
+def test_tiff_resolution_invalid_alter_range(tmp_path):
+    """Behavior when altering valid resolution range
+    to ignore resolution 470.55 dpi of the image
+    """
+
+    # arrange
+    file_name = '8736_max_01.tif'
+    file_source = Path(TEST_RES) / 'image' / file_name
+    file_target = Path(str(tmp_path), file_name)
+    shutil.copy(file_source, file_target)
+
+    # act
+    outcomes: df_v.ScanValidatorCombined = df_v.validate_tiff(file_target,
+                                                              valid_resolutions=[300, 470.55])
+
+    # assert
     assert len(outcomes.invalids) == 2
     assert str(outcomes.path_input).endswith(file_name)
     assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55' == outcomes.invalids[0].info
@@ -81,17 +106,17 @@ def _fixture_img_resolution_invalid(tmp_path):
     file_source = Path(TEST_RES) / 'image' / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
-    img = df_v.Image(file_target)
+    img = df_v.Image(str(file_target))
     img.read()
     yield img
 
 
 def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
-    """Ensure invalid resolution is recognized"""
+    """Ensure only invalid resolution numerical type fraction recognized"""
 
     # arrange
-    tiff_exif_val = df_v.ScanValidatorResolution(img_resolution_invalid)
-
+    tiff_exif_val = df_v.ScanValidatorResolution(img_resolution_invalid,
+                                                 valid_resolutions=[300, 470.55])
     # act
     tiff_exif_val.valid()
 
@@ -127,9 +152,11 @@ def test_tiff_grayscale_newspaper_defaults_valid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    img_data: df_v.Image = df_v.validate_tiff(file_target).img_data
+    img_data: typing.Optional[df_v.Image] = df_v.validate_tiff(file_target).img_data
 
     # assert
+    assert img_data is not None
+    assert img_data.metadata is not None
     assert img_data.metadata.channel == (8,)
     assert img_data.metadata.xRes == 470
     assert img_data.metadata.yRes == 470
@@ -148,9 +175,11 @@ def test_tiff_grayscale_newspaper_valid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    img_data: df_v.Image = df_v.validate_tiff(file_target).img_data
+    img_data: typing.Optional[df_v.Image] = df_v.validate_tiff(file_target).img_data
 
     # assert
+    assert img_data is not None
+    assert img_data.metadata is not None
     assert img_data.metadata.channel == (8,)
     assert img_data.metadata.xRes == 470
     assert img_data.metadata.yRes == 470
@@ -171,7 +200,8 @@ def test_tiff_grayscale_newspaper_only_scanfiledata_valid(tmp_path):
     shutil.copy(file_source, file_target)
 
     # act
-    scan_file_validator_clazz = df_v.ValidatorFactory.get(df_v.LABEL_SCAN_VALIDATOR_FILEDATA)
+    scan_file_validator_clazz: typing.Optional[df_v.Validator] = df_v.ValidatorFactory.get(df_v.LABEL_SCAN_VALIDATOR_FILEDATA)
+    assert scan_file_validator_clazz is not None
     validator: df_v.Validator = scan_file_validator_clazz(file_target)
 
     # assert
@@ -180,9 +210,9 @@ def test_tiff_grayscale_newspaper_only_scanfiledata_valid(tmp_path):
     assert validator.input_data == file_target
 
 
-def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
-    """Don't mix input data, otherwise something pops up like:
-    AttributeError: 'Image' object has no attribute 'stat'
+def test_tiff_grayscale_newspaper_default_validators(tmp_path):
+    """2025-11-10: Changed behavior when altering valid resolution range
+    to exclude the image resolution of 470 dpi
     """
 
     # arrange
@@ -194,6 +224,26 @@ def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
 
     # act
     result = df_v.validate_tiff(file_target, validator_labels)
+
+    # assert
+    assert not result.valid()
+
+
+def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
+    """2025-11-10: Changed behavior when altering valid resolution range
+    to exclude the image resolution of 470 dpi => requires to add 470 dpi
+    to valid resolutions to make the image pass validation
+    """
+
+    # arrange
+    file_name = '1667522809_J_0025_0512.tif'
+    file_source = Path(TEST_RES) / 'image' / file_name
+    file_target = Path(str(tmp_path), file_name)
+    shutil.copy(file_source, file_target)
+    validator_labels = [df_v.LABEL_SCAN_VALIDATOR_FILEDATA, df_v.LABEL_SCAN_VALIDATOR_RESOLUTION]
+
+    # act
+    result = df_v.validate_tiff(file_target, validator_labels, valid_resolutions=[470])
 
     # assert
     assert result.valid()

@@ -91,7 +91,7 @@ LABEL_PROFILE = TIFF_METADATA_LABELS[ICCPROFILE]
 
 # module constants
 MIN_SCAN_FILESIZE = 1024    # Bytes
-MIN_SCAN_RESOLUTION = 300   # like 300 DPI
+RES_300 = 300               # like 300 DPI
 RES_UNIT_DPI = 2            # EXIF Value for DPI
 MAX_CHANNEL_DEPTH = 8       # 8 bits / Channel
 DEFAULT_COMPRESSION = 1     # EXIF 259 1=uncompressed
@@ -148,7 +148,7 @@ class Image:
     time_stamp = None
     profile = dfc.UNSET_LABEL
     check_sum_512 = dfc.UNSET_LABEL
-    metadata: ImageMetadata = None
+    metadata: typing.Optional[ImageMetadata] = None
     invalids = []
 
     def read(self):
@@ -208,6 +208,7 @@ class Image:
     def __str__(self):
         img_fsize = f"{self.file_size}"
         img_md = self.metadata
+        assert img_md is not None
         mds_res = f"({img_md.xRes},{img_md.yRes},{img_md.resolution_unit})"
         img_mds = f"\t{mds_res}\t{img_md.created}\t{img_md.artist}\t{img_md.copyright}\t{img_md.model}\t{img_md.software}\t{self.profile}"
         invalids = f"INVALID{self.invalids}" if len(self.invalids) > 0 else 'VALID'
@@ -220,10 +221,11 @@ class ScanValidatorFile(Validator):
     or no metadata tags for width/height present
     """
 
-    def __init__(self, input_data: Path):
+    def __init__(self, input_data: Path, **kwargs):
         super().__init__(LABEL_SCAN_VALIDATOR_FILEDATA, input_data)
         if isinstance(self.input_data, Image):
             self.input_data = self.input_data.local_path
+        self.min_size = kwargs.get('valid_min_size', MIN_SCAN_FILESIZE)
 
     def valid(self) -> bool:
         """Fail faster: If file can't even be read by group,
@@ -232,8 +234,8 @@ class ScanValidatorFile(Validator):
         if not group_can_read(self.input_data):
             raise FSReadException(f'No permission to read {self.input_data}!')
         f_size = os.path.getsize(self.input_data)
-        if f_size < MIN_SCAN_FILESIZE:
-            msg = f"{INVALID_LABEL_RANGE} filesize {f_size}b < {MIN_SCAN_FILESIZE}b"
+        if f_size < self.min_size:
+            msg = f"{INVALID_LABEL_RANGE} filesize {f_size}b < {self.min_size}b"
             self.invalids.append(Invalid(self.label, self.input_data, msg))
         input_image: Image = Image(self.input_data)
         input_image.read()
@@ -250,19 +252,22 @@ class ScanValidatorChannel(Validator):
     number of channels
     """
 
-    def __init__(self, input_data: Image):
+    def __init__(self, input_data: Image, **kwargs):
         super().__init__(LABEL_SCAN_VALIDATOR_CHANNEL, input_data)
+        self.valid_channels = kwargs.get('valid_channels', GREYSCALE_OR_RGB)
 
     def valid(self) -> bool:
         input_image: Image = self.input_data
+        assert input_image.metadata is not None
         img_md: ImageMetadata = input_image.metadata
+        assert img_md is not None
         md_spp = img_md.samples_per_pixel
         if md_spp == dfc.UNSET_LABEL:
             self.invalids.append(Invalid(self.label, input_image.local_path,
                                  f"{INVALID_LABEL_UNSET} {LABEL_SAMPLES_PIXEL}"))
-        elif md_spp not in GREYSCALE_OR_RGB:
+        elif md_spp not in self.valid_channels:
             self.invalids.append(Invalid(self.label, input_image.local_path,
-                                 f"{INVALID_LABEL_RANGE} {LABEL_SAMPLES_PIXEL} {md_spp} not in {GREYSCALE_OR_RGB}"))
+                                 f"{INVALID_LABEL_RANGE} {LABEL_SAMPLES_PIXEL} {md_spp} not in {self.valid_channels}"))
         if not all(c <= MAX_CHANNEL_DEPTH for c in img_md.channel):
             self.invalids.append(Invalid(self.label, input_image.local_path,
                                  f"{INVALID_LABEL_RANGE} {LABEL_CHANNEL} {img_md.channel} > {MAX_CHANNEL_DEPTH}"))
@@ -272,7 +277,7 @@ class ScanValidatorChannel(Validator):
 class ScanValidatorCompression(Validator):
     """Validate EXIF metadata uncompressed set"""
 
-    def __init__(self, input_data: Image):
+    def __init__(self, input_data: Image, **kwargs):
         super().__init__(LABEL_SCAN_VALIDATOR_COMPRESSION, input_data)
 
     def valid(self) -> bool:
@@ -293,11 +298,13 @@ class ScanValidatorResolution(Validator):
     * Resolution Unit must not be different from DPI
     """
 
-    def __init__(self, input_data: Image):
-        super().__init__(LABEL_SCAN_VALIDATOR_RESOLUTION, input_data)
+    def __init__(self, input_data: Image, **kwargs):
+        super().__init__(LABEL_SCAN_VALIDATOR_RESOLUTION, input_data, **kwargs)
+        self.valid_resolutions = kwargs.get('valid_resolutions', [RES_300])
 
     def valid(self) -> bool:
         input_image: Image = self.input_data
+        assert input_image is not None
         img_loc = input_image.local_path
         img_md: ImageMetadata = input_image.metadata
         a_prefix = self.label
@@ -312,8 +319,8 @@ class ScanValidatorResolution(Validator):
             inv03 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_X}")
             self.invalids.append(inv03)
         else:
-            if img_md.xRes < MIN_SCAN_RESOLUTION:
-                inv04 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_RANGE}{LABEL_RES_X}: {img_md.xRes}")
+            if img_md.xRes not in self.valid_resolutions:
+                inv04 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_X}: {img_md.xRes}")
                 self.invalids.append(inv04)
             x_res: IFDRational = img_md.xRes
             if x_res.real.denominator != 1:
@@ -323,7 +330,7 @@ class ScanValidatorResolution(Validator):
             inv05 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_Y}")
             self.invalids.append(inv05)
         else:
-            if img_md.yRes < MIN_SCAN_RESOLUTION:
+            if img_md.yRes not in self.valid_resolutions:
                 inv06 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_Y}: {img_md.yRes}")
                 self.invalids.append(inv06)
             y_res: IFDRational = img_md.yRes
@@ -339,16 +346,17 @@ class ScanValidatorPhotometric(Validator):
     * if RGB, then profile must be ADOBE RGB 1998
     """
 
-    def __init__(self, input_data: Image):
+    def __init__(self, input_data: Image, **kwargs):
         super().__init__(LABEL_SCAN_VALIDATOR_PHOTOMETRICS, input_data)
+        self.valid_photometrics = kwargs.get('valid_photometrics', PHOTOMETRICS)
 
     def valid(self) -> bool:
         input_image: Image = self.input_data
         img_md: ImageMetadata = input_image.metadata
         pmetrics = img_md.photometric_interpretation
-        if pmetrics not in PHOTOMETRICS:
+        if pmetrics not in self.valid_photometrics:
             self.invalids.append(Invalid(self.label, input_image.local_path,
-                                 f"{INVALID_LABEL_RANGE} {LABEL_GRAY_RGB} {pmetrics} not in {PHOTOMETRICS}"))
+                                 f"{INVALID_LABEL_RANGE} {LABEL_GRAY_RGB} {pmetrics} not in {self.valid_photometrics}"))
         if pmetrics == 2 and input_image.profile != ADOBE_PROFILE_NAME:
             self.invalids.append(Invalid(self.label, input_image.local_path,
                                  f"{INVALID_LABEL_RANGE} {LABEL_PROFILE} != {ADOBE_PROFILE_NAME}"))
@@ -391,11 +399,12 @@ class ScanValidatorCombined(Validator):
 
     validator_factory: ValidatorFactory = ValidatorFactory
 
-    def __init__(self, path_input: Path, validator_labels: typing.List[str]):
+    def __init__(self, path_input: Path, validator_labels: typing.List[str], **kwargs):
         super().__init__(LABEL_SCAN_VALIDATOR_COMBINED, path_input)
         self.path_input = path_input
         self.validator_labels: typing.List[str] = validator_labels
-        self.img_data: Image = None
+        self.img_data: typing.Optional[Image] = None
+        self.kwargs = kwargs
 
     @staticmethod
     def register(validator_label, validator_class):
@@ -409,13 +418,13 @@ class ScanValidatorCombined(Validator):
         self.img_data.read()
         for a_label in self.validator_labels:
             clazz = ScanValidatorCombined.validator_factory.get(a_label)
-            validator: Validator = clazz(self.img_data)
+            validator: Validator = clazz(self.img_data, **self.kwargs)
             if not validator.valid():
                 self.invalids.extend(validator.invalids)
         return super().valid()
 
 
-def validate_tiff(tif_path, required_validators=None):
+def validate_tiff(tif_path, required_validators:typing.Optional[typing.List[str]]=None, **kwargs) -> ScanValidatorCombined:
     """Ensure provided image data contains
     required metadata information concerning
     resolution and alike
@@ -425,7 +434,8 @@ def validate_tiff(tif_path, required_validators=None):
     """
 
     if required_validators is None:
-        required_validators = ValidatorFactory.validators
-    image_val = ScanValidatorCombined(tif_path, required_validators)
+        required_validators = list(ValidatorFactory.validators.keys())
+    assert required_validators is not None
+    image_val = ScanValidatorCombined(tif_path, required_validators, **kwargs)
     image_val.valid()
     return image_val

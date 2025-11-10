@@ -29,9 +29,10 @@ class Invalid:
 class Validator:
     """Common Base Interface"""
 
-    def __init__(self, label: str, input_data):
+    def __init__(self, label: str, input_data, **kwargs):
         self.label = label
         self.input_data = input_data
+        self.kwargs = kwargs
         self.invalids: List[Invalid] = []
 
     @abstractmethod
