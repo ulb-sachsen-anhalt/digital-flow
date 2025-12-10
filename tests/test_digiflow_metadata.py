@@ -1108,8 +1108,8 @@ def test_xmlprocessor_init_with(input_xml):
     proc = df.XMLProcessor(input_xml)
 
     # assert
-    assert proc
-    assert proc.root
+    assert proc is not None
+    assert proc.root is not None
     assert proc.root.tag in ['{http://www.loc.gov/METS/}mets', 'root']
 
 

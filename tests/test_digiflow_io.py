@@ -222,7 +222,7 @@ def test_response_200_with_error_code_response(mock_requests: unittest.mock.Mock
                                headers={'Content-Type': 'text/xml;charset=UTF-8'},
                                data_path=data_path)
     mock_requests.return_value = a_response
-    loader = df_io.OAILoader(tmp_path, "https://dumy.com")
+    loader = df_io.OAILoader("https://dumy.com")
 
     # act
     with pytest.raises(df_io.LoadException) as load_exc:
@@ -242,7 +242,7 @@ def test_response_200_with_no_record_response(mock_requests: unittest.mock.Mock,
                                headers={'Content-Type': 'text/xml;charset=UTF-8'},
                                data_path=data_path)
     mock_requests.return_value = a_response
-    loader = df_io.OAILoader(tmp_path, "https://dumy.com")
+    loader = df_io.OAILoader("https://dumy.com")
 
     # act
     with pytest.raises(df_io.LoadException) as load_exc:
@@ -336,7 +336,7 @@ def test_oailoader_with_string_requests_kwargs(mock_requests: unittest.mock.Mock
     the_url = "https://dumy.com"
     raw_kwargs = {
         df_io.OAI_KWARG_REQUESTS: 'timeout=20, headers={"User-Agent": "ulbbot+IT-WF-OCR-VD17"}'}
-    loader = df_io.OAILoader(tmp_path, the_url, **raw_kwargs)
+    loader = df_io.OAILoader(the_url, **raw_kwargs)
 
     # act
     with pytest.raises(df_io.ContentException) as strange:
@@ -358,7 +358,7 @@ def test_oai_record_deleted(mock_requests: unittest.mock.Mock, tmp_path):
                                data_path=data_path)
     mock_requests.return_value = a_response
     the_url = "https://opendata.uni-halle.de/oai/dd"
-    loader = df_io.OAILoader(tmp_path, the_url)
+    loader = df_io.OAILoader(the_url)
 
     # act
     with pytest.raises(df_io.LoadException) as load_exc:

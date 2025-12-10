@@ -253,6 +253,7 @@ class MetsProcessor(XMLProcessor):
         rigorous concerning *both* attributes and values!
         """
 
+        assert self.root is not None, "No root element known!"
         mets_hdr: ET._Element = self.root.find('.//mets:metsHdr', dfc.XMLNS)
         next_agent_id = 0
         for i, sub_el in enumerate(mets_hdr.getchildren(), 1):

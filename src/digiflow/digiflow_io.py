@@ -6,11 +6,13 @@ import email.mime.text
 import os
 import shutil
 import smtplib
-import urllib3.exceptions
+import typing
 
 from pathlib import Path
 
 import requests
+import urllib3.exceptions
+
 from lxml import etree as ET
 
 import digiflow.common as dfc
@@ -67,11 +69,9 @@ class OAILoader:
               (defaults: empty dict)
     """
 
-    def __init__(self, dir_local, base_url, **kwargs) -> None:
-        self.dir_local = dir_local
+    def __init__(self, base_url, **kwargs) -> None:
         self.base_url = base_url
         self.groups = {}
-        self.path_mets = None
         self.key_images = kwargs[OAI_KWARG_FGROUP_IMG] \
             if OAI_KWARG_FGROUP_IMG in kwargs else DEFAULT_FGROUP_IMG
         self.key_ocr = kwargs[OAI_KWARG_FGROUP_OCR] \
@@ -82,7 +82,7 @@ class OAILoader:
         self.groups[self.key_images] = []
         self.request_kwargs = self._sanitize_kwargs(kwargs)
         self.groups[self.key_ocr] = []
-        self.store = None
+        self.store: typing.Optional[LocalStore] = None
 
     def _sanitize_kwargs(self, in_kwargs):
         top_dict = {}
@@ -100,7 +100,7 @@ class OAILoader:
                     raise LoadException(msg) from val_err
         return top_dict
 
-    def load(self, record_identifier, local_dst, mets_digital_object_identifier=None,
+    def load(self, record_identifier, local_dst:Path, mets_digital_object_identifier=None,
              skip_resources=False, force_update=False, metadata_format='mets',
              use_file_id=False) -> int:
         """
@@ -119,8 +119,11 @@ class OAILoader:
         # sanitize url
         ctx = f"verb=GetRecord&metadataPrefix={metadata_format}&identifier={record_identifier}"
         res_url = f"{self.base_url}?{ctx}"
-        self.path_mets = local_dst
-        path_res = self._handle_load(res_url, self.path_mets, self.post_oai, force_update)
+        if not isinstance(local_dst, Path):
+            local_dst = Path(local_dst).absolute()
+        assert local_dst is not None
+        dir_local = local_dst.parent
+        path_res = self._handle_load(res_url, local_dst, self.post_oai, force_update)
         if path_res:
             loaded += 1
 
@@ -128,7 +131,7 @@ class OAILoader:
             return loaded
 
         # inspect if additional file resources are requested
-        mets_reader = df_md.MetsReader(self.path_mets, mets_digital_object_identifier)
+        mets_reader = df_md.MetsReader(local_dst, mets_digital_object_identifier)
 
         # get linked resources
         for k in self.groups:
@@ -144,12 +147,12 @@ class OAILoader:
                 url_final_token = res_url.split('/')[-1]
                 if use_file_id:
                     url_final_token = mets_file.file_id
-                local_path = self._calculate_path(mets_file.file_type, k, url_final_token)
+                local_path = self._calculate_path(dir_local, mets_file.file_type, k, url_final_token)
                 if self._handle_load(res_url, local_path, post_func):
                     loaded += 1
         return loaded
 
-    def _handle_load(self, res_url, res_path, post_func, force_load=False):
+    def _handle_load(self, res_url:str, res_path:Path, post_func, force_load=False):
         if self.store:
             stored_path = self.store.get(res_path)
             # if in store found ...
@@ -174,12 +177,12 @@ class OAILoader:
             return res_path
         return self.load_resource(res_url, res_path, post_func)
 
-    def _calculate_path(self, mime_type, *args):
+    def _calculate_path(self, dir_local: Path, mime_type:str, *args):
         """
         calculate final path depending on used fileGrp
         'MAX' means images, not means 'xml'
         """
-        res_path = os.path.join(str(self.dir_local), os.sep.join(list(args)))
+        res_path = os.path.join(dir_local, os.sep.join(args))
         if mime_type in _JPG_MIMES and not res_path.endswith('.jpg'):
             res_path += ".jpg"
         if '/MAX/' in res_path and not res_path.endswith('.jpg'):
@@ -210,7 +213,7 @@ class OAILoader:
                 if isinstance(data_snippet, bytes):
                     data_snippet = data_snippet.decode('utf-8')
                 if dfc.XMLNS['mets'] in str(data_snippet) or dfc.XMLNS['oai'] in str(data_snippet):
-                    data = post_func(self.path_mets, data)
+                    data = post_func(path_local, data)
                 elif 'http://www.loc.gov/standards/alto' in str(data_snippet):
                     data = post_func(local_path, data)
                 else:
@@ -332,6 +335,7 @@ class LocalStore:
         """put single resource to path, for example created ocr data"""
 
         path_store = self._calculate_path(path_res)
+        assert path_store is not None
         path_local_dir = os.path.dirname(path_store)
         if not os.path.exists(path_local_dir):
             os.makedirs(path_local_dir)

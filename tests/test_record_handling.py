@@ -140,7 +140,7 @@ def test_oai_load_vd16_with_localstore(mock_request_vd16_997508, tmp_path):
     local_dst = local_dir / (the_id + '.xml')
 
     # act
-    loader = df_io.OAILoader(local_dir, base_url='digitale.bibliothek.uni-halle.de/vd16/oai',
+    loader = df_io.OAILoader(base_url='digitale.bibliothek.uni-halle.de/vd16/oai',
                              group_images=key_images,
                              post_oai=df_md.extract_mets)
     loader.store = df_io.LocalStore(store_dir, local_dir)
@@ -175,7 +175,7 @@ def test_oai_load_opendata_with_localstore(
     local_dst =local_dir / (the_id + '.xml')
 
     # act
-    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+    loader = df_io.OAILoader(base_url=OAI_BASE_URL_OPENDATA,
                              group_images=key_images,
                              post_oai=df_md.extract_mets)
     loader.store = df_io.LocalStore(store_dir, local_dir)
@@ -214,7 +214,7 @@ def test_oai_load_opendata_request_kwargs(
     request_kwargs = dict(headers={'User-Agent': 'Smith'})
 
     # act
-    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+    loader = df_io.OAILoader(base_url=OAI_BASE_URL_OPENDATA,
                              group_images=key_images,
                              post_oai=df_md.extract_mets,
                              request_kwargs=request_kwargs)
@@ -252,11 +252,11 @@ def test_oai_load_opendata_file_identifier(
     dst_path = local_dir / f"{the_id}.xml"
 
     # act
-    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+    loader = df_io.OAILoader(base_url=OAI_BASE_URL_OPENDATA,
                              group_images=key_images,
                              post_oai=df_md.extract_mets)
     loader.store = df_io.LocalStore(store_dir, local_dir)
-    number = loader.load(record.identifier, str(dst_path),
+    number = loader.load(record.identifier, dst_path,
                          use_file_id=True)
 
     # assert
@@ -316,7 +316,7 @@ def test_oai_load_vls_zd1_with_ocr(mock_request, tmp_path):
     local_dst = local_dir / (the_id + '.xml')
 
     # act
-    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_ZD,
+    loader = df_io.OAILoader(base_url=OAI_BASE_URL_ZD,
                              post_oai=df_md.extract_mets)
     loader.store = df_io.LocalStore(store_dir, local_dir)
     number = loader.load(record.identifier, local_dst)
@@ -360,7 +360,7 @@ def test_oai_load_exception_for_server_error(mock_504: unittest.mock.Mock, tmp_p
     request_kwargs = dict(headers={'User-Agent': 'Smith'})
 
     # act
-    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+    loader = df_io.OAILoader(base_url=OAI_BASE_URL_OPENDATA,
                              group_images=key_images,
                              post_oai=df_md.extract_mets,
                              request_kwargs=request_kwargs)
@@ -399,7 +399,7 @@ def test_oai_load_missing_record(mock_requests: unittest.mock.Mock, tmp_path):
     request_kwargs = dict(headers={'User-Agent': 'Smith'})
 
     # act
-    loader = df_io.OAILoader(local_dir, base_url=OAI_BASE_URL_OPENDATA,
+    loader = df_io.OAILoader(base_url=OAI_BASE_URL_OPENDATA,
                              group_images=key_images,
                              post_oai=df_md.extract_mets,
                              request_kwargs=request_kwargs)
