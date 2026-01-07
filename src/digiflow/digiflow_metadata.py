@@ -89,17 +89,18 @@ def _pretty_xml(xml_root, preamble = '<?xml version="1.0" encoding="UTF-8"?>'):
 
     disable preamble by setting it to 'None'
     """
-    as_string = ET.tostring(ET.ElementTree(xml_root), pretty_print=True, encoding='UTF-8') # pyright: ignore[reportCallIssue]
+    # pyright: ignore[reportCallIssue]
+    as_string = ET.tostring(ET.ElementTree(xml_root), pretty_print=True, encoding='UTF-8')
     pretty_parser = ET.XMLParser(resolve_entities=False,
                                   strip_cdata=False,
                                   remove_blank_text=True)
     the_root = ET.fromstring(as_string, pretty_parser)
-    ET.cleanup_namespaces(the_root, top_nsmap=dfc.XMLNS) # pyright: ignore[reportCallIssue]
-    _formatted = ET.tostring(the_root, pretty_print=True, encoding='UTF-8').decode('UTF-8') # pyright: ignore[reportCallIssue]
+    ET.cleanup_namespaces(the_root, top_nsmap=dfc.XMLNS)
+    frmttd = ET.tostring(the_root, pretty_print=True, encoding='UTF-8').decode('UTF-8')
     if preamble and len(preamble.strip()) > 0:
-        formatted_file_content = f'{preamble}\n{_formatted}'
+        formatted_file_content = f'{preamble}\n{frmttd}'
     else:
-        formatted_file_content = f'{_formatted}'
+        formatted_file_content = f'{frmttd}'
     return formatted_file_content.encode('UTF-8').replace(b'\n', b'\r\n')
 
 
@@ -130,7 +131,7 @@ def extract_mets(path_mets, the_data):
 
     xml_root = ET.fromstring(the_data) # pyright: ignore[reportCallIssue]
     mets_tree = _post_oai_extract_metsdata(xml_root)
-    write_xml_file(mets_tree, path_mets, preamble=None) # pyright: ignore[reportCallIssue]
+    write_xml_file(mets_tree, path_mets, preamble='') # pyright: ignore[reportCallIssue]
 
 
 @dataclasses.dataclass
