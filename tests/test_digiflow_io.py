@@ -65,7 +65,7 @@ def test_write_xml_without_preamble(tmp_path):
     txt = '<parent><child name="foo">bar</child></parent>'
     xml_tree = ET.fromstring(txt)
     outpath = tmp_path / "write_foo.xml"
-    df_md.write_xml_file(xml_tree, str(outpath), preamble=None)
+    df_md.write_xml_file(xml_tree, str(outpath), preamble='')
 
     assert os.path.isfile(str(outpath))
     assert open(str(outpath), encoding='utf8').read().startswith('<parent>\n')
