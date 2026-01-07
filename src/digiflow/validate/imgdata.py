@@ -4,6 +4,7 @@ import dataclasses
 import datetime
 import hashlib
 import io
+import json
 import os
 import typing
 
@@ -65,8 +66,8 @@ TIFF_METADATA_LABELS = {
     IMAGEWIDTH: 'width',
     IMAGELENGTH: 'height',
     BITSPERSAMPLE: 'channel',
-    X_RESOLUTION: 'xRes',
-    Y_RESOLUTION: 'yRes',
+    X_RESOLUTION: 'resolution_x',
+    Y_RESOLUTION: 'resolution_y',
     RESOLUTION_UNIT: 'resolution_unit',
     ARTIST: 'artist',
     COMPRESSION: 'compression',
@@ -117,6 +118,84 @@ class InvalidImageDataException(Exception):
 
 
 @dataclasses.dataclass
+class ValidatorConfig:
+    """Centralized configuration for all image validators
+
+    This dataclass bundles all validation parameters together,
+    providing type safety, documentation, and easy serialization.
+    """
+
+    # File validator
+    valid_min_size: int = MIN_SCAN_FILESIZE
+
+    # Channel validator
+    valid_channels: typing.List[int] = dataclasses.field(
+        default_factory=lambda: GREYSCALE_OR_RGB.copy()
+    )
+    max_channel_depth: int = MAX_CHANNEL_DEPTH
+
+    # Compression validator
+    valid_compression: int = DEFAULT_COMPRESSION
+
+    # Resolution validator
+    valid_resolutions: typing.List[int] = dataclasses.field(
+        default_factory=lambda: [RES_300]
+    )
+    valid_resolution_unit: int = RES_UNIT_DPI
+
+    # Photometric validator
+    valid_photometrics: typing.List[int] = dataclasses.field(
+        default_factory=lambda: PHOTOMETRICS.copy()
+    )
+    required_rgb_profile: str = ADOBE_PROFILE_NAME
+
+    def to_dict(self) -> dict:
+        """Convert configuration to dictionary for kwargs
+
+        Returns:
+            Dictionary representation of configuration
+        """
+        return dataclasses.asdict(self)
+
+    @classmethod
+    def from_dict(cls, config_dict: dict) -> 'ValidatorConfig':
+        """Create ValidatorConfig from dictionary
+
+        Args:
+            config_dict: Dictionary with configuration values
+
+        Returns:
+            New ValidatorConfig instance
+        """
+        return cls(**config_dict)
+
+    @classmethod
+    def from_env(cls, prefix: str = "VALIDATOR_") -> 'ValidatorConfig':
+        """Load configuration from environment variables
+
+        Args:
+            prefix: Prefix for environment variable names
+
+        Returns:
+            New ValidatorConfig instance with values from environment
+        """
+        config_dict = {}
+        for key in cls.__dataclass_fields__:
+            env_key = f"{prefix}{key.upper()}"
+            if env_key in os.environ:
+                # Parse value based on type
+                value = os.environ[env_key]
+                field_type = cls.__dataclass_fields__[key].type
+                if 'List' in str(field_type):
+                    config_dict[key] = json.loads(value)
+                elif field_type == int:
+                    config_dict[key] = int(value)
+                else:
+                    config_dict[key] = value
+        return cls(**config_dict)
+
+
+@dataclasses.dataclass
 class ImageMetadata:
     """Wrap image metadata information (i.e. EXIF)
     """
@@ -127,10 +206,9 @@ class ImageMetadata:
     photometric_interpretation = UNSET_NUMBR
     samples_per_pixel = UNSET_NUMBR
     model = dfc.UNSET_LABEL
-    xRes = UNSET_NUMBR
-    yRes = UNSET_NUMBR
+    resolution_x: typing.Optional[IFDRational] = None
+    resolution_y: typing.Optional[IFDRational] = None
     resolution_unit = UNSET_NUMBR
-    color_space = UNSET_NUMBR
     artist = dfc.UNSET_LABEL
     copyright = dfc.UNSET_LABEL
     software = dfc.UNSET_LABEL
@@ -143,7 +221,6 @@ class Image:
     """Store required data"""
 
     local_path: str
-    url = dfc.UNSET_LABEL
     file_size = 0
     time_stamp = None
     profile = dfc.UNSET_LABEL
@@ -162,10 +239,14 @@ class Image:
                 hash_val.update(freader.read())
             self.check_sum_512 = hash_val.hexdigest()
             # read information from TIF TAG V2 section
-            pil_img: TiffImageFile = PILImage.open(self.local_path)
+            open_image = PILImage.open(self.local_path)
+            pil_img: typing.Optional[TiffImageFile] = None
+            if isinstance(open_image, TiffImageFile):
+                pil_img = open_image
+            else:
+                msg = f'Not a valid TIFF image: {self.local_path}'
+                raise InvalidImageDataException(msg)
             meta_data: ImageMetadata = self._read(pil_img)
-            meta_data.color_space = pil_img.mode
-
             # datetime present?
             if meta_data.created is None or meta_data.created == dfc.UNSET_LABEL:
                 ctime = os.stat(self.local_path).st_ctime
@@ -209,10 +290,10 @@ class Image:
         img_fsize = f"{self.file_size}"
         img_md = self.metadata
         assert img_md is not None
-        mds_res = f"({img_md.xRes},{img_md.yRes},{img_md.resolution_unit})"
+        mds_res = f"({img_md.resolution_x},{img_md.resolution_y},{img_md.resolution_unit})"
         img_mds = f"\t{mds_res}\t{img_md.created}\t{img_md.artist}\t{img_md.copyright}\t{img_md.model}\t{img_md.software}\t{self.profile}"
         invalids = f"INVALID{self.invalids}" if len(self.invalids) > 0 else 'VALID'
-        return f"{self.url}\t{self.check_sum_512}\t{img_fsize}\t{self.metadata.width}x{self.metadata.height}\t{img_mds}\t{self.time_stamp}\t{invalids}"
+        return f"{self.local_path}\t{self.check_sum_512}\t{img_fsize}\t{img_md.width}x{img_md.height}\t{img_mds}\t{self.time_stamp}\t{invalids}"
 
 
 class ScanValidatorFile(Validator):
@@ -239,6 +320,7 @@ class ScanValidatorFile(Validator):
             self.invalids.append(Invalid(self.label, self.input_data, msg))
         input_image: Image = Image(self.input_data)
         input_image.read()
+        assert input_image.metadata is not None
         img_md: ImageMetadata = input_image.metadata
         if not img_md.width or not img_md.height:
             self.invalids.append(Invalid(self.label, self.input_data,
@@ -284,6 +366,7 @@ class ScanValidatorCompression(Validator):
         """Check flag umcompressed data set"""
 
         input_image: Image = self.input_data
+        assert input_image.metadata is not None
         img_md: ImageMetadata = input_image.metadata
         if img_md.compression != 1:
             msg = f"{INVALID_LABEL_RANGE} {LABEL_COMPRESSION} {img_md.compression} != 1"
@@ -306,6 +389,7 @@ class ScanValidatorResolution(Validator):
         input_image: Image = self.input_data
         assert input_image is not None
         img_loc = input_image.local_path
+        assert input_image.metadata is not None
         img_md: ImageMetadata = input_image.metadata
         a_prefix = self.label
         if img_md.resolution_unit == UNSET_NUMBR:
@@ -315,28 +399,34 @@ class ScanValidatorResolution(Validator):
             inv02 = Invalid(
                 a_prefix, img_loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_UNIT} {img_md.resolution_unit} != {RES_UNIT_DPI}")
             self.invalids.append(inv02)
-        if img_md.xRes == UNSET_NUMBR:
+        if img_md.resolution_x == UNSET_NUMBR:
             inv03 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_X}")
             self.invalids.append(inv03)
         else:
-            if img_md.xRes not in self.valid_resolutions:
-                inv04 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_X}: {img_md.xRes}")
+            if img_md.resolution_x not in self.valid_resolutions:
+                inv04 = Invalid(a_prefix, img_loc,
+                                f"{INVALID_LABEL_RANGE} {LABEL_RES_X}: {img_md.resolution_x}")
                 self.invalids.append(inv04)
-            x_res: IFDRational = img_md.xRes
-            if x_res.real.denominator != 1:
-                inv07 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_TYPE} {LABEL_RES_X}: {img_md.xRes}")
-                self.invalids.append(inv07)
-        if img_md.yRes == UNSET_NUMBR:
+            if img_md.resolution_x is not None and isinstance(img_md.resolution_x, IFDRational):
+                x_res: IFDRational = img_md.resolution_x
+                if x_res.real.denominator != 1:
+                    inv07 = Invalid(a_prefix, img_loc,
+                                    f"{INVALID_LABEL_TYPE} {LABEL_RES_X}: {img_md.resolution_x}")
+                    self.invalids.append(inv07)
+        if img_md.resolution_y == UNSET_NUMBR:
             inv05 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_UNSET} {LABEL_RES_Y}")
             self.invalids.append(inv05)
         else:
-            if img_md.yRes not in self.valid_resolutions:
-                inv06 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_RANGE} {LABEL_RES_Y}: {img_md.yRes}")
+            if img_md.resolution_y not in self.valid_resolutions:
+                inv06 = Invalid(a_prefix, img_loc,
+                                f"{INVALID_LABEL_RANGE} {LABEL_RES_Y}: {img_md.resolution_y}")
                 self.invalids.append(inv06)
-            y_res: IFDRational = img_md.yRes
-            if y_res.real.denominator != 1:
-                inv08 = Invalid(a_prefix, img_loc, f"{INVALID_LABEL_TYPE} {LABEL_RES_Y}: {img_md.yRes}")
-                self.invalids.append(inv08)
+            if img_md.resolution_y is not None and isinstance(img_md.resolution_y, IFDRational):
+                y_res: IFDRational = img_md.resolution_y
+                if y_res.real.denominator != 1:
+                    inv08 = Invalid(a_prefix, img_loc,
+                                    f"{INVALID_LABEL_TYPE} {LABEL_RES_Y}: {img_md.resolution_y}")
+                    self.invalids.append(inv08)
         return super().valid()
 
 
@@ -352,6 +442,7 @@ class ScanValidatorPhotometric(Validator):
 
     def valid(self) -> bool:
         input_image: Image = self.input_data
+        assert input_image.metadata is not None
         img_md: ImageMetadata = input_image.metadata
         pmetrics = img_md.photometric_interpretation
         if pmetrics not in self.valid_photometrics:
@@ -364,9 +455,12 @@ class ScanValidatorPhotometric(Validator):
 
 
 class ValidatorFactory:
-    """Encapsulate access to actual validator objects"""
+    """Factory for creating and managing validator instances
 
-    validators: typing.Dict = {
+    Supports configuration management and runtime registration of validators.
+    """
+
+    _registry: typing.ClassVar[typing.Dict[str, typing.Type[Validator]]] = {
         LABEL_SCAN_VALIDATOR_FILEDATA: ScanValidatorFile,
         LABEL_SCAN_VALIDATOR_CHANNEL: ScanValidatorChannel,
         LABEL_SCAN_VALIDATOR_COMPRESSION: ScanValidatorCompression,
@@ -374,57 +468,145 @@ class ValidatorFactory:
         LABEL_SCAN_VALIDATOR_PHOTOMETRICS: ScanValidatorPhotometric,
     }
 
-    @staticmethod
-    def register(validator_label:str, validator_class: Validator):
-        """Extend given validators at runtime"""
-        ValidatorFactory.validators[validator_label] = validator_class
+    def __init__(self, config: typing.Optional[ValidatorConfig] = None):
+        """Initialize factory with configuration
 
-    @staticmethod
-    def unregister(validator_label:str):
-        """Manage validators at runtime"""
-        if validator_label in ValidatorFactory.validators:
-            del ValidatorFactory.validators[validator_label]
+        Args:
+            config: Configuration to use. Creates default if None.
+        """
+        self.config = config or ValidatorConfig()
 
-    @staticmethod
-    def get(validator_label: str) -> Validator:
-        """Get Validator object for label"""
+    @classmethod
+    def register(cls, validator_label: str, validator_class: typing.Type[Validator]) -> None:
+        """Register a validator class
 
-        if validator_label not in ValidatorFactory.validators:
+        Args:
+            validator_label: Unique identifier for the validator
+            validator_class: Class that inherits from Validator
+
+        Raises:
+            TypeError: If validator_class doesn't inherit from Validator
+        """
+        if not issubclass(validator_class, Validator):
+            raise TypeError(f"{validator_class} must inherit from Validator")
+        cls._registry[validator_label] = validator_class
+
+    @classmethod
+    def unregister(cls, validator_label: str) -> None:
+        """Remove a validator from the registry"""
+        cls._registry.pop(validator_label, None)
+
+    @classmethod
+    def get_class(cls, validator_label: str) -> typing.Type[Validator]:
+        """Get validator class for label
+
+        Args:
+            validator_label: Label of the validator to retrieve
+
+        Returns:
+            The validator class
+
+        Raises:
+            KeyError: If validator_label not found
+        """
+        if validator_label not in cls._registry:
+            available = ', '.join(cls._registry.keys())
+            raise KeyError(
+                f"No validator registered for '{validator_label}'. "
+                f"Available validators: {available}"
+            )
+        return cls._registry[validator_label]
+
+    @classmethod
+    def get(cls, validator_label: str) -> typing.Type[Validator]:
+        """Get validator class for label (legacy method for backward compatibility)
+
+        Args:
+            validator_label: Label of the validator to retrieve
+
+        Returns:
+            The validator class
+
+        Raises:
+            NotImplementedError: If validator_label not found
+        """
+        if validator_label not in cls._registry:
             raise NotImplementedError(f"No implementation for {validator_label}!")
-        return ValidatorFactory.validators[validator_label]
+        return cls._registry[validator_label]
+
+    def create(self, validator_label: str, input_data: typing.Any,
+               override_config: typing.Optional[dict] = None, **kwargs) -> Validator:
+        """Create a validator instance with configuration
+
+        Args:
+            validator_label: Validator to create
+            input_data: Input for validator
+            override_config: Config overrides for this instance only
+            **kwargs: Additional kwargs (for backward compatibility)
+
+        Returns:
+            Configured validator instance
+        """
+        validator_class = self.get_class(validator_label)
+
+        # Merge default config with overrides and kwargs
+        config_dict = self.config.to_dict()
+        if override_config:
+            config_dict.update(override_config)
+        if kwargs:
+            config_dict.update(kwargs)
+
+        return validator_class(input_data, **config_dict)
+
+    def update_config(self, **kwargs) -> None:
+        """Update factory configuration
+
+        Args:
+            **kwargs: Configuration parameters to update
+        """
+        for key, value in kwargs.items():
+            if hasattr(self.config, key):
+                setattr(self.config, key, value)
+
+    @classmethod
+    def list_validators(cls) -> typing.List[str]:
+        """Get list of all registered validator labels"""
+        return list(cls._registry.keys())
+
+    @classmethod
+    def has_validator(cls, validator_label: str) -> bool:
+        """Check if a validator is registered"""
+        return validator_label in cls._registry
+
+    @property
+    def validators(self) -> typing.Dict[str, typing.Type[Validator]]:
+        """Property for backward compatibility with old code"""
+        return self._registry
 
 
-class ScanValidatorCombined(Validator):
+class ScanValidators(Validator):
     """Encapsulate image validation"""
 
-    validator_factory: ValidatorFactory = ValidatorFactory
-
-    def __init__(self, path_input: Path, validator_labels: typing.List[str], **kwargs):
+    def __init__(self, path_input: Path, validator_labels: typing.List[str],
+                 validator_factory: typing.Optional[ValidatorFactory] = None, **kwargs):
         super().__init__(LABEL_SCAN_VALIDATOR_COMBINED, path_input)
         self.path_input = path_input
-        self.validator_labels: typing.List[str] = validator_labels
+        self.validator_labels = validator_labels
+        self.validator_factory = validator_factory or ValidatorFactory()
         self.img_data: typing.Optional[Image] = None
         self.kwargs = kwargs
 
-    @staticmethod
-    def register(validator_label, validator_class):
-        """Extend validators at runtime"""
-        if validator_label not in ScanValidatorCombined.validator_factory.validators:
-            ScanValidatorCombined.validator_factory.register(validator_label, validator_class)
-
     def valid(self) -> bool:
         self.img_data = Image(self.input_data)
-        self.img_data.url = self.path_input
         self.img_data.read()
-        for a_label in self.validator_labels:
-            clazz = ScanValidatorCombined.validator_factory.get(a_label)
-            validator: Validator = clazz(self.img_data, **self.kwargs)
+        for label in self.validator_labels:
+            validator = self.validator_factory.create(label, self.img_data, **self.kwargs)
             if not validator.valid():
                 self.invalids.extend(validator.invalids)
         return super().valid()
 
 
-def validate_tiff(tif_path, required_validators:typing.Optional[typing.List[str]]=None, **kwargs) -> ScanValidatorCombined:
+def validate_tiff(tif_path, required_validators: typing.Optional[typing.List[str]] = None, **kwargs) -> ScanValidators:
     """Ensure provided image data contains
     required metadata information concerning
     resolution and alike
@@ -434,8 +616,8 @@ def validate_tiff(tif_path, required_validators:typing.Optional[typing.List[str]
     """
 
     if required_validators is None:
-        required_validators = list(ValidatorFactory.validators.keys())
+        required_validators = list(ValidatorFactory._registry.keys())
     assert required_validators is not None
-    image_val = ScanValidatorCombined(tif_path, required_validators, **kwargs)
+    image_val = ScanValidators(tif_path, required_validators, **kwargs)
     image_val.valid()
     return image_val

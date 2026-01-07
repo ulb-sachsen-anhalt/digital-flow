@@ -37,7 +37,7 @@ from .validate import (
     ImageMetadata,
     Invalid,
     InvalidImageDataException,
-    ScanValidatorCombined,
+    ScanValidators,
     ScanValidatorChannel,
     ScanValidatorCompression,
     ScanValidatorFile,

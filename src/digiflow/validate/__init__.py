@@ -25,7 +25,7 @@ from .imgdata import (
     Image,
     ImageMetadata,
     InvalidImageDataException,
-    ScanValidatorCombined,
+    ScanValidators,
     ScanValidatorChannel,
     ScanValidatorCompression,
     ScanValidatorFile,
