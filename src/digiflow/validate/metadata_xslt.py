@@ -17,7 +17,7 @@ except ModuleNotFoundError:
     SAXON_ENABLED = False
 
 
-_DEFAULT_RESULT_FILE = 'result_xslt.xml'
+_DEFAULT_RESULT_FILE = "result_xslt.xml"
 
 
 class DigiflowTransformException(Exception):
@@ -43,8 +43,7 @@ def transform(path_input, path_template, path_result=None, post_process=None) ->
         with PySaxonProcessor() as proc:
             xsltproc = proc.new_xslt30_processor()
             xslt_exec = xsltproc.compile_stylesheet(stylesheet_file=path_template)
-            xslt_exec.transform_to_file(source_file=path_input,
-                                        output_file=path_result)
+            xslt_exec.transform_to_file(source_file=path_input, output_file=path_result)
     except Exception as any_exc:
         raise DigiflowTransformException(any_exc) from any_exc
     if not os.path.isfile(path_result):

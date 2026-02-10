@@ -7,26 +7,25 @@ import lxml.etree as ET
 
 import digiflow.common as dfc
 
+_XDS_RES = pathlib.Path(__file__).parent.parent / "resources" / "xsd"
+METS_1_12 = os.path.join(_XDS_RES, "mets-1-12.xsd")
+MODS_3_8 = os.path.join(_XDS_RES, "mods-3-8.xsd")
+MODS_3_7 = os.path.join(_XDS_RES, "mods-3-7.xsd")
+MIX_2_0 = os.path.join(_XDS_RES, "mix-2-0.xsd")
+ALTO_3_1 = os.path.join(_XDS_RES, "alto-3-1.xsd")
+ALTO_4_2 = os.path.join(_XDS_RES, "alto-4-2.xsd")
 
-_XDS_RES = pathlib.Path(__file__).parent.parent / 'resources' / 'xsd'
-METS_1_12 = os.path.join(_XDS_RES, 'mets-1-12.xsd')
-MODS_3_8 = os.path.join(_XDS_RES, 'mods-3-8.xsd')
-MODS_3_7 = os.path.join(_XDS_RES, 'mods-3-7.xsd')
-MIX_2_0 = os.path.join(_XDS_RES, 'mix-2-0.xsd')
-ALTO_3_1 = os.path.join(_XDS_RES, 'alto-3-1.xsd')
-ALTO_4_2 = os.path.join(_XDS_RES, 'alto-4-2.xsd')
-
-METS_MODS_XSD = {'mets:mets': [METS_1_12],
-                 'mods:mods': [MODS_3_8]}
+METS_MODS_XSD = {"mets:mets": [METS_1_12], "mods:mods": [MODS_3_8]}
 DEFAULT_XSD_MAPPINGS = {
-    'mets:mets': [METS_1_12],
-    'mods:mods': [MODS_3_8], #MODS_3_7],
-    'mix:mix': [MIX_2_0],
-    'alto': [ALTO_4_2],
+    "mets:mets": [METS_1_12],
+    "mods:mods": [MODS_3_8],  # MODS_3_7],
+    "mix:mix": [MIX_2_0],
+    "alto": [ALTO_4_2],
 }
 
 # please linter for lxml
 # pylint: disable=c-extension-no-member
+
 
 class InvalidXMLException(Exception):
     """Mark invalid Validation outcome"""
@@ -44,14 +43,14 @@ def _is_schema_root(xml_tree, schema) -> bool:
 def _is_contained(xml_tree, schema):
     if _is_schema_root(xml_tree, schema):
         return True
-    return len(xml_tree.findall('.//' + schema, dfc.XMLNS)) > 0
+    return len(xml_tree.findall(".//" + schema, dfc.XMLNS)) > 0
 
 
 def _validate(xml_tree, schema, xsd_file):
     if _is_schema_root(xml_tree, schema):
         return _validate_with_xsd(xml_tree, xsd_file)
     _invalids = []
-    sections = xml_tree.findall('.//' + schema, dfc.XMLNS)
+    sections = xml_tree.findall(".//" + schema, dfc.XMLNS)
     for section in sections:
         _invalids.extend(_validate_with_xsd(section, xsd_file))
     return _invalids

@@ -24,43 +24,50 @@ import digiflow.common as dfc
 import digiflow.validate as dfv
 import digiflow.validate.metadata_xslt as df_vmdx
 
-
 # add schematron validation language mapping
-dfc.XMLNS['svrl'] = 'http://purl.oclc.org/dsdl/svrl'
+dfc.XMLNS["svrl"] = "http://purl.oclc.org/dsdl/svrl"
 
 
 # DDB Report information *not* to care about
 # because we're using this for intermediate
 # digitalization workflow results
 IGNORE_DDB_RULES_INTERMEDIATE = [
-    'fileSec_02',           # fatal: no mets:fileSec[@TYPE="DEFAULT"]
-
+    "fileSec_02",  # fatal: no mets:fileSec[@TYPE="DEFAULT"]
     # special cases for combined digital objects (i.e. volumes)
-    'structMapLogical_17',  # fatal: metsPtr xlink:href invalid URN at import references SAF
-    'structMapLogical_22',  # error: no fileGroup@USE='DEFAULT' at import not yet existing
-    'fileSec_05',           # warn: no fileGroup FULLTEXT (newspapers)
+    "structMapLogical_17",  # fatal: metsPtr xlink:href invalid URN at import references SAF
+    "structMapLogical_22",  # error: no fileGroup@USE='DEFAULT' at import not yet existing
+    "fileSec_05",  # warn: no fileGroup FULLTEXT (newspapers)
 ]
 
 IGNORE_DDB_RULES_ULB = IGNORE_DDB_RULES_INTERMEDIATE + [
-    'originInfo_06',        # non-DDB-compliant mods:placeTerm
-    'titleInfo_02',         # some titles are just shorter than 3 chars
-    'structMapLogical_27',  # would not allow TYPE = cover_front
+    "originInfo_06",  # non-DDB-compliant mods:placeTerm
+    "titleInfo_02",  # some titles are just shorter than 3 chars
+    "structMapLogical_27",  # would not allow TYPE = cover_front
 ]
 
-_DDB_MEDIA_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-medien.xsl'
-_DDB_NEWSP_XSL = 'ddb_validierung_mets-mods-ap-digitalisierte-zeitungen.xsl'
-_XSL_DIR = Path(__file__).parent.parent / 'resources' / 'xsl'
+_DDB_MEDIA_XSL = "ddb_validierung_mets-mods-ap-digitalisierte-medien.xsl"
+_DDB_NEWSP_XSL = "ddb_validierung_mets-mods-ap-digitalisierte-zeitungen.xsl"
+_XSL_DIR = Path(__file__).parent.parent / "resources" / "xsl"
 PATH_MEDIA_XSL = _XSL_DIR / _DDB_MEDIA_XSL
 PATH_NEWSP_XSL = _XSL_DIR / _DDB_NEWSP_XSL
 
 # default temporary report file
-REPORT_FILE_XSLT = 'report_xslt.xml'
+REPORT_FILE_XSLT = "report_xslt.xml"
 
 # which types require special treatment?
 # if these show up, switch validation logics
-DIGIS_MULTIVOLUME = ['Ac', 'Af', 'AF', 'Hc', 'Hf', 'HF',
-                     'volume', 'periodical', 'periodical_volume']
-DIGIS_NEWSPAPER = ['issue', 'additional', 'OZ', 'AZ']
+DIGIS_MULTIVOLUME = [
+    "Ac",
+    "Af",
+    "AF",
+    "Hc",
+    "Hf",
+    "HF",
+    "volume",
+    "periodical",
+    "periodical_volume",
+]
+DIGIS_NEWSPAPER = ["issue", "additional", "OZ", "AZ"]
 
 
 # please linter for lxml
@@ -77,11 +84,11 @@ class DigiflowMetadataValidationException(Exception):
 class DDBRole(enum.Enum):
     """Consider the severty of a meldung"""
 
-    INFO = (1, 'info')
-    WARN = (2, 'warn')
-    CAUTION = (3, 'caution')
-    ERROR = (4, 'error')
-    FATAL = (5, 'fatal')
+    INFO = (1, "info")
+    WARN = (2, "warn")
+    CAUTION = (3, "caution")
+    ERROR = (4, "error")
+    FATAL = (5, "fatal")
 
     def __init__(self, order: int, label: str):
         self.order = order
@@ -115,37 +122,39 @@ class DDBRole(enum.Enum):
 
 class DDBMeldung:
     """Individual DDB Meldung de-serialized from
-    svrl:*-elements to gather @id, @role and 
-    @location Attributes as well as optional 
-    children svrl:text, svrl:description 
+    svrl:*-elements to gather @id, @role and
+    @location Attributes as well as optional
+    children svrl:text, svrl:description
     and svrl:property
     """
 
     def __init__(self, elem: ET.Element):
         self._source = elem
-        self.id: str = elem.get('id')
-        self.role: DDBRole = DDBRole.from_label(elem.get('role'))
-        self.location: str = elem.get('location')
-        self.context: str = ''
-        self._text = ''
+        self.id: str = elem.get("id")
+        self.role: DDBRole = DDBRole.from_label(elem.get("role"))
+        self.location: str = elem.get("location")
+        self.context: str = ""
+        self._text = ""
 
     def __str__(self) -> str:
         return str(self.role.label, self.id)
 
     def explain(self):
         """Explain yourself"""
-        msg_txt = f'[{self.id}] '
-        properties = self._source.xpath('svrl:property', namespaces=dfc.XMLNS)
+        msg_txt = f"[{self.id}] "
+        properties = self._source.xpath("svrl:property", namespaces=dfc.XMLNS)
         if len(properties) > 0:
-            _props = '=>'.join(f"{_p.get('id')}:{_p.text}" for _p in properties)
-            msg_txt = f'{msg_txt} {_props}'
+            _props = "=>".join(f"{_p.get('id')}:{_p.text}" for _p in properties)
+            msg_txt = f"{msg_txt} {_props}"
         if len(self.context) > 0:
-            msg_txt = f'{msg_txt} test:{self.context}'
-        descriptions = ' '.join(self._source.xpath('svrl:description/text()', namespaces=dfc.XMLNS))
-        texts = '. '.join(self._source.xpath('svrl:text/text()', namespaces=dfc.XMLNS))
-        explain_token = f'{descriptions} {texts}'
+            msg_txt = f"{msg_txt} test:{self.context}"
+        descriptions = " ".join(
+            self._source.xpath("svrl:description/text()", namespaces=dfc.XMLNS)
+        )
+        texts = ". ".join(self._source.xpath("svrl:text/text()", namespaces=dfc.XMLNS))
+        explain_token = f"{descriptions} {texts}"
         if len(explain_token) > 1:  # because centered whitespace will exist
-            msg_txt = f'{msg_txt} ({descriptions})'
+            msg_txt = f"{msg_txt} ({descriptions})"
         return msg_txt
 
     def add_context(self, ctx: str):
@@ -171,7 +180,9 @@ class Report:
     """
 
     def __init__(self, ddb_meldungen: typing.List[DDBMeldung]):
-        self.ddb_meldungen = sorted(ddb_meldungen, key=lambda e: e.role.order, reverse=True)
+        self.ddb_meldungen = sorted(
+            ddb_meldungen, key=lambda e: e.role.order, reverse=True
+        )
         self.ignored_ddn_rules = []
         self.xsd_errors = None
 
@@ -214,8 +225,7 @@ class Report:
             elif isinstance(min_ddb_level, str):
                 current_role = m.role
                 mininum_role = DDBRole.from_label(min_ddb_level)
-                if (current_role and mininum_role) \
-                        and current_role < mininum_role:
+                if (current_role and mininum_role) and current_role < mininum_role:
                     ignores.append(m)
                 else:
                     respect.append(m)
@@ -243,8 +253,7 @@ class Report:
 class DDBTransformer:
     """Encapsulate technical aspects"""
 
-    def __init__(self, path_input, path_xslt,
-                 tmp_report_dir, tmp_report_file=None):
+    def __init__(self, path_input, path_xslt, tmp_report_dir, tmp_report_file=None):
         self.path_input = path_input
         self.path_xslt = path_xslt
         self.tmp_report_dir = tmp_report_dir
@@ -279,23 +288,20 @@ class Reporter:
     Switch for issues (PICA: AZ|OZ)
     """
 
-    def __init__(self, path_input,
-                 digi_type='Aa',
-                 tmp_report_dir=None):
+    def __init__(self, path_input, digi_type="Aa", tmp_report_dir=None):
         self.path_input = path_input
         self.digi_type = digi_type
         self._report: typing.Optional[Report] = None
         path_xslt = PATH_MEDIA_XSL
-        if (len(self.digi_type) < 5 and self.digi_type[1] == 'Z') or \
-            self.digi_type.lower() in ["issue", "additional"]:
+        if (
+            len(self.digi_type) < 5 and self.digi_type[1] == "Z"
+        ) or self.digi_type.lower() in ["issue", "additional"]:
             path_xslt = PATH_NEWSP_XSL
-        self.transformer = DDBTransformer(path_input,
-                                          path_xslt,
-                                          tmp_report_dir)
+        self.transformer = DDBTransformer(path_input, path_xslt, tmp_report_dir)
 
-    def get(self, ignore_ddb_rule_ids=None,
-            min_ddb_level=None,
-            validate_schema=True) -> Report:
+    def get(
+        self, ignore_ddb_rule_ids=None, min_ddb_level=None, validate_schema=True
+    ) -> Report:
         """get actual validation report with
         respect to custum ignore rule ids
         starting from provided minimal
@@ -319,12 +325,12 @@ class Reporter:
 
     def extract_meldungen(self):
         """Information to gather details can be located in
-        * svrl:failed-assert 
+        * svrl:failed-assert
         * svrl:successful-report
         """
 
         tmp_root = ET.parse(self.transformer.report_path).getroot()
-        sch_els = tmp_root.findall('svrl:*[@role]', dfc.XMLNS)
+        sch_els = tmp_root.findall("svrl:*[@role]", dfc.XMLNS)
         if len(sch_els) > 0:
             meldungen = [DDBMeldung(e) for e in sch_els]
             self._enrich_location(meldungen)
@@ -344,8 +350,10 @@ class Reporter:
                 if the_m.location is not None:
                     more_ctx = df_vmdx.evaluate(path_input, the_m.location)
                     if more_ctx.size > 0:
-                        ctx_items = [more_ctx.item_at(i) for i in range(0, more_ctx.size)]
-                        ctx = ','.join(_i.string_value.strip() for _i in ctx_items)
+                        ctx_items = [
+                            more_ctx.item_at(i) for i in range(0, more_ctx.size)
+                        ]
+                        ctx = ",".join(_i.string_value.strip() for _i in ctx_items)
                         the_m.add_context(ctx)
         except Exception as _exc:
             raise DigiflowMetadataValidationException(_exc) from _exc
@@ -354,8 +362,7 @@ class Reporter:
         """Forward to XSD schema validation"""
 
         try:
-            dfv.validate_xml(self.path_input,
-                             xsd_mappings=dfv.METS_MODS_XSD)
+            dfv.validate_xml(self.path_input, xsd_mappings=dfv.METS_MODS_XSD)
         except dfv.InvalidXMLException as invalids:
             self._report.xsd_errors = invalids.args[0]
 

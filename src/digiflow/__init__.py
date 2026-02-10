@@ -1,6 +1,6 @@
 """digital flow API"""
 
-__version__ = "6.6.18"
+__version__ = "6.7.18"
 
 
 from .digiflow_identifier import *
@@ -28,23 +28,25 @@ from .validate import (
     LABEL_SCAN_VALIDATOR_CHANNEL,
     LABEL_SCAN_VALIDATOR_COMPRESSION,
     LABEL_SCAN_VALIDATOR_RESOLUTION,
-    LABEL_SCAN_VALIDATOR_FILEDATA,
+    LABEL_SCAN_VALIDATOR_FILE,
     METS_MODS_XSD,
     UNSET_NUMBR,
     FSReadException,
     FSWriteException,
-    Image,
-    ImageMetadata,
     Invalid,
+    InputImage,
+    ValidatorFactory,
+    Validator,
+    ImageMetadata,
     InvalidImageDataException,
-    ScanValidators,
+	ScanValidatorFactory,
+	ScanValidator,
+    ScanValidatorConfig,
     ScanValidatorChannel,
     ScanValidatorCompression,
-    ScanValidatorFile,
+    ScanValidatorFileStats,
     ScanValidatorPhotometric,
     ScanValidatorResolution,
-    Validator,
-    ValidatorFactory,
     resource_can_be,
     group_can_read,
     group_can_write,

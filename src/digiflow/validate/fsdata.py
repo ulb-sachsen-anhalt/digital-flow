@@ -6,13 +6,12 @@ from pathlib import (
     Path,
 )
 
-
 PERMISSION_GROUP_READ = [stat.S_IRGRP]
 PERMISSION_GROUP_READ_WRITE = [stat.S_IRGRP, stat.S_IWGRP]
 
 
 class FSReadException(Exception):
-    """Mark State process can't even 
+    """Mark State process can't even
     read file resource due ownership
     """
 
@@ -21,7 +20,7 @@ class FSWriteException(Exception):
     """Mark state process tries to write
     resource for modifications and/or
     sanitizing but isn't allowed
-    to store data due ownership 
+    to store data due ownership
     restrictions"""
 
 
