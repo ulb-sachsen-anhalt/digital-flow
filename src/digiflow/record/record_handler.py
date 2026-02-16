@@ -9,8 +9,8 @@ import typing
 
 import digiflow.record as df_r
 
-RECORD_STATE_MASK_FRAME = 'other_load'
-SETSPEC_SPLITTER = '##'
+RECORD_STATE_MASK_FRAME = "other_load"
+SETSPEC_SPLITTER = "##"
 STRING_QUOTES = "\"'"
 
 
@@ -33,23 +33,26 @@ class RecordHandler:
     => last field sets timestamp for state
     """
 
-    def __init__(self, data_path, data_fields=None,
-                 ident_col=0,
-                 mark_open=df_r.UNSET_LABEL, mark_lock='busy',
-                 transform_func=df_r.row_to_record):
+    def __init__(
+        self,
+        data_path,
+        data_fields=None,
+        ident_col=0,
+        mark_open=df_r.UNSET_LABEL,
+        mark_lock="busy",
+        transform_func=df_r.row_to_record,
+    ):
         self.data_path = str(data_path)
-        self.mark = {'open': mark_open, 'lock': mark_lock}
+        self.mark = {"open": mark_open, "lock": mark_lock}
         self.schema = None
         self.transform_func = transform_func
         self._raw_lines = []
         # read raw lines with data and comments
-        with open(self.data_path, encoding='utf-8') as tmp:
+        with open(self.data_path, encoding="utf-8") as tmp:
             self._raw_lines = tmp.readlines()
         # pick rows containing *real* data
         # skip empty ones and comment lines
-        data_lines = [line
-                      for line in self._raw_lines
-                      if self._is_data_row(line)]
+        data_lines = [line for line in self._raw_lines if self._is_data_row(line)]
         # check data format if possible
         self._set_schema(data_lines[0])
         if data_fields:
@@ -73,15 +76,14 @@ class RecordHandler:
         return len(self.data)
 
     def _build_data(self):
-        """Transform raw_lines into meaningful data and 
+        """Transform raw_lines into meaningful data and
         build index for fast access
 
         with 0 = index of _raw_line_data
              1 = index of data dictionary
         """
         for i, raw_row in enumerate(self._raw_lines):
-            if self._is_data_row(raw_row) and \
-                    not self._is_header_row(raw_row):
+            if self._is_data_row(raw_row) and not self._is_header_row(raw_row):
                 data_entry = self._to_dict(raw_row)
                 data_idx = len(self.data)
                 self.data.append(data_entry)
@@ -93,12 +95,12 @@ class RecordHandler:
         split row by tabulator
         """
 
-        splits = row_as_str.strip().split('\t')
+        splits = row_as_str.strip().split("\t")
         return collections.OrderedDict(zip(self.schema, splits))
 
     @staticmethod
     def _to_str_nl(dict_row):
-        return '\t'.join(dict_row.values()) + '\n'
+        return "\t".join(dict_row.values()) + "\n"
 
     @staticmethod
     def _is_data_row(row):
@@ -115,7 +117,7 @@ class RecordHandler:
         return False
 
     def _set_schema(self, first_line):
-        d_header = [h.strip() for h in first_line.split('\t')]
+        d_header = [h.strip() for h in first_line.split("\t")]
         if not d_header:
             d_header = df_r.LEGACY_HEADER
         self.schema = d_header
@@ -133,7 +135,7 @@ class RecordHandler:
         """
 
         if not state:
-            state = self.mark['open']
+            state = self.mark["open"]
         for i, row in enumerate(self.data, 1):
             if self.state_field not in row:
                 what = f"line:{i:03d} no {self.state_field} field {row}!"
@@ -166,14 +168,16 @@ class RecordHandler:
                 elif identifier in ident:
                     return self.transform_func(row)
 
-    def save_record_state(self, identifier, state=None, append_on_error=False, **kwargs):
+    def save_record_state(
+        self, identifier, state=None, append_on_error=False, **kwargs
+    ):
         """Mark Record state"""
 
         # read datasets
         if not state:
-            state = self.mark['lock']
+            state = self.mark["lock"]
         if identifier in self.index:
-            (idx_raw, idx_data) = self.index[identifier]
+            idx_raw, idx_data = self.index[identifier]
             dict_row = self.data[idx_data]
             right_now = time.strftime(df_r.STATETIME_FORMAT)
             if kwargs:
@@ -190,33 +194,35 @@ class RecordHandler:
                 new_str = RecordHandler._to_str_nl(new_row)
                 self._raw_lines.append(new_str)
                 self.index[identifier] = new_row
-                self.index[identifier+right_now] = result_string
+                self.index[identifier + right_now] = result_string
 
         # if not existing_id:
         else:
-            raise RuntimeError(f'No Record for {identifier} in {self.data_path}! Cant save state!')
+            raise RuntimeError(
+                f"No Record for {identifier} in {self.data_path}! Cant save state!"
+            )
 
         # store actual state
         self._save_file()
 
     def _save_file(self):
-        with open(self.data_path, 'w', encoding='utf-8', newline='')\
-                as handle_write:
+        with open(self.data_path, "w", encoding="utf-8", newline="") as handle_write:
             handle_write.writelines(self._raw_lines)
 
-    def states(self, criterias, set_state=df_r.UNSET_LABEL,
-               dry_run=True, verbose=False):
+    def states(
+        self, criterias, set_state=df_r.UNSET_LABEL, dry_run=True, verbose=False
+    ):
         """Process record states according certain criterias.
 
         Args:
             criterias (list): List of Criterias where each record
-                must match all provided criterias. Defaults to a list 
+                must match all provided criterias. Defaults to a list
                 only containing RecordCriteriaState(RECORD_STATE_UNSET).
             set_state (_type_, optional): Record state to set, if provided,
                 and dry_run is disabled. Defaults to RECORD_STATE_UNSET.
             dry_run (bool, optional): Whether to persist possible
                 modifications or just simulate. Defaults to True.
-            verbose (bool, optional): Whether to list each record info instead of just 
+            verbose (bool, optional): Whether to list each record info instead of just
                 counting numbers. Defaults to False.
         """
         total_matches = []
@@ -235,8 +241,9 @@ class RecordHandler:
             _report_stdout(total_matches)
         return len(total_matches)
 
-    def frame(self, start, frame_size=1000, mark_state=RECORD_STATE_MASK_FRAME,
-              sort_by=None) -> str:
+    def frame(
+        self, start, frame_size=1000, mark_state=RECORD_STATE_MASK_FRAME, sort_by=None
+    ) -> str:
         """
         create record frame with start (inclusive)
         and opt frame_size (how many records from start)
@@ -254,10 +261,10 @@ class RecordHandler:
             end_frame = len(self.data)
         path_dir = os.path.abspath(os.path.dirname(self.data_path))
         file_name = os.path.basename(self.data_path)
-        if '.' in file_name:
-            file_name, file_ext = tuple(file_name.split('.'))
+        if "." in file_name:
+            file_name, file_ext = tuple(file_name.split("."))
         if not file_ext:
-            file_ext = 'csv'
+            file_ext = "csv"
 
         the_rows = []
         for i, row in enumerate(self.data):
@@ -270,21 +277,28 @@ class RecordHandler:
             if sort_by in self.schema:
                 the_rows = sorted(the_rows, key=lambda r: r[sort_by])
             else:
-                raise RuntimeError(f"invalid sort by {sort_by}! only {self.schema} permitted!")
+                raise RuntimeError(
+                    f"invalid sort by {sort_by}! only {self.schema} permitted!"
+                )
 
         file_name_out = f"{file_name}_{org_start:02d}_{end_frame:02d}.{file_ext}"
         path_out = os.path.join(path_dir, file_name_out)
-        with open(path_out, 'w', encoding='UTF-8') as writer:
-            csv_writer = csv.DictWriter(
-                writer, delimiter='\t', fieldnames=self.schema)
+        with open(path_out, "w", encoding="UTF-8") as writer:
+            csv_writer = csv.DictWriter(writer, delimiter="\t", fieldnames=self.schema)
             csv_writer.writeheader()
             for row in the_rows:
                 csv_writer.writerow(row)
         return path_out
 
-    def merges(self, other_handler,
-               other_require_state=None, other_ignore_state=df_r.UNSET_LABEL,
-               append_unknown=True, dry_run=True, verbose=False) -> dict:
+    def merges(
+        self,
+        other_handler,
+        other_require_state=None,
+        other_ignore_state=df_r.UNSET_LABEL,
+        append_unknown=True,
+        dry_run=True,
+        verbose=False,
+    ) -> dict:
         """Merge record data into this list from other_list.
         Detected other_record with known identifier (via index) and
         in case of matching identifiers, merge *only* very first match.
@@ -321,12 +335,12 @@ class RecordHandler:
         appendeds = []
         other_records = []
         if not isinstance(other_handler, RecordHandler):
-            other_handler = RecordHandler(other_handler,
-                                          data_fields=self.schema)
+            other_handler = RecordHandler(other_handler, data_fields=self.schema)
         # check precondition
         if self.schema != other_handler.schema:
             raise RecordHandlerException(
-                f"Missmatch headers {self.schema} != {other_handler.schema}")
+                f"Missmatch headers {self.schema} != {other_handler.schema}"
+            )
 
         other_records = other_handler.data
         # what might be integrated
@@ -340,7 +354,10 @@ class RecordHandler:
                 matches.append(other_record)
                 if _is_unset(self_record) or _other_is_newer(self_record, other_record):
                     # preserve any existing record data
-                    if other_ignore_state is not None and other_state == other_ignore_state:
+                    if (
+                        other_ignore_state is not None
+                        and other_state == other_ignore_state
+                    ):
                         ignores.append(other_record)
                         continue
                     if other_require_state is not None:
@@ -368,36 +385,46 @@ class RecordHandler:
         if not dry_run:
             self._save_file()
         if verbose:
-            print(f'### MATCHES ({len(matches)}) ###')
+            print(f"### MATCHES ({len(matches)}) ###")
             _report_stdout(matches)
-            print(f'### MERGES ({len(merges)}) ###')
+            print(f"### MERGES ({len(merges)}) ###")
             _report_stdout(merges)
-            print(f'### MISSES ({len(misses)}) ###')
+            print(f"### MISSES ({len(misses)}) ###")
             _report_stdout(misses)
-            print(f'### IGNORES ({len(ignores)}) ###')
+            print(f"### IGNORES ({len(ignores)}) ###")
             _report_stdout(ignores)
-            print(f'### REQUIREDS ({len(requireds)}) ###')
+            print(f"### REQUIREDS ({len(requireds)}) ###")
             _report_stdout(requireds)
-            print(f'### APPENDEDS ({len(appendeds)}) ###')
+            print(f"### APPENDEDS ({len(appendeds)}) ###")
             _report_stdout(appendeds)
-        return {'matches': len(matches), 'merges': len(merges),
-                'misses': len(misses), 'ignores': len(ignores),
-                'requireds': len(requireds), 'appendeds': len(appendeds)}
+        return {
+            "matches": len(matches),
+            "merges": len(merges),
+            "misses": len(misses),
+            "ignores": len(ignores),
+            "requireds": len(requireds),
+            "appendeds": len(appendeds),
+        }
 
 
 def _merge(self_record, other_record):
     self_record[df_r.FIELD_STATE] = other_record[df_r.FIELD_STATE]
     self_record[df_r.FIELD_STATETIME] = other_record[df_r.FIELD_STATETIME]
     try:
-        self_info = ast.literal_eval(_clear_trailing_quotes(self_record[df_r.FIELD_INFO]))
-        other_info = ast.literal_eval(_clear_trailing_quotes(other_record[df_r.FIELD_INFO]))
+        self_info = ast.literal_eval(
+            _clear_trailing_quotes(self_record[df_r.FIELD_INFO])
+        )
+        other_info = ast.literal_eval(
+            _clear_trailing_quotes(other_record[df_r.FIELD_INFO])
+        )
         self_info.update(other_info)
         self_record[df_r.FIELD_INFO] = str(self_info)
     except (SyntaxError, ValueError):
         self_record[df_r.FIELD_INFO] = other_record[df_r.FIELD_INFO]
 
-def _clear_trailing_quotes(raw_string:str):
-    """Remove evil trailing chars like double/single 
+
+def _clear_trailing_quotes(raw_string: str):
+    """Remove evil trailing chars like double/single
     quotation marks"""
 
     if raw_string[0] in STRING_QUOTES:
@@ -424,12 +451,12 @@ def _other_is_newer(self_record, other_record):
         return False
 
 
-def _report_stdout(list_records, delimiter='\t'):
+def _report_stdout(list_records, delimiter="\t"):
     """Print set of Records, assume they are OrderedDicts
     with identical Headers"""
     if len(list_records) > 0:
         # read header
         _header = delimiter.join(list_records[0].keys())
-        print('\n' + _header)
+        print("\n" + _header)
         for _r in list_records:
             print(delimiter.join(_r.values()))

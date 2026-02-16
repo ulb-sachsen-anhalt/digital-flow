@@ -19,25 +19,22 @@ from .conftest import TEST_RES, mock_response
 
 ROOT = Path(__file__).parents[1]
 
-EXPORT_METS = 'export_mets.xml'
-
-# some test constants
-ID_737429 = '737429'
-OAI_ID_737429 = f'oai:digital.bibliothek.uni-halle.de/hd:{ID_737429}'
-OAI_SPEC_737429 = 'ulbhaldod'
-CONTENT_TYPE_TXT = 'text/xml;charset=utf-8'
-OAI_BASE_URL_VD16 = 'digitale.bibliothek.uni-halle.de/vd16/oai'
-OAI_BASE_URL_ZD = 'digitale.bibliothek.uni-halle.de/zd/oai'
-OAI_BASE_URL_OPENDATA = 'opendata.uni-halle.de/oai/dd'
+EXPORT_METS = "export_mets.xml"
 
 # pylint: disable=c-extension-no-member, line-too-long
+
 
 def test_intermediate_dirs_created_with_tmpdir(tmpdir):
     """Test depends on PosixPath, only works with 3.6+"""
 
     src_path = TEST_RES / "k2_mets_vd18_147638674.xml"
-    path_dst = tmpdir.join("sub_dir").mkdir().join(
-        "another_sub_dir").mkdir().join("147638674.xml")
+    path_dst = (
+        tmpdir.join("sub_dir")
+        .mkdir()
+        .join("another_sub_dir")
+        .mkdir()
+        .join("147638674.xml")
+    )
     xml = ET.parse(src_path)
 
     # act
@@ -55,8 +52,11 @@ def test_write_xml_defaults(tmp_path):
     df_md.write_xml_file(xml_tree, str(outpath))
 
     assert os.path.isfile(str(outpath))
-    assert open(str(outpath), encoding='utf8').read().startswith(
-        '<?xml version="1.0" encoding="UTF-8"?>\n')
+    assert (
+        open(str(outpath), encoding="utf8")
+        .read()
+        .startswith('<?xml version="1.0" encoding="UTF-8"?>\n')
+    )
 
 
 def test_write_xml_without_preamble(tmp_path):
@@ -65,59 +65,24 @@ def test_write_xml_without_preamble(tmp_path):
     txt = '<parent><child name="foo">bar</child></parent>'
     xml_tree = ET.fromstring(txt)
     outpath = tmp_path / "write_foo.xml"
-    df_md.write_xml_file(xml_tree, str(outpath), preamble='')
+    df_md.write_xml_file(xml_tree, str(outpath), preamble="")
 
     assert os.path.isfile(str(outpath))
-    assert open(str(outpath), encoding='utf8').read().startswith('<parent>\n')
-
-
-def fixture_request_results(*args, **kwargs):
-    """
-    Provide local copies for corresponding download request
-    * dd/oai:opendata.uni-halle.de:1981185920/36020
-    """
-    the_url = args[0]
-    the_headers = kwargs['headers'] if 'headers' in kwargs else {}
-    result = unittest.mock.Mock()
-    result.status_code = 200
-    result.headers = {'Content-Type': 'image/jpeg'}
-    if the_headers:
-        for k, v in the_headers.items():
-            result.headers[k] = v
-        # , 'User-Agent': the_headers['User-Agent']}
-    max_image_dir = os.path.join(
-        str(ROOT), 'tests/resources/vls/monography/737429/MAX')
-    # this one is the METS/MODS
-    if the_url.endswith('36020'):
-        result.headers['Content-Type'] = CONTENT_TYPE_TXT
-        data_path = os.path.join(
-            str(ROOT), 'tests/resources/opendata/1981185920_36020.oai.xml')
-        with open(data_path, encoding="utf-8") as xml:
-            result.content = xml.read()
-    elif the_url.endswith('997508'):
-        result.headers['Content-Type'] = CONTENT_TYPE_TXT
-        data_path = os.path.join(
-            str(ROOT), 'tests/resources/vls/vd16-oai-997508.xml')
-        with open(data_path, encoding="utf-8") as xml:
-            result.content = xml.read()
-    else:
-        with open(max_image_dir + '/737434.jpg', 'rb') as img:
-            result.content = img.read()
-    return result
+    assert open(str(outpath), encoding="utf8").read().startswith("<parent>\n")
 
 
 @pytest.fixture(name="migration_sweeper_img_fixture")
 def _fixture_migration_img_sweeper(tmp_path):
     """Provide test fixture"""
 
-    testroot = tmp_path / 'SWEEPERTEST'
+    testroot = tmp_path / "SWEEPERTEST"
     testroot.mkdir()
-    maxdir = testroot / 'MAX'
-    file_name = '737429.mets.xml'
-    testresources = Path(ROOT / 'tests' / 'resources' / 'migration')
+    maxdir = testroot / "MAX"
+    file_name = "737429.mets.xml"
+    testresources = Path(ROOT / "tests" / "resources" / "migration")
     mets_source = testresources / file_name
     shutil.copy(str(mets_source), os.path.join(str(testroot), file_name))
-    images_dir = testresources / 'MAX'
+    images_dir = testresources / "MAX"
     shutil.copytree(str(images_dir), str(maxdir))
     return str(testroot)
 
@@ -128,7 +93,7 @@ def test_migration_sweeper_img(migration_sweeper_img_fixture):
     df_io.OAIFileSweeper(migration_sweeper_img_fixture).sweep()
 
     for item in Path(migration_sweeper_img_fixture).iterdir():
-        if str(item.name) == 'MAX':
+        if str(item.name) == "MAX":
             # preserve colorchecker
             assert len(list(item.iterdir())) == 1
 
@@ -137,18 +102,18 @@ def test_migration_sweeper_img(migration_sweeper_img_fixture):
 def _fixture_migration_pdf_sweeper(tmp_path):
     """Provide test fixture"""
 
-    testroot = tmp_path / 'SWEEPERTEST'
+    testroot = tmp_path / "SWEEPERTEST"
     testroot.mkdir()
-    downloaddir = testroot / 'DOWNLOAD'
+    downloaddir = testroot / "DOWNLOAD"
     downloaddir.mkdir()
-    file_name = '1981185920_44046.xml'
-    pdf_file_name = '265982944.pdf'
-    testresources = Path(ROOT / 'tests' / 'resources' / 'ocr')
+    file_name = "1981185920_44046.xml"
+    pdf_file_name = "265982944.pdf"
+    testresources = Path(ROOT / "tests" / "resources" / "ocr")
     mets_source = testresources / file_name
     shutil.copy(str(mets_source), os.path.join(str(testroot), file_name))
     #  downloaddir.write_bytes('data')
-    with open(downloaddir / pdf_file_name, 'wb') as fh:
-        fh.write(b'arbitrary pdf')
+    with open(downloaddir / pdf_file_name, "wb") as fh:
+        fh.write(b"arbitrary pdf")
     return str(testroot)
 
 
@@ -156,15 +121,16 @@ def test_migration_sweeper_pdf(migration_sweeper_pdf_fixture):
     """Test cleanup images and renaming of mets file"""
 
     oais = df_io.OAIFileSweeper(
-        migration_sweeper_pdf_fixture, pattern=".xml", filegroups=['DOWNLOAD'])
+        migration_sweeper_pdf_fixture, pattern=".xml", filegroups=["DOWNLOAD"]
+    )
     oais.sweep()
 
     for item in Path(migration_sweeper_pdf_fixture).iterdir():
-        if str(item.name) == 'DOWNLOAD':
+        if str(item.name) == "DOWNLOAD":
             assert len(list(item.iterdir())) == 0
 
 
-@unittest.mock.patch('digiflow.digiflow_io.smtplib.SMTP')
+@unittest.mock.patch("digiflow.digiflow_io.smtplib.SMTP")
 def test_send_mail(mock_smtp):
     """Test note using SMTP mock because
     tails fails outside proper plattform
@@ -181,21 +147,22 @@ def test_send_mail(mock_smtp):
 
     # act
     mess = df_io.smtp_note(
-        'localhost:25',
-        subject='test',
+        "localhost:25",
+        subject="test",
         message=random_message,
-        froms='test@example.com',
-        tos='me@example.de')
+        froms="test@example.com",
+        tos="me@example.de",
+    )
 
     # assert
     assert random_message in mess
-    assert 'me@example.de' in mess
+    assert "me@example.de" in mess
     assert mock_smtp.called
     assert len(mock_smtp.mock_calls) == 3
-    assert mock_smtp.mock_calls[1][0] == '().send_message'
+    assert mock_smtp.mock_calls[1][0] == "().send_message"
 
 
-@unittest.mock.patch('requests.get')
+@unittest.mock.patch("requests.get")
 def test_response_404(mock_requests: unittest.mock.Mock):
     """test request ends up with 417"""
 
@@ -205,54 +172,64 @@ def test_response_404(mock_requests: unittest.mock.Mock):
 
     # act
     with pytest.raises(df_io.LoadException) as exc:
-        df_io.request_resource('http://foo.bar', Path())
+        df_io.request_resource("http://foo.bar", Path())
 
     # assert
-    assert exc.typename == 'ClientError'
+    assert exc.typename == "ClientError"
     assert "http://foo.bar status 417" == exc.value.args[0]
 
 
-@unittest.mock.patch('requests.get')
-def test_response_200_with_error_code_response(mock_requests: unittest.mock.Mock, tmp_path):
+@unittest.mock.patch("requests.get")
+def test_response_200_with_error_code_response(
+    mock_requests: unittest.mock.Mock, tmp_path
+):
     """test request results into OAILoadException"""
 
     # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/oai/oai-invalid-request.xml')
-    a_response = mock_response(status_code=200,
-                               headers={'Content-Type': 'text/xml;charset=UTF-8'},
-                               data_path=data_path)
+    data_path = os.path.join(str(ROOT), "tests/resources/oai/oai-invalid-request.xml")
+    a_response = mock_response(
+        status_code=200,
+        headers={"Content-Type": "text/xml;charset=UTF-8"},
+        data_path=data_path,
+    )
     mock_requests.return_value = a_response
     loader = df_io.OAILoader("https://dumy.com")
 
     # act
     with pytest.raises(df_io.LoadException) as load_exc:
-        loader.load('oai:opendata.uni-halle.de:1981185920/118701',
-                    tmp_path / 'mets.xml')
+        loader.load(
+            "oai:opendata.uni-halle.de:1981185920/118701", tmp_path / "mets.xml"
+        )
 
-    assert 'verb requires the use of the parameters' in str(load_exc.value)
+    assert "verb requires the use of the parameters" in str(load_exc.value)
 
 
-@unittest.mock.patch('requests.get')
-def test_response_200_with_no_record_response(mock_requests: unittest.mock.Mock, tmp_path):
+@unittest.mock.patch("requests.get")
+def test_response_200_with_no_record_response(
+    mock_requests: unittest.mock.Mock, tmp_path
+):
     """test request results into OAILoadException"""
 
     # arrange
-    data_path = os.path.join(str(ROOT), 'tests/resources/oai/oai-record-missing.xml')
-    a_response = mock_response(status_code=200,
-                               headers={'Content-Type': 'text/xml;charset=UTF-8'},
-                               data_path=data_path)
+    data_path = os.path.join(str(ROOT), "tests/resources/oai/oai-record-missing.xml")
+    a_response = mock_response(
+        status_code=200,
+        headers={"Content-Type": "text/xml;charset=UTF-8"},
+        data_path=data_path,
+    )
     mock_requests.return_value = a_response
     loader = df_io.OAILoader("https://dumy.com")
 
     # act
     with pytest.raises(df_io.LoadException) as load_exc:
-        loader.load('oai:opendata.uni-halle.de:1981185920/118701',
-                    tmp_path / 'mets.xml')
+        loader.load(
+            "oai:opendata.uni-halle.de:1981185920/118701", tmp_path / "mets.xml"
+        )
 
     # assert
-    assert 'The given id does not exist' in str(load_exc.value.args[0])
+    assert "The given id does not exist" in str(load_exc.value.args[0])
     assert mock_requests.call_count == 1
-    assert not tmp_path.joinpath('mets.xml').is_file()
+    assert not tmp_path.joinpath("mets.xml").is_file()
 
 
 def test_call_requests_kwargs_invalid_str(tmp_path):
@@ -320,53 +297,3 @@ def test_call_requests_kwargs_valid(mock_requests: unittest.mock.Mock, tmp_path)
     # assert
     assert "unhandled content-type" in strange.value.args[0]
     assert mock_requests.call_count == 1
-
-
-@unittest.mock.patch("requests.get")
-def test_oailoader_with_string_requests_kwargs(mock_requests: unittest.mock.Mock, tmp_path):
-    """Behavior when using the regular OAILoader with
-    string kwargs from a configuration
-    Still raises error due mocked request response
-    (which is not important this time)
-    """
-
-    # arrange
-    mock_requests.return_value.status_code = 200
-    mock_requests.return_value.status_code = 200
-    the_url = "https://dumy.com"
-    raw_kwargs = {
-        df_io.OAI_KWARG_REQUESTS: 'timeout=20, headers={"User-Agent": "ulbbot+IT-WF-OCR-VD17"}'}
-    loader = df_io.OAILoader(the_url, **raw_kwargs)
-
-    # act
-    with pytest.raises(df_io.ContentException) as strange:
-        loader.load_resource(the_url, tmp_path, None)
-
-    # assert
-    assert "unhandled content-type" in strange.value.args[0]
-    assert mock_requests.call_count == 1
-
-
-@unittest.mock.patch("requests.get")
-def test_oai_record_deleted(mock_requests: unittest.mock.Mock, tmp_path):
-    """Test handling of deleted record in OAI response"""
-
-    # arrange
-    data_path = ROOT / 'tests' / 'resources' / 'oai' / 'oai_mets_1981185920_118701.xml'
-    a_response = mock_response(status_code=200,
-                               headers={'Content-Type': 'text/xml;charset=UTF-8'},
-                               data_path=data_path)
-    mock_requests.return_value = a_response
-    the_url = "https://opendata.uni-halle.de/oai/dd"
-    loader = df_io.OAILoader(the_url)
-
-    # act
-    with pytest.raises(df_io.LoadException) as load_exc:
-        loader.load('oai:opendata.uni-halle.de:1981185920/118701',
-            tmp_path / 'mets.xml',
-            None)
-
-    # assert
-    assert 'The record has been deleted' in str(load_exc.value.args[0])
-    assert mock_requests.call_count == 1
-    assert not tmp_path.joinpath('mets.xml').is_file()

@@ -5,14 +5,15 @@ from .record_handler import (
 )
 from .record_criteria import (
     Datetime,
-	Identifier,
+    Identifier,
     State,
     Text,
 )
 from .record_service import (
-    Client, HandlerInformation,
-	RecordRequestHandler,
-	RecordsExhaustedException,
-	RecordsServiceException,
-	run_server
+    Client,
+    HandlerInformation,
+    RecordRequestHandler,
+    RecordsExhaustedException,
+    RecordsServiceException,
+    run_server,
 )

@@ -25,7 +25,7 @@ def test_can_read_common_file(tmp_path):
     """
 
     # arrange
-    file_name = 'k2_mets_morbio_1748529021.xml'
+    file_name = "k2_mets_morbio_1748529021.xml"
     mets_source = Path(TEST_RES) / file_name
     mets_target = Path(str(tmp_path), file_name)
     shutil.copy(str(mets_source), str(mets_target))
@@ -40,7 +40,8 @@ def test_can_read_common_file(tmp_path):
     # but others are not allowed to write
     assert not resource_can_be(mets_target, [stat.S_IWOTH])
     assert not resource_can_be(
-        mets_target, [stat.S_IRUSR, stat.S_IRGRP, stat.S_IROTH, stat.S_IWOTH])
+        mets_target, [stat.S_IRUSR, stat.S_IRGRP, stat.S_IROTH, stat.S_IWOTH]
+    )
 
 
 def test_group_cant_access_resource(tmp_path):
@@ -50,7 +51,7 @@ def test_group_cant_access_resource(tmp_path):
     """
 
     # arrange
-    file_name = 'k2_mets_morbio_1748529021.xml'
+    file_name = "k2_mets_morbio_1748529021.xml"
     mets_source = Path(TEST_RES) / file_name
     mets_target = Path(str(tmp_path), file_name)
     shutil.copy(mets_source, mets_target)

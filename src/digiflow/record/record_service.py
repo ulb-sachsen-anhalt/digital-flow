@@ -22,34 +22,29 @@ import digiflow as df
 import digiflow.record.common as df_rc
 import digiflow.record as df_r
 
+DEFAULT_HEADER = {"Content-Type": "application/json"}
+TEXT_HEADER = {"Content-Type": "text/plain"}
+DEFAULT_COMMAND_NEXT = "next"
+DEFAULT_COMMAND_UPDATE = "update"
+DEFAULT_MARK_BUSY = "busy"
 
-DEFAULT_HEADER = {
-    "Content-Type": "application/json"
-}
-TEXT_HEADER = {
-    "Content-Type": "text/plain"
-}
-DEFAULT_COMMAND_NEXT = 'next'
-DEFAULT_COMMAND_UPDATE = 'update'
-DEFAULT_MARK_BUSY = 'busy'
+X_HEADER_GET_STATE = "X-GET-STATE"
+X_HEADER_SET_STATE = "X-SET-STATE"
 
-X_HEADER_GET_STATE = 'X-GET-STATE'
-X_HEADER_SET_STATE = 'X-SET-STATE'
-
-STATETIME_FORMAT = '%Y-%m-%d_%H:%M:%S'
+STATETIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
 
 DATA_EXHAUSTED_PREFIX = "no records "
 DATA_EXHAUSTED_MARK = DATA_EXHAUSTED_PREFIX + "{} in {}"
 
 LOG_FORMATTER = logging.Formatter(
-    "%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s",
-    datefmt="%Y-%m-%dT%H:%M:%S")
+    "%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s", datefmt="%Y-%m-%dT%H:%M:%S"
+)
 
 
 @dataclasses.dataclass
 class HandlerInformation:
     """Encapsulate some basic
-    information needed to do 
+    information needed to do
     the handling"""
 
     data_path: Path
@@ -77,15 +72,12 @@ class RecordsServiceException(df_rc.RecordDataException):
 
 # make pylint accept names like "do_POST"
 # pylint:disable=invalid-name
-class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
-                           df.FallbackLogger):
+class RecordRequestHandler(http.server.SimpleHTTPRequestHandler, df.FallbackLogger):
     """Simple handler for POST and GET requests
     without additional security - use at own risk
     """
 
-    def __init__(self, start_info: HandlerInformation,
-                 *args,
-                 **kwargs):
+    def __init__(self, start_info: HandlerInformation, *args, **kwargs):
         self.record_list_directory: Path = start_info.data_path
         self.client_ips = start_info.client_ips
         self.command_next = DEFAULT_COMMAND_NEXT
@@ -95,12 +87,13 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
 
     def _parse_request_path(self):
         try:
-            _, file_name, command = self.path.split('/')
+            _, file_name, command = self.path.split("/")
             return command, file_name
         except (ValueError, TypeError):
             self._respond(state=400, headers=TEXT_HEADER)
             self.wfile.write(
-                b'provide file name and command, e.g.: /<file_name>/<command>')
+                b"provide file name and command, e.g.: /<file_name>/<command>"
+            )
             self.log("unable to parse '%s'", self.path, level=logging.ERROR)
         return None
 
@@ -119,7 +112,9 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         """handle GET request"""
         client_name = self.address_string()
         if not self._client_allowed():
-            self.log("request from %s rejected", self.address_string(), level=logging.WARNING)
+            self.log(
+                "request from %s rejected", self.address_string(), level=logging.WARNING
+            )
             return
         get_record_state = self.headers.get(X_HEADER_GET_STATE, failobj=df.UNSET_LABEL)
         set_record_state = self.headers.get(X_HEADER_SET_STATE)
@@ -127,24 +122,32 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         if isinstance(parsed_request, tuple):
             command, file_name = parsed_request
             if command is not None and command == DEFAULT_COMMAND_NEXT:
-                state, data = self.get_next_record(file_name, client_name,
-                                                   get_record_state, set_record_state)
+                state, data = self.get_next_record(
+                    file_name, client_name, get_record_state, set_record_state
+                )
                 if state != 200:
                     self._respond(state)
-                    self.wfile.write(data.encode('utf-8'))
+                    self.wfile.write(data.encode("utf-8"))
                     return
                 if isinstance(data, df_r.Record):
                     ident = data.identifier
                 elif isinstance(data, dict):
                     ident = data.get(df_r.FIELD_IDENTIFIER)
-                self.log("set record %s in %s to %s (load: '%s')",
-                         ident, self.path, client_name, data)
+                self.log(
+                    "set record %s in %s to %s (load: '%s')",
+                    ident,
+                    self.path,
+                    client_name,
+                    data,
+                )
                 if isinstance(data, str):
                     self._respond(state, headers=TEXT_HEADER)
-                    self.wfile.write(data.encode('utf-8'))
+                    self.wfile.write(data.encode("utf-8"))
                 else:
                     self._respond(state)
-                    self.wfile.write(json.dumps(data, default=df_r.Record.dict).encode('utf-8'))
+                    self.wfile.write(
+                        json.dumps(data, default=df_r.Record.dict).encode("utf-8")
+                    )
 
     def log_request(self, *_):
         """silence internal logger"""
@@ -153,33 +156,41 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         """handle POST request"""
         client_name = self.address_string()
         if not self._client_allowed():
-            self.log("request from %s rejected", self.address_string(), level=logging.WARNING)
+            self.log(
+                "request from %s rejected", self.address_string(), level=logging.WARNING
+            )
             return
-        self.log('url path %s from %s', self.path, client_name,
-                 level=logging.INFO)
+        self.log("url path %s from %s", self.path, client_name, level=logging.INFO)
         parsed_request = self._parse_request_path()
         if isinstance(parsed_request, tuple):
             command, file_name = parsed_request
             if command is None:
                 return
-            content_length = int(self.headers['Content-Length'])
+            content_length = int(self.headers["Content-Length"])
             post_data = self.rfile.read(content_length)
             data_dict = json.loads(post_data)
             ident = data_dict.get(df_r.FIELD_IDENTIFIER)
             if DEFAULT_COMMAND_UPDATE == command:
-                self.log("set record %s in %s by %s (load: '%s')",
-                         ident, self.path, client_name, data_dict)
+                self.log(
+                    "set record %s in %s by %s (load: '%s')",
+                    ident,
+                    self.path,
+                    client_name,
+                    data_dict,
+                )
                 if ident:
                     state, data = self.update_record(file_name, data_dict)
                     if isinstance(data, str):
                         self._respond(state, TEXT_HEADER)
-                        self.wfile.write(data.encode('utf-8'))
+                        self.wfile.write(data.encode("utf-8"))
                     else:
                         self._respond(state)
-                        self.wfile.write(json.dumps(data, default=data.dict).encode('utf-8'))
+                        self.wfile.write(
+                            json.dumps(data, default=data.dict).encode("utf-8")
+                        )
                 else:
                     self._respond(404, TEXT_HEADER)
-                    self.wfile.write(f"no {ident} in {file_name}!".encode('utf-8'))
+                    self.wfile.write(f"no {ident} in {file_name}!".encode("utf-8"))
 
     def _respond(self, state=200, headers=None) -> None:
         self.send_response(state)
@@ -191,9 +202,9 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
 
     def get_data_file(self, file_name: str):
         """data_file_name comes with no extension!
-           so we must search for a valid match-
-           returns propably None-values if
-           nothing found.
+        so we must search for a valid match-
+        returns propably None-values if
+        nothing found.
         """
         if isinstance(file_name, str):
             file_name = Path(file_name).stem
@@ -201,11 +212,17 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
             if file_name == Path(a_file).stem:
                 data_file = self.record_list_directory / a_file.name
                 return data_file
-        self.log("no file %s in %s", file_name, self.record_list_directory,
-                 level=logging.WARNING)
+        self.log(
+            "no file %s in %s",
+            file_name,
+            self.record_list_directory,
+            level=logging.WARNING,
+        )
         return None
 
-    def get_next_record(self, file_name, client_name, requested_state, set_state) -> tuple:
+    def get_next_record(
+        self, file_name, client_name, requested_state, set_state
+    ) -> tuple:
         """Deliver next record data if both
         * in watched directory exists record list matching file_name
         * inside this record list are open records available
@@ -214,8 +231,12 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
         data_file_path = self.get_data_file(file_name)
         # no match results in 404 - resources not available after all
         if data_file_path is None:
-            self.log("no file %s found in %s", file_name, self.record_list_directory,
-                     level=logging.WARNING)
+            self.log(
+                "no file %s found in %s",
+                file_name,
+                self.record_list_directory,
+                level=logging.WARNING,
+            )
             return (404, f"no '{file_name}' in {self.record_list_directory}")
 
         handler = df_r.RecordHandler(data_file_path, transform_func=df_r.row_to_record)
@@ -227,10 +248,13 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
             return (404, the_msg)
 
         # store information which client got the package delivered
-        client_info = {'client': client_name}
+        client_info = {"client": client_name}
         next_record.info = client_info
         handler.save_record_state(
-            next_record.identifier, set_state, **{df_r.FIELD_INFO: f'{next_record.info}'})
+            next_record.identifier,
+            set_state,
+            **{df_r.FIELD_INFO: f"{next_record.info}"},
+        )
         return (200, next_record)
 
     def update_record(self, data_file, in_data) -> tuple:
@@ -240,7 +264,7 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
 
         data_file_path = self.get_data_file(data_file)
         if data_file_path is None:
-            self.log('%s not found', data_file_path, level=logging.ERROR)
+            self.log("%s not found", data_file_path, level=logging.ERROR)
             return (404, f"{data_file_path} not found")
         try:
             handler = df_r.RecordHandler(data_file_path)
@@ -251,8 +275,9 @@ class RecordRequestHandler(http.server.SimpleHTTPRequestHandler,
             prev_record.info = in_data.info
             info_str = f"{prev_record.info}"
             in_state = in_data.state
-            handler.save_record_state(in_ident,
-                                      state=in_state, **{df_r.FIELD_INFO: info_str})
+            handler.save_record_state(
+                in_ident, state=in_state, **{df_r.FIELD_INFO: info_str}
+            )
             msg = f"set {in_ident} to {in_state} in {data_file_path}"
             self.log(msg)
             return (200, msg)
@@ -268,11 +293,10 @@ class Client(df.FallbackLogger):
     and communicate results (done|fail)
     """
 
-    def __init__(self, oai_record_list_label, host, port,
-                 logger=None):
+    def __init__(self, oai_record_list_label, host, port, logger=None):
         self.oai_record_list_label = oai_record_list_label
         self.record: df_r.Record = None
-        self.oai_server_url = f'http://{host}:{port}/{oai_record_list_label}'
+        self.oai_server_url = f"http://{host}:{port}/{oai_record_list_label}"
         self.timeout_secs = 30
         super().__init__(some_logger=logger)
 
@@ -281,10 +305,15 @@ class Client(df.FallbackLogger):
         json encoded content into record object
         """
         try:
-            the_headers = {X_HEADER_GET_STATE: get_record_state,
-                           X_HEADER_SET_STATE: set_record_state}
-            response = requests.get(f'{self.oai_server_url}/next',
-                                    timeout=self.timeout_secs, headers=the_headers)
+            the_headers = {
+                X_HEADER_GET_STATE: get_record_state,
+                X_HEADER_SET_STATE: set_record_state,
+            }
+            response = requests.get(
+                f"{self.oai_server_url}/next",
+                timeout=self.timeout_secs,
+                headers=the_headers,
+            )
         except requests.exceptions.RequestException as err:
             self.log("Connection failure: %s", err, level=logging.ERROR)
             raise RecordsServiceException(f"Connection failure: {err}") from err
@@ -293,13 +322,17 @@ class Client(df.FallbackLogger):
         if status == 404:
             # probably nothing to do?
             if DATA_EXHAUSTED_PREFIX in str(result):
-                raise RecordsExhaustedException(result.decode(encoding='utf-8'))
+                raise RecordsExhaustedException(result.decode(encoding="utf-8"))
 
         if status != 200:
             if result is None or len(result) == 0:
                 result = df.UNSET_LABEL
-            self.log("server connection status: %s -> %s", status, result,
-                     level=logging.ERROR)
+            self.log(
+                "server connection status: %s -> %s",
+                status,
+                result,
+                level=logging.ERROR,
+            )
             raise RecordsServiceException(f"Record service error {status} - {result}")
 
         # otherwise response ok
@@ -308,8 +341,7 @@ class Client(df.FallbackLogger):
 
     def update(self, status, oai_urn, **kwargs):
         """Store status update && send message to OAI Service"""
-        self.log("set status '%s' for urn '%s'", status, oai_urn,
-                 level=logging.DEBUG)
+        self.log("set status '%s' for urn '%s'", status, oai_urn, level=logging.DEBUG)
         self.record = df_r.Record(oai_urn)
         self.record.state = status
         # if we have to report somethin' new, then append it
@@ -317,13 +349,22 @@ class Client(df.FallbackLogger):
             try:
                 self.record.info = kwargs
             except AttributeError as attr_err:
-                self._logger.error("info update failed for %s: %s (prev:%s, in:%s)",
-                                   self.record.identifier,
-                                   attr_err.args[0],
-                                   self.record.info, kwargs)
-        self.log("update record %s url %s", self.record, self.oai_server_url,
-                 level=logging.DEBUG)
-        return requests.post(f'{self.oai_server_url}/update', json=self.record.dict(), timeout=60)
+                self._logger.error(
+                    "info update failed for %s: %s (prev:%s, in:%s)",
+                    self.record.identifier,
+                    attr_err.args[0],
+                    self.record.info,
+                    kwargs,
+                )
+        self.log(
+            "update record %s url %s",
+            self.record,
+            self.oai_server_url,
+            level=logging.DEBUG,
+        )
+        return requests.post(
+            f"{self.oai_server_url}/update", json=self.record.dict(), timeout=60
+        )
 
 
 def run_server(host, port, start_data: HandlerInformation):
@@ -331,7 +372,9 @@ def run_server(host, port, start_data: HandlerInformation):
     for local file resources"""
 
     the_logger = start_data.logger
-    the_logger.info("listen at: %s:%s for files from %s", host, port, start_data.data_path)
+    the_logger.info(
+        "listen at: %s:%s for files from %s", host, port, start_data.data_path
+    )
     if start_data.client_ips and len(start_data.client_ips) > 0:
         the_logger.info("accept requests only from %s", start_data.client_ips)
     the_logger.info("next data: %s:%s/<record-file>/next", host, port)
@@ -349,11 +392,13 @@ def run_server(host, port, start_data: HandlerInformation):
 def _set_file_handler(logfile_path: Path):
     try:
         file_handler = logging.handlers.RotatingFileHandler(
-            logfile_path, maxBytes=1_048_576)
+            logfile_path, maxBytes=1_048_576
+        )
     except (PermissionError, FileNotFoundError):
         tmp_log_file = os.path.join(tempfile.gettempdir(), logfile_path)
         file_handler = logging.handlers.RotatingFileHandler(
-            tmp_log_file, maxBytes=10_485_760)
+            tmp_log_file, maxBytes=10_485_760
+        )
     file_handler.setFormatter(LOG_FORMATTER)
     return file_handler
 
@@ -408,11 +453,13 @@ if __name__ == "__main__":
 
     # check pre-conditions
     if not os.access(RAW_LOG_DIR, os.F_OK and os.W_OK):
-        raise RuntimeError(f"cant store log files at non-writeable directory: {RAW_LOG_DIR}")
+        raise RuntimeError(
+            f"cant store log files at non-writeable directory: {RAW_LOG_DIR}"
+        )
     LOG_DIR = Path(RAW_LOG_DIR)
     LOG_PATH = (LOG_DIR / LOG_FILENAME).resolve()
     # foster record directory path
-    if '~' in RES_DIR:
+    if "~" in RES_DIR:
         RES_DIR = Path(RES_DIR).expanduser()
     RES_DIR = Path(RES_DIR).absolute().resolve()
 
@@ -420,7 +467,7 @@ if __name__ == "__main__":
     USED_LOGGING_CONF = None
     if THE_ARGS["log_config"] is not None:
         LOG_CONFIG_FILE = Path(THE_ARGS["log_config"]).resolve()
-        CFG_DICT = {'logname': str(LOG_PATH)}
+        CFG_DICT = {"logname": str(LOG_PATH)}
         logging.config.fileConfig(str(LOG_CONFIG_FILE), defaults=CFG_DICT)
         USED_LOGGING_CONF = LOG_CONFIG_FILE
     LOGGER = logging.getLogger(LOGGER_NAME)

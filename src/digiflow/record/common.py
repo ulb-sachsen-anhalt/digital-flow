@@ -8,38 +8,42 @@ import typing
 
 import digiflow as df
 
+COMMENT_MARK = "#"
 
-COMMENT_MARK = '#'
+STATETIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
 
-STATETIME_FORMAT = '%Y-%m-%d_%H:%M:%S'
+RECORD_STATE_MASK_FRAME = "other_load"
 
-RECORD_STATE_MASK_FRAME = 'other_load'
+UNSET_LABEL = "n.a."
 
-UNSET_LABEL = 'n.a.'
+FIELD_IDENTIFIER = "IDENTIFIER"
+FIELD_URN = "URN"
+FIELD_SYSTEM_HANDLE = "HANDLE"
+FIELD_SPEC = "SETSPEC"
+FIELD_DATESTAMP = "CREATED"
+FIELD_INFO = "INFO"
+FIELD_STATE = "STATE"
+FIELD_STATETIME = "STATE_TIME"
 
-FIELD_IDENTIFIER = 'IDENTIFIER'
-FIELD_URN = 'URN'
-FIELD_SYSTEM_HANDLE = 'HANDLE'
-FIELD_SPEC = 'SETSPEC'
-FIELD_DATESTAMP = 'CREATED'
-FIELD_INFO = 'INFO'
-FIELD_STATE = 'STATE'
-FIELD_STATETIME = 'STATE_TIME'
-
-LEGACY_HEADER = [FIELD_IDENTIFIER, FIELD_SPEC, FIELD_DATESTAMP,
-                 FIELD_INFO, FIELD_STATE, FIELD_STATETIME]
-RECORD_HEADER = [FIELD_IDENTIFIER, FIELD_INFO,
-                 FIELD_STATE, FIELD_STATETIME]
+LEGACY_HEADER = [
+    FIELD_IDENTIFIER,
+    FIELD_SPEC,
+    FIELD_DATESTAMP,
+    FIELD_INFO,
+    FIELD_STATE,
+    FIELD_STATETIME,
+]
+RECORD_HEADER = [FIELD_IDENTIFIER, FIELD_INFO, FIELD_STATE, FIELD_STATETIME]
 
 DEFAULT_MAPPINGS = {
-    'identifier': FIELD_IDENTIFIER,
-    'ext_urn': FIELD_URN,
-    'system_handle': FIELD_SYSTEM_HANDLE,
-    'setspec': FIELD_SPEC,
-    'created_time': FIELD_DATESTAMP,
-    'info': FIELD_INFO,
-    'state': FIELD_STATE,
-    'state_time': FIELD_STATETIME,
+    "identifier": FIELD_IDENTIFIER,
+    "ext_urn": FIELD_URN,
+    "system_handle": FIELD_SYSTEM_HANDLE,
+    "setspec": FIELD_SPEC,
+    "created_time": FIELD_DATESTAMP,
+    "info": FIELD_INFO,
+    "state": FIELD_STATE,
+    "state_time": FIELD_STATETIME,
 }
 
 
@@ -56,6 +60,7 @@ class RecordDataException(Exception):
 @dataclasses.dataclass
 class Context:
     """Provide some more Context"""
+
     position: int
     total_len: int
     data_path: str
@@ -105,11 +110,11 @@ class Record:
         """
         if not self.__local_ident:
             _local_ident = self.__urn
-            if ':' in _local_ident:
-                _splits = self.__urn.split(':')
+            if ":" in _local_ident:
+                _splits = self.__urn.split(":")
                 _local_ident = _splits[-1]
-            if '/' in _local_ident:
-                _local_ident = _local_ident.replace('/', '_')
+            if "/" in _local_ident:
+                _local_ident = _local_ident.replace("/", "_")
             self.__local_ident = _local_ident
         return self.__local_ident
 
@@ -196,8 +201,12 @@ class Record:
             elif isinstance(self._info, tuple):
                 self._info[-1].update(any_value)
         except (AttributeError, SyntaxError, ValueError) as exc:
-             # try to foster multiple quotes at value
-            if isinstance(exc, SyntaxError) and isinstance(any_value, str) and ":" in any_value:
+            # try to foster multiple quotes at value
+            if (
+                isinstance(exc, SyntaxError)
+                and isinstance(any_value, str)
+                and ":" in any_value
+            ):
                 processed = []
                 open_quote = False
                 for i, c in enumerate(any_value):
@@ -205,20 +214,20 @@ class Record:
                     if curr != '"':
                         processed.append(curr)
                     else:
-                        succ = any_value[i+1]
+                        succ = any_value[i + 1]
                         if curr == '"' and not open_quote:
                             open_quote = True
                             processed.append(curr)
                             continue
                         if open_quote and (succ in ":,}"):
-                            processed.append('"') # literal quote
+                            processed.append('"')  # literal quote
                             open_quote = False
                         else:
-                            processed.append('\\"') # in-between quote
+                            processed.append('\\"')  # in-between quote
                 try:
                     self._info = ast.literal_eval("".join(processed))
                 except SyntaxError:
-                    self._info = any_value # because of weired legacy mixtures
+                    self._info = any_value  # because of weired legacy mixtures
             else:
                 self._info = any_value
 

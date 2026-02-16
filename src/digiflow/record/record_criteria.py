@@ -17,7 +17,7 @@ class Criteria:
 
 class Identifier(Criteria):
     """Expect an OAI-URN as identifier,
-    therefore assume prefix 'oai:' 
+    therefore assume prefix 'oai:'
     otherwise use last ':' segment
     """
 
@@ -27,8 +27,8 @@ class Identifier(Criteria):
     def matched(self, record: collections.OrderedDict) -> bool:
         rec_id = record[df_r.FIELD_IDENTIFIER]
         # maybe must deal shortened identifier (like legacy id)
-        if 'oai' not in self.identifier or ':' not in self.identifier:
-            rec_id = rec_id.split(':')[-1]
+        if "oai" not in self.identifier or ":" not in self.identifier:
+            rec_id = rec_id.split(":")[-1]
         return self.identifier == rec_id
 
 
@@ -58,14 +58,14 @@ class Datetime(Criteria):
         self.dt_from = None
         self.dt_to = None
         # *ORDER MATTERS*
-        if 'dt_field' in kwargs:
-            self.field = kwargs['dt_field']
-        if 'dt_format' in kwargs:
-            self.dt_pattern = kwargs['dt_format']
-        if 'dt_from' in kwargs:
-            self.dt_from = time.strptime(kwargs['dt_from'], self.dt_pattern)
-        if 'dt_to' in kwargs:
-            self.dt_to = time.strptime(kwargs['dt_to'], self.dt_pattern)
+        if "dt_field" in kwargs:
+            self.field = kwargs["dt_field"]
+        if "dt_format" in kwargs:
+            self.dt_pattern = kwargs["dt_format"]
+        if "dt_from" in kwargs:
+            self.dt_from = time.strptime(kwargs["dt_from"], self.dt_pattern)
+        if "dt_to" in kwargs:
+            self.dt_to = time.strptime(kwargs["dt_to"], self.dt_pattern)
 
     def matched(self, record: collections.OrderedDict) -> bool:
         if self.field not in record:

@@ -282,7 +282,9 @@ class ScanValidator(dfvc.Validator):
         """Run all validators and collect invalids"""
 
         if self.input_file is None:
-            raise InvalidImageDataException("No image metadata available for validation!")
+            raise InvalidImageDataException(
+                "No image metadata available for validation!"
+            )
         if self.input_file.input_path is None:
             raise dfvfs.FSReadException("No input path provided for file validation!")
 
@@ -395,7 +397,9 @@ class ScanValidatorCompression(ScanValidator):
         img_md: ImageMetadata = self.input_file.metadata
         if img_md.compression != 1:
             msg = f"{dfvc.INVALID_LABEL_RANGE} {LABEL_COMPRESSION} {img_md.compression} != 1"
-            self.invalids.append(dfvc.Invalid(self.label, self.input_file.input_path, msg))
+            self.invalids.append(
+                dfvc.Invalid(self.label, self.input_file.input_path, msg)
+            )
 
 
 class ScanValidatorResolution(ScanValidator):
@@ -572,7 +576,9 @@ def validate_tiff(
         the_image = InputImage(image_data)
         image_data = the_image
     if not isinstance(image_data, InputImage):
-        raise InvalidImageDataException(f"Invalid {image_data}: must be InputImage or Path.")
+        raise InvalidImageDataException(
+            f"Invalid {image_data}: must be InputImage or Path."
+        )
     if image_data.metadata is None:
         image_data.read()
     for scan_validator in scan_validators:

@@ -6,7 +6,6 @@ import datetime
 import pathlib
 import typing
 
-
 UNSET_NUMBR = -1
 INVALID_LABEL_UNSET = "INVALID_UNSET"
 INVALID_LABEL_RANGE = "INVALID_RANGE"
@@ -72,8 +71,7 @@ class ValidatorFactory(abc.ABC):
     Supports configuration management and runtime registration of validators.
     """
 
-    _registry: typing.ClassVar[typing.Dict[str, typing.Type[Validator]]] = {
-    }
+    _registry: typing.ClassVar[typing.Dict[str, typing.Type[Validator]]] = {}
 
     def __init__(self, config: typing.Optional[typing.Any] = None):
         """Initialize factory with configuration
@@ -164,7 +162,9 @@ class ValidatorFactory(abc.ABC):
         validator_class = self.get_class(validator_label)
 
         # Merge default config with overrides and kwargs
-        assert self.config is not None, "Factory config must be set to create validators"
+        assert (
+            self.config is not None
+        ), "Factory config must be set to create validators"
         config_dict = self.config.to_dict()
         if override_config:
             config_dict.update(override_config)

@@ -13,7 +13,7 @@ import digiflow.digiflow_metadata as dfmd
 
 from .conftest import TEST_RES
 
-_EXPORT_METS = 'export_mets.xml'
+_EXPORT_METS = "export_mets.xml"
 
 
 @pytest.mark.skipif("sys.version_info < (3,6)")
@@ -34,7 +34,7 @@ def test_create_export_mets_invalid():
     """
 
     # arrange
-    path_zk_export = os.path.join(TEST_RES, 'zkw', '584', _EXPORT_METS)
+    path_zk_export = os.path.join(TEST_RES, "zkw", "584", _EXPORT_METS)
     assert os.path.exists(path_zk_export)
 
     # act
@@ -43,8 +43,8 @@ def test_create_export_mets_invalid():
 
     assert len(err.value.args) == 1
     _err = err.value.args[0]
-    assert 'ERROR' == _err[0][0]
-    assert 'messageDigestAlgorithm' in str(_err)
+    assert "ERROR" == _err[0][0]
+    assert "messageDigestAlgorithm" in str(_err)
     assert "value 'foo' is not an element of the set" in str(_err)
 
 
@@ -54,7 +54,7 @@ def test_create_export_mets_valid():
     """
 
     # arrange
-    path_zk_export = os.path.join(TEST_RES, 'zkw', '1064', _EXPORT_METS)
+    path_zk_export = os.path.join(TEST_RES, "zkw", "1064", _EXPORT_METS)
     assert os.path.exists(path_zk_export)
 
     # act
@@ -65,7 +65,7 @@ def test_altov4_is_valid():
     """Ensure validity for ALTO V4"""
 
     # arrange
-    path_altov4_737429 = os.path.join(TEST_RES, 'ocr', 'alto', 'FULLTEXT_737438.xml')
+    path_altov4_737429 = os.path.join(TEST_RES, "ocr", "alto", "FULLTEXT_737438.xml")
     assert os.path.exists(path_altov4_737429)
 
     # act
@@ -77,7 +77,8 @@ def test_altov4_from_kraken_serializer_is_valid():
 
     # arrange
     path_altov4_737429 = os.path.join(
-        TEST_RES, 'ocr', 'alto', 'test-kraken-alto4-serialization.xml')
+        TEST_RES, "ocr", "alto", "test-kraken-alto4-serialization.xml"
+    )
     assert os.path.exists(path_altov4_737429)
 
     # act
@@ -92,7 +93,7 @@ def test_mets_from_migration_mvwvd18_cstage_is_invalid():
     """
 
     # arrange
-    path_2910519 = os.path.join(TEST_RES, 'migration', '2910519.fail.xml')
+    path_2910519 = os.path.join(TEST_RES, "migration", "2910519.fail.xml")
     assert os.path.exists(path_2910519)
 
     # act
@@ -101,9 +102,12 @@ def test_mets_from_migration_mvwvd18_cstage_is_invalid():
 
     # assert
     _info = exc.value.args[0]
-    assert 'ERROR' == _info[0][0]
-    assert 'SCHEMASV' == _info[0][1]
-    assert "Element '{http://www.loc.gov/METS/}fileSec': Missing child element(s)." in str(_info)
+    assert "ERROR" == _info[0][0]
+    assert "SCHEMASV" == _info[0][1]
+    assert (
+        "Element '{http://www.loc.gov/METS/}fileSec': Missing child element(s)."
+        in str(_info)
+    )
     assert "Expected is ( {http://www.loc.gov/METS/}fileGrp )" in str(_info)
 
 
@@ -114,18 +118,20 @@ def test_mets_with_two_invalids(tmp_path):
     """
 
     # arrange
-    path_37167 = os.path.join(TEST_RES, 'opendata', '1981185920_37167.xml')
+    path_37167 = os.path.join(TEST_RES, "opendata", "1981185920_37167.xml")
 
     # ensure errors present
     _org_root = ET.parse(path_37167).getroot()
-    _wrong_places = _org_root.findall('.//mods:relatedItem/mods:recordIdentifier', df.XMLNS)
+    _wrong_places = _org_root.findall(
+        ".//mods:relatedItem/mods:recordIdentifier", df.XMLNS
+    )
     assert len(_wrong_places) == 1
-    _wrong_orders = _org_root.findall('.//mods:mods/mods:recordInfo', df.XMLNS)[0][0]
-    assert ET.QName(_wrong_orders).localname == 'recordIdentifier'
+    _wrong_orders = _org_root.findall(".//mods:mods/mods:recordInfo", df.XMLNS)[0][0]
+    assert ET.QName(_wrong_orders).localname == "recordIdentifier"
 
-    _tmp_dst = tmp_path / '37167.xml'
+    _tmp_dst = tmp_path / "37167.xml"
     shutil.copyfile(path_37167, _tmp_dst)
-    dfmd.extract_mets(_tmp_dst, open(_tmp_dst, mode='rb').read())
+    dfmd.extract_mets(_tmp_dst, open(_tmp_dst, mode="rb").read())
 
     # act
     with pytest.raises(dfv.InvalidXMLException) as exc:
@@ -144,7 +150,7 @@ def test_most_rectent_mods38(tmp_path):
     # arrange
     path_src = os.path.join(TEST_RES, "1877049026_Aa_mods38.xml")
 
-    tmp_dst = tmp_path / '1877049026.xml'
+    tmp_dst = tmp_path / "1877049026.xml"
     shutil.copyfile(path_src, tmp_dst)
 
     # act

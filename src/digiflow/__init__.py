@@ -1,6 +1,6 @@
 """digital flow API"""
 
-__version__ = "6.7.18"
+__version__ = "6.8.18"
 
 
 from .digiflow_identifier import *
@@ -39,8 +39,8 @@ from .validate import (
     Validator,
     ImageMetadata,
     InvalidImageDataException,
-	ScanValidatorFactory,
-	ScanValidator,
+    ScanValidatorFactory,
+    ScanValidator,
     ScanValidatorConfig,
     ScanValidatorChannel,
     ScanValidatorCompression,
@@ -51,6 +51,6 @@ from .validate import (
     group_can_read,
     group_can_write,
     validate_tiff,
-	validate_xml,
+    validate_xml,
 )
 from .common import UNSET_LABEL, XMLNS, FallbackLogger

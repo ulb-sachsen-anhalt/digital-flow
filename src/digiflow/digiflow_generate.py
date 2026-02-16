@@ -18,19 +18,18 @@ from docker.models.containers import Container
 from docker.types import Mount
 
 # default sub dir for structure creation
-DEFAULT_STRUCTURE_DIR = 'MAX'
+DEFAULT_STRUCTURE_DIR = "MAX"
 
 # derivates
 DEFAULT_DERIVANS_IMAGE = "ghcr.io/ulb-sachsen-anhalt/digital-derivans:latest"
 DEFAULT_DERIVANS_TIMEOUT = 10800
-DERIVANS_LABEL = 'derivans'
+DERIVANS_LABEL = "derivans"
 DERIVANS_CNT_DATA_DIR: typing.Final[str] = "/usr/derivans/data"
 DERIVANS_CNT_CONF_DIR: typing.Final[str] = "/usr/derivans/config"
 DERIVANS_CNT_LOGG_DIR: typing.Final[str] = "/usr/derivans/log"
 
 
-def id_generator(
-        start=0, prefix=None, suffix=None, previous_value=None, padded=4):
+def id_generator(start=0, prefix=None, suffix=None, previous_value=None, padded=4):
     """
     Generate Numbers with schema [<prefix>]<4digits>[<suffix>]
     with default padded zeros to match 4-digit-numbers
@@ -62,7 +61,7 @@ def id_generator(
         yield number
 
 
-_T = typing.TypeVar('_T')
+_T = typing.TypeVar("_T")
 _FuncWrapperResult = typing.Tuple[float, str, _T]
 RunProfiledResult = typing.Callable[[], _FuncWrapperResult[_T]]
 
@@ -75,7 +74,7 @@ def run_profiled(func: typing.Callable) -> RunProfiledResult:
 
     def _get_func_name(_func: typing.Callable) -> str:
         _label = str(_func)
-        match = re.match(r'.*function ([\w.]+) *', _label)
+        match = re.match(r".*function ([\w.]+) *", _label)
         if match:
             return match.group(1)
         else:
@@ -83,7 +82,7 @@ def run_profiled(func: typing.Callable) -> RunProfiledResult:
             match = re.match(r".*name='([a-z_]+)'.*", _label)
             if match:
                 return match.group(1)
-        return 'func'
+        return "func"
 
     def func_wrapper(*args) -> _FuncWrapperResult[_T]:
         result = None
@@ -103,21 +102,21 @@ def run_profiled(func: typing.Callable) -> RunProfiledResult:
 
 @run_profiled
 def run_command(cmd, timeout) -> subprocess.CompletedProcess:
-    """Forward command with given timeout
-    """
+    """Forward command with given timeout"""
     return subprocess.run(
         cmd,
         shell=True,
         check=True,
         capture_output=True,
-        encoding='UTF-8',
-        timeout=timeout
+        encoding="UTF-8",
+        timeout=timeout,
     )
 
 
 @dataclass(frozen=True)
 class DerivansResult:
     """Encapsulate Derivans outcome"""
+
     command: str
     duration: float
     result: typing.Optional[ContainerProcResult] = None
@@ -137,12 +136,12 @@ class BaseDerivansManager(ABC):
 
     @staticmethod
     def create(
-            path_input: str,
-            container_image_name: str = None,
-            path_binary: str = None,
-            path_mvn_project: str = None,
-            path_configuration: str = None,
-            path_logging: str = None,
+        path_input: str,
+        container_image_name: str = None,
+        path_binary: str = None,
+        path_mvn_project: str = None,
+        path_configuration: str = None,
+        path_logging: str = None,
     ) -> BaseDerivansManager:
         """Create actual DerivansManager instance
         depending on provided parameters"""
@@ -162,12 +161,14 @@ class BaseDerivansManager(ABC):
         )
 
     def __init__(
-            self,
-            path_mets_file,
-            path_configuration=None,
+        self,
+        path_mets_file,
+        path_configuration=None,
     ):
         if path_configuration and not Path(str(path_configuration)).is_file():
-            raise RuntimeError(f"[DerivansManager] config missing: {path_configuration}!")
+            raise RuntimeError(
+                f"[DerivansManager] config missing: {path_configuration}!"
+            )
         self.path_mets_file = path_mets_file
         self.path_configuration = path_configuration
         self.images = None
@@ -207,18 +208,20 @@ class DerivansManager(BaseDerivansManager):
         self._label = label
 
     def __init__(
-            self,
-            path_mets_file: str,
-            path_binary: str,
-            path_mvn_project: str = None,
-            path_configuration: str = None,
+        self,
+        path_mets_file: str,
+        path_binary: str,
+        path_mvn_project: str = None,
+        path_configuration: str = None,
     ):
-        if path_binary is None or \
-                not (Path(path_binary).is_dir() or Path(path_binary).is_file()):
+        if path_binary is None or not (
+            Path(path_binary).is_dir() or Path(path_binary).is_file()
+        ):
             raise RuntimeError(f"[DerivansManager] invalid path_binary: {path_binary}!")
-        if path_mvn_project is not None \
-                and not Path(str(path_mvn_project)).is_dir():
-            raise RuntimeError(f"[DerivansManager] invalid path_mvn_project: {path_mvn_project}!")
+        if path_mvn_project is not None and not Path(str(path_mvn_project)).is_dir():
+            raise RuntimeError(
+                f"[DerivansManager] invalid path_mvn_project: {path_mvn_project}!"
+            )
         super().__init__(
             path_mets_file=path_mets_file,
             path_configuration=path_configuration,
@@ -240,7 +243,7 @@ class DerivansManager(BaseDerivansManager):
 
         # fallback to default 'java' if no need to worry about
         if not self.path_exec:
-            self.path_exec = 'java'
+            self.path_exec = "java"
 
     def start(self) -> DerivansResult:
         """Create Derivates with provided configuration
@@ -256,17 +259,18 @@ class DerivansManager(BaseDerivansManager):
         prev_dir = os.path.abspath(os.curdir)
         os.chdir(derivans_root)
         path_exec = self.path_exec
-        if platform.system() not in ['Linux']:
+        if platform.system() not in ["Linux"]:
             path_exec = f'"{path_exec}"'
-        cmd = f'{path_exec} -jar {self.path_binary} {self.path_mets_file} {self.additional_args}'
+        cmd = f"{path_exec} -jar {self.path_binary} {self.path_mets_file} {self.additional_args}"
         if self.path_configuration:
-            cmd += f' -c {self.path_configuration}'
+            cmd += f" -c {self.path_configuration}"
         if self.images:
             cmd += f" -i {self.images}"
         # disable pylint due it is not able to recognize
         # output being created by decorator
         time_duration, label, result = self._execute_derivans(
-            cmd)  # pylint: disable=unpacking-non-sequence
+            cmd
+        )  # pylint: disable=unpacking-non-sequence
         os.chdir(prev_dir)
         return DerivansResult(
             command=cmd,
@@ -278,7 +282,7 @@ class DerivansManager(BaseDerivansManager):
     def _identify_derivans_bin(self, the_dir=None):
         if not the_dir:
             the_dir = self.path_binary
-        all_files = [f for f in os.listdir(the_dir) if f.endswith('.jar')]
+        all_files = [f for f in os.listdir(the_dir) if f.endswith(".jar")]
         derivantis = sorted([f for f in all_files if self._label in str(f)])
         if len(derivantis) > 0:
             return os.path.join(the_dir, derivantis[0])
@@ -291,7 +295,7 @@ class DerivansManager(BaseDerivansManager):
         if not os.path.isdir(dir_derivans):
             raise RuntimeError(f"Invalid derivans project dir: '{dir_derivans}'!")
 
-        derivans_build_dir = os.path.join(dir_derivans, 'target')
+        derivans_build_dir = os.path.join(dir_derivans, "target")
         the_derivans = None
         if os.path.exists(derivans_build_dir):
             the_derivans = self._identify_derivans_bin(derivans_build_dir)
@@ -300,10 +304,8 @@ class DerivansManager(BaseDerivansManager):
         if not the_derivans:
             os.chdir(dir_derivans)
             compl_proc = subprocess.run(
-                'mvn clean package -DskipTests',
-                shell=True,
-                check=True,
-                timeout=600)
+                "mvn clean package -DskipTests", shell=True, check=True, timeout=600
+            )
             if compl_proc.returncode != 0:
                 raise RuntimeError("Cant build app '%s' in '%s'!")
             the_derivans = self._identify_derivans_bin(derivans_build_dir)
@@ -312,8 +314,7 @@ class DerivansManager(BaseDerivansManager):
         if not os.path.exists(target_dir):
             os.mkdir(target_dir)
         shutil.copy(the_derivans, target_dir)
-        self.path_binary = os.path.join(
-            target_dir, os.path.basename(the_derivans))
+        self.path_binary = os.path.join(target_dir, os.path.basename(the_derivans))
 
     def _execute_derivans(self, command) -> _FuncWrapperResult:
         return run_command(command, self.timeout)
@@ -325,11 +326,11 @@ class ContainerDerivansManager(BaseDerivansManager):
     """
 
     def __init__(
-            self,
-            path_mets_file: str,
-            container_image: str = DEFAULT_DERIVANS_IMAGE,
-            path_configuration: str = None,
-            path_logging: str = None,
+        self,
+        path_mets_file: str,
+        container_image: str = DEFAULT_DERIVANS_IMAGE,
+        path_configuration: str = None,
+        path_logging: str = None,
     ):
         super().__init__(
             path_mets_file=path_mets_file,
@@ -341,7 +342,7 @@ class ContainerDerivansManager(BaseDerivansManager):
         self.run_command = ""
 
     def init(self) -> None:
-        repo, tag = self._container_image.split(':')
+        repo, tag = self._container_image.split(":")
         self._client.images.pull(repo, tag)
 
     def start(self) -> DerivansResult:
@@ -350,22 +351,31 @@ class ContainerDerivansManager(BaseDerivansManager):
         mets_path: Path = Path(self.path_mets_file).absolute()
         if mets_path.is_dir():
             command.append(DERIVANS_CNT_DATA_DIR)
-            mounts.append(Mount(source=str(mets_path), target=DERIVANS_CNT_DATA_DIR, type='bind'))
+            mounts.append(
+                Mount(source=str(mets_path), target=DERIVANS_CNT_DATA_DIR, type="bind")
+            )
         if mets_path.is_file():
             mets_file_name: str = mets_path.name
             mets_dir: str = str(mets_path.parent.absolute())
-            target_mets_file: str = str(Path(DERIVANS_CNT_DATA_DIR).joinpath(mets_file_name))
+            target_mets_file: str = str(
+                Path(DERIVANS_CNT_DATA_DIR).joinpath(mets_file_name)
+            )
             command.append(target_mets_file)
-            mounts.append(Mount(source=mets_dir, target=DERIVANS_CNT_DATA_DIR, type='bind'))
+            mounts.append(
+                Mount(source=mets_dir, target=DERIVANS_CNT_DATA_DIR, type="bind")
+            )
         if self.path_configuration is not None:
             config_path: typing.Union[Path, None] = Path(self.path_configuration)
             if config_path.exists() and config_path.is_file():
                 config_file_name: str = config_path.name
                 config_dir: str = str(config_path.parent.absolute())
                 target_config_file: str = str(
-                    Path(DERIVANS_CNT_CONF_DIR).joinpath(config_file_name))
-                mounts.append(Mount(source=config_dir, target=DERIVANS_CNT_CONF_DIR, type='bind'))
-                command.append('-c')
+                    Path(DERIVANS_CNT_CONF_DIR).joinpath(config_file_name)
+                )
+                mounts.append(
+                    Mount(source=config_dir, target=DERIVANS_CNT_CONF_DIR, type="bind")
+                )
+                command.append("-c")
                 command.append(target_config_file)
                 if self.images:
                     command.append("-i")
@@ -374,7 +384,9 @@ class ContainerDerivansManager(BaseDerivansManager):
             command.append(self.additional_args)
         if self._path_logging:
             _log_dir = self._path_logging
-            mounts.append(Mount(source=_log_dir, target=DERIVANS_CNT_LOGG_DIR, type='bind'))
+            mounts.append(
+                Mount(source=_log_dir, target=DERIVANS_CNT_LOGG_DIR, type="bind")
+            )
 
         start_time: float = time.perf_counter()
         container: Container = self._client.containers.run(
@@ -382,13 +394,13 @@ class ContainerDerivansManager(BaseDerivansManager):
             command=command,
             user=os.getuid(),
             mounts=mounts,
-            detach=True
+            detach=True,
         )
-        exit_code: int = container.wait()['StatusCode']
-        logs: str = container.logs().decode('utf-8')
+        exit_code: int = container.wait()["StatusCode"]
+        logs: str = container.logs().decode("utf-8")
         container.remove()
 
-        full_command_equivalent: typing.List[str] = ['docker run -rm']
+        full_command_equivalent: typing.List[str] = ["docker run -rm"]
         for mount in mounts:
             full_command_equivalent.append(
                 f"--mount type={mount['Type']},source={mount['Source']},target={mount['Target']}"

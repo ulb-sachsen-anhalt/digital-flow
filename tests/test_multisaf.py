@@ -23,15 +23,15 @@ from digiflow import (
 
 import digiflow.validate as df_v
 
-from .conftest import (
-    TEST_RES
-)
+from .conftest import TEST_RES
 
 
 def _check_data(extr_dir, expected_saf_files, ddict):
     with open(extr_dir / "contents", "r", encoding="UTF-8") as file:
         contents = file.readlines()
-    assert (len(contents)) == (len(os.listdir(extr_dir)) - 4)  # All expected files are available
+    assert (len(contents)) == (
+        len(os.listdir(extr_dir)) - 4
+    )  # All expected files are available
     for contentline in contents:
         fn = contentline.split("\t")[0].split("\n")[0]
         assert fn in expected_saf_files[ddict["Folder"]]
@@ -44,26 +44,52 @@ def _check_data(extr_dir, expected_saf_files, ddict):
 
     with open(path_dublic_core, "r", encoding="UTF-8") as file:
         dublin_core = file.read()
-    for (element, qualifier, content) in ddict["Content"]:
+    for element, qualifier, content in ddict["Content"]:
         if qualifier != "":
             if len(qualifier.split("|||")) == 1:
-                write_string = '  <dcvalue element="' + \
-                    str(element) + '" qualifier="' + str(qualifier) + \
-                    '">' + str(content) + '</dcvalue>\n'
+                write_string = (
+                    '  <dcvalue element="'
+                    + str(element)
+                    + '" qualifier="'
+                    + str(qualifier)
+                    + '">'
+                    + str(content)
+                    + "</dcvalue>\n"
+                )
             else:
                 if len(content.split("|||")) > 1:
                     cont, auth = content.split("|||")
-                    write_string = '  <dcvalue element="' + str(element) +\
-                        '" qualifier="' + str(qualifier.split("|||")[0]) +\
-                            '" authority="' + auth + '" confidence="' +\
-                                str(600) + '">' + str(cont) + '</dcvalue>\n'
+                    write_string = (
+                        '  <dcvalue element="'
+                        + str(element)
+                        + '" qualifier="'
+                        + str(qualifier.split("|||")[0])
+                        + '" authority="'
+                        + auth
+                        + '" confidence="'
+                        + str(600)
+                        + '">'
+                        + str(cont)
+                        + "</dcvalue>\n"
+                    )
                 else:
-                    write_string = '  <dcvalue element="' + \
-                        str(element) + '" qualifier="' + str(qualifier.split("|||")
-                            [0]) + '">' + str(content) + '</dcvalue>\n'
+                    write_string = (
+                        '  <dcvalue element="'
+                        + str(element)
+                        + '" qualifier="'
+                        + str(qualifier.split("|||")[0])
+                        + '">'
+                        + str(content)
+                        + "</dcvalue>\n"
+                    )
         else:
-            write_string = '  <dcvalue element="' + \
-                str(element) + '">' + str(content) + '</dcvalue>\n'
+            write_string = (
+                '  <dcvalue element="'
+                + str(element)
+                + '">'
+                + str(content)
+                + "</dcvalue>\n"
+            )
         assert write_string in dublin_core  # All metadata seems to be correct
 
 
@@ -71,7 +97,7 @@ def _setup_data(cnt_dir, table_path):
     expected_saf_files = {}
     for to_saf in os.listdir(cnt_dir / "to_saf/"):
         expected_saf_files[to_saf] = []
-        for (fullpath, _, files) in os.walk(cnt_dir / "to_saf/" / to_saf):
+        for fullpath, _, files in os.walk(cnt_dir / "to_saf/" / to_saf):
             rel_dir = os.path.relpath(fullpath, cnt_dir / "to_saf/" / to_saf)
             clean_rel_dir = ""
             for char in rel_dir:
@@ -99,35 +125,42 @@ def _setup_data(cnt_dir, table_path):
 
     data_dict = {}
     for row_number in range(3, metadata_table.max_row + 1):
-        foldername = str(metadata_table.cell(
-            row=row_number, column=metadata_table_meta["ordner"]).value)
+        foldername = str(
+            metadata_table.cell(
+                row=row_number, column=metadata_table_meta["ordner"]
+            ).value
+        )
         data_dict[row_number] = {}
         data_dict[row_number]["Folder"] = foldername
         data_dict[row_number]["Content"] = []
         for dcentry, td_dc in metadata_table_dc.items():
             split_dc = dcentry.split(".")
             if len(split_dc) == 3:
-                (_, element, qualifier) = split_dc
+                _, element, qualifier = split_dc
             else:
                 if len(split_dc) == 2:
                     split_dc.append("")
-                    (_, element, qualifier) = split_dc
+                    _, element, qualifier = split_dc
             content = metadata_table.cell(row=row_number, column=td_dc).value
             if content:
                 if isinstance(content, str) and ";" in content:
                     content = content.split(";")
                     for sub_content in content:
-                        data_dict[row_number]["Content"].append((element, qualifier, sub_content))
+                        data_dict[row_number]["Content"].append(
+                            (element, qualifier, sub_content)
+                        )
                 else:
-                    data_dict[row_number]["Content"].append((element, qualifier, content))
+                    data_dict[row_number]["Content"].append(
+                        (element, qualifier, content)
+                    )
     return data_dict, expected_saf_files
 
 
 @pytest.fixture(name="multisaf")
 def fixture_multisaf(tmp_path):
     """fixture for multisaf"""
-    src_dir = os.path.join(TEST_RES, 'multisaf')
-    dst_dir = tmp_path / 'content'
+    src_dir = os.path.join(TEST_RES, "multisaf")
+    dst_dir = tmp_path / "content"
     shutil.copytree(src_dir, dst_dir)
     work_dir = tmp_path / "export_workdir"
     work_dir.mkdir()
@@ -139,7 +172,7 @@ def fixture_multisaf(tmp_path):
 def test_correct_contents(multisaf):
     """Check if the contents are the expected ones"""
     # arrange
-    (cnt_dir, _, exp_dir) = multisaf
+    cnt_dir, _, exp_dir = multisaf
     # act
     one_saf = False
     table_path = cnt_dir / "Metadata_Collection.xlsx"
@@ -153,7 +186,7 @@ def test_correct_contents(multisaf):
         extract_saf_dir = exp_dir / foldername
         shutil.unpack_archive(exp_dir / saf_file, extract_dir=extract_saf_dir)
 
-    assert len(os.listdir(exp_dir))/2 == len(data_dict.items())
+    assert len(os.listdir(exp_dir)) / 2 == len(data_dict.items())
     for ddict in data_dict.values():
         assert ddict["Folder"] in os.listdir(exp_dir)
         extr_dir = exp_dir / ddict["Folder"] / ddict["Folder"]
@@ -163,7 +196,7 @@ def test_correct_contents(multisaf):
 def test_correct_contents_onesaf(multisaf):
     """Check if the contents are the expected ones"""
     # arrange
-    (cnt_dir, _, exp_dir) = multisaf
+    cnt_dir, _, exp_dir = multisaf
     # act
     one_saf = True
     table_path = cnt_dir / "Metadata_Collection.xlsx"
@@ -177,7 +210,7 @@ def test_correct_contents_onesaf(multisaf):
         extract_saf_dir = exp_dir / foldername
         shutil.unpack_archive(exp_dir / saf_file, extract_dir=extract_saf_dir)
 
-    assert len(os.listdir(exp_dir))/2 == 1
+    assert len(os.listdir(exp_dir)) / 2 == 1
     for item_folder in os.listdir(extract_saf_dir):
         row_num = int(item_folder.split("item_")[-1]) + 3
         extr_dir = extract_saf_dir / item_folder

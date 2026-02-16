@@ -19,23 +19,24 @@ from digiflow import (
 )
 import digiflow.common as dfc
 
-from .conftest import (
-    TEST_RES
-)
+from .conftest import TEST_RES
 
-LABEL_META = 'meta.xml'
+LABEL_META = "meta.xml"
 XPATH_GOOBI_URN = './/goobi:metadata[@name="ulb_urn"]'
 
 
 @pytest.mark.parametrize(
-    "test_input,expected", [
-        ('urn:nbn:de:gbv:089-332175294', '5'),
-        ('urn:nbn:de:gbv:3:1-1192015415-181497433-1', '9'),
-        ('urn:nbn:de:gbv:3:4-1192015415-211620807-1', '7'),
-        ('urn:nbn:de:gbv:3:1-62923', '0'),
-        ('urn:nbn:de:gbv:3:1-69482', '1'),
-        ('urn:nbn:de:gbv:3:3-21437-p0004-', '6'),
-        ('urn:nbn:de:gbv:3:1-847518-1901041801', '8')])
+    "test_input,expected",
+    [
+        ("urn:nbn:de:gbv:089-332175294", "5"),
+        ("urn:nbn:de:gbv:3:1-1192015415-181497433-1", "9"),
+        ("urn:nbn:de:gbv:3:4-1192015415-211620807-1", "7"),
+        ("urn:nbn:de:gbv:3:1-62923", "0"),
+        ("urn:nbn:de:gbv:3:1-69482", "1"),
+        ("urn:nbn:de:gbv:3:3-21437-p0004-", "6"),
+        ("urn:nbn:de:gbv:3:1-847518-1901041801", "8"),
+    ],
+)
 def test_urn_checkdigits(test_input, expected):
     """
     Checkdigit algorithm (Pruefziffer)
@@ -51,14 +52,17 @@ def test_urn_checkdigits(test_input, expected):
 
 
 @pytest.mark.parametrize(
-    "test_input,expected", [
-        ('urn:nbn:de:gbv:089-332175294-5', False),
-        ('urn:nbn:de:gbv:3:1-1192015415-181497433-19', True),
-        ('urn:nbn:de:gbv:n.a.', False),
-        ('urn:nbn:de:gbv:3:3-21437-p0004-6', True),
-        ('urn:nbn:de:gbv:3:1-694468/fragment/page=9293732', True),
-        ('urn:nbn:de:gbv:3:1-847518-19010418018', True),
-        ('urn:nbn:de:gbv:3:1-847518-19010418018/fragment/page=0001', True)])
+    "test_input,expected",
+    [
+        ("urn:nbn:de:gbv:089-332175294-5", False),
+        ("urn:nbn:de:gbv:3:1-1192015415-181497433-19", True),
+        ("urn:nbn:de:gbv:n.a.", False),
+        ("urn:nbn:de:gbv:3:3-21437-p0004-6", True),
+        ("urn:nbn:de:gbv:3:1-694468/fragment/page=9293732", True),
+        ("urn:nbn:de:gbv:3:1-847518-19010418018", True),
+        ("urn:nbn:de:gbv:3:1-847518-19010418018/fragment/page=0001", True),
+    ],
+)
 def test_existing_urn_values(test_input, expected, tmp_path):
     """
     Which known URN patters are recognized as
@@ -76,7 +80,7 @@ def test_existing_urn_values(test_input, expected, tmp_path):
     shutil.copyfile(src_path, str(path_meta))
     xml_root = ET.parse(path_meta).getroot()
     parent_phys = xml_root.find('.//mets:structMap[@TYPE="PHYSICAL"]', dfc.XMLNS)
-    dummy_element = ET.SubElement(parent_phys, 'div', {'CONTENTIDS': test_input})
+    dummy_element = ET.SubElement(parent_phys, "div", {"CONTENTIDS": test_input})
 
     # assert
     assert expected == does_fit(dummy_element)
@@ -94,13 +98,13 @@ def test_urn_granular_exported_from_kitodo2_default(fixture_k2_export):
     """Ensure padd_left is respected"""
 
     # arrange
-    _urn_main = 'urn:nbn:de:gbv:3:1-1192015415-147638674-17'
+    _urn_main = "urn:nbn:de:gbv:3:1-1192015415-147638674-17"
     xml_root = ET.parse(fixture_k2_export).getroot()
 
     # act
-    (xml_root_result, kind, report) = enrich_urn_granular(xml_root,
-                                                       urn_main=_urn_main,
-                                                       padd_left=1)
+    xml_root_result, kind, report = enrich_urn_granular(
+        xml_root, urn_main=_urn_main, padd_left=1
+    )
     write_xml_file(xml_root_result, fixture_k2_export)
 
     # assert
@@ -108,27 +112,28 @@ def test_urn_granular_exported_from_kitodo2_default(fixture_k2_export):
     assert kind == URNType.GRANULAR_FRAGMENT_PAGE
     result_xml = ET.parse(fixture_k2_export).getroot()
     phys_divs = result_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', dfc.XMLNS)
+        './/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', dfc.XMLNS
+    )
     for phys_div in phys_divs:
-        assert phys_div.attrib['CONTENTIDS']
+        assert phys_div.attrib["CONTENTIDS"]
 
-    urn = f'{_urn_main}/fragment/page=1'
-    assert urn == phys_divs[0].attrib['CONTENTIDS']
-    urn2 = f'{_urn_main}/fragment/page=17'
-    assert urn2 == phys_divs[16].attrib['CONTENTIDS']
+    urn = f"{_urn_main}/fragment/page=1"
+    assert urn == phys_divs[0].attrib["CONTENTIDS"]
+    urn2 = f"{_urn_main}/fragment/page=17"
+    assert urn2 == phys_divs[16].attrib["CONTENTIDS"]
 
 
 def test_urn_granular_exported_with_padding(fixture_k2_export):
     """Behavior if page padding is fixed to '4'"""
 
     # arrange
-    _urn_main = 'urn:nbn:de:gbv:3:1-1192015415-147638674-17'
+    _urn_main = "urn:nbn:de:gbv:3:1-1192015415-147638674-17"
     if not os.path.exists(fixture_k2_export):
         raise ValueError(f'invalid path "{fixture_k2_export}"')
     xml_root = ET.parse(fixture_k2_export).getroot()
 
     # act
-    (xml_root_result, kind, rep) = enrich_urn_granular(xml_root, _urn_main, padd_left=4)
+    xml_root_result, kind, rep = enrich_urn_granular(xml_root, _urn_main, padd_left=4)
     write_xml_file(xml_root_result, fixture_k2_export)
 
     # assert
@@ -136,11 +141,12 @@ def test_urn_granular_exported_with_padding(fixture_k2_export):
     assert kind == URNType.GRANULAR_FRAGMENT_PAGE
     result_xml = ET.parse(fixture_k2_export).getroot()
     phys_divs = result_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', dfc.XMLNS)
-    urn = f'{_urn_main}/fragment/page=0001'
-    assert urn == phys_divs[0].attrib['CONTENTIDS']
-    urn2 = f'{_urn_main}/fragment/page=0017'
-    assert urn2 == phys_divs[16].attrib['CONTENTIDS']
+        './/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', dfc.XMLNS
+    )
+    urn = f"{_urn_main}/fragment/page=0001"
+    assert urn == phys_divs[0].attrib["CONTENTIDS"]
+    urn2 = f"{_urn_main}/fragment/page=0017"
+    assert urn2 == phys_divs[16].attrib["CONTENTIDS"]
 
 
 @pytest.fixture
@@ -175,13 +181,15 @@ def fixture_k2_monography(tmp_path):
 def test_create_urn_granular_within_kitodo2(fixture_k2_monography):
 
     # arrange
-    _urn_main = 'urn:nbn:de:gbv:3:3-1192015415-882674978-12'
+    _urn_main = "urn:nbn:de:gbv:3:3-1192015415-882674978-12"
     if not os.path.exists(fixture_k2_monography):
         raise ValueError(f'invalid path "{fixture_k2_monography}"')
     xml_root = ET.parse(fixture_k2_monography).getroot()
 
     # act
-    (xml_root_result, kind, rep) = enrich_urn_granular(xml_root, urn_main =_urn_main, padd_left=8)
+    xml_root_result, kind, rep = enrich_urn_granular(
+        xml_root, urn_main=_urn_main, padd_left=8
+    )
     write_xml_file(xml_root_result, fixture_k2_monography)
 
     # assert
@@ -189,14 +197,15 @@ def test_create_urn_granular_within_kitodo2(fixture_k2_monography):
     assert kind == URNType.GRANULAR_FRAGMENT_PAGE
     result_xml = ET.parse(fixture_k2_monography).getroot()
     phys_divs = result_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', dfc.XMLNS)
+        './/mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div', dfc.XMLNS
+    )
     for phys_div in phys_divs:
-        assert phys_div.attrib['CONTENTIDS']
+        assert phys_div.attrib["CONTENTIDS"]
 
-    urn = f'{_urn_main}/fragment/page=00000001'
-    assert urn == phys_divs[0].attrib['CONTENTIDS']
-    urn1 = f'{_urn_main}/fragment/page=00000017'
-    assert urn1 == phys_divs[16].attrib['CONTENTIDS']
+    urn = f"{_urn_main}/fragment/page=00000001"
+    assert urn == phys_divs[0].attrib["CONTENTIDS"]
+    urn1 = f"{_urn_main}/fragment/page=00000017"
+    assert urn1 == phys_divs[16].attrib["CONTENTIDS"]
 
 
 def test_urn_mvw_kitodo2(tmp_path):
@@ -218,8 +227,7 @@ def test_urn_mvw_kitodo2(tmp_path):
     meta_xml = ET.parse(path_meta).getroot()
     urn = meta_xml.find(XPATH_GOOBI_URN, dfc.XMLNS)
     assert "urn:nbn:de:gbv:3:1-1192015415-325168768-18" == urn.text
-    anchor_xml = ET.parse(os.path.join(
-        dir_name, 'meta_anchor.xml')).getroot()
+    anchor_xml = ET.parse(os.path.join(dir_name, "meta_anchor.xml")).getroot()
     urn_host = anchor_xml.find(XPATH_GOOBI_URN, dfc.XMLNS)
     assert "urn:nbn:de:gbv:3:1-1192015415-147173272-15" == urn_host.text
 
@@ -240,11 +248,11 @@ def test_urn_granular_upsert_legacy_vls(fixture_vls_monography_granular1):
     """
 
     # arrange
-    urn_main = 'urn:nbn:de:gbv:3:3-21437'
+    urn_main = "urn:nbn:de:gbv:3:3-21437"
     xml_root = ET.parse(fixture_vls_monography_granular1).getroot()
 
     # act
-    (xml_root_result, _type, rep) = enrich_urn_granular(xml_root, urn_main=urn_main)
+    xml_root_result, _type, rep = enrich_urn_granular(xml_root, urn_main=urn_main)
     write_xml_file(xml_root_result, fixture_vls_monography_granular1)
 
     # assert
@@ -253,8 +261,9 @@ def test_urn_granular_upsert_legacy_vls(fixture_vls_monography_granular1):
     assert _type == URNType.GRANULAR_PAGE
     meta_xml = ET.parse(fixture_vls_monography_granular1).getroot()
     page5 = meta_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS)[4]
-    assert "urn:nbn:de:gbv:3:3-21437-p0005-2" == page5.attrib['CONTENTIDS']
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS
+    )[4]
+    assert "urn:nbn:de:gbv:3:3-21437-p0005-2" == page5.attrib["CONTENTIDS"]
 
 
 def test_urn_granular_with_inconsistent_contentids(tmp_path):
@@ -274,8 +283,10 @@ def test_urn_granular_with_inconsistent_contentids(tmp_path):
 
     # act
     with pytest.raises(GranularURNExistsException) as execinfo:
-        enrich_urn_granular(xml_root, urn_main='urn:nbn:de:gbv:3:3-178')
-        assert 'calculated granular URN ' in execinfo.value
+        enrich_urn_granular(xml_root, urn_main="urn:nbn:de:gbv:3:3-178")
+
+    assert "calculated granular URN " in str(execinfo.value.args[0])
+    assert "already used by: '['phys10600']'" in str(execinfo.value.args[0])
 
 
 def test_urn_granular_vd18_mvw_fstage(tmp_path):
@@ -284,14 +295,14 @@ def test_urn_granular_vd18_mvw_fstage(tmp_path):
     """
 
     # arrange
-    main_urn = 'urn:nbn:de:gbv:3:1-635986'
+    main_urn = "urn:nbn:de:gbv:3:1-635986"
     src_meta = TEST_RES / "migration" / "9427337.mets.xml"
     path_meta = tmp_path / "9427337.mets.xml"
     shutil.copyfile(src_meta, str(path_meta))
     xml_root = ET.parse(str(path_meta)).getroot()
 
     # act
-    (xml_root_result, _type, rep) = enrich_urn_granular(xml_root, main_urn)
+    xml_root_result, _type, rep = enrich_urn_granular(xml_root, main_urn)
     write_xml_file(xml_root_result, str(path_meta))
 
     # assert
@@ -300,8 +311,9 @@ def test_urn_granular_vd18_mvw_fstage(tmp_path):
     assert _type == URNType.GRANULAR_PAGE
     meta_xml = ET.parse(str(path_meta)).getroot()
     page5 = meta_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS)[1]
-    assert "urn:nbn:de:gbv:3:1-635986-p0002-0" == page5.attrib['CONTENTIDS']
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS
+    )[1]
+    assert "urn:nbn:de:gbv:3:1-635986-p0002-0" == page5.attrib["CONTENTIDS"]
 
 
 @pytest.fixture
@@ -311,7 +323,7 @@ def fixture_granular_urn_order_gap(tmp_path):
     seems to be missing in between pages, like it jumps from p0001 to p0003:
     """
 
-    src_meta = TEST_RES / "vls" /"12504.mets.xml"  # mets with order gaps
+    src_meta = TEST_RES / "vls" / "12504.mets.xml"  # mets with order gaps
     path_meta = tmp_path / "12504.mets.xml"
     shutil.copyfile(src_meta, str(path_meta))
     xml_root = ET.parse(str(path_meta)).getroot()
@@ -319,18 +331,18 @@ def fixture_granular_urn_order_gap(tmp_path):
     parent = last_phys_cnt.getparent()
     # 2. insert brand new colorchecker as last element
     attribs = {
-        'ID': 'phys58794',
-        'TYPE': 'page',
-        'CONTENTIDS': 'urn:n.a.',
-        'ORDER': '13',
-        'ORDERLABEL': '[Colorchecker]'}
-    ET.SubElement(parent, '{http://www.loc.gov/METS/}div', attribs)
+        "ID": "phys58794",
+        "TYPE": "page",
+        "CONTENTIDS": "urn:n.a.",
+        "ORDER": "13",
+        "ORDERLABEL": "[Colorchecker]",
+    }
+    ET.SubElement(parent, "{http://www.loc.gov/METS/}div", attribs)
     write_xml_file(xml_root, path_meta)
     return str(path_meta), xml_root
 
 
-def test_urn_granular_order_gaps_repair(
-        tmp_path, fixture_granular_urn_order_gap):
+def test_urn_granular_order_gaps_repair(tmp_path, fixture_granular_urn_order_gap):
     """
     Behavior for inconsistent legacy data with gaps
     in their ORDER
@@ -342,24 +354,33 @@ def test_urn_granular_order_gaps_repair(
     by the pre-last page
     """
     # arrange
-    main_urn = 'urn:nbn:de:gbv:3:1-1488'
+    main_urn = "urn:nbn:de:gbv:3:1-1488"
     xml_root = fixture_granular_urn_order_gap[1]
     valid_urns_at_start = 12
 
     # pre-check
-    cnt_ids = xml_root.findall('.//mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS)
-    assert len([e for e in cnt_ids if '-p00' in e.get('CONTENTIDS')]) == valid_urns_at_start
+    cnt_ids = xml_root.findall(
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS
+    )
+    assert (
+        len([e for e in cnt_ids if "-p00" in e.get("CONTENTIDS")])
+        == valid_urns_at_start
+    )
 
     # act I
     with pytest.raises(GranularURNExistsException) as exist_exc:
         enrich_urn_granular(xml_root, main_urn)
 
     # assert
-    assert "granular URN 'urn:nbn:de:gbv:3:1-1488-p0013-5' already used" in str(exist_exc.value)
+    assert "granular URN 'urn:nbn:de:gbv:3:1-1488-p0013-5' already used" in str(
+        exist_exc.value
+    )
 
     # act II: try to repair this time
     # (xml_res, _, ins) = enrich_urn_granular_from_contentids(fixture_granular_urn_order_gap[1])
-    (xml_res, _, rep) = enrich_urn_granular(fixture_granular_urn_order_gap[1], urn_main=main_urn, do_sanitize=True)
+    xml_res, _, rep = enrich_urn_granular(
+        fixture_granular_urn_order_gap[1], urn_main=main_urn, do_sanitize=True
+    )
     path_meta = tmp_path / "12504_repair.mets.xml"
     write_xml_file(xml_res, str(path_meta))
     colorchecker = xml_res.find('.//mets:*[@ID="phys58794"]', dfc.XMLNS)
@@ -367,15 +388,19 @@ def test_urn_granular_order_gaps_repair(
 
     # assert
     assert len(rep.added) == 1
-    assert attr['CONTENTIDS'] == 'urn:nbn:de:gbv:3:1-1488-p0014-1'
-    assert attr['ORDER'] == '13'
-    assert attr['ORDERLABEL'] == '[Colorchecker]'
+    assert attr["CONTENTIDS"] == "urn:nbn:de:gbv:3:1-1488-p0014-1"
+    assert attr["ORDER"] == "13"
+    assert attr["ORDERLABEL"] == "[Colorchecker]"
 
     # act
-    cnt2 = xml_root.findall('.//mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS)
+    cnt2 = xml_root.findall(
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS
+    )
 
     # assert
-    assert len([e for e in cnt2 if '-1488-p00' in e.attrib['CONTENTIDS']]) == (valid_urns_at_start + 1)
+    assert len([e for e in cnt2 if "-1488-p00" in e.attrib["CONTENTIDS"]]) == (
+        valid_urns_at_start + 1
+    )
 
 
 @pytest.fixture
@@ -393,18 +418,18 @@ def fixture_granular_urn_false_order(tmp_path):
     parent = last_phys_cnt.getparent()
     # 2. insert brand new colorchecker as last element
     attribs = {
-        'ID': 'phys4116797',
-        'TYPE': 'page',
-        'CONTENTIDS': 'urn:n.a.',
-        'ORDER': '71',
-        'ORDERLABEL': '[Colorchecker]'}
-    ET.SubElement(parent, '{http://www.loc.gov/METS/}div', attribs)
+        "ID": "phys4116797",
+        "TYPE": "page",
+        "CONTENTIDS": "urn:n.a.",
+        "ORDER": "71",
+        "ORDERLABEL": "[Colorchecker]",
+    }
+    ET.SubElement(parent, "{http://www.loc.gov/METS/}div", attribs)
 
     return str(path_meta), xml_root
 
 
-def test_urn_granular_false_order(
-        tmp_path, fixture_granular_urn_false_order):
+def test_urn_granular_false_order(tmp_path, fixture_granular_urn_false_order):
     """
     check behavior for inconsistent legacy with gaps in in granular urns
     and partly missorted urn
@@ -416,14 +441,18 @@ def test_urn_granular_false_order(
     n_valid_urns = 70
 
     # pre-check
-    cnt_ids = xml_root.findall('.//mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS)
-    urns = [e for e in cnt_ids if '-272189-p00' in e.attrib['CONTENTIDS']]
+    cnt_ids = xml_root.findall(
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS
+    )
+    urns = [e for e in cnt_ids if "-272189-p00" in e.attrib["CONTENTIDS"]]
     assert len(urns) == n_valid_urns
 
     # act II: try to repair this time
     xml_res, _, rep = enrich_urn_granular(
         fixture_granular_urn_false_order[1],
-        'urn:nbn:de:gbv:3:1-272189', do_sanitize=True)
+        "urn:nbn:de:gbv:3:1-272189",
+        do_sanitize=True,
+    )
     path_meta = tmp_path / "4066583_repair.mets.xml"
     write_xml_file(xml_res, str(path_meta))
     colorchecker = xml_res.find('.//mets:*[@ID="phys4116797"]', dfc.XMLNS)
@@ -431,15 +460,17 @@ def test_urn_granular_false_order(
 
     # assert
     assert len(rep.added) == 1
-    assert attr['CONTENTIDS'] == 'urn:nbn:de:gbv:3:1-272189-p0072-1'
-    assert attr['ORDER'] == '71'
-    assert attr['ORDERLABEL'] == '[Colorchecker]'
+    assert attr["CONTENTIDS"] == "urn:nbn:de:gbv:3:1-272189-p0072-1"
+    assert attr["ORDER"] == "71"
+    assert attr["ORDERLABEL"] == "[Colorchecker]"
 
     # act
-    cnt2 = xml_root.findall('.//mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS)
+    cnt2 = xml_root.findall(
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@ORDER]', dfc.XMLNS
+    )
 
     # assert after enrich
-    urns = [e for e in cnt2 if '-272189-p00' in e.attrib['CONTENTIDS']]
+    urns = [e for e in cnt2 if "-272189-p00" in e.attrib["CONTENTIDS"]]
     assert len(urns) == (n_valid_urns + 1)
 
 
@@ -452,14 +483,14 @@ def test_urn_granular_fragement_page_k3_newspaper_issue(tmp_path):
     """
 
     # arrange
-    urn_main = 'urn:nbn:de:gbv:3:3-171133730-30089663818490701-14'
+    urn_main = "urn:nbn:de:gbv:3:3-171133730-30089663818490701-14"
     src_meta = TEST_RES / "k3_300896638-18490701.xml"
     path_meta = tmp_path / "300896638-18490701.mets.xml"
     shutil.copyfile(src_meta, str(path_meta))
     xml_root = ET.parse(str(path_meta)).getroot()
 
     # act
-    (xml_root_result, _type, rep) = enrich_urn_granular(xml_root, urn_main)
+    xml_root_result, _type, rep = enrich_urn_granular(xml_root, urn_main)
     write_xml_file(xml_root_result, str(path_meta))
 
     # assert
@@ -468,13 +499,19 @@ def test_urn_granular_fragement_page_k3_newspaper_issue(tmp_path):
     assert _type == URNType.GRANULAR_FRAGMENT_PAGE
     meta_xml = ET.parse(str(path_meta)).getroot()
     fst_page = meta_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS)[0]
-    assert fst_page.attrib['CONTENTIDS'].endswith("30089663818490701-14/fragment/page=0001")
-    assert fst_page.attrib['ORDERLABEL'] == '[Seite 1]'
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS
+    )[0]
+    assert fst_page.attrib["CONTENTIDS"].endswith(
+        "30089663818490701-14/fragment/page=0001"
+    )
+    assert fst_page.attrib["ORDERLABEL"] == "[Seite 1]"
     lst_page = meta_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS)[-1]
-    assert lst_page.attrib['CONTENTIDS'].endswith("30089663818490701-14/fragment/page=0005")
-    assert lst_page.attrib['ORDERLABEL'] == '[Colorchecker]'
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS
+    )[-1]
+    assert lst_page.attrib["CONTENTIDS"].endswith(
+        "30089663818490701-14/fragment/page=0005"
+    )
+    assert lst_page.attrib["ORDERLABEL"] == "[Colorchecker]"
 
 
 def test_urn_granular_inhouse_zd_replacement_not_enforced(tmp_path):
@@ -484,18 +521,20 @@ def test_urn_granular_inhouse_zd_replacement_not_enforced(tmp_path):
     """
 
     # arrange
-    urn_main = 'urn:nbn:de:gbv:3:3-62299-19030423018'
+    urn_main = "urn:nbn:de:gbv:3:3-62299-19030423018"
     src_meta = TEST_RES / "vls_digital_3014754.zmets.xml"
     path_meta = tmp_path / "3014754.mets.xml"
     shutil.copyfile(src_meta, str(path_meta))
     _reader = MetsReader(path_meta)
-    ident_urn = ET.SubElement(_reader.primary_dmd, '{http://www.loc.gov/mods/v3}identifier', {'type': 'urn'})
+    ident_urn = ET.SubElement(
+        _reader.primary_dmd, "{http://www.loc.gov/mods/v3}identifier", {"type": "urn"}
+    )
     ident_urn.text = urn_main
     _reader.write()
     xml_root = ET.parse(str(path_meta)).getroot()
 
     # act
-    (xml_root_result, _type, rep) = enrich_urn_granular(xml_root, urn_main)
+    xml_root_result, _type, rep = enrich_urn_granular(xml_root, urn_main)
     write_xml_file(xml_root_result, str(path_meta))
 
     # assert
@@ -505,8 +544,9 @@ def test_urn_granular_inhouse_zd_replacement_not_enforced(tmp_path):
     assert _type == URNType.GRANULAR_PAGE
     meta_xml = ET.parse(str(path_meta)).getroot()
     page1 = meta_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS)[0]
-    assert "urn:nbn:de:gbv:3:3-62299-p0005-5" == page1.attrib['CONTENTIDS']
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS
+    )[0]
+    assert "urn:nbn:de:gbv:3:3-62299-p0005-5" == page1.attrib["CONTENTIDS"]
 
 
 def test_urn_granular_inhouse_zd_replacement_enforced(tmp_path):
@@ -516,18 +556,24 @@ def test_urn_granular_inhouse_zd_replacement_enforced(tmp_path):
     """
 
     # arrange
-    urn_main = 'urn:nbn:de:gbv:3:3-62299-19030423018'
+    urn_main = "urn:nbn:de:gbv:3:3-62299-19030423018"
     src_meta = TEST_RES / "vls_digital_3014754.zmets.xml"
     path_meta = tmp_path / "3014754.mets.xml"
     shutil.copyfile(src_meta, str(path_meta))
-    _reader = MetsReader(path_meta)
-    ident_urn = ET.SubElement(_reader.primary_dmd, '{http://www.loc.gov/mods/v3}identifier', {'type': 'urn'})
+    mets_reader = MetsReader(path_meta)
+    ident_urn = ET.SubElement(
+        mets_reader.primary_dmd,
+        "{http://www.loc.gov/mods/v3}identifier",
+        {"type": "urn"},
+    )
     ident_urn.text = urn_main
-    _reader.write()
+    mets_reader.write()
     xml_root = ET.parse(str(path_meta)).getroot()
 
     # act
-    (xml_root_result, _type, rep) = enrich_urn_granular(xml_root, urn_main=urn_main, do_replace=True)
+    xml_root_result, _type, rep = enrich_urn_granular(
+        xml_root, urn_main=urn_main, do_replace=True
+    )
     write_xml_file(xml_root_result, str(path_meta))
 
     # assert
@@ -537,8 +583,12 @@ def test_urn_granular_inhouse_zd_replacement_enforced(tmp_path):
     assert _type == URNType.GRANULAR_FRAGMENT_PAGE
     meta_xml = ET.parse(str(path_meta)).getroot()
     page1 = meta_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS)[0]
-    assert "urn:nbn:de:gbv:3:3-62299-19030423018/fragment/page=0001" == page1.attrib['CONTENTIDS']
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS
+    )[0]
+    assert (
+        "urn:nbn:de:gbv:3:3-62299-19030423018/fragment/page=0001"
+        == page1.attrib["CONTENTIDS"]
+    )
 
 
 def test_urn_granular_zdp_replace_granular_urn(tmp_path):
@@ -557,34 +607,47 @@ def test_urn_granular_zdp_replace_granular_urn(tmp_path):
     """
 
     # arrange
-    urn_main = 'urn:nbn:de:gbv:3:1-1823278450-18401231'
+    urn_main = "urn:nbn:de:gbv:3:1-1823278450-18401231"
     src_meta = TEST_RES / "vls_digitale_9633116.zmets.xml"
     path_meta = tmp_path / "9633116.zmets.xml"
     shutil.copyfile(src_meta, str(path_meta))
     _reader = MetsReader(path_meta)
-    ident_urn = ET.SubElement(_reader.primary_dmd, '{http://www.loc.gov/mods/v3}identifier', {'type': 'urn'})
+    ident_urn = ET.SubElement(
+        _reader.primary_dmd, "{http://www.loc.gov/mods/v3}identifier", {"type": "urn"}
+    )
     ident_urn.text = urn_main
     _reader.write()
     xml_root = ET.parse(str(path_meta)).getroot()
 
     # act
-    (xml_root_result, _type, rep) = enrich_urn_granular(xml_root, urn_main=urn_main, do_replace=True)
+    xml_root_result, _type, rep = enrich_urn_granular(
+        xml_root, urn_main=urn_main, do_replace=True
+    )
     write_xml_file(xml_root_result, str(path_meta))
 
     # assert
     assert os.path.exists(str(path_meta))
     assert len(rep.added) == 6
     assert len(rep.existed) == 6
-    assert rep.existed[0].urn == 'urn:nbn:de:gbv:3:1-694468/fragment/page=9293732'
-    assert rep.added[0].urn == 'urn:nbn:de:gbv:3:1-1823278450-18401231/fragment/page=0001'
+    assert rep.existed[0].urn == "urn:nbn:de:gbv:3:1-694468/fragment/page=9293732"
+    assert (
+        rep.added[0].urn == "urn:nbn:de:gbv:3:1-1823278450-18401231/fragment/page=0001"
+    )
     assert len(rep.replaced) == 6
-    assert rep.replaced['phys9293732'] == 'urn:nbn:de:gbv:3:1-694468/fragment/page=9293732 => urn:nbn:de:gbv:3:1-1823278450-18401231/fragment/page=0001'
+    assert (
+        rep.replaced["phys9293732"]
+        == "urn:nbn:de:gbv:3:1-694468/fragment/page=9293732 => urn:nbn:de:gbv:3:1-1823278450-18401231/fragment/page=0001"
+    )
     assert rep.existed[0].id == rep.added[0].id
     assert _type == URNType.GRANULAR_FRAGMENT_PAGE
     meta_xml = ET.parse(str(path_meta)).getroot()
     page1 = meta_xml.findall(
-        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS)[0]
-    assert "urn:nbn:de:gbv:3:1-1823278450-18401231/fragment/page=0001" == page1.attrib['CONTENTIDS']
+        './/mets:structMap[@TYPE="PHYSICAL"]//mets:div[@CONTENTIDS]', dfc.XMLNS
+    )[0]
+    assert (
+        "urn:nbn:de:gbv:3:1-1823278450-18401231/fragment/page=0001"
+        == page1.attrib["CONTENTIDS"]
+    )
 
 
 def test_get_identifiers_from_elder_datasets(tmp_path):
@@ -596,10 +659,10 @@ def test_get_identifiers_from_elder_datasets(tmp_path):
     src_meta = TEST_RES / "vls_digital_737429.mets.xml"
     path_meta = tmp_path / "737429.mets.xml"
     shutil.copyfile(src_meta, str(path_meta))
-    _reader = MetsReader(path_meta, dmd_id='md737429')
+    _reader = MetsReader(path_meta, dmd_id="md737429")
 
     # act
     report = _reader.report
 
     # assert
-    assert report.system_identifier == {'digital.bibliothek.uni-halle.de/hd': '737429'}
+    assert report.system_identifier == {"digital.bibliothek.uni-halle.de/hd": "737429"}

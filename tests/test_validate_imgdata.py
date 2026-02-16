@@ -19,8 +19,8 @@ def test_tiff_channel_depth_invalid(tmp_path):
     """
 
     # arrange
-    file_name = '43837_max_01.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "43837_max_01.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(tmp_path, file_name)
     shutil.copy(file_source, file_target)
 
@@ -32,7 +32,10 @@ def test_tiff_channel_depth_invalid(tmp_path):
     inv01 = invalids[0]
     assert inv01.label == df_v.LABEL_SCAN_VALIDATOR_CHANNEL
     assert inv01.location == file_target
-    assert f'{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_CHANNEL} (16, 16, 16) > 8' == inv01.info
+    assert (
+        f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_CHANNEL} (16, 16, 16) > 8"
+        == inv01.info
+    )
 
 
 def test_tiff_resolution_invalid(tmp_path):
@@ -41,8 +44,8 @@ def test_tiff_resolution_invalid(tmp_path):
     """
 
     # arrange
-    file_name = '8736_max_01.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "8736_max_01.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -52,10 +55,10 @@ def test_tiff_resolution_invalid(tmp_path):
     # assert
     assert len(invalids) == 4
     assert str(invalids[0].location).endswith(file_name)
-    assert f'{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_X}: 470.55' == invalids[0].info
-    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55' == invalids[1].info
-    assert f'{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: 470.55' == invalids[2].info
-    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55' == invalids[3].info
+    assert f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_X}: 470.55" == invalids[0].info
+    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55" == invalids[1].info
+    assert f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: 470.55" == invalids[2].info
+    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55" == invalids[3].info
 
 
 def test_tiff_resolution_invalid_alter_range(tmp_path):
@@ -64,8 +67,8 @@ def test_tiff_resolution_invalid_alter_range(tmp_path):
     """
 
     # arrange
-    file_name = '8736_max_01.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "8736_max_01.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -77,8 +80,8 @@ def test_tiff_resolution_invalid_alter_range(tmp_path):
     # assert
     assert len(invalids) == 2
     assert str(invalids[0].location).endswith(file_name)
-    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55' == invalids[0].info
-    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55' == invalids[1].info
+    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55" == invalids[0].info
+    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55" == invalids[1].info
 
 
 def test_tiff_validate_only_channels_valid(tmp_path):
@@ -89,8 +92,8 @@ def test_tiff_validate_only_channels_valid(tmp_path):
     """
 
     # arrange
-    file_name = '8736_max_01.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "8736_max_01.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -103,10 +106,10 @@ def test_tiff_validate_only_channels_valid(tmp_path):
     assert len(invalids) == 0
 
 
-@pytest.fixture(name='img_resolution_invalid')
+@pytest.fixture(name="img_resolution_invalid")
 def _fixture_img_resolution_invalid(tmp_path):
-    file_name = '8736_max_01.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "8736_max_01.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
     img = df_v.InputImage(file_target)
@@ -118,16 +121,23 @@ def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
     """Ensure only invalid resolution numerical type fraction recognized"""
 
     # arrange
-    tiff_exif_val = df_v.ScanValidatorResolution(img_resolution_invalid,
-                                                 valid_resolutions=[300, 470.55])
+    tiff_exif_val = df_v.ScanValidatorResolution(
+        img_resolution_invalid, valid_resolutions=[300, 470.55]
+    )
     # act
     tiff_exif_val.check()
 
     # assert
     assert tiff_exif_val.label == df_v.LABEL_SCAN_VALIDATOR_RESOLUTION
     assert len(tiff_exif_val.invalids) == 2
-    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55' == tiff_exif_val.invalids[0].info
-    assert f'{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55' == tiff_exif_val.invalids[1].info
+    assert (
+        f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55"
+        == tiff_exif_val.invalids[0].info
+    )
+    assert (
+        f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55"
+        == tiff_exif_val.invalids[1].info
+    )
 
 
 def test_tiffexifresolution_channels_valid(img_resolution_invalid):
@@ -145,18 +155,18 @@ def test_tiffexifresolution_channels_valid(img_resolution_invalid):
 
 
 def test_tiff_grayscale_newspaper_valid(tmp_path):
-    """Ensure grayscale image properly recognized
-    """
+    """Ensure grayscale image properly recognized"""
 
     # arrange
-    file_name = '1667522809_J_0025_0512.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "1667522809_J_0025_0512.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
     # act
-    invalids: typing.List[df_v.Invalid] = df_v.validate_tiff(file_target,
-                                                             valid_resolutions=[470])
+    invalids: typing.List[df_v.Invalid] = df_v.validate_tiff(
+        file_target, valid_resolutions=[470]
+    )
     img_data = df_v.InputImage(file_target)
     img_data.read()
 
@@ -172,19 +182,20 @@ def test_tiff_grayscale_newspaper_valid(tmp_path):
 
 def test_tiff_grayscale_newspaper_only_scanfiledata_valid(tmp_path):
     """Prevent regression: don't map validator to
-    'TiffImageFile' since this a class from 
+    'TiffImageFile' since this a class from
     'PIL.TiffImagePlugin' and all will crack
     """
 
     # arrange
-    file_name = '1667522809_J_0025_0512.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "1667522809_J_0025_0512.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
 
     # act
     sf_validator_clazz: typing.Type[df_v.Validator] = df_vi.ScanValidatorFactory.get(
-        df_v.LABEL_SCAN_VALIDATOR_FILE)
+        df_v.LABEL_SCAN_VALIDATOR_FILE
+    )
     assert sf_validator_clazz is not None
     validator: df_v.Validator = sf_validator_clazz(file_target)
 
@@ -202,11 +213,14 @@ def test_tiff_grayscale_newspaper_default_validators(tmp_path):
     """
 
     # arrange
-    file_name = '1667522809_J_0025_0512.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "1667522809_J_0025_0512.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
-    validator_labels = [df_v.LABEL_SCAN_VALIDATOR_FILE, df_v.LABEL_SCAN_VALIDATOR_RESOLUTION]
+    validator_labels = [
+        df_v.LABEL_SCAN_VALIDATOR_FILE,
+        df_v.LABEL_SCAN_VALIDATOR_RESOLUTION,
+    ]
 
     # act
     invalids: typing.List[df_v.Invalid] = df_v.validate_tiff(
@@ -218,18 +232,22 @@ def test_tiff_grayscale_newspaper_default_validators(tmp_path):
 
 
 def test_validate_tiff_with_input_image(tmp_path):
-    """Ensure validate_tiff can accept InputImage instance directly and properly read it
-    """
+    """Ensure validate_tiff can accept InputImage instance directly and properly read it"""
 
     # arrange
-    file_name = '1667522809_J_0025_0512.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "1667522809_J_0025_0512.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
-    validator_labels = [df_v.LABEL_SCAN_VALIDATOR_FILE, df_v.LABEL_SCAN_VALIDATOR_RESOLUTION]
+    validator_labels = [
+        df_v.LABEL_SCAN_VALIDATOR_FILE,
+        df_v.LABEL_SCAN_VALIDATOR_RESOLUTION,
+    ]
 
     # act
-    input_file = df_vi.InputImage(file_target)  # Pre-read to ensure metadata is populated
+    input_file = df_vi.InputImage(
+        file_target
+    )  # Pre-read to ensure metadata is populated
     invalids: typing.List[df_v.Invalid] = df_v.validate_tiff(
         input_file, validator_labels
     )
@@ -245,11 +263,14 @@ def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
     """
 
     # arrange
-    file_name = '1667522809_J_0025_0512.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "1667522809_J_0025_0512.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
-    validator_labels = [df_v.LABEL_SCAN_VALIDATOR_FILE, df_v.LABEL_SCAN_VALIDATOR_RESOLUTION]
+    validator_labels = [
+        df_v.LABEL_SCAN_VALIDATOR_FILE,
+        df_v.LABEL_SCAN_VALIDATOR_RESOLUTION,
+    ]
 
     # act
     invalids: typing.List[df_v.Invalid] = df_v.validate_tiff(
@@ -266,8 +287,8 @@ def test_tiff_resolution_missing(tmp_path):
     """
 
     # arrange
-    file_name = '8736_max_02.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "8736_max_02.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -277,21 +298,41 @@ def test_tiff_resolution_missing(tmp_path):
     # assert
     assert len(invalids) == 3
     assert str(invalids[0].location).endswith(file_name)
-    assert f'{df_v.INVALID_LABEL_UNSET} {df_vi.LABEL_RES_UNIT}' == invalids[0].info
-    assert f'{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_X}: None' == invalids[1].info
-    assert f'{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: None' == invalids[2].info
+    assert f"{df_v.INVALID_LABEL_UNSET} {df_vi.LABEL_RES_UNIT}" == invalids[0].info
+    assert f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_X}: None" == invalids[1].info
+    assert f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: None" == invalids[2].info
 
 
-@pytest.mark.parametrize(['image_name', 'check_sum', 'x_resolution'],
-                         [('8736_max_01.tif', 'af097aeb37e311895bb189710cfd98e8671dba05b2f02ce4cd196d74d856a699f7dcd1afd0369049f9f30e6442412acd78a6d67fb8c71cf2147520c1264a6b0f', 470.55),
-                          ('8736_max_02.tif', '9d3fad68d0c4b1a8e2a1c9b8b14c6546fb980f81b9d427ddb07a173ec83d4e979a5881a1a1803776f6477d1729dd971204cce465e3f2ccb1612ffa8bdcb2fed0', None),
-                          ('1667522809_J_0025_0512.tif', '6b8ad086a5719da8a7f9a951ddca9f93843ca99fdc2b8f06bd28db89367af115e616cb76522d946fdd714e35acfbcbc7ae67c06635903316fe330d7e7bd6103a', 470),
-                          ("43837_max_01.tif", "4b1f31b0f757f83f73244895c63c2c9c9f1ec488f3d46b214d97974628aa51b2208c88313c4dbc79d942d36203465733fa77ca1f931eb570b14d2f4eae721755", 300)])
+@pytest.mark.parametrize(
+    ["image_name", "check_sum", "x_resolution"],
+    [
+        (
+            "8736_max_01.tif",
+            "af097aeb37e311895bb189710cfd98e8671dba05b2f02ce4cd196d74d856a699f7dcd1afd0369049f9f30e6442412acd78a6d67fb8c71cf2147520c1264a6b0f",
+            470.55,
+        ),
+        (
+            "8736_max_02.tif",
+            "9d3fad68d0c4b1a8e2a1c9b8b14c6546fb980f81b9d427ddb07a173ec83d4e979a5881a1a1803776f6477d1729dd971204cce465e3f2ccb1612ffa8bdcb2fed0",
+            None,
+        ),
+        (
+            "1667522809_J_0025_0512.tif",
+            "6b8ad086a5719da8a7f9a951ddca9f93843ca99fdc2b8f06bd28db89367af115e616cb76522d946fdd714e35acfbcbc7ae67c06635903316fe330d7e7bd6103a",
+            470,
+        ),
+        (
+            "43837_max_01.tif",
+            "4b1f31b0f757f83f73244895c63c2c9c9f1ec488f3d46b214d97974628aa51b2208c88313c4dbc79d942d36203465733fa77ca1f931eb570b14d2f4eae721755",
+            300,
+        ),
+    ],
+)
 def test_tiff_image_properties(image_name, check_sum, x_resolution):
     """Make sure image properties read properly"""
 
     # arrange
-    file_source = Path(TEST_RES) / 'image' / image_name
+    file_source = Path(TEST_RES) / "image" / image_name
 
     # act
     image: df_v.InputImage = df_v.InputImage(file_source)
@@ -307,13 +348,14 @@ def test_tiff_image_properties(image_name, check_sum, x_resolution):
 # ValidatorConfig Tests - pytest style
 # ============================================================================
 
-@pytest.fixture(name='default_config')
+
+@pytest.fixture(name="default_config")
 def _fixture_default_config():
     """Fixture providing a default ValidatorConfig instance"""
     return df_vi.ScanValidatorConfig()
 
 
-@pytest.fixture(name='custom_config')
+@pytest.fixture(name="custom_config")
 def _fixture_custom_config():
     """Fixture providing a custom ValidatorConfig instance"""
     return df_vi.ScanValidatorConfig(
@@ -321,21 +363,23 @@ def _fixture_custom_config():
         valid_channels=[1, 3, 4],
         max_channel_depth=16,
         valid_resolutions=[300, 400, 600],
-        required_rgb_profile="sRGB IEC61966-2.1"
+        required_rgb_profile="sRGB IEC61966-2.1",
     )
 
 
-@pytest.fixture(name='newspaper_image')
+@pytest.fixture(name="newspaper_image")
 def _fixture_newspaper_image(tmp_path):
     """Fixture providing path to newspaper test image"""
-    file_name = '1667522809_J_0025_0512.tif'
-    file_source = Path(TEST_RES) / 'image' / file_name
+    file_name = "1667522809_J_0025_0512.tif"
+    file_source = Path(TEST_RES) / "image" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
     return file_target
 
 
-def test_validator_config_default_initialization(default_config: df_vi.ScanValidatorConfig):
+def test_validator_config_default_initialization(
+    default_config: df_vi.ScanValidatorConfig,
+):
     """Test ValidatorConfig creates with default values"""
     assert default_config.valid_min_size == df_vi.MIN_SCAN_FILESIZE
     assert default_config.valid_channels == df_vi.GREYSCALE_OR_RGB
@@ -347,7 +391,9 @@ def test_validator_config_default_initialization(default_config: df_vi.ScanValid
     assert default_config.required_rgb_profile == df_vi.ADOBE_PROFILE_NAME
 
 
-def test_validator_config_custom_initialization(custom_config: df_vi.ScanValidatorConfig):
+def test_validator_config_custom_initialization(
+    custom_config: df_vi.ScanValidatorConfig,
+):
     """Test ValidatorConfig with custom values"""
     assert custom_config.valid_min_size == 2048
     assert custom_config.valid_channels == [1, 3, 4]
@@ -364,19 +410,19 @@ def test_validator_config_to_dict(custom_config: df_vi.ScanValidatorConfig):
     config_dict = custom_config.to_dict()
 
     assert isinstance(config_dict, dict)
-    assert config_dict['valid_min_size'] == 2048
-    assert config_dict['valid_resolutions'] == [300, 400, 600]
-    assert 'valid_channels' in config_dict
-    assert 'max_channel_depth' in config_dict
+    assert config_dict["valid_min_size"] == 2048
+    assert config_dict["valid_resolutions"] == [300, 400, 600]
+    assert "valid_channels" in config_dict
+    assert "max_channel_depth" in config_dict
 
 
 def test_validator_config_from_dict():
     """Test creation of ValidatorConfig from dictionary"""
     config_dict = {
-        'valid_min_size': 4096,
-        'valid_channels': [3],
-        'max_channel_depth': 12,
-        'valid_resolutions': [600, 1200]
+        "valid_min_size": 4096,
+        "valid_channels": [3],
+        "max_channel_depth": 12,
+        "valid_resolutions": [600, 1200],
     }
 
     config = df_vi.ScanValidatorConfig.from_dict(config_dict)
@@ -392,7 +438,7 @@ def test_validator_config_roundtrip_dict():
     original = df_vi.ScanValidatorConfig(
         valid_min_size=8192,
         valid_resolutions=[300, 600, 1200],
-        required_rgb_profile="ProPhoto RGB"
+        required_rgb_profile="ProPhoto RGB",
     )
 
     config_dict = original.to_dict()
@@ -438,7 +484,7 @@ def test_validator_config_override_in_factory(newspaper_image):
     validator = factory.create(
         df_v.LABEL_SCAN_VALIDATOR_RESOLUTION,
         img,
-        override_config={'valid_resolutions': [470]}  # Override to match
+        override_config={"valid_resolutions": [470]},  # Override to match
     )
 
     validator.check()
@@ -470,13 +516,16 @@ def test_validator_factory_update_config():
     assert factory.config.max_channel_depth == 16
 
 
-@pytest.mark.parametrize("validator_label", [
-    df_v.LABEL_SCAN_VALIDATOR_FILE,
-    df_v.LABEL_SCAN_VALIDATOR_CHANNEL,
-    df_v.LABEL_SCAN_VALIDATOR_COMPRESSION,
-    df_v.LABEL_SCAN_VALIDATOR_RESOLUTION,
-    df_v.LABEL_SCAN_VALIDATOR_PHOTOMETRICS,
-])
+@pytest.mark.parametrize(
+    "validator_label",
+    [
+        df_v.LABEL_SCAN_VALIDATOR_FILE,
+        df_v.LABEL_SCAN_VALIDATOR_CHANNEL,
+        df_v.LABEL_SCAN_VALIDATOR_COMPRESSION,
+        df_v.LABEL_SCAN_VALIDATOR_RESOLUTION,
+        df_v.LABEL_SCAN_VALIDATOR_PHOTOMETRICS,
+    ],
+)
 def test_validator_factory_has_all_validators(validator_label):
     """Test that ValidatorFactory has all required validators registered"""
     assert df_vi.ScanValidatorFactory.has_validator(validator_label)

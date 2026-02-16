@@ -1,19 +1,23 @@
 """I/O related helpers"""
 
 import ast
+import concurrent.futures
 import email.utils
 import email.mime.text
+import math
 import os
 import shutil
 import smtplib
+import time
 import typing
 
 from pathlib import Path
 
-import requests
+import urllib.parse
 import urllib3.exceptions
 
-from lxml import etree as ET
+import requests
+import lxml.etree as ET
 
 import digiflow.common as dfc
 import digiflow.digiflow_metadata as df_md
@@ -28,11 +32,24 @@ DEFAULT_FGROUP_OCR = "FULLTEXT"
 OAI_KWARG_POSTFUNC = "post_oai"
 OAI_KWARG_REQUESTS = "request_kwargs"
 REQUESTS_DEFAULT_TIMEOUT = 20
+REQUEST_DEFAULT_PARALLEL_DOWNLOADS = 4
 
-_MIME_TYPE_JPG = "image/jpg"
-_MIME_TYPE_JPEG = "image/jpeg"
+MIME_TYPE_JPG = "image/jpg"
+MIME_TYPE_JPEG = "image/jpeg"
 
-_JPG_MIMES = [_MIME_TYPE_JPG, _MIME_TYPE_JPEG]
+JPG_MIMES = [MIME_TYPE_JPG, MIME_TYPE_JPEG]
+
+
+MIMETYPE_TO_EXTENSION = {
+    "image/jpeg": ".jpg",
+    "image/jpg": ".jpg",
+    "image/png": ".png",
+    "image/tiff": ".tif",
+    "image/tif": ".tif",
+    "application/pdf": ".pdf",
+    "text/xml": ".xml",
+    "application/xml": ".xml",
+}
 
 
 class LoadException(Exception):
@@ -45,14 +62,82 @@ class ServerError(LoadException):
 
 
 class ClientError(LoadException):
-    """Loading of Record via OAI failed due 
+    """Loading of Record via OAI failed due
     response status_code indicating Client Error"""
 
 
 class ContentException(LoadException):
-    """Loading of Record via OAI failed due unexpected 
-    returned content, indicating missing record data 
+    """Loading of Record via OAI failed due unexpected
+    returned content, indicating missing record data
     or even missing complete record"""
+
+
+class OAIRecord:
+    """
+    OAI Record which may load XML metadata initially, then resources on-demand
+    """
+
+    def __init__(
+        self,
+        record_identifier: str,
+        metadata_path: Path,
+        loader: "OAILoader",
+        mets_digital_object_identifier: typing.Optional[str] = None,
+    ):
+        self.record_identifier = record_identifier
+        self.metadata_path = metadata_path
+        self._loader = loader
+        self._mets_reader: typing.Optional[df_md.MetsReader] = None
+        self._mets_digital_object_identifier = mets_digital_object_identifier
+        self._files: typing.Dict[str, typing.List[dfc.METSFile]] = {}
+
+    @property
+    def mets_reader(self) -> df_md.MetsReader:
+        """Lazy initialize METS reader"""
+        if self._mets_reader is None:
+            self._mets_reader = df_md.MetsReader(
+                self.metadata_path, self._mets_digital_object_identifier
+            )
+        return self._mets_reader
+
+    def get_files(self, group: str) -> typing.List[dfc.METSFile]:
+        """Get file information from METS for a specific group or all groups if None"""
+        return self.mets_reader.get_files(use_group=group)
+
+    def load_resources(
+        self, group_names: typing.Optional[typing.List[str]], use_file_id: bool = False
+    ) -> int:
+        """
+        Load resources on-demand
+
+        Args:
+            group_names: List of group names to load (e.g., ['images', 'ocr'])
+                         If None, loads all configured groups
+            use_file_id: Use METS file ID instead of URL token
+        Returns:
+            Number of resources loaded
+        """
+        loaded = 0
+        dir_local = self.metadata_path.parent
+
+        # Determine which resources to load
+        for fgroup, mets_files in self._files.items():
+            if group_names is not None and fgroup not in group_names:
+                continue
+            for mets_file in mets_files:
+                res_url = mets_file.url
+                url_final_token = res_url.split("/")[-1]
+                if use_file_id:
+                    url_final_token = mets_file.file_id
+                local_path = self._loader.calculate_path(
+                    dir_local,
+                    mets_file.mimetype,
+                    self._loader.key_images,
+                    url_final_token,
+                )
+                if self._loader.handle_load(res_url, local_path, None):
+                    loaded += 1
+        return loaded
 
 
 class OAILoader:
@@ -71,18 +156,28 @@ class OAILoader:
 
     def __init__(self, base_url, **kwargs) -> None:
         self.base_url = base_url
+        if not self.base_url.startswith("https://"):
+            self.base_url = "https://" + self.base_url
         self.groups = {}
-        self.key_images = kwargs[OAI_KWARG_FGROUP_IMG] \
-            if OAI_KWARG_FGROUP_IMG in kwargs else DEFAULT_FGROUP_IMG
-        self.key_ocr = kwargs[OAI_KWARG_FGROUP_OCR] \
-            if OAI_KWARG_FGROUP_OCR in kwargs else DEFAULT_FGROUP_OCR
         self.post_oai = df_md.extract_mets
+        self.request_kwargs = self._sanitize_kwargs(kwargs)
         if OAI_KWARG_POSTFUNC in kwargs:
             self.post_oai = kwargs[OAI_KWARG_POSTFUNC]
+        self.key_images = (
+            kwargs[OAI_KWARG_FGROUP_IMG]
+            if OAI_KWARG_FGROUP_IMG in kwargs
+            else DEFAULT_FGROUP_IMG
+        )
+        self.key_ocr = (
+            kwargs[OAI_KWARG_FGROUP_OCR]
+            if OAI_KWARG_FGROUP_OCR in kwargs
+            else DEFAULT_FGROUP_OCR
+        )
         self.groups[self.key_images] = []
-        self.request_kwargs = self._sanitize_kwargs(kwargs)
         self.groups[self.key_ocr] = []
+        self.mets_reader: typing.Optional[df_md.MetsReader] = None
         self.store: typing.Optional[LocalStore] = None
+        self._session: typing.Optional[requests.Session] = None
 
     def _sanitize_kwargs(self, in_kwargs):
         top_dict = {}
@@ -100,9 +195,27 @@ class OAILoader:
                     raise LoadException(msg) from val_err
         return top_dict
 
-    def load(self, record_identifier, local_dst:Path, mets_digital_object_identifier=None,
-             skip_resources=False, force_update=False, metadata_format='mets',
-             use_file_id=False) -> int:
+    def _get_session(self) -> requests.Session:
+        """Get or create requests session for connection pooling"""
+        if self._session is None:
+            self._session = requests.Session()
+        return self._session
+
+    def __del__(self):
+        """Cleanup session on destruction"""
+        if self._session:
+            self._session.close()
+
+    def load(
+        self,
+        record_identifier,
+        local_dst: Path,
+        mets_digital_object_identifier=None,
+        skip_resources=False,
+        force_update=False,
+        metadata_format="mets",
+        use_file_id=False,
+    ) -> int:
         """
         load metadata from OAI with optional caching in-between
         request additional linked resources if required
@@ -123,36 +236,40 @@ class OAILoader:
             local_dst = Path(local_dst).absolute()
         assert local_dst is not None
         dir_local = local_dst.parent
-        path_res = self._handle_load(res_url, local_dst, self.post_oai, force_update)
+        path_res = self.handle_load(res_url, local_dst, self.post_oai, force_update)
         if path_res:
             loaded += 1
 
         if skip_resources:
             return loaded
 
-        # inspect if additional file resources are requested
-        mets_reader = df_md.MetsReader(local_dst, mets_digital_object_identifier)
+        # inspect if file resources shall be handled
+        self.mets_reader = df_md.MetsReader(local_dst, mets_digital_object_identifier)
 
         # get linked resources
         for k in self.groups:
-            self.groups[k] = mets_reader.get_filegrp_info(group=k)
+            self.groups[k] = self.mets_reader.get_files(use_group=k)
 
         # if exist, download them too
         post_func = None
         for k, file_entries in self.groups.items():
             if k == self.key_ocr:
-                post_func = post_oai_store_ocr
+                post_func = post_load_store_xml
             for mets_file in file_entries:
-                res_url = mets_file.loc_url
-                url_final_token = res_url.split('/')[-1]
+                assert isinstance(mets_file, dfc.METSFile)
+                res_url = mets_file.url
+                url_final_token = res_url.split("/")[-1]
                 if use_file_id:
                     url_final_token = mets_file.file_id
-                local_path = self._calculate_path(dir_local, mets_file.file_type, k, url_final_token)
-                if self._handle_load(res_url, local_path, post_func):
+                local_path = self.calculate_path(
+                    dir_local, mets_file.mimetype, k, url_final_token
+                )
+                if self.handle_load(res_url, local_path, post_func):
                     loaded += 1
         return loaded
 
-    def _handle_load(self, res_url:str, res_path:Path, post_func, force_load=False):
+    def handle_load(self, res_url: str, res_path: Path, post_func, force_load=False):
+        """Forward load request to store if configured, otherwise load directly"""
         if self.store:
             stored_path = self.store.get(res_path)
             # if in store found ...
@@ -164,7 +281,7 @@ class OAILoader:
                 file_name = os.path.basename(stored_path)
                 file_dir = os.path.dirname(stored_path)
                 mets_ctime = str(int(os.stat(stored_path).st_mtime))
-                bkp_mets = file_name.replace('mets', mets_ctime)
+                bkp_mets = file_name.replace("mets", mets_ctime)
                 os.rename(stored_path, os.path.join(file_dir, bkp_mets))
                 # 2. download again anyway
                 data_path = self.load_resource(res_url, res_path, post_func)
@@ -177,20 +294,20 @@ class OAILoader:
             return res_path
         return self.load_resource(res_url, res_path, post_func)
 
-    def _calculate_path(self, dir_local: Path, mime_type:str, *args):
+    def calculate_path(self, dir_local: Path, mimetype: str, *args):
         """
         calculate final path depending on used fileGrp
         'MAX' means images, not means 'xml'
         """
         res_path = os.path.join(dir_local, os.sep.join(args))
-        if mime_type in _JPG_MIMES and not res_path.endswith('.jpg'):
+        if mimetype in JPG_MIMES and not res_path.endswith(".jpg"):
             res_path += ".jpg"
-        if '/MAX/' in res_path and not res_path.endswith('.jpg'):
-            res_path += '.jpg'
-        if "xml" in mime_type and not res_path.endswith('.xml'):
+        if "/MAX/" in res_path and not res_path.endswith(".jpg"):
+            res_path += ".jpg"
+        if "xml" in mimetype and not res_path.endswith(".xml"):
             res_path += ".xml"
-        if '/FULLTEXT/' in res_path and not res_path.endswith('.xml'):
-            res_path += '.xml'
+        if "/FULLTEXT/" in res_path and not res_path.endswith(".xml"):
+            res_path += ".xml"
         return Path(res_path)
 
     def load_resource(self, url, path_local, post_func):
@@ -203,7 +320,8 @@ class OAILoader:
             if not os.path.isdir(dst_dir):
                 os.makedirs(dst_dir)
             local_path, data, content_type = request_resource(
-                url, path_local, **self.request_kwargs)
+                url, path_local, **self.request_kwargs
+            )
             if post_func and data:
                 # divide METS from XML (OCR-ALTO)
                 # in rather brute force fashion
@@ -211,10 +329,12 @@ class OAILoader:
                 # propably sanitize data, as it might originate
                 # from test-data or *real* requests
                 if isinstance(data_snippet, bytes):
-                    data_snippet = data_snippet.decode('utf-8')
-                if dfc.XMLNS['mets'] in str(data_snippet) or dfc.XMLNS['oai'] in str(data_snippet):
+                    data_snippet = data_snippet.decode("utf-8")
+                if dfc.XMLNS["mets"] in str(data_snippet) or dfc.XMLNS["oai"] in str(
+                    data_snippet
+                ):
                     data = post_func(path_local, data)
-                elif 'http://www.loc.gov/standards/alto' in str(data_snippet):
+                elif "http://www.loc.gov/standards/alto" in str(data_snippet):
                     data = post_func(local_path, data)
                 else:
                     raise LoadException(f"Can't handle {content_type} from {url}!")
@@ -230,18 +350,240 @@ class OAILoader:
             msg = f"load {url} exception: {exc}"
             raise RuntimeError(msg) from exc
 
+    def clone(
+        self,
+        record_identifier: str,
+        local_dst: Path,
+        download_resources: bool = False,
+        types: typing.Optional[typing.List[str]] = None,
+        mets_digital_object_identifier: typing.Optional[str] = None,
+        metadata_format: str = "mets",
+        n_workers: int = REQUEST_DEFAULT_PARALLEL_DOWNLOADS,
+        progress_callback: typing.Optional[typing.Callable] = None,
+    ) -> typing.Dict[str, typing.Any]:
+        """
+        Clone an OAI record with comprehensive resource management.
+
+        This method extends the basic load() functionality with:
+        - Parallel resource downloading
+        - Selective fileGroup filtering
+        - Progress tracking and statistics
+
+        Args:
+            record_identifier: OAI identifier for the record
+            local_dst: Local path for METS XML file
+            download_resources: If True, download all linked resources
+            types: List of fileGroup USE values to download (e.g., ['MAX', 'DOWNLOAD'])
+                If None and download_resources=True, downloads all fileGroups
+            mets_digital_object_identifier: Optional MODS identifier
+            metadata_format: OAI metadata format (default: 'mets')
+            n_workers: Number of parallel download workers (default: 4)
+            progress_callback: Optional callback function(current, total, status_msg)
+
+        Returns:
+            Dictionary with statistics and information about the cloned record
+
+        Examples:
+            # Basic clone (METS only)
+            stats = loader.clone('oai:repo:123456', Path('data/item1'))
+            # Clone with all resources
+            stats = loader.clone(
+                'oai:repo:123456',
+                Path('data/item2'),
+                download_resources=True
+            )
+
+            # Clone only MAX images and PDFs
+            stats = loader.clone(
+                'oai:repo:123456',
+                Path('data/item3'),
+                download_resources=True,
+                types=['MAX', 'DOWNLOAD']
+            )
+        """
+        try:
+            # Ensure local_dst is a Path
+            if not isinstance(local_dst, Path):
+                local_dst = Path(local_dst).absolute()
+            output_dir = local_dst.parent
+            # Step 1: Download METS record
+            if progress_callback:
+                progress_callback(0, 1, "Downloading METS record")
+            ctx = f"verb=GetRecord&metadataPrefix={metadata_format}&identifier={record_identifier}"
+            url = f"{self.base_url}?{ctx}"
+            response = self._get_session().get(url, timeout=30, **self.request_kwargs)
+            response.raise_for_status()
+            # Ensure directory exists
+            local_dst.parent.mkdir(parents=True, exist_ok=True)
+            # Save METS - parse bytes to XML tree, extract METS, and write to file
+            xml_root = ET.fromstring(response.content)
+            mets_tree = df_md.post_oai_extract_metsdata(xml_root)
+            assert mets_tree is not None
+            df_md.write_xml_file(mets_tree, local_dst, preamble="")
+            self.mets_reader = df_md.MetsReader(
+                local_dst, mets_digital_object_identifier
+            )
+            if progress_callback:
+                progress_callback(1, 1, "METS record downloaded")
+            # Step 2: Download resources if requested
+            if download_resources:
+                try:
+                    # Extract resources from METS based on fileGroup selection
+                    if types:
+                        # Selective download: Only fetch specified fileGroup types
+                        # Example: types=['MAX', 'DOWNLOAD'] will only get MAX images and PDFs
+                        all_resources = []
+                        for file_type in types:
+                            all_resources.extend(
+                                self.mets_reader.get_files(use_group=file_type)
+                            )
+                        filtered_resources = all_resources
+                    else:
+                        # Complete download: Fetch all files from all available fileGroups
+                        # This includes MAX, THUMBS, DEFAULT, DOWNLOAD, FULLTEXT, etc.
+                        # Note: Must iterate through _files.keys() since get_files() defaults
+                        # to 'MAX' only when called without arguments
+                        all_resources = []
+                        for use_group in self.mets_reader._files.keys():
+                            all_resources.extend(
+                                self.mets_reader.get_files(use_group=use_group)
+                            )
+                        filtered_resources = all_resources
+                    # Download in parallel
+                    results = self._download_resources_parallel(
+                        filtered_resources,
+                        output_dir,
+                        max_workers=n_workers,
+                        progress_callback=progress_callback,
+                    )
+                    return results
+                except Exception as e:
+                    error_msg = f"Resource download error: {e}"
+        except Exception as e:
+            error_msg = f"Clone operation failed: {e}"
+            raise LoadException(error_msg) from e
+        return {}
+
+    def _download_resources_parallel(
+        self,
+        resources: typing.List[dfc.METSFile],
+        output_dir: Path,
+        max_workers: int = 5,
+        progress_callback: typing.Optional[typing.Callable] = None,
+    ) -> dict:
+        """
+        Download resources using parallel workers.
+
+        Args:
+            resources: Dictionary of resources grouped by type
+            output_dir: Base output directory
+            max_workers: Number of parallel download workers
+            progress_callback: Optional callback(current, total, status_msg)
+
+        Returns:
+            Statistics dictionary
+        """
+        ts_start = time.time()
+        stats = {
+            "total": 0,
+            "success": 0,
+            "failed": 0,
+            "size_bytes": 0,
+            "by_type": {},
+            "duration_seconds": 0,
+            "n_workers": max_workers,
+        }
+        # Flatten resources list
+        if not resources:
+            return stats
+        stats["total"] = len(resources)
+        session = self._get_session()
+        # Download with parallel workers
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # Submit all download tasks
+            future_to_resource = {
+                executor.submit(
+                    self._download_single_resource, resource, output_dir, session
+                ): resource
+                for resource in resources
+            }
+            # Process completed downloads
+            for i, future in enumerate(
+                concurrent.futures.as_completed(future_to_resource), 1
+            ):
+                result = future.result()
+                if result["success"]:
+                    stats["success"] += 1
+                    stats["size_bytes"] += result["size"]
+                    use_type = result["use"]
+                    stats["by_type"][use_type] = stats["by_type"].get(use_type, 0) + 1
+                    if progress_callback:
+                        progress_callback(
+                            i, stats["total"], f"Downloaded {result['file']}"
+                        )
+                else:
+                    stats["failed"] += 1
+                    if progress_callback:
+                        progress_callback(i, stats["total"], f"Failed {result['file']}")
+            ts_duration = math.floor(time.time() - ts_start)
+            stats["duration_seconds"] = ts_duration
+        return stats
+
+    def _download_single_resource(
+        self, resource: dfc.METSFile, output_dir: Path, session: requests.Session
+    ) -> dict:
+        """
+        Download a single resource.
+        Args:
+            resource: Resource information dictionary
+            output_dir: Base output directory
+            session: Requests session for connection pooling
+        Returns:
+            Result dictionary with success status and metadata
+        """
+        try:
+            url = resource.url
+            file_id = resource.file_id
+            use = resource.use
+            filename = _sanitize_local_file_extension(
+                Path(file_id), resource.mimetype, url
+            )
+            output_path = output_dir / use / filename
+            # Create directory if it doesn't exist
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            # Download file with timeout from request_kwargs or default
+            timeout = self.request_kwargs.get("timeout", 30)
+            response = session.get(url, timeout=timeout, **self.request_kwargs)
+            response.raise_for_status()
+            # Save file
+            with open(output_path, "wb") as f:
+                f.write(response.content)
+            return {
+                "success": True,
+                "file": filename,
+                "use": use,
+                "size": len(response.content),
+                "path": output_path,
+            }
+        except (OSError, requests.RequestException) as e:
+            return {
+                "success": False,
+                "file": resource.file_id,
+                "use": resource.use,
+                "error": str(e),
+            }
+
 
 class OAIFileSweeper:
-    """ delete all resources (files and empty folder),
-        except colorchecker, if any
-        parse *.mets.xml to identify files to be deleted
+    """delete all resources (files and empty folder),
+    except colorchecker, if any
+    parse *.mets.xml to identify files to be deleted
     """
 
-    def __init__(self, path_store, pattern='mets.xml', filegroups=None):
+    def __init__(self, path_store, pattern="mets.xml", filegroups=None):
         self.work_dir = path_store
         self.pattern = pattern
-        self.filegroups = filegroups if isinstance(filegroups, list)\
-            else ["MAX"]
+        self.filegroups = filegroups if isinstance(filegroups, list) else ["MAX"]
 
     def sweep(self):
         """remove OAI-Resources from given dir, if any contained"""
@@ -253,20 +595,15 @@ class OAIFileSweeper:
             for filegroup in self.filegroups:
                 if filegroup not in dirs:
                     continue
-
                 curr_root_path = Path(curr_root)
                 curr_filegroup_folder = curr_root_path / filegroup
-                _files = [
-                    f for f in curr_filegroup_folder.iterdir() if f.is_file()]
+                _files = [f for f in curr_filegroup_folder.iterdir() if f.is_file()]
 
-                if filegroup == 'MAX' and len(_files) < 2:
-                    # One image only? This is likely the colorchecker! --> skip
-                    # legacy
+                if filegroup == "MAX" and len(_files) < 2:
+                    # One image only? This is likely the colorchecker! --> skip legacy
+
                     continue
-
-                curr_mets_files = [
-                    xml for xml in files if xml.endswith(self.pattern)]
-
+                curr_mets_files = [xml for xml in files if xml.endswith(self.pattern)]
                 if curr_mets_files:
                     curr_mets_file = curr_mets_files[0]
                     curr_mets = curr_root_path.joinpath(curr_mets_file)
@@ -279,8 +616,10 @@ class OAIFileSweeper:
                             try:
                                 pth.unlink()
                                 _parent = pth.parent
-                                if _parent.is_dir() and\
-                                   len(list(_parent.iterdir())) == 0:
+                                if (
+                                    _parent.is_dir()
+                                    and len(list(_parent.iterdir())) == 0
+                                ):
                                     _parent.rmdir()
                             except PermissionError:
                                 return f"cannot delete {pth} due insuff. perm."
@@ -290,7 +629,7 @@ class OAIFileSweeper:
         xml_root = ET.parse(str(mets_xml)).getroot()
         xpath = f".//mets:fileGrp[@USE='{filegroup}']/mets:file/mets:FLocat"
         locats = xml_root.findall(xpath, {"mets": "http://www.loc.gov/METS/"})
-        links = [xl.get('{http://www.w3.org/1999/xlink}href') for xl in locats]
+        links = [xl.get("{http://www.w3.org/1999/xlink}href") for xl in locats]
         return [Path(ln).stem for ln in links]
 
 
@@ -304,8 +643,8 @@ class LocalStore:
     def _calculate_path(self, path_res):
         if not isinstance(path_res, str):
             path_res = str(path_res)
-        sub_path_res = path_res.replace(str(self.dir_local), '')
-        if sub_path_res.startswith('/'):
+        sub_path_res = path_res.replace(str(self.dir_local), "")
+        if sub_path_res.startswith("/"):
             sub_path_res = sub_path_res[1:]
             if sub_path_res:
                 return os.path.join(str(self.dir_store_root), sub_path_res)
@@ -343,7 +682,7 @@ class LocalStore:
         shutil.copy2(str(path_res), path_store)
         return path_store
 
-    def put_all(self, src_dir, filter_ext='.xml'):
+    def put_all(self, src_dir, filter_ext=".xml"):
         """
         put all resources singular from last directory
         segement of current source directory to dst dir,
@@ -355,9 +694,7 @@ class LocalStore:
         if not os.path.exists(dst_dir):
             os.makedirs(dst_dir)
         entries = os.listdir(src_dir)
-        existing = [f
-                    for f in entries
-                    if str(f).endswith(filter_ext)]
+        existing = [f for f in entries if str(f).endswith(filter_ext)]
         stored = 0
         for ent in existing:
             src = os.path.join(src_dir, ent)
@@ -398,15 +735,14 @@ def request_resource(url: str, path_local: Path, **kwargs):
             raise ServerError(the_info)
         content_type = None
         if status == 200:
-            content_type = response.headers['Content-Type']
+            content_type = response.headers["Content-Type"]
             # textual xml data
-            if 'text' in content_type or 'xml' in content_type:
+            if "text" in content_type or "xml" in content_type:
                 result = response.content
             # catch other content types by MIMI sub_type
             # split "<application|image>/<sub_type>"
-            elif content_type.split('/')[-1] in ['jpg', 'jpeg', 'pdf', 'png']:
-                path_local = _sanitize_local_file_extension(
-                    path_local, content_type)
+            elif content_type.split("/")[-1] in ["jpg", "jpeg", "pdf", "png"]:
+                path_local = _sanitize_local_file_extension(path_local, content_type)
                 if not isinstance(path_local, Path):
                     path_local = Path(path_local)
                 path_local.write_bytes(response.content)
@@ -415,22 +751,29 @@ def request_resource(url: str, path_local: Path, **kwargs):
                 msg = f"download {url} with unhandled content-type {content_type}"
                 raise ContentException(msg)
         return (path_local, result, content_type)
-    except (OSError) as exc:
+    except OSError as exc:
         msg = f"fail to download {url} to {path_local}"
         raise RuntimeError(msg) from exc
 
 
-def _sanitize_local_file_extension(path_local: Path, content_type):
+def _sanitize_local_file_extension(
+    path_local: Path, content_type: str, url: typing.Optional[str] = None
+) -> Path:
     if not isinstance(path_local, Path):
         path_local = Path(path_local).absolute()
-    if 'xml' in content_type and path_local.suffix != '.xml':
-        path_local = path_local.with_suffix('.xml')
-    elif 'jpeg' in content_type and path_local.suffix != '.jpg':
-        path_local = path_local.with_suffix('.jpg')
-    elif 'png' in content_type and path_local.suffix != '.png':
-        path_local = path_local.with_suffix('.png')
-    elif 'pdf' in content_type and path_local.suffix != '.pdf':
-        path_local = path_local.with_suffix('.pdf')
+    correct_ext = MIMETYPE_TO_EXTENSION.get(content_type)
+    if not correct_ext:
+        for mime, ext in MIMETYPE_TO_EXTENSION.items():
+            if mime.split("/", maxsplit=1)[-1] in content_type:
+                correct_ext = ext
+                break
+    if not correct_ext and url:
+        parsed = urllib.parse.urlparse(url)
+        url_ext = Path(parsed.path).suffix
+        if url_ext:
+            correct_ext = url_ext
+    if correct_ext and path_local.suffix != correct_ext:
+        path_local = path_local.with_suffix(correct_ext)
     return path_local
 
 
@@ -445,13 +788,13 @@ def smtp_note(smtp_conn: str, subject: str, message: str, froms: str, tos):
     """
 
     if isinstance(tos, list):
-        tos = ','.join(tos)
+        tos = ",".join(tos)
     try:
         msg = email.mime.text.MIMEText(message)
-        msg['Date'] = email.utils.formatdate(localtime=True)
-        msg['Subject'] = subject
-        msg['From'] = froms
-        msg['To'] = tos + "\n"
+        msg["Date"] = email.utils.formatdate(localtime=True)
+        msg["Subject"] = subject
+        msg["From"] = froms
+        msg["To"] = tos + "\n"
         server = smtplib.SMTP(smtp_conn)
         server.send_message(msg)
         server.quit()
@@ -460,29 +803,38 @@ def smtp_note(smtp_conn: str, subject: str, message: str, froms: str, tos):
         return f"Failed to notify '{tos}': '{_exc.args[0]}' ('{message}')!"
 
 
-def post_oai_store_ocr(path_local, the_data):
+def post_load_store_xml(path_local, the_data):
     """
-    Store OCR XML as it is
-    Explicite encoding is required with OCR-strings but not
+    Store XML as it is - encoding required with OCR-strings but not
     for byte objects like from semantics fulltext responses
     """
 
     if isinstance(the_data, str):
-        the_data = the_data.encode('utf-8')
+        the_data = the_data.encode("utf-8")
     xml_root = ET.fromstring(the_data)
-    df_md.write_xml_file(xml_root, path_local, preamble='')
+    df_md.write_xml_file(xml_root, path_local, preamble="")
 
 
-def get_enclosed(tokens_str: str, mark_end='}', mark_start='{', func_find='rfind') -> str:
+@dfc.deprecated(
+    "This function has limited use cases and will be removed in future versions"
+)
+def get_enclosed(
+    tokens_str: str, mark_end="}", mark_start="{", func_find="rfind"
+) -> str:
     """
     Search dict-like enclosed entry in string
     from end (rfind) or start (find)
 
     If no match, return empty string ''
+
+    .. deprecated::
+        This function has limited use cases and will be removed in future versions
     """
     if mark_end in tokens_str and mark_start in tokens_str:
         _offset_right_end = tokens_str.__getattribute__(func_find)(mark_end)
-        _offset_right_start = tokens_str[:_offset_right_end].__getattribute__(func_find)(mark_start)
-        _the_enclosed = tokens_str[_offset_right_start:(_offset_right_end+1)]
+        _offset_right_start = tokens_str[:_offset_right_end].__getattribute__(
+            func_find
+        )(mark_start)
+        _the_enclosed = tokens_str[_offset_right_start : (_offset_right_end + 1)]
         return _the_enclosed
-    return ''
+    return ""
