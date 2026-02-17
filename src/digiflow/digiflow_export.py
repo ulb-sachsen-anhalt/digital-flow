@@ -21,8 +21,9 @@ import pathlib
 import shutil
 import subprocess
 import tempfile
+import typing
 
-from lxml import etree as ET
+import lxml.etree as ET
 
 from digiflow import (
     write_xml_file,
@@ -58,6 +59,7 @@ class DigiFlowExportError(Exception):
 
 
 class ExportMapping:
+    """Map a source file to its SAF target path with optional access rights."""
 
     def __init__(self, path_source, path_target, access_right=None):
         if not os.path.exists(path_source):
@@ -84,14 +86,20 @@ class ExportMapping:
     def __repr__(self) -> str:
         return f"{self.path_source} => {self.path_target}"
 
-    def __eq__(self, __o: object) -> bool:
+    def __eq__(self, other: object) -> bool:
+        """Enable check with in-operator to prevent duplicate ExportMappings."""
+        if not isinstance(other, ExportMapping):
+            return NotImplemented
         return (
-            self.path_source == __o.path_source and self.path_target == __o.path_target
+            self.path_source == other.path_source and self.path_target == other.path_target
         )
 
-    def __lt__(self, __o: object) -> bool:
+    def __lt__(self, other: object) -> bool:
+        """Enable meaningful sorting of ExportMappings by source path basename."""
+        if not isinstance(other, ExportMapping):
+            return NotImplemented
         self_src_base = os.path.basename(self.path_source)
-        other_src_base = os.path.basename(__o.path_source)
+        other_src_base = os.path.basename(other.path_source)
         return self_src_base <= other_src_base
 
 
@@ -108,7 +116,7 @@ def process(
     # _handle_contents_file(work_dir)
     _handle_contents_file(work_dir, export_mappings)
     the_tmp_path, the_filesize = compress(os.path.dirname(work_dir), archive_name)
-    path_export_processing = move_to_tmp_file(the_tmp_path, target_data_dir)
+    path_export_processing = move_file_to(the_tmp_path, target_data_dir)
     return (path_export_processing, the_filesize)
 
 
@@ -141,6 +149,8 @@ def map_contents(src_dir, dst_dir, export_map=None):
 
     for src, dst in export_map.items():
         for source_path in source_paths:
+            if not isinstance(src, str):
+                src = str(src)
             if src in source_path:
                 # for each individual file review
                 if isinstance(dst, list):
@@ -160,36 +170,36 @@ def map_contents(src_dir, dst_dir, export_map=None):
     return mappings
 
 
-# def _handle_contents_file(working_item_dir, only_mets=False):
-def _handle_contents_file(working_item_dir, export_mappings):
+def _handle_contents_file(working_item_dir,
+                          export_mappings: typing.List[ExportMapping]):
     contents_file_path = os.path.join(working_item_dir, "contents")
     with open(contents_file_path, "a", encoding="UTF-8") as contents_file:
         for mapping in sorted(export_mappings):
-            _target_base = pathlib.Path(mapping.path_target)
-            _name = _target_base.name
-            _src_bundle = mapping.src_bundle
-            if _name == SAF_METS_XML:
+            target_base = pathlib.Path(mapping.path_target)
+            the_name = target_base.name
+            src_bundle = mapping.src_bundle
+            if the_name == SAF_METS_XML:
                 contents_file.write(f"{SAF_METS_XML}\tbundle:METS_BACKUP\n")
-            elif _name.endswith((".pdf", ".epub")):
-                _right = ""
+            elif the_name.endswith((".pdf", ".epub")):
+                the_right = ""
                 if mapping.access_right is not None:
-                    _right = f"\tpermissions: -r {mapping.access_right}"
-                contents_file.write(f"{_name}{_right}\n")
-            elif _name in ["dublin_core.xml", "relationships"] or _name.startswith(
+                    the_right = f"\tpermissions: -r {mapping.access_right}"
+                contents_file.write(f"{the_name}{the_right}\n")
+            elif the_name in ["dublin_core.xml", "relationships"] or the_name.startswith(
                 "metadata_"
             ):
                 # these xml's are dublin core metadata for E-Pflicht migration
                 continue
-            elif _name.endswith(".pdf.txt"):
-                contents_file.write(f"{_name}\tbundle:TEXT\n")
-            elif _src_bundle == SRC_FULLTEXT and _is_alto(_target_base):
-                contents_file.write(f"{_name}\tbundle:FULLTEXT_OCR\n")
-            elif _src_bundle in DIR_IMAGES:
-                image_row = _render_row(_name, working_item_dir)
+            elif the_name.endswith(".pdf.txt"):
+                contents_file.write(f"{the_name}\tbundle:TEXT\n")
+            elif src_bundle == SRC_FULLTEXT and _is_alto(target_base):
+                contents_file.write(f"{the_name}\tbundle:FULLTEXT_OCR\n")
+            elif src_bundle in DIR_IMAGES:
+                image_row = _render_row(the_name, working_item_dir)
                 contents_file.write(image_row)
             # we know them, but we do *not* handle 'em
             # since they're already dealt at main image
-            elif _src_bundle in DIR_DERIVATES:
+            elif src_bundle in DIR_DERIVATES:
                 continue
             else:
                 raise DigiFlowExportError(f"can't handle {mapping}!")
@@ -247,17 +257,21 @@ def compress(work_dir, archive_name):
     return (zip_file_path, f"{zip_size}MB")
 
 
-def move_to_tmp_file(the_file_path, destination):
+def move_file_to(the_file_path, destination):
     """
-    Move propably very large export data with masked name to external drive
+    Move propably very large export artefact with intermediate suffix to external drive
     """
     abs_dstination = os.path.abspath(destination)
     zip_export_path = os.path.join(abs_dstination, os.path.basename(the_file_path))
-    export_processing = zip_export_path + ".processing"
+    export_processing = pathlib.Path(zip_export_path).with_suffix(".processing")
     if not os.path.isdir(abs_dstination):
         os.makedirs(abs_dstination, exist_ok=True)
+    # this step may take mminutes 'til midnight
     shutil.move(the_file_path, export_processing)
-    return export_processing
+    # finalize export by renaming to final name without .processing suffix
+    final_export_path = pathlib.Path(export_processing).with_suffix(".zip")
+    os.rename(export_processing, final_export_path)
+    return final_export_path
 
 
 def _handle_dublin_core_dummy(work_dir):

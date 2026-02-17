@@ -116,11 +116,11 @@ def test_export_kitodo2_result(monography_319696111):
     )
 
     # assert
-    final_location = str(os.path.join(exp_dir, "319696111.zip"))
     assert len(result) == 2
-    # changed due intermediate ".processing" - suffix
-    assert result[0].startswith(final_location)
     assert result[1] == "0MB"
+    # SAF suffix changed due intermediate ".processing"
+    final_location = os.path.join(exp_dir, "319696111.zip")
+    assert str(result[0]).startswith(final_location)
 
 
 def test_export_kitodo2_inspect_saf_assets(monography_319696111):

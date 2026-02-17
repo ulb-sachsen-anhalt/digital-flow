@@ -545,10 +545,11 @@ class OAILoader:
             url = resource.url
             file_id = resource.file_id
             use = resource.use
-            filename = _sanitize_local_file_extension(
-                Path(file_id), resource.mimetype, url
+            path_segment = urllib.parse.urlparse(url).path
+            local_path = output_dir / use / path_segment.rsplit("/", maxsplit=1)[-1]
+            output_path = _sanitize_local_file_extension(
+                local_path, resource.mimetype, file_id
             )
-            output_path = output_dir / use / filename
             # Create directory if it doesn't exist
             output_path.parent.mkdir(parents=True, exist_ok=True)
             # Download file with timeout from request_kwargs or default
@@ -560,7 +561,7 @@ class OAILoader:
                 f.write(response.content)
             return {
                 "success": True,
-                "file": filename,
+                "file": output_path.name,
                 "use": use,
                 "size": len(response.content),
                 "path": output_path,
@@ -757,7 +758,7 @@ def request_resource(url: str, path_local: Path, **kwargs):
 
 
 def _sanitize_local_file_extension(
-    path_local: Path, content_type: str, url: typing.Optional[str] = None
+    path_local: Path, content_type: str, file_id: typing.Optional[str] = None
 ) -> Path:
     if not isinstance(path_local, Path):
         path_local = Path(path_local).absolute()
@@ -767,11 +768,10 @@ def _sanitize_local_file_extension(
             if mime.split("/", maxsplit=1)[-1] in content_type:
                 correct_ext = ext
                 break
-    if not correct_ext and url:
-        parsed = urllib.parse.urlparse(url)
-        url_ext = Path(parsed.path).suffix
-        if url_ext:
-            correct_ext = url_ext
+    file_name = path_local.stem
+    if file_name == 'default' and file_id:
+        file_name = file_id
+    path_local = path_local.with_name(file_name)
     if correct_ext and path_local.suffix != correct_ext:
         path_local = path_local.with_suffix(correct_ext)
     return path_local
