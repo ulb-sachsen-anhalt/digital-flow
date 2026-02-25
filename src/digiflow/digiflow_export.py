@@ -16,6 +16,7 @@ Dependencies:
 Implements task #5735
 """
 
+import dataclasses
 import os
 import pathlib
 import shutil
@@ -52,6 +53,35 @@ DEFAULT_EXPORT_MAPPINGS = {
 CONTENTS_FILE_MAPPINGS = {SRC_FULLTEXT: "FULLTEXT_OCR", SRC_MAX: ""}
 
 EXPORT_CMD_PATTERN = "zip -q -r {} item_000"
+
+SAF_ADDITIONAL_DUBLIN_CORE = "dublin_core"
+SAF_ADDITIONAL_DUBLIN_CORE_DERIVATES = "dublin_core_derivates"
+SAF_ADDITIONAL_COLLECTIONS = "collections"
+SAF_ADDITIONAL_CONTENTS = "contents"
+DEFAULT_SAF_ADDITIONAL_FILES = [
+    SAF_ADDITIONAL_DUBLIN_CORE,
+    SAF_ADDITIONAL_DUBLIN_CORE_DERIVATES,
+    SAF_ADDITIONAL_COLLECTIONS,
+    SAF_ADDITIONAL_CONTENTS,
+]
+ALLOWED_SAF_ADDITIONAL_FILES = set(DEFAULT_SAF_ADDITIONAL_FILES)
+
+
+def _validate_saf_additional_files(saf_additional_files):
+    """Validate optional SAF additional file selector values."""
+    if saf_additional_files is None:
+        return list(DEFAULT_SAF_ADDITIONAL_FILES)
+    if not isinstance(saf_additional_files, list):
+        raise DigiFlowExportError(
+            "Invalid saf_additional_files: expected list of SAF flags."
+        )
+    unknown_files = sorted(set(saf_additional_files) - ALLOWED_SAF_ADDITIONAL_FILES)
+    if unknown_files:
+        allowed = sorted(ALLOWED_SAF_ADDITIONAL_FILES)
+        raise DigiFlowExportError(
+            f"Unknown SAF additional files requested: {unknown_files}. Allowed: {allowed}"
+        )
+    return list(saf_additional_files)
 
 
 class DigiFlowExportError(Exception):
@@ -103,18 +133,127 @@ class ExportMapping:
         return self_src_base <= other_src_base
 
 
+@dataclasses.dataclass(frozen=True)
+class ExportRequest:
+    """Value object that contains all arguments needed for a single export run."""
+
+    process_metafile_path: typing.Union[str, pathlib.Path]
+    collection: str
+    saf_final_name: str
+    export_dst: typing.Union[str, pathlib.Path]
+    export_map: typing.Optional[dict] = None
+    tmp_saf_dir: typing.Optional[typing.Union[str, pathlib.Path]] = None
+
+
+@dataclasses.dataclass
+class DigiFlowExporterConfig:
+    """Optional runtime configuration for DigiFlowExporter."""
+
+    mapping_factory: typing.Optional[typing.Callable] = None
+    processor: typing.Optional[typing.Callable] = None
+    workspace_cls: typing.Optional[type] = None
+    default_export_map: typing.Optional[dict] = None
+    saf_additional_files: typing.Optional[typing.List[str]] = None
+
+
+class ExportWorkspace:
+    """Lifecycle helper for temporary SAF export workspace."""
+
+    PREFIX = "opendata-working-"
+
+    def __init__(self, saf_final_name, tmp_saf_dir=None):
+        self.saf_final_name = saf_final_name
+        self.tmp_saf_dir = tmp_saf_dir
+        self._context = None
+        self.tmp_dir = None
+        self.item_dir = None
+
+    def __enter__(self):
+        temp_root = tempfile.gettempdir()
+        if self.tmp_saf_dir:
+            temp_root = self.tmp_saf_dir
+        self._context = tempfile.TemporaryDirectory(prefix=self.PREFIX, dir=temp_root)
+        self.tmp_dir = self._context.__enter__()
+        self.item_dir = os.path.join(self.tmp_dir, self.saf_final_name, "item_000")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        assert self._context is not None, "ExportWorkspace context not properly initialized!"
+        return self._context.__exit__(exc_type, exc_val, exc_tb)
+
+
+class DigiFlowExporter:
+    """Application service that orchestrates one complete SAF export."""
+
+    def __init__(
+        self,
+        mapping_factory=None,
+        processor=None,
+        workspace_cls=None,
+        config: typing.Optional[DigiFlowExporterConfig] = None,
+    ):
+        cfg_mapping_factory = config.mapping_factory if config else None
+        cfg_processor = config.processor if config else None
+        cfg_workspace_cls = config.workspace_cls if config else None
+        cfg_default_export_map = config.default_export_map if config else None
+        cfg_saf_additional_files = config.saf_additional_files if config else None
+
+        self.mapping_factory = mapping_factory or cfg_mapping_factory or map_contents
+        self.processor = processor or cfg_processor or process
+        self.workspace_cls = workspace_cls or cfg_workspace_cls or ExportWorkspace
+        self.default_export_map = cfg_default_export_map or DEFAULT_EXPORT_MAPPINGS
+        self.saf_additional_files = _validate_saf_additional_files(
+            cfg_saf_additional_files
+        )
+
+    def run(self, request: ExportRequest):
+        source_path_dir = self._resolve_source_path_dir(request.process_metafile_path)
+        export_map = request.export_map
+        if export_map is None:
+            export_map = self.default_export_map
+        with self.workspace_cls(request.saf_final_name, request.tmp_saf_dir) as workspace:
+            mappings = self.mapping_factory(source_path_dir, workspace.item_dir, export_map)
+            return self.processor(
+                mappings,
+                workspace.item_dir,
+                request.saf_final_name,
+                request.collection,
+                request.export_dst,
+                self.saf_additional_files,
+            )
+
+    @staticmethod
+    def _resolve_source_path_dir(process_metafile_path):
+        source_path_dir = os.path.dirname(process_metafile_path)
+        if not os.path.exists(source_path_dir):
+            raise DigiFlowExportError(
+                f"Source directory does not exist: {source_path_dir}"
+            )
+        return source_path_dir
+
+
 def process(
-    export_mappings, work_dir, archive_name, target_collection, target_data_dir
+    export_mappings,
+    work_dir,
+    archive_name,
+    target_collection,
+    target_data_dir,
+    saf_additional_files=None,
 ):
     """process digitalizates with images"""
 
+    selected_files = set(_validate_saf_additional_files(saf_additional_files))
+
     for mapping in export_mappings:
         mapping.copy()
-    _handle_dublin_core_dummy(work_dir)
-    _handle_dublin_core_derivates(work_dir)
-    _handle_collections_file(work_dir, target_collection)
-    # _handle_contents_file(work_dir)
-    _handle_contents_file(work_dir, export_mappings)
+    if SAF_ADDITIONAL_DUBLIN_CORE in selected_files:
+        _handle_dublin_core_dummy(work_dir)
+    if SAF_ADDITIONAL_DUBLIN_CORE_DERIVATES in selected_files:
+        _handle_dublin_core_derivates(work_dir)
+    if SAF_ADDITIONAL_COLLECTIONS in selected_files:
+        _handle_collections_file(work_dir, target_collection)
+    if SAF_ADDITIONAL_CONTENTS in selected_files:
+        _handle_contents_file(work_dir, export_mappings)
     the_tmp_path, the_filesize = compress(os.path.dirname(work_dir), archive_name)
     path_export_processing = move_file_to(the_tmp_path, target_data_dir)
     return (path_export_processing, the_filesize)
@@ -342,16 +481,12 @@ def export_data_from(
     Main entry point to prepare, create and export specified data
     related to provided digitalization item process metadatafile_path
     """
-    source_path_dir = os.path.dirname(process_metafile_path)
-    if not os.path.exists(source_path_dir):
-        raise DigiFlowExportError(f"Source directory does not exist: {source_path_dir}")
-    if export_map is None:
-        export_map = DEFAULT_EXPORT_MAPPINGS
-    tmp_dir = tempfile.gettempdir()
-    prefix = "opendata-working-"
-    if tmp_saf_dir:
-        tmp_dir = tmp_saf_dir
-    with tempfile.TemporaryDirectory(prefix=prefix, dir=tmp_dir) as tmp_dir:
-        work_dir = os.path.join(tmp_dir, saf_final_name, "item_000")
-        _mappings = map_contents(source_path_dir, work_dir, export_map)
-        return process(_mappings, work_dir, saf_final_name, collection, export_dst)
+    request = ExportRequest(
+        process_metafile_path=process_metafile_path,
+        collection=collection,
+        saf_final_name=saf_final_name,
+        export_dst=export_dst,
+        export_map=export_map,
+        tmp_saf_dir=tmp_saf_dir,
+    )
+    return DigiFlowExporter().run(request)

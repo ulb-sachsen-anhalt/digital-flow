@@ -123,6 +123,147 @@ def test_export_kitodo2_result(monography_319696111):
     assert str(result[0]).startswith(final_location)
 
 
+def test_export_oop_minimal_working_example(monography_319696111):
+    """Minimal example for OOP export entrypoint."""
+
+    # arrange
+    cnt_dir, _, exp_dir = monography_319696111
+    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    request = dfx.ExportRequest(
+        process_metafile_path=process_metafile,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        saf_final_name="319696111",
+        export_dst=exp_dir,
+        export_map=EXPORT_MAPPING_KITODO2,
+    )
+
+    # act
+    result = dfx.DigiFlowExporter().run(request)
+
+    # assert
+    assert len(result) == 2
+    assert result[1] == "0MB"
+    assert os.path.exists(result[0])
+    assert str(result[0]).endswith("319696111.zip")
+
+
+def test_export_oop_with_default_mappings(monography_319696111):
+    """Minimal OOP example using internal default mappings."""
+
+    # arrange
+    cnt_dir, _, exp_dir = monography_319696111
+    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    request = dfx.ExportRequest(
+        process_metafile_path=process_metafile,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        saf_final_name="319696111-default",
+        export_dst=exp_dir,
+    )
+
+    # act
+    result = dfx.DigiFlowExporter().run(request)
+
+    # assert
+    assert len(result) == 2
+    assert os.path.exists(result[0])
+    assert str(result[0]).endswith("319696111-default.zip")
+
+
+def test_export_oop_with_optional_configuration(monography_319696111):
+    """Exporter uses optional config default mapping when request has no export_map."""
+
+    # arrange
+    cnt_dir, _, exp_dir = monography_319696111
+    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    config = dfx.DigiFlowExporterConfig(default_export_map={".xml": THE_METS})
+    request = dfx.ExportRequest(
+        process_metafile_path=process_metafile,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        saf_final_name="319696111-config",
+        export_dst=exp_dir,
+    )
+
+    # act
+    result = dfx.DigiFlowExporter(config=config).run(request)
+
+    # assert
+    assert len(result) == 2
+    assert os.path.exists(result[0])
+    tmp_saf_file_name = next(filter(lambda e: "319696111-config" in e, os.listdir(exp_dir)))
+    final_saf_file_name = tmp_saf_file_name.replace(".processing", "")
+    os.rename(
+        os.path.join(exp_dir, tmp_saf_file_name),
+        os.path.join(exp_dir, final_saf_file_name),
+    )
+    final_saf_path = str(os.path.join(exp_dir, final_saf_file_name))
+    shutil.unpack_archive(final_saf_path, extract_dir=exp_dir)
+    assert os.path.exists(os.path.join(exp_dir, "item_000", THE_METS))
+    assert not os.path.exists(os.path.join(exp_dir, "item_000", "319696111.pdf"))
+
+
+def test_export_oop_config_can_skip_derivates_file(monography_319696111):
+    """Optional SAF additional files config can skip metadata_local.xml creation."""
+
+    # arrange
+    cnt_dir, _, exp_dir = monography_319696111
+    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    config = dfx.DigiFlowExporterConfig(
+        saf_additional_files=[
+            dfx.SAF_ADDITIONAL_DUBLIN_CORE,
+            dfx.SAF_ADDITIONAL_COLLECTIONS,
+            dfx.SAF_ADDITIONAL_CONTENTS,
+        ]
+    )
+    request = dfx.ExportRequest(
+        process_metafile_path=process_metafile,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        saf_final_name="319696111-no-derivates",
+        export_dst=exp_dir,
+        export_map=EXPORT_MAPPING_KITODO2,
+    )
+
+    # act
+    result = dfx.DigiFlowExporter(config=config).run(request)
+
+    # assert
+    assert len(result) == 2
+    tmp_saf_file_name = next(
+        filter(lambda e: "319696111-no-derivates" in e, os.listdir(exp_dir))
+    )
+    final_saf_file_name = tmp_saf_file_name.replace(".processing", "")
+    os.rename(
+        os.path.join(exp_dir, tmp_saf_file_name),
+        os.path.join(exp_dir, final_saf_file_name),
+    )
+    final_saf_path = str(os.path.join(exp_dir, final_saf_file_name))
+    shutil.unpack_archive(final_saf_path, extract_dir=exp_dir)
+    assert os.path.exists(os.path.join(exp_dir, "item_000", "dublin_core.xml"))
+    assert not os.path.exists(os.path.join(exp_dir, "item_000", "metadata_local.xml"))
+
+
+def test_export_oop_config_with_unknown_saf_additional_file_raises(
+    monography_319696111,
+):
+    """Unknown SAF additional file selector must raise DigiFlowExportError."""
+
+    # arrange
+    cnt_dir, _, exp_dir = monography_319696111
+    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    config = dfx.DigiFlowExporterConfig(saf_additional_files=["unknown-flag"])
+    request = dfx.ExportRequest(
+        process_metafile_path=process_metafile,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        saf_final_name="319696111-invalid-config",
+        export_dst=exp_dir,
+        export_map=EXPORT_MAPPING_KITODO2,
+    )
+
+    # act + assert
+    with pytest.raises(dfx.DigiFlowExportError) as exc_info:
+        dfx.DigiFlowExporter(config=config).run(request)
+    assert "Unknown SAF additional files requested" in str(exc_info.value)
+
+
 def test_export_kitodo2_inspect_saf_assets(monography_319696111):
     """
     create export with monography data from kitodo2
