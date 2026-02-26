@@ -281,6 +281,32 @@ def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
     assert len(invalids) == 0
 
 
+@pytest.mark.parametrize(
+    ["file_name", "valid_resolutions"],
+    [
+        ("43837_max_01.tif", [300, 470]),
+        ("1667522809_J_0025_0512.tif", [300, 470]),
+    ],
+)
+def test_tiff_resolution_valid_values_pass(file_name, valid_resolutions, tmp_path):
+    """Ensure custom valid resolution lists accept known valid integer values"""
+
+    # arrange
+    file_source = Path(TEST_RES) / "image" / file_name
+    file_target = tmp_path / file_name
+    shutil.copy(file_source, file_target)
+
+    # act
+    invalids: typing.List[df_v.Invalid] = df_v.validate_tiff(
+        file_target,
+        [df_v.LABEL_SCAN_VALIDATOR_RESOLUTION],
+        valid_resolutions=valid_resolutions,
+    )
+
+    # assert
+    assert len(invalids) == 0
+
+
 def test_tiff_resolution_missing(tmp_path):
     """Detect invalid images:
     What happens if resolution values completely missing?
