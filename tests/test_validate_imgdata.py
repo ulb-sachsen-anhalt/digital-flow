@@ -20,7 +20,7 @@ def test_tiff_channel_depth_invalid(tmp_path):
 
     # arrange
     file_name = "43837_max_01.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(tmp_path, file_name)
     shutil.copy(file_source, file_target)
 
@@ -45,7 +45,7 @@ def test_tiff_resolution_invalid(tmp_path):
 
     # arrange
     file_name = "8736_max_01.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -53,12 +53,10 @@ def test_tiff_resolution_invalid(tmp_path):
     invalids: typing.List[df_v.Invalid] = df_v.validate_tiff(file_target)
 
     # assert
-    assert len(invalids) == 4
+    assert len(invalids) == 2
     assert str(invalids[0].location).endswith(file_name)
     assert f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_X}: 470.55" == invalids[0].info
-    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55" == invalids[1].info
-    assert f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: 470.55" == invalids[2].info
-    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55" == invalids[3].info
+    assert f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: 470.55" == invalids[1].info
 
 
 def test_tiff_resolution_invalid_alter_range(tmp_path):
@@ -68,7 +66,7 @@ def test_tiff_resolution_invalid_alter_range(tmp_path):
 
     # arrange
     file_name = "8736_max_01.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -78,10 +76,7 @@ def test_tiff_resolution_invalid_alter_range(tmp_path):
     )
 
     # assert
-    assert len(invalids) == 2
-    assert str(invalids[0].location).endswith(file_name)
-    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55" == invalids[0].info
-    assert f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55" == invalids[1].info
+    assert len(invalids) == 0
 
 
 def test_tiff_validate_only_channels_valid(tmp_path):
@@ -93,7 +88,7 @@ def test_tiff_validate_only_channels_valid(tmp_path):
 
     # arrange
     file_name = "8736_max_01.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -109,7 +104,7 @@ def test_tiff_validate_only_channels_valid(tmp_path):
 @pytest.fixture(name="img_resolution_invalid")
 def _fixture_img_resolution_invalid(tmp_path):
     file_name = "8736_max_01.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
     img = df_v.InputImage(file_target)
@@ -122,7 +117,7 @@ def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
 
     # arrange
     tiff_exif_val = df_v.ScanValidatorResolution(
-        img_resolution_invalid, valid_resolutions=[300, 470.55]
+        img_resolution_invalid, valid_resolutions=[300]
     )
     # act
     tiff_exif_val.check()
@@ -131,11 +126,11 @@ def test_tiffexifresolution_resolution_invalid(img_resolution_invalid):
     assert tiff_exif_val.label == df_v.LABEL_SCAN_VALIDATOR_RESOLUTION
     assert len(tiff_exif_val.invalids) == 2
     assert (
-        f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_X}: 470.55"
+        f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_X}: 470.55"
         == tiff_exif_val.invalids[0].info
     )
     assert (
-        f"{df_v.INVALID_LABEL_TYPE} {df_vi.LABEL_RES_Y}: 470.55"
+        f"{df_v.INVALID_LABEL_RANGE} {df_vi.LABEL_RES_Y}: 470.55"
         == tiff_exif_val.invalids[1].info
     )
 
@@ -159,7 +154,7 @@ def test_tiff_grayscale_newspaper_valid(tmp_path):
 
     # arrange
     file_name = "1667522809_J_0025_0512.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -188,7 +183,7 @@ def test_tiff_grayscale_newspaper_only_scanfiledata_valid(tmp_path):
 
     # arrange
     file_name = "1667522809_J_0025_0512.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
 
@@ -214,7 +209,7 @@ def test_tiff_grayscale_newspaper_default_validators(tmp_path):
 
     # arrange
     file_name = "1667522809_J_0025_0512.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
     validator_labels = [
@@ -236,7 +231,7 @@ def test_validate_tiff_with_input_image(tmp_path):
 
     # arrange
     file_name = "1667522809_J_0025_0512.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
     validator_labels = [
@@ -264,7 +259,7 @@ def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
 
     # arrange
     file_name = "1667522809_J_0025_0512.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
     validator_labels = [
@@ -286,13 +281,14 @@ def test_tiff_grayscale_newspaper_custom_validators_valid(tmp_path):
     [
         ("43837_max_01.tif", [300, 470]),
         ("1667522809_J_0025_0512.tif", [300, 470]),
+        ("00000196_cropped.tif", [300, 470]),
     ],
 )
 def test_tiff_resolution_valid_values_pass(file_name, valid_resolutions, tmp_path):
     """Ensure custom valid resolution lists accept known valid integer values"""
 
     # arrange
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = tmp_path / file_name
     shutil.copy(file_source, file_target)
 
@@ -314,7 +310,7 @@ def test_tiff_resolution_missing(tmp_path):
 
     # arrange
     file_name = "8736_max_02.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
 
@@ -358,7 +354,7 @@ def test_tiff_image_properties(image_name, check_sum, x_resolution):
     """Make sure image properties read properly"""
 
     # arrange
-    file_source = Path(TEST_RES) / "image" / image_name
+    file_source = Path(TEST_RES) / "images" / image_name
 
     # act
     image: df_v.InputImage = df_v.InputImage(file_source)
@@ -397,7 +393,7 @@ def _fixture_custom_config():
 def _fixture_newspaper_image(tmp_path):
     """Fixture providing path to newspaper test image"""
     file_name = "1667522809_J_0025_0512.tif"
-    file_source = Path(TEST_RES) / "image" / file_name
+    file_source = Path(TEST_RES) / "images" / file_name
     file_target = Path(str(tmp_path), file_name)
     shutil.copy(file_source, file_target)
     return file_target

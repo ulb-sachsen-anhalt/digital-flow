@@ -418,6 +418,11 @@ class ScanValidatorResolution(ScanValidator):
         return LABEL_SCAN_VALIDATOR_RESOLUTION
 
     def check(self) -> None:
+        """Changed due 2026-02-26:
+        * Resolution values must not be rationals, but integers
+          Therefore ignore rational denominator/numerator since encountered
+          rational values are strange, i.e. 3_000_000/10_000 => 300.00
+        """
         super().check()
         assert self.input_file is not None
         assert isinstance(self.input_file, InputImage)
@@ -451,17 +456,6 @@ class ScanValidatorResolution(ScanValidator):
                     f"{dfvc.INVALID_LABEL_RANGE} {LABEL_RES_X}: {img_md.resolution_x}",
                 )
                 self.invalids.append(inv04)
-            if img_md.resolution_x is not None and isinstance(
-                img_md.resolution_x, IFDRational
-            ):
-                x_res: IFDRational = img_md.resolution_x
-                if x_res.denominator != 1:
-                    inv07 = dfvc.Invalid(
-                        a_prefix,
-                        img_loc,
-                        f"{dfvc.INVALID_LABEL_TYPE} {LABEL_RES_X}: {img_md.resolution_x}",
-                    )
-                    self.invalids.append(inv07)
         if img_md.resolution_y == dfvc.UNSET_NUMBR:
             inv05 = dfvc.Invalid(
                 a_prefix, img_loc, f"{dfvc.INVALID_LABEL_UNSET} {LABEL_RES_Y}"
@@ -475,17 +469,6 @@ class ScanValidatorResolution(ScanValidator):
                     f"{dfvc.INVALID_LABEL_RANGE} {LABEL_RES_Y}: {img_md.resolution_y}",
                 )
                 self.invalids.append(inv06)
-            if img_md.resolution_y is not None and isinstance(
-                img_md.resolution_y, IFDRational
-            ):
-                y_res: IFDRational = img_md.resolution_y
-                if y_res.denominator != 1:
-                    inv08 = dfvc.Invalid(
-                        a_prefix,
-                        img_loc,
-                        f"{dfvc.INVALID_LABEL_TYPE} {LABEL_RES_Y}: {img_md.resolution_y}",
-                    )
-                    self.invalids.append(inv08)
 
 
 class ScanValidatorPhotometric(ScanValidator):
