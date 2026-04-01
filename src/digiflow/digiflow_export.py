@@ -42,13 +42,13 @@ BUNDLE_THUMBNAIL = "BUNDLE_THUMBNAIL__"
 SRC_THUMBS = "BUNDLE_THUMBNAIL__"
 DIR_IMAGES = [KITODO2_MAX, SRC_MAX, SRC_IMAGE_FOOTER]
 DIR_DERIVATES = [SRC_PREVIEW, SRC_THUMBS]
-DEFAULT_EXPORT_MAPPINGS = {
+ULB_DEFAULT_EXPORT_MAPPINGS = {
     ".xml": SAF_METS_XML,
-    ".pdf": None,
-    SRC_IMAGE_FOOTER: None,
-    SRC_THUMBS: None,
-    SRC_PREVIEW: None,
-    SRC_FULLTEXT: None,
+    ".pdf": "",
+    SRC_IMAGE_FOOTER: "",
+    SRC_THUMBS: "",
+    SRC_PREVIEW: "",
+    SRC_FULLTEXT: "",
 }
 CONTENTS_FILE_MAPPINGS = {SRC_FULLTEXT: "FULLTEXT_OCR", SRC_MAX: ""}
 
@@ -73,13 +73,13 @@ def _validate_saf_additional_files(saf_additional_files):
         return list(DEFAULT_SAF_ADDITIONAL_FILES)
     if not isinstance(saf_additional_files, list):
         raise DigiFlowExportError(
-            "Invalid saf_additional_files: expected list of SAF flags."
+            "invalid saf_additional_files: expected list of SAF flags."
         )
     unknown_files = sorted(set(saf_additional_files) - ALLOWED_SAF_ADDITIONAL_FILES)
     if unknown_files:
         allowed = sorted(ALLOWED_SAF_ADDITIONAL_FILES)
         raise DigiFlowExportError(
-            f"Unknown SAF additional files requested: {unknown_files}. Allowed: {allowed}"
+            f"unknown SAF additional files requested: {unknown_files}. Allowed: {allowed}"
         )
     return list(saf_additional_files)
 
@@ -88,45 +88,51 @@ class DigiFlowExportError(Exception):
     """Mark Export Exception"""
 
 
-class ExportMapping:
-    """Map a source file to its SAF target path with optional access rights."""
+class SourceFileMapping:
+    """Map a source file with absolute path to a target path,
+    which may be a directory or a file.
+    May contain optional information about access rights
+    or DSpace-SAF bundle information, i.e. "MAX", or "FULLTEXT".
 
-    def __init__(self, path_source, path_target, access_right=None):
-        if not os.path.exists(path_source):
-            raise DigiFlowExportError(f"Invalid source path '{path_source}'!")
-        if not os.path.isabs(path_source):
-            raise DigiFlowExportError(f"Source path '{path_source}' is not absolute!")
-        path_target_dir = os.path.dirname(path_target)
-        if not os.path.exists(path_target_dir):
+    If bundle information not provided, it will be derived
+    from source file's path subdirectory, i.e. "<base_dir>/MAX".
+    """
+
+    def __init__(self, path_source: pathlib.Path, path_target: pathlib.Path,
+                 access_right=None, dspace_bundle=None):
+        if not isinstance(path_source, pathlib.Path):
+            path_source = pathlib.Path(path_source)
+        if not isinstance(path_target, pathlib.Path):
+            path_target = pathlib.Path(path_target)
+        if not path_source.is_absolute():
+            raise DigiFlowExportError(f"source path '{path_source}' not absolute!")
+        if not path_source.exists():
+            raise DigiFlowExportError(f"invalid source path '{path_source}'!")
+        path_target_dir = path_target.parent
+
+        if not path_target_dir.exists():
             os.makedirs(path_target_dir)
         self.path_source = path_source
         self.path_target = path_target
         self.access_right = access_right
-        _path_src = pathlib.Path(path_source)
-        self.src_bundle = _path_src.parent.stem
-
-    def get(self):
-        """Access mapping"""
-        return (self.path_source, self.path_target)
+        self.dspace_bundle = dspace_bundle
+        if self.dspace_bundle is None:
+            path_src = pathlib.Path(path_source)
+            self.dspace_bundle = path_src.parent.stem
 
     def copy(self):
         """copy from source to target"""
         shutil.copy(self.path_source, self.path_target)
 
-    def __repr__(self) -> str:
-        return f"{self.path_source} => {self.path_target}"
-
     def __eq__(self, other: object) -> bool:
         """Enable check with in-operator to prevent duplicate ExportMappings."""
-        if not isinstance(other, ExportMapping):
+        if not isinstance(other, SourceFileMapping):
             return NotImplemented
-        return (
-            self.path_source == other.path_source and self.path_target == other.path_target
-        )
+        return self.path_source == other.path_source and self.path_target == other.path_target
 
     def __lt__(self, other: object) -> bool:
         """Enable meaningful sorting of ExportMappings by source path basename."""
-        if not isinstance(other, ExportMapping):
+        if not isinstance(other, SourceFileMapping):
             return NotImplemented
         self_src_base = os.path.basename(self.path_source)
         other_src_base = os.path.basename(other.path_source)
@@ -137,12 +143,12 @@ class ExportMapping:
 class ExportRequest:
     """Value object that contains all arguments needed for a single export run."""
 
-    process_metafile_path: typing.Union[str, pathlib.Path]
-    collection: str
+    process_metafile_path: pathlib.Path
     saf_final_name: str
-    export_dst: typing.Union[str, pathlib.Path]
+    export_dst: typing.Optional[pathlib.Path] = None
     export_map: typing.Optional[dict] = None
-    tmp_saf_dir: typing.Optional[typing.Union[str, pathlib.Path]] = None
+    collection: typing.Optional[str] = None
+    tmp_saf_dir: typing.Optional[pathlib.Path] = None
 
 
 @dataclasses.dataclass
@@ -156,25 +162,28 @@ class DigiFlowExporterConfig:
     saf_additional_files: typing.Optional[typing.List[str]] = None
 
 
-class ExportWorkspace:
-    """Lifecycle helper for temporary SAF export workspace."""
+class SingleItemExportWorkspace:
+    """Create temporary SAF export workspace."""
 
-    PREFIX = "opendata-working-"
+    TMP_DIR_PREFIX = "export-working-"
+    ITEM_SUB_DIR = "item_000"
 
-    def __init__(self, saf_final_name, tmp_saf_dir=None):
+    def __init__(self, saf_final_name, item_sub_dir=ITEM_SUB_DIR,
+                 tmp_saf_dir=None):
         self.saf_final_name = saf_final_name
-        self.tmp_saf_dir = tmp_saf_dir
+        self.single_item_sub_dir = item_sub_dir
+        self.tmp_saf_dir: typing.Optional[pathlib.Path] = tmp_saf_dir
+        self.tmp_dir: typing.Optional[str] = None
+        self.item_dir: typing.Optional[pathlib.Path] = None
         self._context = None
-        self.tmp_dir = None
-        self.item_dir = None
 
     def __enter__(self):
         temp_root = tempfile.gettempdir()
         if self.tmp_saf_dir:
             temp_root = self.tmp_saf_dir
-        self._context = tempfile.TemporaryDirectory(prefix=self.PREFIX, dir=temp_root)
+        self._context = tempfile.TemporaryDirectory(prefix=self.TMP_DIR_PREFIX, dir=temp_root)
         self.tmp_dir = self._context.__enter__()
-        self.item_dir = os.path.join(self.tmp_dir, self.saf_final_name, "item_000")
+        self.item_dir = pathlib.Path(self.tmp_dir) / self.saf_final_name / self.single_item_sub_dir
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -182,37 +191,44 @@ class ExportWorkspace:
         return self._context.__exit__(exc_type, exc_val, exc_tb)
 
 
-class DigiFlowExporter:
-    """Application service that orchestrates one complete SAF export."""
+class SAFExporter:
+    """Application SAF export for digitalisation data of 
+    * METS/MODS, and
+    * opt. Images (TIFF, JPEG)
+    * opt. OCR (ALTO XML)
+    * opt. PDFs (born-digital or scanned)
+    Includes export logic from given workspace, building the SAF structure with all
+    expected files and DSpace metadata assets, and processing the export,
+    i.e. creating a Zip archive and moving this to optional target destination.
+    """
 
     def __init__(
         self,
         mapping_factory=None,
         processor=None,
-        workspace_cls=None,
         config: typing.Optional[DigiFlowExporterConfig] = None,
     ):
         cfg_mapping_factory = config.mapping_factory if config else None
         cfg_processor = config.processor if config else None
-        cfg_workspace_cls = config.workspace_cls if config else None
         cfg_default_export_map = config.default_export_map if config else None
         cfg_saf_additional_files = config.saf_additional_files if config else None
-
-        self.mapping_factory = mapping_factory or cfg_mapping_factory or map_contents
+        self.mapping_func = mapping_factory or cfg_mapping_factory or map_contents
         self.processor = processor or cfg_processor or process
-        self.workspace_cls = workspace_cls or cfg_workspace_cls or ExportWorkspace
-        self.default_export_map = cfg_default_export_map or DEFAULT_EXPORT_MAPPINGS
+        self.default_export_map = cfg_default_export_map or ULB_DEFAULT_EXPORT_MAPPINGS
         self.saf_additional_files = _validate_saf_additional_files(
             cfg_saf_additional_files
         )
 
     def run(self, request: ExportRequest):
+        """Run export with given request parameters."""
         source_path_dir = self._resolve_source_path_dir(request.process_metafile_path)
         export_map = request.export_map
         if export_map is None:
             export_map = self.default_export_map
-        with self.workspace_cls(request.saf_final_name, request.tmp_saf_dir) as workspace:
-            mappings = self.mapping_factory(source_path_dir, workspace.item_dir, export_map)
+        with SingleItemExportWorkspace(saf_final_name=request.saf_final_name,
+                             tmp_saf_dir=request.tmp_saf_dir) as workspace:
+            assert workspace.item_dir is not None, "ExportWorkspace item_dir invalid!"
+            mappings = self.mapping_func(source_path_dir, workspace.item_dir, export_map)
             return self.processor(
                 mappings,
                 workspace.item_dir,
@@ -221,6 +237,10 @@ class DigiFlowExporter:
                 request.export_dst,
                 self.saf_additional_files,
             )
+
+    def move(self, the_file_path, destination):
+        """Move propably very large export artefact with intermediate suffix to external drive."""
+        return move_file_to(the_file_path, destination)
 
     @staticmethod
     def _resolve_source_path_dir(process_metafile_path):
@@ -247,19 +267,20 @@ def process(
     for mapping in export_mappings:
         mapping.copy()
     if SAF_ADDITIONAL_DUBLIN_CORE in selected_files:
-        _handle_dublin_core_dummy(work_dir)
+        _generate_dublin_core_file(work_dir)
     if SAF_ADDITIONAL_DUBLIN_CORE_DERIVATES in selected_files:
-        _handle_dublin_core_derivates(work_dir)
+        _generate_dublin_core_derivates(work_dir)
     if SAF_ADDITIONAL_COLLECTIONS in selected_files:
         _handle_collections_file(work_dir, target_collection)
     if SAF_ADDITIONAL_CONTENTS in selected_files:
-        _handle_contents_file(work_dir, export_mappings)
+        _generate_contents_file(work_dir, export_mappings)
     the_tmp_path, the_filesize = compress(os.path.dirname(work_dir), archive_name)
     path_export_processing = move_file_to(the_tmp_path, target_data_dir)
     return (path_export_processing, the_filesize)
 
 
-def map_contents(src_dir, dst_dir, export_map=None):
+def map_contents(src_dir: pathlib.Path, dst_dir: pathlib.Path,
+                 export_map=None) -> typing.List[SourceFileMapping]:
     """
     Create Mappings for source dir file entries to
     future destination dir entries.
@@ -275,7 +296,7 @@ def map_contents(src_dir, dst_dir, export_map=None):
     file with extension '.xml' and turn it into 'mets.xml'
     """
 
-    mappings = []
+    mappings: typing.List[SourceFileMapping] = []
     access_right = None
     if not export_map:
         export_map = {".xml": SAF_METS_XML}
@@ -287,36 +308,36 @@ def map_contents(src_dir, dst_dir, export_map=None):
     ]
 
     for src, dst in export_map.items():
+        # for each individual file review
         for source_path in source_paths:
-            if not isinstance(src, str):
-                src = str(src)
             if src in source_path:
-                # for each individual file review
-                if isinstance(dst, list):
-                    # with E-Pflicht migr. we pass the right
-                    # as second list element
-                    dst, access_right = dst
-                if not dst:
-                    _default_dst = os.path.basename(source_path)
-                    dst_path = os.path.join(dst_dir, _default_dst)
+                # if isinstance(dst, list):
+                #     # with E-Pflicht migr. we pass the right
+                #     # as second list element
+                #     dst, access_right = dst
+                if not dst or len(dst.strip()) == 0:
+                    default_dst = os.path.basename(source_path)
+                    dst_path = os.path.join(dst_dir, default_dst)
                 else:
                     dst_path = os.path.join(dst_dir, dst)
-                _mapping = ExportMapping(source_path, dst_path, access_right)
+                sf_mapping = SourceFileMapping(pathlib.Path(source_path),
+                                               pathlib.Path(dst_path),
+                                               access_right=access_right)
                 # prevent re-addition
-                if _mapping not in mappings:
-                    mappings.append(_mapping)
+                if sf_mapping not in mappings:
+                    mappings.append(sf_mapping)
 
     return mappings
 
 
-def _handle_contents_file(working_item_dir,
-                          export_mappings: typing.List[ExportMapping]):
+def _generate_contents_file(working_item_dir,
+                          export_mappings: typing.List[SourceFileMapping]):
     contents_file_path = os.path.join(working_item_dir, "contents")
     with open(contents_file_path, "a", encoding="UTF-8") as contents_file:
         for mapping in sorted(export_mappings):
             target_base = pathlib.Path(mapping.path_target)
             the_name = target_base.name
-            src_bundle = mapping.src_bundle
+            src_bundle = mapping.dspace_bundle
             if the_name == SAF_METS_XML:
                 contents_file.write(f"{SAF_METS_XML}\tbundle:METS_BACKUP\n")
             elif the_name.endswith((".pdf", ".epub")):
@@ -334,7 +355,7 @@ def _handle_contents_file(working_item_dir,
             elif src_bundle == SRC_FULLTEXT and _is_alto(target_base):
                 contents_file.write(f"{the_name}\tbundle:FULLTEXT_OCR\n")
             elif src_bundle in DIR_IMAGES:
-                image_row = _render_row(the_name, working_item_dir)
+                image_row = _render_content_file_row(the_name, working_item_dir)
                 contents_file.write(image_row)
             # we know them, but we do *not* handle 'em
             # since they're already dealt at main image
@@ -344,7 +365,7 @@ def _handle_contents_file(working_item_dir,
                 raise DigiFlowExportError(f"can't handle {mapping}!")
 
 
-def _render_row(img_label, working_item_dir):
+def _render_content_file_row(img_label, working_item_dir):
     """
     Render image entry in contents file
     extend with optional virtual derivates
@@ -413,7 +434,7 @@ def move_file_to(the_file_path, destination):
     return final_export_path
 
 
-def _handle_dublin_core_dummy(work_dir):
+def _generate_dublin_core_file(work_dir):
     dc_dummy_path = os.path.join(work_dir, "dublin_core.xml")
     if os.path.exists(dc_dummy_path):
         # already provided by pipeline (E-Pflicht)
@@ -432,7 +453,7 @@ def _handle_dublin_core_dummy(work_dir):
     write_xml_file(dublin_core, dc_dummy_path)
 
 
-def _handle_dublin_core_derivates(work_dir):
+def _generate_dublin_core_derivates(work_dir):
     """
     <?xml version="1.0" encoding="UTF-8"?>
     <dublin_core schema="local">
@@ -463,17 +484,12 @@ def _handle_collections_file(work_dir, collections):
         collections_path = os.path.join(work_dir, "collections")
         with open(collections_path, "a", encoding="UTF-8") as collections_file:
             collections_file.write(collections)
-    else:
-        raise DigiFlowExportError(
-            "No collections data provided - invalid share_it export!"
-        )
-
 
 def export_data_from(
     process_metafile_path,
-    collection,
     saf_final_name,
     export_dst,
+    collection=None,
     export_map=None,
     tmp_saf_dir=None,
 ):
@@ -483,10 +499,10 @@ def export_data_from(
     """
     request = ExportRequest(
         process_metafile_path=process_metafile_path,
-        collection=collection,
         saf_final_name=saf_final_name,
         export_dst=export_dst,
+        collection=collection,
         export_map=export_map,
         tmp_saf_dir=tmp_saf_dir,
     )
-    return DigiFlowExporter().run(request)
+    return SAFExporter().run(request)

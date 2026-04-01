@@ -14,8 +14,8 @@ from digiflow.digiflow_multisaf import create_saf
 from digiflow import (
     export_data_from,
     map_contents,
-    ExportMapping,
-    DEFAULT_EXPORT_MAPPINGS,
+    SourceFileMapping,
+    ULB_DEFAULT_EXPORT_MAPPINGS,
     DigiFlowExportError,
     BUNDLE_PREVIEW as BP,
     BUNDLE_THUMBNAIL as BT,

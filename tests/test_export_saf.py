@@ -9,8 +9,8 @@ import pytest
 from digiflow import (
     export_data_from,
     map_contents,
-    ExportMapping,
-    DEFAULT_EXPORT_MAPPINGS,
+    SourceFileMapping,
+    ULB_DEFAULT_EXPORT_MAPPINGS,
     DigiFlowExportError,
     BUNDLE_PREVIEW as BP,
     BUNDLE_THUMBNAIL as BT,
@@ -55,26 +55,26 @@ def test_export_mappings_mets(monography_319696111):
 
     # assert
     assert len(export_mappings) == 1
-    assert export_mappings[0].path_source.endswith(KITODO2_MONOGRAPHY_METS)
-    assert export_mappings[0].path_target.endswith(THE_METS)
+    assert export_mappings[0].path_source.name == KITODO2_MONOGRAPHY_METS
+    assert export_mappings[0].path_target.name == THE_METS
 
 
 def test_export_mappings_invalid_workdir(monography_319696111):
-    """Behavior with default matching paths
-    TODO clear concerns"""
+    """Behavior: relative path for working directory should
+    raise exception."""
 
     # arrange
     w_dir, _, _ = monography_319696111
 
     # act
     with pytest.raises(DigiFlowExportError) as export_err:
-        ExportMapping(str(w_dir)[5:], w_dir.parent)
+        SourceFileMapping(w_dir.name, w_dir.parent)
 
     # assert
-    assert "Invalid source path" in str(export_err.value)
+    assert "source path 'content' not absolute!" in str(export_err.value)
 
 
-EXPORT_MAPPING_KITODO2 = {".xml": THE_METS, ".pdf": None, "jpgs/max": None}
+EXPORT_MAPPING_KITODO2 = {".xml": THE_METS, ".pdf": "", "jpgs/max": ""}
 
 
 def test_export_kitodo2_mappings(monography_319696111):
@@ -90,8 +90,8 @@ def test_export_kitodo2_mappings(monography_319696111):
     # assert
     assert len(content_files) == 69
     for content_file in content_files:
-        last_src_segm = content_file.path_source.split("/")[-1]
-        last_dst_segm = content_file.path_target.split("/")[-1]
+        last_src_segm = content_file.path_source.name
+        last_dst_segm = content_file.path_target.name
         if last_dst_segm == "mets.xml":
             continue
         assert last_src_segm == last_dst_segm
@@ -109,10 +109,10 @@ def test_export_kitodo2_result(monography_319696111):
     # act
     result = export_data_from(
         process_metafile,
-        SHARE_IT_EXPORT_COLLECTION,
-        export_map=EXPORT_MAPPING_KITODO2,
         saf_final_name="319696111",
         export_dst=exp_dir,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        export_map=EXPORT_MAPPING_KITODO2,
     )
 
     # assert
@@ -128,7 +128,7 @@ def test_export_oop_minimal_working_example(monography_319696111):
 
     # arrange
     cnt_dir, _, exp_dir = monography_319696111
-    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    process_metafile = cnt_dir / KITODO2_MONOGRAPHY_METS
     request = dfx.ExportRequest(
         process_metafile_path=process_metafile,
         collection=SHARE_IT_EXPORT_COLLECTION,
@@ -138,7 +138,7 @@ def test_export_oop_minimal_working_example(monography_319696111):
     )
 
     # act
-    result = dfx.DigiFlowExporter().run(request)
+    result = dfx.SAFExporter().run(request)
 
     # assert
     assert len(result) == 2
@@ -152,7 +152,7 @@ def test_export_oop_with_default_mappings(monography_319696111):
 
     # arrange
     cnt_dir, _, exp_dir = monography_319696111
-    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    process_metafile = cnt_dir / KITODO2_MONOGRAPHY_METS
     request = dfx.ExportRequest(
         process_metafile_path=process_metafile,
         collection=SHARE_IT_EXPORT_COLLECTION,
@@ -161,7 +161,7 @@ def test_export_oop_with_default_mappings(monography_319696111):
     )
 
     # act
-    result = dfx.DigiFlowExporter().run(request)
+    result = dfx.SAFExporter().run(request)
 
     # assert
     assert len(result) == 2
@@ -169,12 +169,34 @@ def test_export_oop_with_default_mappings(monography_319696111):
     assert str(result[0]).endswith("319696111-default.zip")
 
 
+def test_export_oop_without_collection(monography_319696111):
+    """ExportRequest runs successfully without setting collection parameter."""
+
+    # arrange
+    cnt_dir, _, exp_dir = monography_319696111
+    process_metafile = cnt_dir / KITODO2_MONOGRAPHY_METS
+    request = dfx.ExportRequest(
+        process_metafile_path=process_metafile,
+        saf_final_name="319696111-no-collection",
+        export_dst=exp_dir,
+        export_map=EXPORT_MAPPING_KITODO2,
+    )
+
+    # act
+    result = dfx.SAFExporter().run(request)
+
+    # assert
+    assert len(result) == 2
+    assert os.path.exists(result[0])
+    assert str(result[0]).endswith("319696111-no-collection.zip")
+
+
 def test_export_oop_with_optional_configuration(monography_319696111):
     """Exporter uses optional config default mapping when request has no export_map."""
 
     # arrange
     cnt_dir, _, exp_dir = monography_319696111
-    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    process_metafile = cnt_dir / KITODO2_MONOGRAPHY_METS
     config = dfx.DigiFlowExporterConfig(default_export_map={".xml": THE_METS})
     request = dfx.ExportRequest(
         process_metafile_path=process_metafile,
@@ -184,7 +206,7 @@ def test_export_oop_with_optional_configuration(monography_319696111):
     )
 
     # act
-    result = dfx.DigiFlowExporter(config=config).run(request)
+    result = dfx.SAFExporter(config=config).run(request)
 
     # assert
     assert len(result) == 2
@@ -206,7 +228,7 @@ def test_export_oop_config_can_skip_derivates_file(monography_319696111):
 
     # arrange
     cnt_dir, _, exp_dir = monography_319696111
-    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    process_metafile = cnt_dir / KITODO2_MONOGRAPHY_METS
     config = dfx.DigiFlowExporterConfig(
         saf_additional_files=[
             dfx.SAF_ADDITIONAL_DUBLIN_CORE,
@@ -223,7 +245,7 @@ def test_export_oop_config_can_skip_derivates_file(monography_319696111):
     )
 
     # act
-    result = dfx.DigiFlowExporter(config=config).run(request)
+    result = dfx.SAFExporter(config=config).run(request)
 
     # assert
     assert len(result) == 2
@@ -248,7 +270,7 @@ def test_export_oop_config_with_unknown_saf_additional_file_raises(
 
     # arrange
     cnt_dir, _, exp_dir = monography_319696111
-    process_metafile = os.path.join(cnt_dir, KITODO2_MONOGRAPHY_METS)
+    process_metafile = cnt_dir / KITODO2_MONOGRAPHY_METS
     config = dfx.DigiFlowExporterConfig(saf_additional_files=["unknown-flag"])
     request = dfx.ExportRequest(
         process_metafile_path=process_metafile,
@@ -260,8 +282,8 @@ def test_export_oop_config_with_unknown_saf_additional_file_raises(
 
     # act + assert
     with pytest.raises(dfx.DigiFlowExportError) as exc_info:
-        dfx.DigiFlowExporter(config=config).run(request)
-    assert "Unknown SAF additional files requested" in str(exc_info.value)
+        dfx.SAFExporter(config=config).run(request)
+    assert "unknown SAF additional files requested" in str(exc_info.value)
 
 
 def test_export_kitodo2_inspect_saf_assets(monography_319696111):
@@ -276,10 +298,10 @@ def test_export_kitodo2_inspect_saf_assets(monography_319696111):
     # act
     export_data_from(
         process_metafile,
-        SHARE_IT_EXPORT_COLLECTION,
-        export_map=EXPORT_MAPPING_KITODO2,
         saf_final_name="319696111",
         export_dst=exp_dir,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        export_map=EXPORT_MAPPING_KITODO2,
     )
 
     # respect intermediate ".processing" - suffix
@@ -310,10 +332,10 @@ def test_export_kitodo2_inspect_saf_contents_file(monography_319696111):
     # act
     export_data_from(
         process_metafile,
-        SHARE_IT_EXPORT_COLLECTION,
-        export_map=EXPORT_MAPPING_KITODO2,
         saf_final_name="319696111",
         export_dst=exp_dir,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        export_map=EXPORT_MAPPING_KITODO2,
     )
 
     # respect intermediate ".processing" - suffix
@@ -343,6 +365,7 @@ def test_export_kitodo2_inspect_saf_contents_file(monography_319696111):
 def test_export_kitodo2_without_share_it_info_raises_exception(monography_319696111):
     """
     create export with monography data but invalid share_it info
+    Changed behavior: No exception raised anymore without collections file.
     """
 
     # arrange
@@ -350,13 +373,17 @@ def test_export_kitodo2_without_share_it_info_raises_exception(monography_319696
     process_metafile = os.path.join(work_dir, KITODO2_MONOGRAPHY_METS)
 
     # act
-    with pytest.raises(Exception) as exc:
-        export_data_from(
-            process_metafile, None, "319696111", str(exp_dir), EXPORT_MAPPING_KITODO2
+    result = export_data_from(
+            process_metafile,
+            saf_final_name="319696111",
+            export_dst=str(exp_dir),
+            collection=None,
+            export_map=EXPORT_MAPPING_KITODO2
         )
 
     # assert
-    assert "No collections data provided" in str(exc.value)
+    assert result is not None
+    assert result[1] == "0MB"
 
 
 def test_export_mappings_migration_monography(tmp_path):
@@ -370,16 +397,18 @@ def test_export_mappings_migration_monography(tmp_path):
     shutil.copytree(source_dir, target_dir)
     the_workdir = tmp_path / "export_workdir"
     the_workdir.mkdir()
-    matching_paths = {".xml": THE_METS, ".pdf": None, "MAX": None}
+    matching_paths = {".xml": THE_METS, ".pdf": "", "MAX": ""}
 
     # act
-    mapped_files = map_contents(target_dir, str(the_workdir), matching_paths)
+    mapped_files = map_contents(src_dir=target_dir,
+                                dst_dir=the_workdir,
+                                export_map=matching_paths)
 
     # assert
     assert len(mapped_files) == 17
     for mapped_file in mapped_files:
-        last_src_segm = mapped_file.path_source.split("/")[-1]
-        last_dst_segm = mapped_file.path_target.split("/")[-1]
+        last_src_segm = mapped_file.path_source.name
+        last_dst_segm = mapped_file.path_target.name
         if last_dst_segm == THE_METS:
             continue
         assert last_src_segm == last_dst_segm
@@ -391,21 +420,23 @@ def _fixture_text_bundle(tmp_path):
     * 1 pdf
     * 1 pdf.txt
     * 10 xml files"""
-    _working = tmp_path / "WORKDIR"
-    _working.mkdir()
-    open(_working / FAKE_METS, mode="w").write("<mets></mets>")
-    open(_working / FAKE_PDF, mode="wb").write(b"<mets></mets>")
-    open(_working / f"{FAKE_PDF}.txt", mode="w").write(
-        "first line\nsecond line\nand third"
-    )
-    _fulltext = _working / "FULLTEXT"
-    _fulltext.mkdir()
-    _alto_txt = '<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.loc.gov/standards/alto/ns-v4#" xsi:schemaLocation="http://www.loc.gov/standards/alto/ns-v4# http://www.loc.gov/standards/alto/v4/alto-4-1.xsd"></alto>'
+    work_dir = tmp_path / "WORKDIR"
+    work_dir.mkdir()
+    with open(work_dir / FAKE_METS, mode="w", encoding="UTF-8") as f:
+        f.write("<mets></mets>")
+    with open(work_dir / FAKE_PDF, mode="wb") as f:
+        f.write(b"pdf")
+    with open(work_dir / f"{FAKE_PDF}.txt", mode="w", encoding="UTF-8") as f:
+        f.write("first line\nsecond line\nand third")
+    fulltext = work_dir / "FULLTEXT"
+    fulltext.mkdir()
+    alto_txt = '<alto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.loc.gov/standards/alto/ns-v4#" xsi:schemaLocation="http://www.loc.gov/standards/alto/ns-v4# http://www.loc.gov/standards/alto/v4/alto-4-1.xsd"></alto>'
     for i in range(1, 11):
-        open(_fulltext / f"{i:08d}.xml", mode="w").write(_alto_txt)
-    _export_dst = tmp_path / "export_dir"
-    _export_dst.mkdir()
-    return (_working, _export_dst)
+        with open(fulltext / f"{i:08d}.xml", mode="w", encoding="UTF-8") as f:
+            f.write(alto_txt)
+    export_dst = tmp_path / "export_dir"
+    export_dst.mkdir()
+    return (work_dir, export_dst)
 
 
 def test_export_re_ocr_with_text_bundle_mappings(re_ocr):
@@ -413,14 +444,14 @@ def test_export_re_ocr_with_text_bundle_mappings(re_ocr):
 
     # arrange
     working, export_dst = re_ocr
-    xport_map = DEFAULT_EXPORT_MAPPINGS
+    xport_map = ULB_DEFAULT_EXPORT_MAPPINGS
     if ".xml" in xport_map:
         del xport_map[".xml"]
     if ".pdf" in xport_map:
         del xport_map[".pdf"]
     xport_map[FAKE_METS] = THE_METS
-    xport_map[FAKE_PDF] = None
-    xport_map[".pdf.txt"] = None
+    xport_map[FAKE_PDF] = ""
+    xport_map[".pdf.txt"] = ""
 
     # act
     mappings = map_contents(working, export_dst, xport_map)
@@ -437,22 +468,22 @@ def test_export_re_ocr_with_text_bundle_contents_file(re_ocr):
 
     # arrange
     work_dir, export_dst = re_ocr
-    xport_map = DEFAULT_EXPORT_MAPPINGS
+    xport_map = ULB_DEFAULT_EXPORT_MAPPINGS
     if ".xml" in xport_map:
         del xport_map[".xml"]
     if ".pdf" in xport_map:
         del xport_map[".pdf"]
     xport_map[FAKE_METS] = THE_METS
-    xport_map[FAKE_PDF] = None
-    xport_map[".pdf.txt"] = None
+    xport_map[FAKE_PDF] = ""
+    xport_map[".pdf.txt"] = ""
 
     # act
     export_data_from(
         work_dir / FAKE_METS,
-        SHARE_IT_EXPORT_COLLECTION,
-        export_map=xport_map,
         saf_final_name="12345678",
         export_dst=export_dst,
+        collection=SHARE_IT_EXPORT_COLLECTION,
+        export_map=xport_map,
     )
 
     # respect intermediate ".processing" - suffix
@@ -516,75 +547,78 @@ def _fixture_mono_derivates(tmp_path):
     which correspond the proper DSpace
     virtual file groups"""
 
-    _working = tmp_path / "WORKDIR"
-    _working.mkdir()
-    open(_working / FAKE_METS, mode="w").write("<mets></mets>")
-    open(_working / FAKE_PDF, mode="wb").write(b"<mets></mets>")
-    _dirs = ["IMAGE_FOOTER", "BUNDLE_BRANDED_PREVIEW__", "BUNDLE_THUMBNAIL__"]
-    for _d in _dirs:
-        _path_d = _working / _d
-        _path_d.mkdir()
+    tmp_work_dir = tmp_path / "WORKDIR"
+    tmp_work_dir.mkdir()
+    with open(tmp_work_dir / FAKE_METS, mode="w", encoding="UTF-8") as mets_wrt:
+        mets_wrt.write("<mets></mets>")
+    with open(tmp_work_dir / FAKE_PDF, mode="wb") as pdf_wrt:
+        pdf_wrt.write(b"pdf")
+    image_dirs = ["IMAGE_FOOTER", "BUNDLE_BRANDED_PREVIEW__", "BUNDLE_THUMBNAIL__"]
+    for img_dir in image_dirs:
+        path_img_dir = tmp_work_dir / img_dir
+        path_img_dir.mkdir()
         for i in range(1, 11):
-            _img_path = f"{_d}{i:08}.jpg"
+            img_path = f"{img_dir}{i:08}.jpg"
             # clear IMAGE_FOOTER, since this is not it's name
             # on the wildside (just like '00000001.jpg')
-            _img_path = _img_path.replace("IMAGE_FOOTER", "")
-            open(_path_d / _img_path, "w+b").write(bytearray(JPG_MARKS))
-    _export_dst = tmp_path / "export_dir"
-    _export_dst.mkdir()
-    yield (_working, _export_dst)
+            img_path = img_path.replace("IMAGE_FOOTER", "")
+            with open(path_img_dir / img_path, "w+b") as img_wrt:
+                img_wrt.write(bytearray(JPG_MARKS))
+    export_dst = tmp_path / "export_dir"
+    export_dst.mkdir()
+    yield (tmp_work_dir, export_dst)
 
 
 def test_export_migration_derivates_mappings(monography_derivates):
     """Default Mappings as from VLS migrations"""
 
     # arrange
-    _src, _export_dst = monography_derivates
-    _xport_map = DEFAULT_EXPORT_MAPPINGS
+    wrk_dir, export_dst = monography_derivates
+    xport_map = ULB_DEFAULT_EXPORT_MAPPINGS
 
     # act
-    mappings = map_contents(_src, _export_dst, _xport_map)
+    mappings = map_contents(wrk_dir, export_dst, xport_map)
 
     # assert
     assert len(mappings) == 32
 
 
-@pytest.fixture(name="monography_derivates_export")
+@pytest.fixture(name="monography_export_destination")
 def _fixture_monography_derivates_export(monography_derivates):
 
     # arrange
-    _src, _export_dst = monography_derivates
+    wrk_dir, export_dst = monography_derivates
     export_data_from(
-        _src / FAKE_METS,
-        SHARE_IT_EXPORT_COLLECTION,
+        wrk_dir / FAKE_METS,
         saf_final_name="12345678",
-        export_dst=_export_dst,
+        export_dst=export_dst,
+        collection=SHARE_IT_EXPORT_COLLECTION,
     )
 
     # respect intermediate ".processing" - suffix
     # required for calling shutil - otherwise claims
     # ".processing" is invalid archive format
-    _tmp_saf_file_name = next(filter(lambda e: "zip" in e, os.listdir(_export_dst)))
-    _final_saf_file_name = _tmp_saf_file_name.replace(".processing", "")
+    tmp_saf_file_name = next(filter(lambda e: "zip" in e, os.listdir(export_dst)))
+    final_saf_file_name = tmp_saf_file_name.replace(".processing", "")
     os.rename(
-        os.path.join(_export_dst, _tmp_saf_file_name),
-        os.path.join(_export_dst, _final_saf_file_name),
+        os.path.join(export_dst, tmp_saf_file_name),
+        os.path.join(export_dst, final_saf_file_name),
     )
-    final_saf_path = str(os.path.join(_export_dst, _final_saf_file_name))
-    shutil.unpack_archive(final_saf_path, extract_dir=_export_dst)
-    yield os.path.join(_export_dst, "item_000")
+    final_saf_path = str(os.path.join(export_dst, final_saf_file_name))
+    shutil.unpack_archive(final_saf_path, extract_dir=export_dst)
+    yield os.path.join(export_dst, "item_000")
 
 
-def test_export_migration_derivates_files(monography_derivates_export):
+def test_export_migration_derivates_files(monography_export_destination):
     """Ensure all generated derivates are present
     The number of the beast: 36
     * 1 mets.xml
-    * 10 MAX images, 10 Thumbnails, 10 default previews
+    * 10 MAX images, 10 Thumbnails, 10 default previews = 30 images
     * 1 PDF
     * 4 SAF specifics: collections, contents, dublin_core.xml, metadata_local.xml
     """
 
-    mde = monography_derivates_export
+    mde = monography_export_destination
 
     # assert
     assert os.path.exists(os.path.join(mde, THE_METS))
@@ -599,11 +633,11 @@ def test_export_migration_derivates_files(monography_derivates_export):
     assert 36 == len(os.listdir(mde))
 
 
-def test_export_migration_derivates_contents_file(monography_derivates_export):
+def test_export_migration_derivates_contents_file(monography_export_destination):
     """The contents of the contents^TM"""
 
     # arrange
-    path_contents = os.path.join(monography_derivates_export, "contents")
+    path_contents = os.path.join(monography_export_destination, "contents")
     content_entries = [l for l in open(path_contents).readlines()]
     _img1 = "00000001.jpg"
 
@@ -628,9 +662,9 @@ def test_export_from_invalid_directory_fails(tmp_path):
     with pytest.raises(df.DigiFlowExportError) as exc_info:
         export_data_from(
             str(work_dir),
-            SHARE_IT_EXPORT_COLLECTION,
             saf_final_name=archive_name,
             export_dst=tmp_path,
+            collection=SHARE_IT_EXPORT_COLLECTION,
         )
     # assert
     assert "Source directory does not exist" in str(exc_info.value)
