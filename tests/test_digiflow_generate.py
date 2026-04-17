@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import subprocess
+import pathlib
 import time
 
 from unittest import (
@@ -12,6 +12,7 @@ import pytest
 
 from digiflow import (
     DerivansManager,
+    DerivansManagerError,
     run_profiled,
     id_generator,
     ContainerDerivansManager,
@@ -114,8 +115,9 @@ def test_utils_profile_class_context():
     assert MyClass.my_func_static(3, 5) == (0.25, "MyClass.my_func_static", 15)
 
 
+@mock.patch("docker.models.images.ImageCollection.list")
 @mock.patch("docker.models.images.ImageCollection.pull")
-def test_derivans_containermanager(mock_pull, tmp_path):
+def test_derivans_containermanager(mock_pull, mock_list, tmp_path):
     """Check init phase of containerized
     Derivans execution context tries to
     pull required default container image"""
@@ -126,12 +128,14 @@ def test_derivans_containermanager(mock_pull, tmp_path):
     mets_file = os.path.join(str(test_project_root), "mets_mods.xml")
     with open(mets_file, "w", encoding="utf-8") as fh_mets:
         fh_mets.write(_DUMMY_METS)
-    dmanager = ContainerDerivansManager(mets_file)
+    dmanager = ContainerDerivansManager(mets_file, path_configuration=None, path_logging=None)
+    mock_list.return_value = []
 
     # act
     dmanager.init()
 
     # assert
+    assert mock_list.call_count == 1
     assert mock_pull.call_count == 1
     call_args = mock_pull.call_args.args
     assert len(call_args) == 2
@@ -140,9 +144,37 @@ def test_derivans_containermanager(mock_pull, tmp_path):
     assert call_args[1] == "latest"
 
 
-@mock.patch("docker.models.containers.ContainerCollection.run")
+@mock.patch("docker.models.images.ImageCollection.list")
 @mock.patch("docker.models.images.ImageCollection.pull")
-def test_derivans_containermanager_additional_args(mock_pull, mock_run, tmp_path):
+def test_derivans_containermanager_image_already_available(
+    mock_pull, mock_list, tmp_path
+):
+    """Check init phase does not pull image
+    if requested image is already available locally"""
+
+    # arrange
+    test_project_root = tmp_path / "migrationtest"
+    test_project_root.mkdir()
+    mets_file = os.path.join(str(test_project_root), "mets_mods.xml")
+    with open(mets_file, "w", encoding="utf-8") as fh_mets:
+        fh_mets.write(_DUMMY_METS)
+    dmanager = ContainerDerivansManager(mets_file, path_configuration=None, path_logging=None)
+    mock_list.return_value = [mock.Mock()]
+
+    # act
+    dmanager.init()
+
+    # assert
+    mock_list.assert_called_once_with(DEFAULT_DERIVANS_IMAGE)
+    mock_pull.assert_not_called()
+
+
+@mock.patch("docker.models.containers.ContainerCollection.run")
+@mock.patch("docker.models.images.ImageCollection.list")
+@mock.patch("docker.models.images.ImageCollection.pull")
+def test_derivans_containermanager_additional_args(
+    mock_pull, mock_list, mock_run, tmp_path
+):
     """Check init phase of containerized
     Derivans execution context tries to
     pull required default container image"""
@@ -153,7 +185,8 @@ def test_derivans_containermanager_additional_args(mock_pull, mock_run, tmp_path
     mets_file = os.path.join(str(test_project_root), "mets_mods.xml")
     with open(mets_file, "w", encoding="utf-8") as fh_mets:
         fh_mets.write(_DUMMY_METS)
-    dmanager = ContainerDerivansManager(mets_file)
+    dmanager = ContainerDerivansManager(mets_file, path_configuration=None, path_logging=None)
+    mock_list.return_value = []
     dmanager.additional_args = "-f /data/conf/my_footer.png"
 
     # act
@@ -161,6 +194,7 @@ def test_derivans_containermanager_additional_args(mock_pull, mock_run, tmp_path
     dmanager.start()
 
     # assert
+    assert mock_list.call_count == 1
     assert mock_pull.call_count == 1
     assert mock_run.call_count == 1
     assert dmanager.run_command.endswith(" -f /data/conf/my_footer.png")
@@ -183,21 +217,15 @@ def test_derivans_manager_with_path_bin_dir(tmp_path):
     with open(mets_file, "w", encoding="utf-8") as fh_mets:
         fh_mets.write(_DUMMY_METS)
 
-    path_mvn_project = str(test_project_root / "digital-derivans")
     dmanager = DerivansManager(
-        mets_file, path_binary=str(test_project_bin), path_mvn_project=path_mvn_project
+        mets_file, path_configuration=None, path_binary=test_project_bin
     )
-    cwd = os.getcwd()
 
-    # act
-    with pytest.raises(subprocess.CalledProcessError) as err:
+    # act + assert
+    with pytest.raises(DerivansManagerError) as err:
         dmanager.init()
-    os.chdir(cwd)  # subprocess is changing the cwd, so lets go back
 
-    # assert
-    assert (
-        "Command 'mvn clean package -DskipTests' " "returned non-zero exit status"
-    ) in str(err.value)
+    assert "no derivans binary found" in str(err.value)
 
 
 def test_derivans_manager_none_path_binary(tmp_path):
@@ -212,8 +240,8 @@ def test_derivans_manager_none_path_binary(tmp_path):
         fh_mets.write(_DUMMY_METS)
 
     # act
-    with pytest.raises(RuntimeError) as exc:
-        DerivansManager(mets_file, path_binary=None)
+    with pytest.raises(DerivansManagerError) as exc:
+        DerivansManager(mets_file, path_configuration=None, path_binary=None)
 
     # assert
     assert "invalid path_binary" in str(exc.value)
@@ -243,13 +271,12 @@ def test_derivans_start_set_exec(mock_check, mock_call, tmp_path):
     mets_file = os.path.join(str(test_project_root), "mets_mods.xml")
     with open(mets_file, "w", encoding="utf-8") as fh_mets:
         fh_mets.write(_DUMMY_METS)
-    path_mvn_project = str(test_project_root / "digital-derivans")
     dmanager = DerivansManager(
-        mets_file, path_binary=str(test_project_bin), path_mvn_project=path_mvn_project
+        mets_file, path_configuration=None, path_binary=test_project_bin
     )
     # here is the important detail
     dmanager.path_exec = "/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
-    mock_check.return_value = str(test_project_bin)
+    mock_check.return_value = test_project_bin
     mock_call.side_effect = _forward_derivans_call(0.1)
 
     # act
@@ -276,11 +303,10 @@ def test_derivans_start_default(mock_check, mock_call, tmp_path):
     mets_file = os.path.join(str(test_project_root), "mets_mods.xml")
     with open(mets_file, "w", encoding="utf-8") as fh_mets:
         fh_mets.write(_DUMMY_METS)
-    path_mvn_project = str(test_project_root / "digital-derivans")
     dmanager = DerivansManager(
-        mets_file, path_binary=str(test_project_bin), path_mvn_project=path_mvn_project
+        mets_file, path_configuration=None, path_binary=test_project_bin
     )
-    mock_check.return_value = str(test_project_bin)
+    mock_check.return_value = test_project_bin
     mock_call.side_effect = _forward_derivans_call(0.1)
 
     # act
@@ -311,11 +337,10 @@ def test_derivans_start_with_additional_config(mock_check, mock_call, tmp_path):
     mets_file = os.path.join(str(test_project_root), "mets_mods.xml")
     with open(mets_file, "w", encoding="utf-8") as fh_mets:
         fh_mets.write(_DUMMY_METS)
-    path_mvn_project = str(test_project_root / "digital-derivans")
     dmanager = DerivansManager(
-        mets_file, path_binary=str(test_project_bin), path_mvn_project=path_mvn_project
+        mets_file, path_configuration=None, path_binary=test_project_bin
     )
-    mock_check.return_value = str(test_project_bin)
+    mock_check.return_value = test_project_bin
     dmanager.path_configuration = "/path/to/derivans.ini"
     mock_call.side_effect = _forward_derivans_call(0.1)
 
@@ -361,12 +386,10 @@ def test_derivans_start_with_java_xargs(mock_check, mock_call, tmp_path):
     mets_file = os.path.join(str(test_project_root), "mets_mods.xml")
     with open(mets_file, "w", encoding="utf-8") as fh_mets:
         fh_mets.write(_DUMMY_METS)
-    path_mvn_project = str(test_project_root / "digital-derivans")
     dmanager = DerivansManager(
-        mets_file, path_binary=str(test_project_bin), path_mvn_project=path_mvn_project
+        mets_file, path_configuration=None, path_binary=test_project_bin
     )
-    mock_check.return_value = str(test_project_bin)
-    dmanager.path_configuration = "/path/to/derivans.ini"
+    mock_check.return_value = test_project_bin
     dmanager.additional_args = "-Djava.awt.headless=true"
     mock_call.side_effect = _forward_derivans_call(0.1)
 

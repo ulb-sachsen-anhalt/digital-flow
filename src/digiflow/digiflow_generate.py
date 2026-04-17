@@ -4,7 +4,6 @@ from __future__ import annotations
 import os
 import platform
 import re
-import shutil
 import subprocess
 import time
 import typing
@@ -55,15 +54,15 @@ def id_generator(start=0, prefix=None, suffix=None, previous_value=None, padded=
     for num in range(start + 1, 99999999):
         number = str(num).zfill(padded)
         if prefix:
-            number = "{}{}".format(prefix, number)
+            number = f"{prefix}{number}"
         if suffix:
-            number = "{}{}".format(number, suffix)
+            number = f"{number}{suffix}"
         yield number
 
 
 _T = typing.TypeVar("_T")
 _FuncWrapperResult = typing.Tuple[float, str, _T]
-RunProfiledResult = typing.Callable[[], _FuncWrapperResult[_T]]
+RunProfiledResult = typing.Callable[..., _FuncWrapperResult[_T]]
 
 
 def run_profiled(func: typing.Callable) -> RunProfiledResult:
@@ -113,6 +112,10 @@ def run_command(cmd, timeout) -> subprocess.CompletedProcess:
     )
 
 
+class DerivansManagerError(RuntimeError):
+    """DerivansManager related errors"""
+
+
 @dataclass(frozen=True)
 class DerivansResult:
     """Encapsulate Derivans outcome"""
@@ -125,6 +128,7 @@ class DerivansResult:
 
 @dataclass(frozen=True)
 class ContainerProcResult:
+    """Encapsulate container process outcome"""
     exit_code: int
     logs: str
 
@@ -137,11 +141,10 @@ class BaseDerivansManager(ABC):
     @staticmethod
     def create(
         path_input: str,
-        container_image_name: str = None,
-        path_binary: str = None,
-        path_mvn_project: str = None,
-        path_configuration: str = None,
-        path_logging: str = None,
+        path_configuration: typing.Optional[Path] = None,
+        path_logging: typing.Optional[Path] = None,
+        container_image_name: typing.Optional[str] = None,
+        path_binary: typing.Optional[Path] = None,
     ) -> BaseDerivansManager:
         """Create actual DerivansManager instance
         depending on provided parameters"""
@@ -153,21 +156,22 @@ class BaseDerivansManager(ABC):
                 path_configuration=path_configuration,
                 path_logging=path_logging,
             )
-        return DerivansManager(
-            path_mets_file=path_input,
-            path_binary=path_binary,
-            path_mvn_project=path_mvn_project,
-            path_configuration=path_configuration,
-        )
+        if path_binary is not None:
+            return DerivansManager(
+                path_mets_file=path_input,
+                path_binary=path_binary,
+                path_configuration=path_configuration,
+            )
+        raise DerivansManagerError("container_image_name or path_binary must be provided!")
 
     def __init__(
         self,
         path_mets_file,
         path_configuration=None,
     ):
-        if path_configuration and not Path(str(path_configuration)).is_file():
-            raise RuntimeError(
-                f"[DerivansManager] config missing: {path_configuration}!"
+        if path_configuration and not Path(path_configuration).is_file():
+            raise DerivansManagerError(
+                f"config missing: {path_configuration}!"
             )
         self.path_mets_file = path_mets_file
         self.path_configuration = path_configuration
@@ -199,47 +203,31 @@ class DerivansManager(BaseDerivansManager):
     def timeout(self, timeout):
         self._timeout = timeout
 
-    @property
-    def label(self):
-        return self._label
-
-    @label.setter
-    def label(self, label):
-        self._label = label
-
     def __init__(
         self,
         path_mets_file: str,
-        path_binary: str,
-        path_mvn_project: str = None,
-        path_configuration: str = None,
+        path_configuration: typing.Optional[Path],
+        path_binary: typing.Optional[Path],
     ):
-        if path_binary is None or not (
-            Path(path_binary).is_dir() or Path(path_binary).is_file()
-        ):
-            raise RuntimeError(f"[DerivansManager] invalid path_binary: {path_binary}!")
-        if path_mvn_project is not None and not Path(str(path_mvn_project)).is_dir():
-            raise RuntimeError(
-                f"[DerivansManager] invalid path_mvn_project: {path_mvn_project}!"
-            )
         super().__init__(
             path_mets_file=path_mets_file,
             path_configuration=path_configuration,
         )
+        if path_binary is None or not (
+            path_binary.is_dir() or path_binary.is_file()
+        ):
+            raise DerivansManagerError(f"invalid path_binary: {path_binary}!")
         self.path_binary = path_binary
-        self.path_mvn_project = path_mvn_project
         self._timeout = DEFAULT_DERIVANS_TIMEOUT
         self._label = DERIVANS_LABEL
         self.path_exec = None
 
     def init(self):
-        _path_derivans = self.path_binary
-
-        if Path(self.path_binary).is_dir():
+        if isinstance(self.path_binary, Path) and self.path_binary.is_dir():
+            _dir = self.path_binary
             self.path_binary = self._identify_derivans_bin()
-
-        if self.path_binary is None:
-            self._recreate_app(_path_derivans)
+            if self.path_binary is None:
+                raise DerivansManagerError(f"no derivans binary found in {_dir}!")
 
         # fallback to default 'java' if no need to worry about
         if not self.path_exec:
@@ -255,7 +243,8 @@ class DerivansManager(BaseDerivansManager):
         * return to previous directory
 
         """
-        derivans_root = os.path.dirname(self.path_binary)
+        assert isinstance(self.path_binary, Path)
+        derivans_root = self.path_binary.parent
         prev_dir = os.path.abspath(os.curdir)
         os.chdir(derivans_root)
         path_exec = self.path_exec
@@ -279,42 +268,17 @@ class DerivansManager(BaseDerivansManager):
             label=label,
         )
 
-    def _identify_derivans_bin(self, the_dir=None):
+    def _identify_derivans_bin(self, the_dir: typing.Optional[Path]=None):
         if not the_dir:
             the_dir = self.path_binary
-        all_files = [f for f in os.listdir(the_dir) if f.endswith(".jar")]
-        derivantis = sorted([f for f in all_files if self._label in str(f)])
+        if the_dir is None or not the_dir.is_dir():
+            raise DerivansManagerError(f"invalid path_binary: {the_dir}!")
+        all_files = [f for f in os.listdir(the_dir)
+                     if f.endswith(".jar") and self._label in str(f)]
+        derivantis = sorted(all_files, reverse=True)
         if len(derivantis) > 0:
-            return os.path.join(the_dir, derivantis[0])
+            return the_dir / derivantis[0]
         return None
-
-    def _recreate_app(self, target_dir):
-        dir_derivans = self.path_mvn_project
-        if not dir_derivans:
-            raise RuntimeError("Derivans project dir unset!")
-        if not os.path.isdir(dir_derivans):
-            raise RuntimeError(f"Invalid derivans project dir: '{dir_derivans}'!")
-
-        derivans_build_dir = os.path.join(dir_derivans, "target")
-        the_derivans = None
-        if os.path.exists(derivans_build_dir):
-            the_derivans = self._identify_derivans_bin(derivans_build_dir)
-
-        # if derivans app not build yet, then ...
-        if not the_derivans:
-            os.chdir(dir_derivans)
-            compl_proc = subprocess.run(
-                "mvn clean package -DskipTests", shell=True, check=True, timeout=600
-            )
-            if compl_proc.returncode != 0:
-                raise RuntimeError("Cant build app '%s' in '%s'!")
-            the_derivans = self._identify_derivans_bin(derivans_build_dir)
-
-        # copy new built jar to target directory
-        if not os.path.exists(target_dir):
-            os.mkdir(target_dir)
-        shutil.copy(the_derivans, target_dir)
-        self.path_binary = os.path.join(target_dir, os.path.basename(the_derivans))
 
     def _execute_derivans(self, command) -> _FuncWrapperResult:
         return run_command(command, self.timeout)
@@ -328,9 +292,9 @@ class ContainerDerivansManager(BaseDerivansManager):
     def __init__(
         self,
         path_mets_file: str,
+        path_configuration: typing.Optional[Path],
+        path_logging: typing.Optional[Path],
         container_image: str = DEFAULT_DERIVANS_IMAGE,
-        path_configuration: str = None,
-        path_logging: str = None,
     ):
         super().__init__(
             path_mets_file=path_mets_file,
@@ -343,7 +307,8 @@ class ContainerDerivansManager(BaseDerivansManager):
 
     def init(self) -> None:
         repo, tag = self._container_image.split(":")
-        self._client.images.pull(repo, tag)
+        if not self._client.images.list(self._container_image):
+            self._client.images.pull(repo, tag)
 
     def start(self) -> DerivansResult:
         mounts: typing.List[Mount] = []
@@ -385,7 +350,7 @@ class ContainerDerivansManager(BaseDerivansManager):
         if self._path_logging:
             _log_dir = self._path_logging
             mounts.append(
-                Mount(source=_log_dir, target=DERIVANS_CNT_LOGG_DIR, type="bind")
+                Mount(source=str(_log_dir), target=DERIVANS_CNT_LOGG_DIR, type="bind")
             )
 
         start_time: float = time.perf_counter()
