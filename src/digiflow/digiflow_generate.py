@@ -140,7 +140,7 @@ class BaseDerivansManager(ABC):
 
     @staticmethod
     def create(
-        path_input: str,
+        path_input: Path,
         path_configuration: typing.Optional[Path] = None,
         path_logging: typing.Optional[Path] = None,
         container_image_name: typing.Optional[str] = None,
@@ -166,8 +166,8 @@ class BaseDerivansManager(ABC):
 
     def __init__(
         self,
-        path_mets_file,
-        path_configuration=None,
+        path_mets_file: Path,
+        path_configuration: typing.Optional[Path] = None,
     ):
         if path_configuration and not Path(path_configuration).is_file():
             raise DerivansManagerError(
@@ -175,7 +175,6 @@ class BaseDerivansManager(ABC):
             )
         self.path_mets_file = path_mets_file
         self.path_configuration = path_configuration
-        self.images = None
         self.additional_args = ""
 
     @abstractmethod
@@ -205,7 +204,7 @@ class DerivansManager(BaseDerivansManager):
 
     def __init__(
         self,
-        path_mets_file: str,
+        path_mets_file: Path,
         path_configuration: typing.Optional[Path],
         path_binary: typing.Optional[Path],
     ):
@@ -250,11 +249,11 @@ class DerivansManager(BaseDerivansManager):
         path_exec = self.path_exec
         if platform.system() not in ["Linux"]:
             path_exec = f'"{path_exec}"'
-        cmd = f"{path_exec} -jar {self.path_binary} {self.path_mets_file} {self.additional_args}"
+        cmd = f"{path_exec} -jar {self.path_binary} {self.path_mets_file}"
         if self.path_configuration:
             cmd += f" -c {self.path_configuration}"
-        if self.images:
-            cmd += f" -i {self.images}"
+        if self.additional_args:
+            cmd += f" {self.additional_args}"
         # disable pylint due it is not able to recognize
         # output being created by decorator
         time_duration, label, result = self._execute_derivans(
@@ -291,7 +290,7 @@ class ContainerDerivansManager(BaseDerivansManager):
 
     def __init__(
         self,
-        path_mets_file: str,
+        path_mets_file: Path,
         path_configuration: typing.Optional[Path],
         path_logging: typing.Optional[Path],
         container_image: str = DEFAULT_DERIVANS_IMAGE,
@@ -342,9 +341,6 @@ class ContainerDerivansManager(BaseDerivansManager):
                 )
                 command.append("-c")
                 command.append(target_config_file)
-                if self.images:
-                    command.append("-i")
-                    command.append(self.images)
         if self.additional_args and len(self.additional_args.strip()) > 0:
             command.append(self.additional_args)
         if self._path_logging:
