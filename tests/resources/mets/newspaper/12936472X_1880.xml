@@ -1,0 +1,763 @@
+<mets:mets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:kitodo="http://meta.kitodo.org/v1/"
+           xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:dv="http://dfg-viewer.de/"
+           xmlns:mods="http://www.loc.gov/mods/v3"
+           xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/mods.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd">
+   <mets:metsHdr CREATEDATE="2026-04-08T17:14:12.703+02:00"
+                 LASTMODDATE="2026-04-22T14:56:11.482+02:00">
+      <mets:metsDocumentID>8732</mets:metsDocumentID>
+   </mets:metsHdr>
+   <mets:dmdSec ID="uuid-6ac0f0b9-f347-337f-a46e-145d0834a826">
+      <mets:mdWrap MDTYPE="MODS">
+         <mets:xmlData>
+            <mods:mods>
+               <mods:originInfo eventType="publication">
+                  <mods:place>
+                     <mods:placeTerm type="text">Berlin</mods:placeTerm>
+                  </mods:place>
+               </mods:originInfo>
+               <mods:originInfo eventType="digitization">
+                  <mods:publisher>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:publisher>
+                  <mods:place>
+                     <mods:placeTerm type="text">Halle (Saale)</mods:placeTerm>
+                  </mods:place>
+                  <mods:dateCaptured encoding="iso8601">2026</mods:dateCaptured>
+               </mods:originInfo>
+               <mods:recordInfo>
+                  <mods:recordCreationDate encoding="marc">14-11-93</mods:recordCreationDate>
+                  <mods:recordChangeDate encoding="marc">09-02-26</mods:recordChangeDate>
+               </mods:recordInfo>
+               <mods:titleInfo>
+                  <mods:title>Wochenblatt für Architekten und Ingenieure</mods:title>
+               </mods:titleInfo>
+               <mods:relatedItem type="host">
+                  <mods:recordInfo>
+                     <mods:recordIdentifier source="kxp-ppn">1960359568</mods:recordIdentifier>
+                  </mods:recordInfo>
+                  <mods:identifier type="zdb">3234962-2</mods:identifier>
+                  <mods:relatedItem type="original">
+                     <mods:identifier type="zdb">161379-0</mods:identifier>
+                     <mods:recordInfo>
+                        <mods:recordIdentifier source="kxp-ppn">12936472X</mods:recordIdentifier>
+                     </mods:recordInfo>
+                  </mods:relatedItem>
+                  <mods:titleInfo>
+                     <mods:title>Wochenblatt für Architekten und Ingenieure</mods:title>
+                  </mods:titleInfo>
+               </mods:relatedItem>
+               <mods:language>
+                  <mods:languageTerm type="code" authority="iso639-2b">ger</mods:languageTerm>
+               </mods:language>
+               <mods:extension>
+                  <ulb:externalType xmlns:ulb="https://bibliothek.uni-halle.de" recordSyntax="pica">Az</ulb:externalType>
+                  <ulb:collection xmlns:ulb="https://bibliothek.uni-halle.de">https://opendata2.uni-halle.de/handle/1516514412012/171555</ulb:collection>
+               </mods:extension>
+               <mods:location>
+                  <mods:physicalLocation>Universitäts- und Landesbibliothek Sachsen-Anhalt</mods:physicalLocation>
+                  <mods:shelfLocator>AB BB 2111</mods:shelfLocator>
+               </mods:location>
+               <mods:classification authority="ddc">090</mods:classification>
+               <mods:accessCondition type="use and reproduction"
+                                     xlink:href="https://creativecommons.org/publicdomain/mark/1.0/">Public Domain Mark 1.0</mods:accessCondition>
+            </mods:mods>
+         </mets:xmlData>
+      </mets:mdWrap>
+   </mets:dmdSec>
+   <mets:amdSec ID="admd4">
+      <mets:rightsMD ID="uuid-554830ff-5d8b-3108-b759-3e9689263740">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVRIGHTS">
+            <mets:xmlData>
+               <dv:rights>
+                  <dv:owner>Universitäts- und Landesbibliothek Sachsen-Anhalt</dv:owner>
+                  <dv:ownerLogo>Share_it</dv:ownerLogo>
+                  <dv:ownerSiteURL>http://www.bibliothek.uni-halle.de</dv:ownerSiteURL>
+                  <dv:ownerContact>mailto:auskunft@bibliothek.uni-halle.de</dv:ownerContact>
+               </dv:rights>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:rightsMD>
+      <mets:digiprovMD ID="uuid-a9db791c-593e-354d-a873-67895aa1d2c2">
+         <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="DVLINKS">
+            <mets:xmlData>
+               <dv:links>
+                  <dv:reference>https://opac.lbs-halle.gbv.de/DB=1/XMLPRS=N/PPN?PPN=12936472X</dv:reference>
+                  <dv:presentation/>
+               </dv:links>
+            </mets:xmlData>
+         </mets:mdWrap>
+      </mets:digiprovMD>
+   </mets:amdSec>
+   <mets:fileSec/>
+   <mets:structMap TYPE="PHYSICAL">
+      <mets:div TYPE="physSequence" ID="uuid-8dd75c71-570c-4221-bde7-c94be7bae161"/>
+   </mets:structMap>
+   <mets:structMap TYPE="LOGICAL">
+      <mets:div LABEL="Wochenblatt für Architekten und Ingenieure"
+                ID="uuid-b5df1370-2c13-445f-b05d-21ca22f2106a"
+                TYPE="newspaper">
+         <mets:mptr xlink:href="12936472X" LOCTYPE="URL"/>
+         <mets:div ADMID="uuid-a9db791c-593e-354d-a873-67895aa1d2c2 uuid-554830ff-5d8b-3108-b759-3e9689263740"
+                   ID="uuid-4da17211-df05-4584-a6cb-16d19a8434f2"
+                   DMDID="uuid-6ac0f0b9-f347-337f-a46e-145d0834a826"
+                   TYPE="year"
+                   ORDERLABEL="1880">
+            <mets:div ID="uuid-72e824f5-7a12-4232-94f3-342f410c5881"
+                      TYPE="month"
+                      ORDER="1"
+                      ORDERLABEL="1880-01">
+               <mets:div ID="uuid-7ca43b3c-f2ce-4b8e-b8fb-93028b333458"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-01-02">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-edfb5033-88d6-4c6e-a46b-b64afce5eeb4"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880010201" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-b5d6103f-c8d9-425b-9a1c-0d876df2d921"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-01-09">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-69aad879-c739-4bd9-9302-cc19548c6dae"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880010901" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-75335d43-b15d-47c9-be97-e66a6bbf39ec"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-01-16">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-c2c4d638-633d-42e5-9297-54b46bda96b8"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880011601" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-84d3ede6-98b2-4bca-9469-3e0c5f23cbd0"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-01-23">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-2807f776-4087-4d6c-b9c7-0426a63bd296"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880012301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-da808457-d7c4-41d4-ac8a-e6de18072fe4"
+                         TYPE="day"
+                         ORDER="5"
+                         ORDERLABEL="1880-01-30">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-14114f42-0c14-426a-a851-33ad4622e841"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880013001" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-cd5b2f9b-ef85-4cd8-b183-060d2684a8ea"
+                      TYPE="month"
+                      ORDER="2"
+                      ORDERLABEL="1880-02">
+               <mets:div ID="uuid-6940b835-fd21-4bb4-9d2f-1f83704c24c5"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-02-06">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-c5f62189-7d35-4bbd-8cbd-c064088b0ad8"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880020601" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-4bd4ed82-3a1e-4f5d-8d47-c07252ec8937"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-02-13">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-ca56f961-51d6-43fb-aca4-29153a3e6644"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880021301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-fd2633e9-fb4b-4d14-8f97-4eb183ae8a7f"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-02-20">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-3abf359d-1aa8-4360-8c8b-e35c2ed32eac"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880022001" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-ac1e5047-16fe-471e-8b11-a8fa12ae1158"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-02-27">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-74c88d87-1bef-44b6-99ea-5e6223c6f1b3"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880022701" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-100aa58e-6ab3-40e2-9c73-4c28ae60ad0c"
+                      TYPE="month"
+                      ORDER="3"
+                      ORDERLABEL="1880-03">
+               <mets:div ID="uuid-5046246a-cc92-4474-9f8c-6f8b6ae44b8e"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-03-05">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-6d171649-161d-4754-bfd1-9ea7e58368f1"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880030501" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-05eaf754-7c54-4e4e-8611-9dd645d586a0"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-03-12">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-f3fee425-6943-4c7b-98e0-3d5a02797d9c"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880031201" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-5a0db3ce-9510-470f-a3bb-d61e8b5d5d3a"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-03-19">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-5f398913-0ee3-4b81-ace5-1ce63b1bd131"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880031901" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-28d9f8e0-001f-4566-8991-ad48c380e6f3"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-03-26">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-104efdf1-6b3a-4591-8815-cfeeb1c3c45b"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880032601" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-d64e5f17-0f19-4f60-813b-2e1671b9989d"
+                      TYPE="month"
+                      ORDER="4"
+                      ORDERLABEL="1880-04">
+               <mets:div ID="uuid-d6ac3ad3-1948-4898-be36-2f432bc96b51"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-04-02">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-f68a81d6-4f3d-491d-ac73-0db629f9ac4a"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880040201" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-a62201d6-f949-478a-8113-a43e910d22e5"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-04-09">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-7234ce4b-fd00-4ceb-9f2c-9dbe21e0097f"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880040901" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-eb14b501-951a-4b4d-b272-d9dae3bced94"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-04-16">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-f83bb5fe-2ac2-4bfd-ba7f-bdb256d24e30"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880041601" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-94ba543c-61cc-44b8-830e-500a6d3ce990"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-04-23">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-2a8fde85-e4b8-4287-bd9c-bccbae931e68"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880042301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-5b01f393-18f7-4817-ac9e-ed022e09b3cb"
+                         TYPE="day"
+                         ORDER="5"
+                         ORDERLABEL="1880-04-30">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-05e8815e-7607-406f-936d-d2245dae8a35"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880043001" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-b2b81852-8d2b-42b7-95f6-78ed79b23750"
+                      TYPE="month"
+                      ORDER="5"
+                      ORDERLABEL="1880-05">
+               <mets:div ID="uuid-ccfa3140-b7d6-44be-a7e1-7f88d8919c90"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-05-07">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-de221f08-a224-4025-b6c2-4d7152dc19ca"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880050701" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-9235e7d7-0a3b-4caf-b3c4-a82c0743657c"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-05-13">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-7f236e42-3efd-4e96-9106-56b868bff52c"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880051301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-6e203e76-5898-47d4-9774-0ed809c16fe4"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-05-21">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-275e7e64-8d5f-4a18-894c-e7f3473d8073"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880052101" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-d9787c48-c72b-4166-98a5-98bfb6bb1ae2"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-05-28">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-bf7b7d19-e7bf-45a4-a425-7f35c0969496"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880052801" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-abc79a01-3cb9-4427-93f4-b81e6122d252"
+                      TYPE="month"
+                      ORDER="6"
+                      ORDERLABEL="1880-06">
+               <mets:div ID="uuid-bcc9b387-66f9-438b-9432-46a8261dd51b"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-06-04">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-d273e8e6-7340-452b-87a3-70909fb72385"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880060401" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-857d879b-a313-4728-8965-cb3533b7c029"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-06-09">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-707d0314-0fef-453a-975c-30868c7f5497"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880060901" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-509ddc37-2d33-4bb5-b479-4769a5032b67"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-06-11">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-30bf9a7d-f665-4a32-a023-760f6acd7081"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880061101" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-7f49604e-484d-410b-abf6-2530c9ea779d"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-06-18">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-2e0c3b63-2ebb-4ba4-9880-7be7d2f1dc60"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880061801" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-ca537418-3f46-4b17-bf3f-6e80c72d565a"
+                         TYPE="day"
+                         ORDER="5"
+                         ORDERLABEL="1880-06-25">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-be75b8f8-a7c4-48a6-b806-0d5b77a695b1"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880062501" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-442445bc-2496-4bc8-ab78-d7c1caa89367"
+                      TYPE="month"
+                      ORDER="7"
+                      ORDERLABEL="1880-07">
+               <mets:div ID="uuid-fb42a547-c8ed-4020-b56a-8a7d0ccbdfaf"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-07-02">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-4337c50f-cb90-4872-9e2d-39ce3f8df189"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880070201" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-d121f637-c1fc-4cc6-9941-e49fd6b2f880"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-07-09">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-33f3b812-4a5d-4742-81d1-2b4b221f6d72"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880070901" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-26174cac-b309-4ec2-a2b1-3a593f9700a1"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-07-16">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-c73a70bc-29a8-4e27-978c-1df2b09ba06c"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880071601" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-bcec0dcf-bcf1-4a29-933d-eea67cba8964"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-07-23">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-c2e1fb9b-bce7-45b6-8411-66a4276db3f6"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880072301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-6462ceb3-caee-484d-95e2-4b28670e844e"
+                         TYPE="day"
+                         ORDER="5"
+                         ORDERLABEL="1880-07-30">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-3bb1d014-0167-4313-bb55-a319ffa901cc"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880073001" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-d144d5ad-4b02-48bd-bb9c-81e1d815cfa5"
+                      TYPE="month"
+                      ORDER="8"
+                      ORDERLABEL="1880-08">
+               <mets:div ID="uuid-379b7a56-7482-40c7-a0d4-330da313ad1d"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-08-06">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-e6d45af2-bd83-498b-858d-64589334c934"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880080601" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-58454451-d87d-4af3-aa91-728a76743391"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-08-13">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-a7b231db-03dc-4a9e-a9d2-27fbb23a4d1a"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880081301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-b132fff2-5259-42d2-a87d-09ccebd88a2b"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-08-20">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-23430c57-c535-418c-a587-63baf0085186"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880082001" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-e9d610a8-deb7-4769-9809-46cd0136cc08"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-08-27">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-49575270-e028-414a-98ab-ad231447ccc3"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880082701" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-b05bf17d-b512-45e1-b2d6-ab955c5f2375"
+                      TYPE="month"
+                      ORDER="9"
+                      ORDERLABEL="1880-09">
+               <mets:div ID="uuid-392830ac-e43f-4380-93e3-3ebeb7963e24"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-09-03">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-e629b266-bb5d-41e2-869c-8242027160c9"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880090301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-ad4a7935-9259-4e84-a99e-7a41f90f1424"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-09-10">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-f482470e-a87c-4c0d-acbc-d237989e1bd8"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880091001" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-da0ca9e9-9e45-490f-8bc0-ef3b2d7dfe24"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-09-17">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-2ee63374-1383-4a75-b69b-f7a0457b64aa"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880091701" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-702a9cff-53db-40ff-8a0a-1787d2c3bf45"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-09-24">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-536fa41a-d929-4200-9f87-5ce55c45b611"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880092401" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-722a68d8-4dd9-4350-9752-0c30cd3be394"
+                      TYPE="month"
+                      ORDER="10"
+                      ORDERLABEL="1880-10">
+               <mets:div ID="uuid-30d7db81-54b0-49f8-909a-84e9621c0460"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-10-01">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-3ab38947-689e-4771-b3ce-7867acb990c4"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880100101" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-78601370-b804-4db5-86bf-ed91b4e1136c"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-10-08">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-6c40e290-ed3d-4f7a-b5bd-9e509a4495cc"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880100801" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-b8e359c9-ca0e-4d15-940a-07c1d31a618b"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-10-15">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-ea21eab3-676c-4830-9f95-3f0f4147637e"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880101501" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-b6066a21-ce43-4364-8e94-10ce6d1a368e"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-10-22">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-de7d02dc-94c6-4ac6-9b37-4313c8bc7b5e"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880102201" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-e56d90cc-519e-46c0-92be-022673ea1046"
+                         TYPE="day"
+                         ORDER="5"
+                         ORDERLABEL="1880-10-29">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-2a077f76-2b40-4d6d-87a1-33badddfb219"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880102901" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-7acce312-e933-450d-a822-df6e97c616c6"
+                      TYPE="month"
+                      ORDER="11"
+                      ORDERLABEL="1880-11">
+               <mets:div ID="uuid-df7ff06e-35ee-4d5c-9d7e-c2d895083dfc"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-11-05">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-5907fdaa-24e4-4304-87a0-1a874855166b"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880110501" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-d2f0ae56-90ef-47ed-bf3f-80bd97fb1444"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-11-12">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-03ec7d0a-ab2d-41a1-8740-b1a3d34454a6"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880111201" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-f34b3ffb-af1e-474e-ad2f-ade1196eeff2"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-11-19">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-89a4f26c-9ca8-4aee-aebe-82271dff5ba3"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880111901" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-0f559422-c015-4d88-a6a2-e3b3906e7fd7"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-11-26">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-50adfaea-adb3-4098-b3cd-8f1d006b83ee"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880112601" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-b812a482-f023-4dbf-8897-90917d7f97af"
+                      TYPE="month"
+                      ORDER="12"
+                      ORDERLABEL="1880-12">
+               <mets:div ID="uuid-44d5095d-cfd1-4e8c-888b-0230e4a84e2c"
+                         TYPE="day"
+                         ORDER="1"
+                         ORDERLABEL="1880-12-03">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-4015c73a-5ceb-42c5-aa62-abf376ed8d10"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880120301" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-b4480eba-6653-437b-b651-767f64618352"
+                         TYPE="day"
+                         ORDER="2"
+                         ORDERLABEL="1880-12-10">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-6aa5ec6d-e8e3-4a90-a3e6-4d815370434e"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880121001" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-7aee5933-2971-467f-8474-e86559eef3c8"
+                         TYPE="day"
+                         ORDER="3"
+                         ORDERLABEL="1880-12-17">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-44f7e395-deee-47e9-b196-750c4a0a9155"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880121701" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-81118d61-6430-4f9e-8eac-07737994d080"
+                         TYPE="day"
+                         ORDER="4"
+                         ORDERLABEL="1880-12-24">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-feb1f50c-ac22-4e7d-a8c1-ef61b2378cb2"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880122401" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+               <mets:div ID="uuid-3f4c254d-57e0-4100-8700-3b7c7eb36695"
+                         TYPE="day"
+                         ORDER="5"
+                         ORDERLABEL="1880-12-31">
+                  <mets:div ADMID="admd4"
+                            ID="uuid-64309c9d-4e6e-41c6-b932-76903388d881"
+                            TYPE="issue"
+                            ORDER="1">
+                     <mets:mptr xlink:href="12936472X-1880123101" LOCTYPE="URL"/>
+                  </mets:div>
+               </mets:div>
+            </mets:div>
+         </mets:div>
+      </mets:div>
+   </mets:structMap>
+</mets:mets>

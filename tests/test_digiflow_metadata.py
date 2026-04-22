@@ -700,9 +700,6 @@ def test_metsreader_opendata_manipulated_origin(tmp_path):
     ]
 
 
-# k2_mets_vd18_147638674
-
-
 def test_metsreader_opendata_inspect_kitodo3_mono_origins():
     """How to handle latest Kitodo 3 DMS export"""
 
@@ -1084,6 +1081,19 @@ def test_mets_reader_newspaper_year_1921():
     dmd_report: df.DmdReport = the_report.prime_report
     assert the_report.logical_type == "year"
     assert dmd_report.languages == ["ger"]
+
+
+def test_dmd_report_wochenblatt_1880():
+    """Behavior if strange year METS encountered
+    without any identifiers indicates data error
+    """
+
+    the_reader = df.MetsReader(
+        TEST_RES / "mets" / "newspaper" / "12936472X_1880.xml"
+    )
+    with pytest.raises(df.DigiflowMetadataException) as _runtime_error:
+        _ = the_reader.report
+    assert "no identifiers" in _runtime_error.value.args[0]
 
 
 def test_metsreader_kitodo2_058141367():
