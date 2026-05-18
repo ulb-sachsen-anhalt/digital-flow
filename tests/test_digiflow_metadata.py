@@ -835,25 +835,30 @@ def test_metsreader_zd2_issue_18680621():
 
 
 @pytest.mark.parametrize(
-    ["mets_path", "dmd_id"],
+    ["mets_path", "dmd_id", "logical_type"],
     [
-        (os.path.join(TEST_RES, "migration/10595.mets.xml"), "md10595"),
-        (os.path.join(TEST_RES, "migration/9427342.mets.xml"), "md9427342"),
-        (os.path.join(TEST_RES, "migration/9427337.mets.xml"), "md9427337"),
-        (os.path.join(TEST_RES, "k2_mets_vd18_058141367.xml"), "DMDLOG_0000"),
-        (os.path.join(TEST_RES, "k2_mets_vd18_147638674.xml"), "DMDLOG_0000"),
-        (os.path.join(TEST_RES, "vls/zd/zd1-16359609.mets.xml"), "md16359609"),
-        (os.path.join(TEST_RES, "opendata/123456789_27949.xml"), "md1180329"),
+        (os.path.join(TEST_RES, "migration/10595.mets.xml"), "md10595", "monograph"),
+        (os.path.join(TEST_RES, "migration/9427342.mets.xml"), "md9427342", "multivolume_work"),
+        (os.path.join(TEST_RES, "migration/9427337.mets.xml"), "md9427337", "volume"),
+        (os.path.join(TEST_RES, "k2_mets_vd18_058141367.xml"), "DMDLOG_0000", "monograph"),
+        (os.path.join(TEST_RES, "k2_mets_vd18_147638674.xml"), "DMDLOG_0000", "monograph"),
+        (os.path.join(TEST_RES, "vls/zd/zd1-16359609.mets.xml"), "md16359609", "issue"),
+        (os.path.join(TEST_RES, "opendata/123456789_27949.xml"), "md1180329", "monograph"),
+        (TEST_RES / "kitodo3" / "meta" / "meta_2387.xml", "uuid-105708b0-e915-36d5-8167-99ef14d0baf7",
+         "NewspaperYear")
     ],
 )
-def test_metsreader_identify_prime_dmd_section(mets_path, dmd_id):
+def test_metsreader_identify_prime_dmd_section(mets_path, dmd_id, logical_type):
     """Ensure hit proper primaray MODS DMD section"""
 
     # act
     mets_reader = df.MetsReader(mets_path)
+    the_report = mets_reader.report
 
     # assert
     assert mets_reader.dmd_id == dmd_id
+    assert the_report
+    assert the_report.logical_type == logical_type
 
 
 def test_metsprocessor_remove_elements_and_close_tags(tmp_path):

@@ -45,7 +45,7 @@ MARK_KITODO3 = "kitodo3"
 MARK_VLS = "vls"
 MARK_AGENT_LEGACY = "legacy vlid: "
 MARK_AGENT_VLID = "created vlid: "
-XPR_MODS_SEC = ".//mets:dmdSec/mets:mdWrap/mets:xmlData/mods:mods/../../.."
+XPR_MODS_SEC = ".//mets:dmdSec[@ID]/mets:mdWrap/mets:xmlData/*/../../.."
 PATTERN_FILEGROUP_USE = './/mets:fileGrp[@USE="{}"]'
 
 # script constants
@@ -531,7 +531,7 @@ class MetsReader(MetsProcessor):
         """Encapsulated recognition of primary DMD section"""
         the_id = self._prime_mods_id
         dmd_secs = self.root.findall(
-            f'.//mets:dmdSec[@ID="{the_id}"]/mets:mdWrap/mets:xmlData/mods:mods',
+            f'.//mets:dmdSec[@ID="{the_id}"]/mets:mdWrap/mets:xmlData/*',
             dfc.XMLNS,
         )
         if len(dmd_secs) == 0:
@@ -880,8 +880,8 @@ class ModsReader(XMLProcessor):
         return None
 
     def get_identifiers(self):
-        """Read different kind-o-identifiers from DMD MODS
-        and respect custom Kitodo goobi-elements
+        """Read different kind-o-identifiers from DMD section
+        with respect to custom Kitodo/goobi extensions and VLS peculiarities
         """
         if self.root is None:
             raise DigiflowMetadataException(
@@ -924,6 +924,11 @@ class ModsReader(XMLProcessor):
             if ":nbn:" in goobi_urns[0]:
                 key = "urn:nbn"
             idents[key] = goobi_urns[0].strip()
+        kitodos = self.root.xpath("//mets:xmlData//*[starts-with(@name, 'CatalogIDSource')]",
+                                  namespaces=dfc.XMLNS)
+        if len(kitodos) > 0:
+            for kit in kitodos:
+                idents[kit.attrib["name"]] = kit.text.strip()
         if len(idents) < 1:
             raise DigiflowMetadataException(
                 f"no identifiers in {self.dmd_id} of {self.root.base}!"

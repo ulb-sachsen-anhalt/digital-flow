@@ -1,0 +1,1592 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mets:mets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:kitodo="http://meta.kitodo.org/v1/" xmlns:mets="http://www.loc.gov/METS/">
+    <mets:metsHdr CREATEDATE="2021-11-01T13:37:57.004+01:00" LASTMODDATE="2024-09-12T14:25:55.987+02:00">
+        <mets:metsDocumentID>2387</mets:metsDocumentID>
+    </mets:metsHdr>
+    <mets:dmdSec ID="uuid-105708b0-e915-36d5-8167-99ef14d0baf7">
+        <mets:mdWrap>
+            <mets:xmlData>
+                <kitodo:kitodo>
+                    <kitodo:metadata name="CatalogIDSourceNewspaper">171133730</kitodo:metadata>
+                    <kitodo:metadata name="singleDigCollection">1516514412012/256079</kitodo:metadata>
+                    <kitodo:metadata name="issueYearName">5. Jahrgang</kitodo:metadata>
+                    <kitodo:metadata name="PlaceOfPublication">Halle</kitodo:metadata>
+                    <kitodo:metadata name="ulb_copyright_link">https://creativecommons.org/publicdomain/mark/1.0/</kitodo:metadata>
+                    <kitodo:metadata name="IssueOrderNumber">1934</kitodo:metadata>
+                    <kitodo:metadata name="ulb_PublisherName">Universitäts- und Landesbibliothek Sachsen-Anhalt</kitodo:metadata>
+                    <kitodo:metadata name="ulb_PlaceOfPublication">Halle (Saale)</kitodo:metadata>
+                    <kitodo:metadata name="CatalogIDPeriodicalDB">1156107-5</kitodo:metadata>
+                    <kitodo:metadata name="ulb_OwnerName">Stadtarchiv Halle</kitodo:metadata>
+                    <kitodo:metadata name="processTitle">171133730-1934</kitodo:metadata>
+                    <kitodo:metadata name="PICAChangeDate">01-09-23</kitodo:metadata>
+                    <kitodo:metadata name="DocLanguage">ger</kitodo:metadata>
+                    <kitodo:metadata name="PublicationYear">1934</kitodo:metadata>
+                    <kitodo:metadata name="CatalogIDDigital">1744746265</kitodo:metadata>
+                    <kitodo:metadata name="shelfmarksource">CG100</kitodo:metadata>
+                    <kitodo:metadata name="dateDigit">2024</kitodo:metadata>
+                    <kitodo:metadata name="PICAType">Az</kitodo:metadata>
+                    <kitodo:metadata name="CatalogIDSourcePlus">1711337301934</kitodo:metadata>
+                    <kitodo:metadata name="PICACreationDate">06-11-94</kitodo:metadata>
+                    <kitodo:metadata name="ulb_copyright">Public Domain Mark 1.0</kitodo:metadata>
+                    <kitodo:metadata name="ulb_DDC">090</kitodo:metadata>
+                    <kitodo:metadata name="titleNewspaper">Mitteldeutsche Nationalzeitung</kitodo:metadata>
+                    <kitodo:metadata name="ulb_urn">urn:nbn:de:gbv:3:1-171133730-1711337301934-2</kitodo:metadata>
+                    <kitodo:metadata name="CatalogIDPeriodicalDBDigital">3050748-0</kitodo:metadata>
+                </kitodo:kitodo>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:fileSec/>
+    <mets:structMap TYPE="PHYSICAL">
+        <mets:div ID="uuid-d5af2d22-4d2b-4e2e-9555-16d73e4e84a6"/>
+    </mets:structMap>
+    <mets:structMap TYPE="LOGICAL">
+        <mets:div ID="uuid-1e856e50-658f-4b3e-9666-d11fddc2fd6a" DMDID="uuid-105708b0-e915-36d5-8167-99ef14d0baf7" TYPE="NewspaperYear" ORDER="1" ORDERLABEL="1934">
+            <mets:div ID="uuid-0a8d5928-808a-461e-ae89-810c82fd40a0" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-01">
+                <mets:div ID="uuid-a5c7b308-8cde-4298-b492-d931f8e16f7d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-02">
+                    <mets:div ID="uuid-6a366e42-1af1-4847-9d3b-d10a381888b2" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2389" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-cc753209-2a11-4e50-bfb4-ea64ab427307" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-03">
+                    <mets:div ID="uuid-6debbe80-5bf0-4554-af0b-a6f61b368e60" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2390" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-afd2e1d2-8ac6-47eb-97d3-626deba41b9e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-04">
+                    <mets:div ID="uuid-6e385fd2-bc28-4974-a1e3-4fe8adea3461" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2391" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-606cabb8-7acf-4d0b-bc15-049451e98f67" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-05">
+                    <mets:div ID="uuid-bf5d813e-8e70-4408-8c56-4ed5aa1f9e08" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2392" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f7e46340-4d8a-46b3-be2a-8fe35a5d37cc" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-06">
+                    <mets:div ID="uuid-225e22a2-d9c1-4e56-a0c7-8fc4eb55dd0f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2393" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f2db205e-2579-48d1-9493-956b381b053f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-08">
+                    <mets:div ID="uuid-6f5b5172-cdb6-4392-9e2f-45859c2426fa" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2394" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-05507708-19ca-4b8d-b644-d3ccff13eb22" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-09">
+                    <mets:div ID="uuid-c7a8b3bd-d1fc-4306-9681-d8acc02502d5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2395" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a46e55fb-8b7a-4429-b823-7745189165cf" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-10">
+                    <mets:div ID="uuid-fa47faaa-d02a-4a76-8723-4ceb79e39855" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2396" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e23ee2f0-6a96-4ce2-8162-51633e044e46" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-11">
+                    <mets:div ID="uuid-efb8013d-3d48-4d3d-b486-4959d1ecf4d8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2397" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-be6b42bf-cb32-4ac5-8719-222d2836ae45" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-12">
+                    <mets:div ID="uuid-ed8b9017-d725-4441-a31a-dc92899f913a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2398" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bd7d43a8-5e0e-4b40-8a6b-487083cbfc1f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-13">
+                    <mets:div ID="uuid-de57b370-5972-4bd1-8ef8-3a004b987050" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2399" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-335c6a5a-0c6c-4d7e-9997-4fe5f48b6c01" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-15">
+                    <mets:div ID="uuid-7648141c-a82b-419b-bf39-a29d9a6cbea3" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2400" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a77bc2da-2380-4b57-97db-74e9fa97b351" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-16">
+                    <mets:div ID="uuid-9b099762-653d-43ec-8492-e56be8b1c109" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2401" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4e88ead8-464c-4050-b1d0-48cde0ece2b4" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-17">
+                    <mets:div ID="uuid-eba6d94a-e500-4a56-9e6a-12e95c3a4ce4" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2402" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e2deb212-8b54-44a7-b495-f4e0dcef7e1a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-18">
+                    <mets:div ID="uuid-e088379b-6136-45ee-be65-76408c798509" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2403" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7e92b3cb-d5d8-49db-af27-840fa8c95365" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-19">
+                    <mets:div ID="uuid-32045a59-b4f6-4fd0-9b4c-23f21f5cf83a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2404" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-8313cffd-e357-447a-8097-98aa7c43bfd5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-20">
+                    <mets:div ID="uuid-a681fc13-4399-488a-9af9-27f1b3d2afad" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2405" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5da451f6-49a8-4f8f-83b4-cd6475a38b5b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-22">
+                    <mets:div ID="uuid-f0ba7c10-557e-4566-84ac-9ac2384b68e7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2406" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-c8128814-4ae8-4a21-a4f5-d271da8ba63f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-23">
+                    <mets:div ID="uuid-b8dfcdfa-5a05-4ffc-8ea4-be8f14a75896" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2407" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e6b6005b-dac7-4796-87d4-7d812e511bb4" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-24">
+                    <mets:div ID="uuid-ce933429-37f4-44d2-b862-7be8fa3c5422" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2408" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-62085fc9-2e32-4a12-bb44-1f8338e2066e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-25">
+                    <mets:div ID="uuid-a4a780b8-3c4f-4a42-9f08-54610f999784" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2409" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-afa91437-41b8-4bf2-a5f8-ecbaf7daf1a5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-26">
+                    <mets:div ID="uuid-82e70072-1fb1-414d-8368-faf38420753b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2410" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0c7e0510-1a04-4cb7-a3b4-4edb1528d1bc" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-27">
+                    <mets:div ID="uuid-2a4687da-8bb6-4661-8049-a83f7f502bd4" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2411" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-69a9ebe5-0a3d-4ae4-bc5f-162911145477" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-29">
+                    <mets:div ID="uuid-02221f20-f6d6-4007-b803-bc0d6cdab539" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2412" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7802091f-e560-4126-be62-0141d16b1fe5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-30">
+                    <mets:div ID="uuid-a277fc28-3212-4a19-b572-9d6a6e0945b8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2413" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7393aeaa-101d-4695-a035-d52d6a6f674d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-01-31">
+                    <mets:div ID="uuid-a97e09a5-4717-4e22-9f1e-9817d5757026" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2414" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-bfba1c6d-5352-406d-b916-6ba0fce89148" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-02">
+                <mets:div ID="uuid-7ef1d1bd-4045-4aeb-870c-8ac79ed43cb6" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-01">
+                    <mets:div ID="uuid-cecf7eb0-3eae-492a-8cb0-2fdc2599a71b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2415" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-16559bee-3302-4241-a29f-e99de74c4789" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-02">
+                    <mets:div ID="uuid-c8068d91-1206-4550-8886-fa13d9e987b1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2416" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bf11559d-3653-410d-ae88-e2b81beda0cb" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-03">
+                    <mets:div ID="uuid-deb1920b-f864-4c93-bf6d-b99d476742b6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2417" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-cf3921fc-1573-4d3e-9901-54245ce22749" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-05">
+                    <mets:div ID="uuid-41127dda-d919-4dbc-84d2-ee61dcbdf9fa" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2418" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-912bdafc-d5f2-4434-88bf-735eb71ea6a4" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-06">
+                    <mets:div ID="uuid-89aee405-28ae-4738-a7db-8208c1e0d29a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2419" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d262a8d2-335b-4454-a1ab-040ba91abee0" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-07">
+                    <mets:div ID="uuid-cba2380c-8612-44c4-84a2-3953ffcc91a7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2420" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7402ee44-cf4d-4611-a96b-be4d6e913cc4" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-08">
+                    <mets:div ID="uuid-c1ebff9f-7abc-48c3-a267-5de03fb0869f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2421" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0fd88c97-d6f3-4ee7-95c5-a71862032217" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-09">
+                    <mets:div ID="uuid-c47c5b1f-61a9-4152-8952-f4f33ab5c164" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2422" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5c07dae9-99e1-45a3-94c7-a34e3cd467da" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-10">
+                    <mets:div ID="uuid-479c648d-81f2-4cef-8fff-3a75f7a62c84" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2423" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-db959063-3d34-48d5-a1b3-423acfb6112d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-12">
+                    <mets:div ID="uuid-6481fc1a-2b80-4068-9daa-21c6a5ae4019" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2424" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7505d88f-638d-4b06-b022-a01a031c8e1b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-13">
+                    <mets:div ID="uuid-15b30e9d-8eab-4d9d-b502-dafdf9cada57" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2425" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9710de12-351a-405a-9056-12bbbbff4bb0" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-14">
+                    <mets:div ID="uuid-4db56d17-152d-48fa-8350-43e798e369da" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2426" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-771656ab-3ba5-45e8-b15c-4ae7b0f32d8c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-15">
+                    <mets:div ID="uuid-473069a6-e7b5-47d1-9c4a-0487a0e44950" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2427" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5d64547b-1d44-4149-ac5a-6bb3f70c4c55" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-16">
+                    <mets:div ID="uuid-9df5b7db-57b8-4762-97b0-e62974bbd3b5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2428" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-1e8fd6ff-09c0-4367-b779-2a13a9a06256" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-17">
+                    <mets:div ID="uuid-23af52f4-d4e8-4e18-b2ce-c765ecaa476c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2429" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-be0bff7f-8a31-4b97-97c5-637928456ff5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-19">
+                    <mets:div ID="uuid-8704faa3-6461-49ee-bb52-9a6442866663" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2430" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-696ddee9-9b3b-4691-94d3-cce7d02ea57f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-20">
+                    <mets:div ID="uuid-50ff327c-ba31-4864-bf55-0dbbff556357" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2431" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-acfdbe1f-9c2f-4b57-a0e1-3cd246d2d218" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-21">
+                    <mets:div ID="uuid-b8a999a0-06ca-4bc9-86e9-dfde90c7e5de" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2432" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-18088078-b56a-490b-a235-eb7143091253" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-22">
+                    <mets:div ID="uuid-abd03acc-b07f-4b11-9d99-94d09061526b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2433" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7d73107d-43a9-4a9c-9af6-c02295798644" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-23">
+                    <mets:div ID="uuid-895fc3b6-edb1-466d-8ac9-195cd69504dc" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2434" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0ce60dcd-d1b2-4774-9223-7bf86d7615e1" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-24">
+                    <mets:div ID="uuid-309c4b30-f935-4dd6-9ec4-1f523c00db9b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2435" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-52a3d617-eded-4280-8761-88335428e194" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-26">
+                    <mets:div ID="uuid-bf302680-6e2c-419e-a792-a52feec95647" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2436" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-281182de-0fce-4c57-9d37-5cdbcf3a3b44" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-27">
+                    <mets:div ID="uuid-d8d3ffe4-dcce-4036-88eb-20c8ac3d4dee" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2437" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-c4a8eeed-e2fc-468a-8c7a-c2c5d3bf27a1" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-02-28">
+                    <mets:div ID="uuid-0a7e2376-d7d5-41b2-8a58-ebd1068faa09" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2438" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-f4af0c07-b4bf-4c81-aa95-38150cc7f7b7" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-03">
+                <mets:div ID="uuid-f64a2465-c1a5-448a-8b2f-e037ed426c9c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-01">
+                    <mets:div ID="uuid-21622691-1543-4ee3-8ea0-9f2da675bbf8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2439" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-1813f0dc-c7d0-474a-8b27-6c838962ff2a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-02">
+                    <mets:div ID="uuid-491c29f9-b7d2-4c14-966e-1d9adfe248e1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2440" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e61beb27-9ddd-475b-9779-7125f6d74e6a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-03">
+                    <mets:div ID="uuid-076c71f0-a654-42eb-ad0b-7f2842142a3e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2441" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-be464be5-5c37-4220-8d6c-3db5df7a5606" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-05">
+                    <mets:div ID="uuid-ffd45139-9cda-4d69-92a5-014886b13456" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2442" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b05152aa-650e-48f6-82c1-769f4fefd2d6" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-06">
+                    <mets:div ID="uuid-8a40e506-4306-4b7a-a158-03a0f7417bbb" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2443" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e207c3ca-aeb7-4be6-a813-146578b0960a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-07">
+                    <mets:div ID="uuid-95b12ee8-a465-4146-a9cc-9465f1624f4d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2444" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-961279bf-4ab7-42c8-932d-1e20c8862201" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-08">
+                    <mets:div ID="uuid-05a148a0-12fa-4cc5-8cf5-fb447dc45c93" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2445" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3fee056d-0f2b-499a-9bc6-67fd1cdb6a8e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-09">
+                    <mets:div ID="uuid-5abeec95-3a1e-4a03-bb20-c8bf02eaf3f4" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2446" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-137f0cea-2bd5-4f46-a371-27539fa04cb2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-10">
+                    <mets:div ID="uuid-e6eac31f-71ca-4d04-8b4e-46989770c167" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2447" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-dab8339b-d59b-40f3-ac01-487333491db5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-12">
+                    <mets:div ID="uuid-ce1a9b34-544b-41ab-952e-614bf77caa5a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2448" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f074ec5d-40e0-49e9-9f6e-7f31f72e0ada" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-13">
+                    <mets:div ID="uuid-80d57f3d-7176-4d1c-827a-ed27108b3546" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2449" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-62cc2794-bc9f-45fa-aaef-d00d448787c7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-14">
+                    <mets:div ID="uuid-442a5fc8-740c-4f37-b340-2a4d3031c54c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2450" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3de066d9-a35b-4807-a5d4-bade72e4fa3e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-15">
+                    <mets:div ID="uuid-f6d7ac93-c3a8-4847-b75b-10870c930ecf" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2451" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e539aa68-58fa-44d6-9d85-e3ea66763d71" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-16">
+                    <mets:div ID="uuid-0c0417bb-e103-4f80-984b-d183d5c02d8f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2452" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-08c325d6-a46c-4d18-b5d1-6ae55718381b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-17">
+                    <mets:div ID="uuid-0f641d64-d12f-4e09-a823-8f4e4e4279e9" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2453" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2cb9cf30-35b9-4e58-b6dc-26b2b8018b88" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-19">
+                    <mets:div ID="uuid-bb34ede4-dbf9-491f-bfb1-c12e5b359e00" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2454" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4b6de1cf-b96b-45af-8389-dd2497d95bdb" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-20">
+                    <mets:div ID="uuid-2a5ca4f5-fe79-40d8-8fc4-3f256e8bc73d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2455" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9253574a-6d40-4492-8cd1-3f6aa04d85f2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-21">
+                    <mets:div ID="uuid-b07235da-5deb-44a9-bce9-823db2df41e4" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2456" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5dc2d688-a73e-47d3-8335-c3ef0d71a8e5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-22">
+                    <mets:div ID="uuid-fd291f7e-b5eb-425c-8e3a-b5575c4ddf06" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2457" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5b01242f-a26c-42b1-80e1-1de5e76bb098" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-23">
+                    <mets:div ID="uuid-4b5bd775-2b8c-4a6b-9971-95f88ae1337f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2458" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e1a2cf06-7808-4092-a704-5a4a2af7d2a1" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-24">
+                    <mets:div ID="uuid-d2567e37-fa2a-416c-9270-873736c30f5f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2459" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2b9ac613-844d-4f7d-97b1-c4bfaa6082b8" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-26">
+                    <mets:div ID="uuid-644adac1-d95f-435b-8c33-296b8f039444" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2460" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bc093c99-b799-4181-82c6-c9a2091d9faf" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-27">
+                    <mets:div ID="uuid-ce139f2b-3138-4f03-bcf7-73847024fd18" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2461" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-45fe8f62-0d12-4ec9-826e-80c1c35131e7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-28">
+                    <mets:div ID="uuid-df69ff70-cf46-4476-bf61-371ad55c2278" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2462" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-c01fd84e-7c1a-4095-8560-d25580984a06" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-29">
+                    <mets:div ID="uuid-3b525d33-c79e-47aa-b267-a91428a404a1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2463" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e8e82cad-cf34-4af0-97d3-904142bfd93a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-03-31">
+                    <mets:div ID="uuid-0bc3cab4-394a-4785-82a9-f01feebc6ac5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2465" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-7b2632d6-e61f-4739-b222-787ff7014cde" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-04">
+                <mets:div ID="uuid-15afe68e-907c-4bc2-b19f-86abf862e616" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-03">
+                    <mets:div ID="uuid-da771747-5e36-4ab7-be32-33f3331c27a1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2467" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e7cb7f00-f509-4ce0-adbd-e9423be7b8d9" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-04">
+                    <mets:div ID="uuid-fa8d8cc6-b65b-4bca-8bd1-f63d0d3b19f9" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2468" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4ead9400-2fd5-454e-92f5-adcec163620a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-05">
+                    <mets:div ID="uuid-4fbe64fe-7d98-4ff5-88cc-e11729f1829d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2469" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-555f1d1c-24e8-45e9-92aa-02387351e367" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-06">
+                    <mets:div ID="uuid-867d6d61-da98-4f8c-b475-4cf6529496ad" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2470" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a2617a25-2648-4a0b-96e9-a5dcbd0fb50f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-07">
+                    <mets:div ID="uuid-8ef1019f-8e67-4ef9-9084-e1a1df96bed4" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2471" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-48015a13-8d57-4ef1-8172-12f89e996e15" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-09">
+                    <mets:div ID="uuid-c04dd544-1f96-466f-bd22-b44abb65657b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2472" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-12493e34-5895-456f-b726-6c2a80ae1017" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-10">
+                    <mets:div ID="uuid-cbd3d934-c401-4e04-824a-ee4b0f1d6fbf" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2473" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bd634cf2-dadc-436f-be43-aecc1dae0a35" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-11">
+                    <mets:div ID="uuid-44858897-01ee-4ee8-98a8-2e34a6cb9e23" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2474" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-07184381-9bdf-492d-96f0-54ca3f0a1502" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-12">
+                    <mets:div ID="uuid-064674ca-115a-4a3c-a9a7-a4255b251c1a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2475" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e26f84cf-d44e-42ed-afca-54805bd4ae26" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-13">
+                    <mets:div ID="uuid-6b3153b7-6152-4b09-a3b0-7fe2c2dcef24" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2476" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a948ec0d-f59f-4b74-ad7b-cac29db205ac" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-14">
+                    <mets:div ID="uuid-ca496bbe-e2e0-4e1d-b048-7717b0e694f4" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2477" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a18a73fc-af5d-41f1-a27a-3ccab26768d3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-16">
+                    <mets:div ID="uuid-d0aef73a-36e3-4d71-8dbc-bdf87bbdce79" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2478" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-11f16666-9256-49b0-a12d-88a5087790a6" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-17">
+                    <mets:div ID="uuid-dcc8b2a8-2bfc-4e44-a943-0dd2bd8f6252" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2479" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-561a285c-c974-4293-9437-cb491ff47dec" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-18">
+                    <mets:div ID="uuid-cd45f2b5-408b-42d3-ae32-922c52a8db33" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2480" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ba6000e1-c484-47ff-abfc-6e1fafd9aa88" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-19">
+                    <mets:div ID="uuid-5d9f271b-e8b7-4f78-ab8f-fcd53cd341bf" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2481" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b72fe24c-5e4f-4921-868b-cba9891e62e5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-20">
+                    <mets:div ID="uuid-cb1f3405-1da8-4127-8bc4-58cbd5b68086" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2482" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-6f2794b7-496c-4eec-ae07-39c668a17ddf" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-21">
+                    <mets:div ID="uuid-7c9cc7dc-21eb-4de1-aaab-0a5c11cb7f3a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2483" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4f84c1eb-fd7c-46a6-90cb-411ed2785f2c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-23">
+                    <mets:div ID="uuid-7134bb2d-ddc4-4e23-81ad-d39d1649bad3" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2484" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-6cf7c7f2-80f2-41a1-9171-2b914b81ed1f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-24">
+                    <mets:div ID="uuid-e9278db7-e80d-4dd0-97b4-6297297a87b2" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2485" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-6d1e9f47-fab1-4634-ba4e-36bf16fcab21" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-25">
+                    <mets:div ID="uuid-accf96aa-1f71-47fa-bca6-f89ba4288fd0" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2486" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-fe5112c4-41b7-494c-b253-54fa6b96bab6" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-26">
+                    <mets:div ID="uuid-7654919f-96cd-4013-ba42-85d5dd8db6f6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2487" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-fdeadfae-0606-43dd-9d19-0a40594fd539" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-27">
+                    <mets:div ID="uuid-6dbcf2d6-24d6-4398-91d9-5952e5c7662c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2488" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9407f67e-15e0-4bbc-871c-bc554f907068" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-28">
+                    <mets:div ID="uuid-624591b2-829a-4552-88e8-d680417ca2b2" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2489" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5263b5f3-a627-4c6f-8802-275b81c0ccc4" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-04-30">
+                    <mets:div ID="uuid-d29f570f-91e3-4c3b-90c9-c42f9d2bec8f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2490" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-0e9670b7-51b7-404a-8642-2808f402697a" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-05">
+                <mets:div ID="uuid-ae21611e-0dfc-442b-9765-19ab2a3c1685" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-02">
+                    <mets:div ID="uuid-1c68f032-c55b-4e2e-a22a-9375c369f8d3" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2492" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9306db13-2c37-430c-939e-4b15c0d4e732" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-03">
+                    <mets:div ID="uuid-9f05ba96-4f1d-4d16-b760-b6df10791105" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2493" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-42a812c4-f1cd-457f-bac7-ad25fb2ddb05" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-04">
+                    <mets:div ID="uuid-d75d6ca8-9680-4391-aaae-18be757f5dd5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2494" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-64625597-e39a-4326-b850-e6cadca883d3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-05">
+                    <mets:div ID="uuid-352ea5d2-68f6-474a-a8e3-c81a1922ae8f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2495" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-21574777-d81d-4df4-9607-ec34f5d2188b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-07">
+                    <mets:div ID="uuid-f07d37b9-decd-415d-b386-b4a40020f305" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2496" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e3e56408-210b-48ad-ad11-14e0a584821c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-08">
+                    <mets:div ID="uuid-3dfd066f-dae1-4c50-bcc9-36ed1e85f959" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2497" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7b031a70-ddce-408d-9ec0-41c380eaae52" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-09">
+                    <mets:div ID="uuid-e9e30c65-be93-4812-9c2c-e0bb771e78f2" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2498" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-91c7745c-ed3e-45c6-9bd5-ff38e6d43817" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-11">
+                    <mets:div ID="uuid-26173a9a-cfd0-46d1-9684-d2717c0be613" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2500" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-c51be233-0019-4856-896c-d2b67039b33e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-12">
+                    <mets:div ID="uuid-16f444b6-d20e-4297-a156-6a673b170cad" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2501" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-1f9e042a-d9e1-48ef-9497-52aafa2c6b57" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-14">
+                    <mets:div ID="uuid-90614860-ea33-41c6-a084-b46a86b7da3c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2502" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-673b1429-fd30-4db7-a74a-a68c5a6e64b1" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-15">
+                    <mets:div ID="uuid-46e206d0-1696-44aa-abfa-e7d6af5cb597" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2503" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a69893f9-66af-49cb-a00f-1f0280ae0152" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-16">
+                    <mets:div ID="uuid-5f0424f9-270a-4049-8333-244fa1d1f1c6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2504" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-85f2e721-6b3a-4823-a7e6-bfee1723ef58" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-17">
+                    <mets:div ID="uuid-d76a660c-0474-42b9-ab42-aa0cd7317dd6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2505" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d503f721-0d7c-4768-83de-c304cf623602" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-18">
+                    <mets:div ID="uuid-532ebabb-9e0c-48d8-8c4f-138e4337469e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2506" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3b9a5ff2-7b05-491a-a856-b8bfbae8d815" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-19">
+                    <mets:div ID="uuid-b93dc375-5c49-4cf8-ad7d-00fe432959a8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2507" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-cf205bcc-b232-4d28-939a-857d50ba0a2c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-22">
+                    <mets:div ID="uuid-686e1af2-1d6a-48b7-b4f2-4bf153859c11" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2509" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-1e276100-e3c8-4869-81d8-1820217bfb6e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-23">
+                    <mets:div ID="uuid-9f7508fe-eafb-4b5f-baeb-3344f22e94d6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2510" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ff4f332b-bf1e-4f15-93bc-c5cba923b2ad" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-24">
+                    <mets:div ID="uuid-fdcd02b2-a644-435a-95d8-3a3d8821f574" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2511" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-29728839-e308-4bed-9058-c4019c28d3b2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-25">
+                    <mets:div ID="uuid-426451d0-107e-4a9b-93cc-cb36fc080730" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2512" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-13f04ea0-38c2-4909-b2d4-2b54e7ed86be" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-26">
+                    <mets:div ID="uuid-8a41486d-fff5-43ea-9a00-a01ad870d912" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2513" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2c877a01-ef99-4010-9937-8b274ab581f3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-28">
+                    <mets:div ID="uuid-040cd7b6-4520-42ea-ae2c-4d0b4dd8fcb5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2514" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-10b37a6d-bd72-4b7b-85b2-d850fa4d120b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-29">
+                    <mets:div ID="uuid-6f1beaaa-8859-4636-a1a2-0ecdb4bd80f9" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2515" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-c2738574-d3f3-46c5-81e3-774084ef57ba" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-30">
+                    <mets:div ID="uuid-426bbbf5-7493-4cac-87bd-dd5c1699f8a6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2516" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-68b319ff-038b-4aea-8756-77c8436171a7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-05-31">
+                    <mets:div ID="uuid-e62c4fdf-3a73-4b5c-be67-ebf7fcd7bac7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2517" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-4b9cb4fc-d544-4491-9ce2-e213411e66b2" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-06">
+                <mets:div ID="uuid-6a65b8b0-c138-4e82-b0ce-54037412ab9e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-01">
+                    <mets:div ID="uuid-1b0fe89f-384e-4895-8982-3b865d5434e0" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2518" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-046df0ea-335c-48ba-830e-d18eed3e0ae3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-02">
+                    <mets:div ID="uuid-4c272248-4120-4a00-9471-4b2f7460b9dc" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2519" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d7f38ef4-fcdd-4deb-b71f-ae255bd720c7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-04">
+                    <mets:div ID="uuid-0a130f84-172e-468c-89d4-86a2c76067e7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2520" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-1bba1f4c-6bd3-402c-851b-09b33246c8ef" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-05">
+                    <mets:div ID="uuid-3e55e1b5-6d65-407b-973c-a4f894e0b3b1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2521" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-971b8bdb-095f-4c52-a878-95867468ba58" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-06">
+                    <mets:div ID="uuid-0343f62f-7bf3-4fbd-bd6f-e88465f4d3a7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2522" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bca55552-c11e-45fa-b18f-8b5872958447" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-07">
+                    <mets:div ID="uuid-97bfd180-2a77-4923-a0f8-5af0bf1bf0c8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2523" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-44c266ed-67a3-431d-88df-29de515215ca" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-08">
+                    <mets:div ID="uuid-12e5cffe-32b0-482b-a258-d75ab3500f9d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2524" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-24314499-a18d-4c0f-8000-a5a17828be63" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-09">
+                    <mets:div ID="uuid-f4e5a6a0-e038-438c-9e85-f1142e1d3ff1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2525" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-aba39074-ac0d-46bd-ba08-e393050fe0f8" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-11">
+                    <mets:div ID="uuid-5d174ddf-a28c-425d-ab6b-1ed25e06df56" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2526" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-df9ae09b-3bff-4baf-af91-269b83a91e86" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-12">
+                    <mets:div ID="uuid-7e47d24c-9a6d-418a-af16-1c521967298d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2527" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e74ba850-5da2-480f-b0da-231c8094c82d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-13">
+                    <mets:div ID="uuid-48a9e72b-0600-4110-aec9-a016432807e1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2528" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-849f7abd-bc8f-4f44-90fd-34a0f015cb28" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-14">
+                    <mets:div ID="uuid-344a2b01-48ae-4c16-b22b-ac9fcac8416e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2529" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f725abae-8483-47d7-b8f5-a1296970ddb3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-15">
+                    <mets:div ID="uuid-35d75c27-a040-40f4-9122-acff3438ff6c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2530" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0ba51154-f3b4-4003-b336-c4e5534f2b4b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-16">
+                    <mets:div ID="uuid-8a696e7d-0fd0-4dac-a5ca-438d4dbda744" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2531" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d5470d3c-adab-4ee4-957d-8f709d4986b2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-18">
+                    <mets:div ID="uuid-ba6390f0-dd52-406e-8db5-9eb0643f5f38" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2532" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-6f384e11-f72c-4628-9a34-7d8122f0a73f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-19">
+                    <mets:div ID="uuid-b10e2edb-adf8-4d92-8b64-ed2d27b36064" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2533" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7824f81b-93ad-44d8-becf-4b639c5c7ef7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-20">
+                    <mets:div ID="uuid-4029ad93-976b-4b29-bc7e-c5edc9baf3f1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2534" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2c29c9a2-c16e-4540-9f80-517a4c12a1cb" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-21">
+                    <mets:div ID="uuid-f0be0864-8e33-46d3-81b2-1e295297f211" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2535" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a0c7491d-6427-4b4b-955d-b3da8f6c8bba" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-22">
+                    <mets:div ID="uuid-4208c491-9659-4357-a46e-58706d2c850c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2536" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0f44a0a5-4055-49ac-9a87-c3fce2a6bf3d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-23">
+                    <mets:div ID="uuid-b69a4a75-3139-47d6-8e1f-6b293ae76b14" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2537" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-41a66a9a-495d-44b1-9479-1c1f989710ff" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-25">
+                    <mets:div ID="uuid-f5d71068-d08f-4a84-8791-7c8eb7f2ebbd" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2538" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e9f77627-a5af-4311-96c8-3d2557c61010" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-26">
+                    <mets:div ID="uuid-f50f34a1-3096-4601-90ba-59d27d3710a1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2539" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4ce35fac-a0d1-482c-b938-600e7b98edde" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-27">
+                    <mets:div ID="uuid-14f2b20b-af2a-4583-ab11-76843d01c903" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2540" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7f5d17e5-b2c1-4f80-b9bb-b4bf110d1d03" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-28">
+                    <mets:div ID="uuid-a0bf500d-dbe2-43e2-8f04-8dc027c280e0" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2541" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9cb75d5c-f0a0-46cb-813f-a6799e099c69" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-29">
+                    <mets:div ID="uuid-5ed11958-4928-4946-a71a-db9ebcf2711a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2542" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-6403ae76-a5d7-4dbb-9c39-782e7bd3956a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-06-30">
+                    <mets:div ID="uuid-7bfcaa71-9d12-4770-a66c-a93cccf60728" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2543" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-457b6e2c-7903-45d0-ad90-7923e59ca3bf" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-07">
+                <mets:div ID="uuid-630b72c6-d0a2-4cfd-ac54-6812220fedb5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-02">
+                    <mets:div ID="uuid-a70c6aa8-b040-46dc-907f-2b4bd7d8a54f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2544" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7cacaf14-9e5f-41bb-92c1-d212868a02ba" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-03">
+                    <mets:div ID="uuid-3e593afc-049c-4f79-a4ac-a80d6affd3cc" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2545" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a99ef34a-d2ad-4d7e-8569-622f8f753592" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-04">
+                    <mets:div ID="uuid-f5a6aa0e-dd2b-48c8-bdb9-373d132e7ae0" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2546" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-515c7075-9989-4df3-8aee-7346bf451c7c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-05">
+                    <mets:div ID="uuid-a5bf3560-1958-4ab8-b687-3721091355ed" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2547" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-80afc986-7dfa-48a0-823a-21dba5c180b2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-06">
+                    <mets:div ID="uuid-cef5596b-e1e4-4b1b-8a17-b88995f69bd8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2548" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d987e283-d146-488a-8f0a-5a016365dc95" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-07">
+                    <mets:div ID="uuid-b6afbe77-0a46-44c4-a4c6-15508691e8c9" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2549" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-744bfe68-0c1d-4001-becd-aaa4e65bb8ad" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-09">
+                    <mets:div ID="uuid-b3d2e5bf-1328-4ae8-ad5e-c69eddb3dca6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2550" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ff9ad78a-315c-4390-9df4-57cb7d4da897" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-10">
+                    <mets:div ID="uuid-a1d616bf-341b-4fce-a962-08689d4f3d6f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2551" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f2d10940-e408-48b5-8f47-d5e52d35246f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-11">
+                    <mets:div ID="uuid-67abd961-4184-4a14-876f-06da16ef6b9b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2552" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f00f0f07-7680-49b8-ab5c-ef47e76fc584" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-12">
+                    <mets:div ID="uuid-e77758c6-5b12-40e8-87ef-df18c5a4713a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2553" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-03b6cdd4-5253-43b2-a52c-044ef9ade766" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-13">
+                    <mets:div ID="uuid-91f7404e-9d3b-471b-8954-693e1cbcb673" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2554" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-12a07490-268c-4702-989e-4893f5a9580c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-14">
+                    <mets:div ID="uuid-0ac6b4ea-9fd5-40db-b5d5-07dee3d5be3a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2555" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-41744acf-2943-4607-a5f5-52629e8b9e06" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-16">
+                    <mets:div ID="uuid-3f1cb828-f683-41dc-b0db-b57aee502523" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2556" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ed8acc61-feff-4fff-9efb-6c01117adbae" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-17">
+                    <mets:div ID="uuid-3b77ab31-c821-4816-9432-7692c21e1d88" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2557" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e231605c-a5f9-4d7a-bd9b-1dfdaf501bd0" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-18">
+                    <mets:div ID="uuid-c86a95c6-2a27-43d4-ac4c-28bba0686e02" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2558" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3eab177a-b6f9-4315-8240-7e9747a5bbe3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-19">
+                    <mets:div ID="uuid-5af77cf3-ef04-4b43-9d22-f60660d1a5f5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2559" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7e81d9ca-0fe7-454f-b5ef-7e08f799595f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-20">
+                    <mets:div ID="uuid-3dc49d2d-d4a8-4292-a76c-91f1ba76a982" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2560" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5c64f618-ca82-4b62-8f56-f5468baf7521" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-21">
+                    <mets:div ID="uuid-4ef2b0c9-1a3b-48c7-a9c1-41f847505bda" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2561" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b947de5f-02c8-450f-a33a-0be249c5e966" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-23">
+                    <mets:div ID="uuid-42769ad7-d9c8-4ffb-a052-26d71540234a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2562" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f4eda7df-b78d-4136-a252-bcd36c7b0037" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-24">
+                    <mets:div ID="uuid-d63f2d38-d4e7-434f-a800-d758caa79917" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2563" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2dd889e9-7dd4-44c4-9636-206ff0593938" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-25">
+                    <mets:div ID="uuid-6612e933-a6b2-4817-b10d-4e55986435c9" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2564" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-8be59446-2591-4298-9e9a-f5b67647385a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-26">
+                    <mets:div ID="uuid-d2e8077f-c7c5-46b0-a44b-53341e2657e3" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2565" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-17319116-bef2-4166-ad98-29cbcdbc68ad" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-27">
+                    <mets:div ID="uuid-a75747b5-4f0d-4e70-bac6-0f23b9bb61ee" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2566" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b33c026d-93dd-457c-b263-8f37017e17b6" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-28">
+                    <mets:div ID="uuid-dd01b6e8-c928-4e03-8f8e-3b1df9448b8a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2567" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3b0959d9-bfe5-4d5c-b546-53477f5b5002" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-30">
+                    <mets:div ID="uuid-7c603cff-5b19-4328-a68a-767b9b31756f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2568" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e47283fd-05c1-4036-a70d-e1132acd8e28" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-07-31">
+                    <mets:div ID="uuid-728b45e5-116d-4820-8ec7-17e598dfea90" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2569" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-ec700535-2ef5-42b7-ac12-8f8d1932ba66" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-08">
+                <mets:div ID="uuid-d99cb797-9212-4012-b2bc-0f8cb99916f6" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-01">
+                    <mets:div ID="uuid-339190dc-3f31-49ec-bd7b-ed9533b5250a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2570" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-354ed853-6eb5-4492-9ef7-7ee45481570c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-02">
+                    <mets:div ID="uuid-fe1945b2-d25b-4fc6-b722-5df4bfc26c2a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2571" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9c5a254a-5a36-4485-b725-c4c155794a25" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-03">
+                    <mets:div ID="uuid-95c4ea2a-8773-41ec-bea6-ad4939a296f5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2572" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b388264c-6cc5-457c-b811-b87734e17ebb" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-04">
+                    <mets:div ID="uuid-a8d4ec77-f9ec-4e6b-a364-734043cfffe6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2573" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2a188b20-54ae-4b68-aa2b-66072ec3d8c5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-06">
+                    <mets:div ID="uuid-c09b40f6-0a13-48c3-9dd2-716672c4e56e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2574" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-18449cb2-0cfc-4fd3-89d1-bacea127f63c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-07">
+                    <mets:div ID="uuid-1cb43fe8-58d1-4869-861a-ca21d7c11e76" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2575" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2427960a-08fe-4a72-8b88-ed99e0a4ddd5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-08">
+                    <mets:div ID="uuid-2edcaf99-b521-4d88-921c-55c862ea28da" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2576" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-34bbf2c0-63e2-457b-a17e-d37dd3ed0b23" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-09">
+                    <mets:div ID="uuid-cb07966c-d252-4e34-9bfb-e7a2971c22ff" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2577" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2975b6c7-c424-4068-bb24-75a8cb31a998" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-10">
+                    <mets:div ID="uuid-81097a32-cf37-4848-841e-0d1acbf159dd" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2578" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-52327c77-0043-4502-a76e-cdff8c35d4d6" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-11">
+                    <mets:div ID="uuid-831435dc-24f4-4555-a044-ce4f78aec1f7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2579" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4423bf8c-9310-4da7-815e-aa8be3ada015" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-13">
+                    <mets:div ID="uuid-90d915df-6798-4484-bc73-912b5cb528cf" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2580" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3ba9b834-43ca-49d6-aac6-aeeb192609a7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-14">
+                    <mets:div ID="uuid-ff8a85cf-0d40-4ca7-8765-f96b58a697e1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2581" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-887e5b58-5f87-4042-973c-b70ef88fc53b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-15">
+                    <mets:div ID="uuid-c3d0da21-6be1-416d-8bfb-d42543dd09d8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2582" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d68d4c6a-d5a6-4382-b15b-5d33faedf279" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-16">
+                    <mets:div ID="uuid-df062b1e-fe68-461b-a903-17cf15033e5e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2583" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4305c3a9-9604-402d-9133-b5565c8ffd4e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-17">
+                    <mets:div ID="uuid-33743105-6ba4-4303-93b3-4f308270b298" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2584" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2e45180e-467b-42fe-9bfc-0fb25bb2085b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-18">
+                    <mets:div ID="uuid-7904e0ab-ef49-45d1-aa42-330ce099ef44" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2585" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e048cf15-0585-46e7-b414-2ec521f4cabb" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-20">
+                    <mets:div ID="uuid-6a2b60f0-2f97-4093-acdd-0a99fe2117cd" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2586" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-99c54b8d-c3cc-4c91-af4c-ded688de9d83" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-21">
+                    <mets:div ID="uuid-64fc6f35-53dd-481b-8a5d-d2dc91fcc7c8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2587" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4fc4348f-0afc-4aa4-8b00-3a3e5f3862cf" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-22">
+                    <mets:div ID="uuid-00991456-c08d-4a7a-b07e-2e59d3cd3e24" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2588" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-47595d8f-b809-4651-8575-c646aea11118" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-23">
+                    <mets:div ID="uuid-3b50d288-ab43-4366-967d-33ea508b9c75" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2589" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0c41e935-f74e-47c3-9819-9c615bb7ec50" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-24">
+                    <mets:div ID="uuid-ed565810-b1fa-4af9-80fe-7ff5827856a3" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2590" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0827a47f-6138-4aa3-9725-35b4c6d70150" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-25">
+                    <mets:div ID="uuid-a9e14d60-32d0-4ae5-8ce3-264f26e2a343" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2591" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f939f5fa-04be-4de2-8654-cadd6d862bcd" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-27">
+                    <mets:div ID="uuid-1541d415-42a7-42a4-b6fe-f4b52bc499d0" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2592" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f9c9345d-4cc8-414c-8a6f-fe71fffeb88b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-28">
+                    <mets:div ID="uuid-ef7717d7-8094-44e0-84f4-92dfc6d7e0ac" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2593" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bfdb0d59-89ef-485c-8250-84b068dcccea" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-29">
+                    <mets:div ID="uuid-a9dee848-e134-4bae-8aba-d2380e5af252" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2594" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0df64e55-876b-4cea-9731-f0fb1a52ba15" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-30">
+                    <mets:div ID="uuid-b60d0ffb-60b9-4244-aac2-a630577a5d71" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2595" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-965b423c-ea42-4711-b04a-017e1e51feeb" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-08-31">
+                    <mets:div ID="uuid-da059953-c479-418a-abfe-ea1bc541c070" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2596" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-a234719a-c03d-4422-971d-119131d5ed28" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-09">
+                <mets:div ID="uuid-41e2bf94-88c6-416d-a6fd-cc8dfa844133" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-01">
+                    <mets:div ID="uuid-6906ef2c-da29-4568-96b2-7ed759b9c153" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2597" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-35e96c00-439a-41e3-8fc3-c9ecaa7e68eb" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-03">
+                    <mets:div ID="uuid-4d7f5861-d4c7-4c30-b813-ee3b462f034c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2598" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ca9fa0ab-fbe4-4ea9-8d02-b903f00f64f0" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-04">
+                    <mets:div ID="uuid-8c1ebad7-3eb1-43e9-a5fd-759ce713f95d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2599" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a422363c-5e6a-49ca-aaf2-1c10c502f9ff" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-05">
+                    <mets:div ID="uuid-ebcea3fe-61d6-4e62-83bb-4f59bd7731cc" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2600" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-144856fb-34b1-47c3-824f-97bdbe01f272" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-06">
+                    <mets:div ID="uuid-5ae6d65f-87da-47ca-9e55-759a0069cebf" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2601" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e801203d-e05b-4740-81bc-a115f26834de" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-07">
+                    <mets:div ID="uuid-1527e748-a19a-48b3-b99e-9154221b0821" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2602" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-c1f7492b-baaf-4eaa-ae44-93a878f871be" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-08">
+                    <mets:div ID="uuid-2d759d3e-ad5b-46ad-b345-6de62e99ddad" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2603" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f09cd2b8-af9c-4d48-83f1-31754aecb847" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-10">
+                    <mets:div ID="uuid-219088ce-0e39-4c90-9760-8667b4c30440" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2604" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-6e2cd0d2-dbd8-4030-b003-233504e3b1a2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-11">
+                    <mets:div ID="uuid-d043372d-d9fe-4123-8ecd-fcfd3b9b0191" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2605" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b9976dfd-0f76-4a34-97ba-c50e4d4a51aa" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-12">
+                    <mets:div ID="uuid-1458d1ba-2941-47dc-bd3d-5913896ac94e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2606" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-085b0d5c-1b1c-4568-a64c-e5cc5ab71973" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-13">
+                    <mets:div ID="uuid-2c8f8ebb-d955-479a-b753-3bae5c4c842a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2607" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3a18c5ae-660b-464c-8056-316a15d37344" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-14">
+                    <mets:div ID="uuid-865a8976-21cd-4cee-80c0-bdfbfb0afc7e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2608" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bb0bf5d9-6deb-44dc-ab1f-f37b80a63459" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-15">
+                    <mets:div ID="uuid-8748f294-3f1a-4126-ba75-71cfe31103c3" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2609" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-35ecd799-dd4c-492a-a5dd-0e288b71009b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-17">
+                    <mets:div ID="uuid-52ce200c-93e6-4a33-8276-8c9c7b6035e7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2610" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-c7af2286-a8b0-4fd1-9026-c71e151fe186" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-18">
+                    <mets:div ID="uuid-7664dd4f-ce11-48bc-81b5-7dba29847cd9" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2611" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2bd3a6a9-5791-42d2-b9cb-6ebf648b7b1e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-19">
+                    <mets:div ID="uuid-63f73bc4-c4e3-406c-b09a-e75358400b0d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2612" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-314883c0-e599-4002-b67e-061e6c9da4c5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-20">
+                    <mets:div ID="uuid-91b692d8-61f6-460b-bdd1-252355c1a9d6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2613" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-eab25833-eb2b-4cd4-b86f-2eff701a3014" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-21">
+                    <mets:div ID="uuid-d0e365d8-3ae9-4d96-bc84-d597c1d0df5a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2614" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ca9a77bb-a823-4071-b1b0-a94a8f0ddec7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-22">
+                    <mets:div ID="uuid-35b0c6e6-beaf-4a82-b283-7ee3c7e77602" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2615" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-cd6260ac-1524-468a-a313-415ed5f66bd5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-24">
+                    <mets:div ID="uuid-9ce8b1f1-cbae-4708-af84-a051f36dd394" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2616" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7fca31b7-f5c5-4a02-9f9d-95241eecffe9" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-25">
+                    <mets:div ID="uuid-d6a7a114-f2ad-41da-94be-9fe66176df15" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2617" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-31686bd1-49da-449f-bc16-a1e43c8ad315" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-26">
+                    <mets:div ID="uuid-20f4cc85-c0c4-497f-a9b8-2ae636f4bee2" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2618" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-42576bf4-da13-4e53-b578-3e4fe3857d31" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-27">
+                    <mets:div ID="uuid-bcd185e4-0826-4056-ad9a-8d96dba8926a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2619" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-731ed5f3-44c2-4870-bbc8-4321a03f56a3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-28">
+                    <mets:div ID="uuid-8631ce2f-0b38-4366-bc1c-e7b1ce19c630" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2620" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bfb0bf30-6364-4926-8d64-84d7320b4c9d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-09-29">
+                    <mets:div ID="uuid-69027ea4-e02a-4157-b498-ab0b17b04598" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2621" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-b0172348-6b2c-453f-aa2a-b7db6667b6ce" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-10">
+                <mets:div ID="uuid-1d9b846a-5769-4837-9bfa-06d22a0d4146" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-01">
+                    <mets:div ID="uuid-04026f8a-da55-48a5-8be5-5d8a588635c9" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2622" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-62dbaf28-ba3c-45b4-bfa2-223d5fa4811a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-02">
+                    <mets:div ID="uuid-abdbde13-06c1-4d07-875f-b8506baf23f5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2623" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9b712d03-5cce-40db-933b-f6d6b7d93be3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-03">
+                    <mets:div ID="uuid-0bbf8985-d95d-4df1-83cd-cacb9ffe47d7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2624" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4392404d-883b-405c-8ed3-f59049c5492d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-04">
+                    <mets:div ID="uuid-49bc06a7-3a88-4a2f-bed9-7d0ab98a9ecd" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2625" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-cefce23d-5986-4734-a4a6-ed0c321d5a75" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-05">
+                    <mets:div ID="uuid-8b7bde47-a26e-4b6b-9986-b2a608a5f312" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2626" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-8c28d336-8e20-49a9-9b8a-ce74b3e19647" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-06">
+                    <mets:div ID="uuid-1a40aa56-b42f-418e-8b66-57ee30b0349d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2627" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-da9369eb-9709-4b5f-acb3-4fb4c09a92b9" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-08">
+                    <mets:div ID="uuid-0c0697d1-2c28-4fc6-89e0-4ca094be27ca" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2628" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-98042e0e-e5a9-49dc-a7b4-bf6f14eaf3fd" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-09">
+                    <mets:div ID="uuid-2976b693-814b-4e1d-aa03-c9cb3e6ea5bb" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2629" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-51fd69f8-6ae5-47e3-bf3d-e4aa0becf918" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-10">
+                    <mets:div ID="uuid-7e1e5321-30e7-4f3c-8c6b-deab1690b7f1" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2630" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7eae1f7b-34d8-4cd8-8fdf-37f71c6e7ae5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-11">
+                    <mets:div ID="uuid-95852562-a5f0-4451-806d-21ff155fc25c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2631" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7bf0d5f1-b222-4b5b-a785-2c4d34e16bd1" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-12">
+                    <mets:div ID="uuid-cd0a6be0-9483-47f3-a59d-56f04e28113c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2632" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-53776da5-06ff-4a30-9e98-8b5d247ea56e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-13">
+                    <mets:div ID="uuid-3bf79c07-237c-4858-a6d1-7fd799f89bb4" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2633" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-af3e695d-d6d3-437b-a517-60b89ee6fa64" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-15">
+                    <mets:div ID="uuid-8874b58e-b994-4d77-89a9-9712d4b12517" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2634" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d0d44777-9edb-47c0-a2ea-bd37c9184cd8" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-16">
+                    <mets:div ID="uuid-6a70c251-b2fe-4c65-99f5-de159bc07673" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2635" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f6f630ca-0e23-4504-9352-59428b9f178f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-17">
+                    <mets:div ID="uuid-2a39ab3a-c54e-4d37-b334-5c2b99baf244" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2636" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-41980d81-1ac6-428d-b005-3af77c90d14a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-18">
+                    <mets:div ID="uuid-093e7c6b-ae60-42a9-9fe4-ee231935ea9b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2637" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-23ca4745-b52d-49a8-aba9-1e49bdf32845" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-19">
+                    <mets:div ID="uuid-481076cb-c1f7-424e-a961-3a9ee035ccc6" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2638" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d5722a43-784d-4fe9-be72-366ccbf28949" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-20">
+                    <mets:div ID="uuid-85359b43-1ba3-47f1-86b7-3afc6e13050a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2639" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2ba519a2-3e90-4e75-87a3-75492d54590f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-22">
+                    <mets:div ID="uuid-36860ed9-78c9-4de2-b10d-9030a613d40b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2640" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-dfb7500b-7c56-4fcf-a10a-18bfaad99f9c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-23">
+                    <mets:div ID="uuid-b021da73-2f0d-4b30-909c-54dbc60a1762" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2641" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-dd8403c2-f0ef-4fb9-8094-4e727cb23b11" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-24">
+                    <mets:div ID="uuid-77208198-a2af-4e32-b47b-fb95d975e5e5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2642" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3e69b14b-05a8-4b44-9396-c77116ecef48" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-25">
+                    <mets:div ID="uuid-70ddfb59-cb8d-436c-b73c-faf62acd5e39" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2643" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0f634e6e-90a9-4430-b283-e1c7e561f184" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-26">
+                    <mets:div ID="uuid-5f8c1fd7-aec1-45a4-ad7c-d645a9a48a7a" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2644" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-7231602b-5cc5-47be-b8cb-7f8a509a6ed7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-27">
+                    <mets:div ID="uuid-bd251e35-196a-4099-9d72-bcee3c3cf21c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2645" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ec461868-4b8b-47a4-bbd4-63a6c21928cf" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-29">
+                    <mets:div ID="uuid-bb928395-272a-4e18-8811-e08809a2c79c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2646" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-12905f71-a2d9-4e30-803e-5fbd98db35ee" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-30">
+                    <mets:div ID="uuid-6728aa7f-24eb-4f9d-b694-85999e4b5905" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2647" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ead30a33-d9d4-45fe-a32c-6b9415547d05" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-10-31">
+                    <mets:div ID="uuid-aaca1877-bbda-4f2a-9a1e-137df1077d24" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2648" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-d8065998-dec8-41b4-998a-3aa987c8b63d" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-11">
+                <mets:div ID="uuid-d0d4d9c6-f8ab-47ad-81bb-6be5d7d2a513" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-01">
+                    <mets:div ID="uuid-9a540986-7474-4e4b-87fc-b1cc90f6df3d" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2649" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-060cdd48-5559-4cfb-aa06-3842ecfeb9e9" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-02">
+                    <mets:div ID="uuid-dc98b49d-6310-48e7-8757-87d4f444a618" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2650" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-8395cb43-27e7-4306-ad9e-0c2b0069bc8d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-03">
+                    <mets:div ID="uuid-a197f866-b046-4ecb-bf27-6e560ac25050" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2651" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bcef4fe5-519b-489e-820f-13d817ea35f0" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-05">
+                    <mets:div ID="uuid-61ce5828-007f-4ddf-ab5f-fc878253875b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2652" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-9c973c4e-661c-4cdd-8920-dde3d01eeba4" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-06">
+                    <mets:div ID="uuid-da9cf706-d7f7-4241-b8c4-d251c268bc3e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2653" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-318b3b69-b161-4b59-9d73-183cfe727a6a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-07">
+                    <mets:div ID="uuid-08b6e0a2-6f12-4dd2-8490-192975ef5e32" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2654" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-42394fad-70a3-4f21-9f84-4edbc99a479c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-08">
+                    <mets:div ID="uuid-65412c3e-b72c-4462-9944-366d1bbc2db5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2655" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ce45109f-eb4b-4105-a2d1-f693afdd2df2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-09">
+                    <mets:div ID="uuid-dc13b8ed-a599-495f-8f7d-05be43300a69" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2656" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d57ea6c4-98ef-4680-87ec-5d9661a065c3" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-10">
+                    <mets:div ID="uuid-626f05c3-e26f-4602-bbeb-5f7a42cc96da" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2657" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2803a91c-dc9a-4a5d-b7ab-b4a8bdadcd39" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-12">
+                    <mets:div ID="uuid-4154df79-b4be-4f9c-bf3d-f39de6518311" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2658" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-43b56cf1-5869-4abd-b29c-78afc05f209f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-13">
+                    <mets:div ID="uuid-b12cca37-6c29-46a3-8dc2-8ebbd2203e77" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2659" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ea8bc058-df44-4a5c-b930-ed1314a83a1d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-14">
+                    <mets:div ID="uuid-c8c6a273-becc-4247-ae6d-7df4f71a2779" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2660" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-6f218096-d746-45f7-ac78-826a5696719f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-15">
+                    <mets:div ID="uuid-e7361835-03c0-457e-b775-308005d71511" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2661" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b14cfbac-9f60-42db-a6e9-84ea85e74220" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-16">
+                    <mets:div ID="uuid-49bdaa4b-ead9-49a8-86a3-6bfc03108d63" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2662" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3a0fa7e8-c0cd-4025-9a7b-8daf46ddafd2" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-17">
+                    <mets:div ID="uuid-a9ef816e-45ba-4f53-872f-844b32bdce27" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2663" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d3151ef4-1301-4d08-a219-88411598919e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-19">
+                    <mets:div ID="uuid-e6c1d65b-c735-445b-bc29-9609698f05b8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2664" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0d49f340-17d6-4537-86ec-ea9815dd9f1b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-20">
+                    <mets:div ID="uuid-ec10ba17-0b8d-4c86-8687-c3dda2385a6b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2665" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-96ea91ce-878f-4939-bc71-0f973305f19c" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-22">
+                    <mets:div ID="uuid-0c4643c2-a9df-4190-ab17-f8c2e1202224" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2667" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-00f4f595-3766-4d97-9e97-782752a632c4" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-23">
+                    <mets:div ID="uuid-429e4aa5-476e-4e97-b4ba-cd940ead5a68" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2668" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ae97bdb8-ff5c-43c3-a9e4-8e55d2a33945" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-24">
+                    <mets:div ID="uuid-1dcfec37-dbd5-497e-a23d-25140b83bc0e" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2669" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-224b9d8c-9f7a-49d8-9b48-c2c5922177c0" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-26">
+                    <mets:div ID="uuid-450ac0d7-b6d7-4fc5-a0a0-da2b4bb1c868" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2670" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-230733e7-24d1-4d82-84f6-cf63eecbbf1d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-27">
+                    <mets:div ID="uuid-4b4b2155-6435-4fbb-abab-a80b96742e03" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2671" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4d39c9cd-b2be-4b7e-b29f-709c98667007" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-28">
+                    <mets:div ID="uuid-8bbf1869-6664-44e5-93d2-ccfe071a9084" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2672" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-17477a15-d007-4c89-8436-b08c3b2f3e6a" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-29">
+                    <mets:div ID="uuid-d729d16d-b9b9-4326-beb1-af1ac0e1ca46" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2673" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-61a099fd-c4cd-48cd-b606-dc244920d1b9" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-11-30">
+                    <mets:div ID="uuid-8639e596-e197-4adc-8fe4-22ed08e62d04" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2674" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+            <mets:div ID="uuid-03514394-9aa4-4bbf-b57c-868b60e735aa" TYPE="NewspaperMonth" ORDER="1" ORDERLABEL="1934-12">
+                <mets:div ID="uuid-0272ff03-d48e-4be4-b10d-aa1db46e51b5" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-01">
+                    <mets:div ID="uuid-6a4dd400-675e-4497-8d52-2a0406e6dc88" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2675" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-d8e073b0-f6fc-4185-b39a-352ead7eea60" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-03">
+                    <mets:div ID="uuid-909468fd-9a09-4eda-934a-204682d66524" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2676" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b6d3e4a1-833c-4a3f-979c-41c3d71f8bd8" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-04">
+                    <mets:div ID="uuid-00cc51f3-4ce7-4a80-8f81-fe77b22bc24b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2677" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-137f3cc5-b7c6-463b-820d-2cbb80b1eb2e" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-05">
+                    <mets:div ID="uuid-c48aa0a7-2d4f-4c64-9194-2d72b4aae8c0" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2678" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-221161da-88e0-4e70-baac-346cee9082d9" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-06">
+                    <mets:div ID="uuid-0e6a54cb-a355-4f71-b9e3-71ad5743b94c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2679" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-579d1fc1-4599-4cef-9dd3-1ea9d1b95265" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-07">
+                    <mets:div ID="uuid-e18d1432-fc08-41d2-8505-51cb76d96ad2" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2680" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f69a1704-d4d6-47df-88ae-2258588ce4a1" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-08">
+                    <mets:div ID="uuid-bafaa8e5-9180-4c60-8e9c-19c63f42f972" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2681" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-e1bb647a-c032-40e3-8dff-d67a85a50983" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-10">
+                    <mets:div ID="uuid-08f76835-f4c4-440b-8cae-d555ba8db9fa" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2682" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ac28d4cc-3a3e-4c67-9609-d6517abbb94d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-11">
+                    <mets:div ID="uuid-ceb5da24-5550-4bbb-958b-40057134c932" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2683" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-f5eff24a-a495-4d3c-8158-bfa4dc5bb1d7" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-12">
+                    <mets:div ID="uuid-cceb3c72-db6b-402d-b6fe-1bf7e440e117" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2684" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-68a00eb2-82ba-4929-a0eb-94da7f6a2a5b" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-13">
+                    <mets:div ID="uuid-8d1b6855-9b1a-4aff-96d8-be308a1bbcd8" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2685" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-edfd1312-b658-4c3f-ac78-43505d0a9107" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-14">
+                    <mets:div ID="uuid-380431f0-e4f4-4858-afb0-fc44783e7490" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2686" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-80d556a0-6796-4801-95a5-3dbbf1645327" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-15">
+                    <mets:div ID="uuid-1fb6c13e-5979-459e-8c76-ec99a5aeead3" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2687" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-5f728fdc-14fe-4886-b165-19a8a0536c41" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-17">
+                    <mets:div ID="uuid-3155825f-d6f8-4644-bcb3-c588e55f236c" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2688" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-4464a06d-ecba-463c-ab13-6944cd6d9f63" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-18">
+                    <mets:div ID="uuid-f3be2aed-4d79-461a-88e0-8c042391c535" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2689" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-55ea6ecf-3cb2-44ba-b5dc-5bbbcfe4df94" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-19">
+                    <mets:div ID="uuid-d494cf57-d446-4947-80a5-e4d08e9d545b" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2690" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-ff0b59d9-8483-45fd-8fae-b3f88a674097" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-20">
+                    <mets:div ID="uuid-6528726d-5b51-4277-9179-03dc76b2270f" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2691" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-3a7e0cd3-00b5-4643-a6db-cbc65c2ec0ab" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-21">
+                    <mets:div ID="uuid-5c9a1296-6afb-4951-8fc2-d4cd41067b95" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2692" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-a8353818-b7fb-4030-965e-734641caaf53" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-22">
+                    <mets:div ID="uuid-b942334f-3a5d-49be-bf2d-d7f3c68e8eb0" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2693" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-2063de0d-1c44-402c-a929-0210fce9191d" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-24">
+                    <mets:div ID="uuid-7597afc5-7790-4c7a-838e-5d8a74c255cb" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2694" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-cb79916c-c89a-4a9e-8da3-77a747cca3fe" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-27">
+                    <mets:div ID="uuid-835ed5d4-4e0e-4bf7-89d8-7e4ba91f41d7" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2697" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-b6198bb3-5cf3-4055-a32b-1decc13a066f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-28">
+                    <mets:div ID="uuid-d20e3b85-0ca9-42e9-b856-b85c0ae55b23" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2698" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-bd356edd-e9eb-4ab2-a562-d64879238f9f" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-29">
+                    <mets:div ID="uuid-e4730693-d895-41b5-831f-e8602d15b8d5" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2699" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+                <mets:div ID="uuid-0387afdc-d45f-4e62-bb23-80ab2a334da8" TYPE="NewspaperDay" ORDER="1" ORDERLABEL="1934-12-31">
+                    <mets:div ID="uuid-c90bef7e-b082-4a06-adbd-2930566a2bfc" ORDER="1">
+                        <mets:mptr xlink:href="database://?process.id=2700" LOCTYPE="OTHER" OTHERLOCTYPE="Kitodo.Production"/>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+    <mets:structLink/>
+</mets:mets>

@@ -1,6 +1,6 @@
 """digital flow API"""
 
-__version__ = "6.12.20"
+__version__ = "6.13.20"
 
 
 from .digiflow_identifier import *
