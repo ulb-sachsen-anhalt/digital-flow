@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:kitodo="http://meta.kitodo.org/v1/" xmlns:mets="http://www.loc.gov/METS/">
+  <mets:metsHdr CREATEDATE="2024-03-01T08:40:04.927+01:00" LASTMODDATE="2024-08-12T15:16:30.407+02:00">
+    <mets:metsDocumentID>79848</mets:metsDocumentID>
+  </mets:metsHdr>
+  <mets:dmdSec ID="uuid-973051e0-93f1-364c-9ee6-a8338e8e0111">
+    <mets:mdWrap>
+      <mets:xmlData>
+        <kitodo:kitodo>
+          <kitodo:metadata name="ulb_OwnerName">Universitäts- und Landesbibliothek Sachsen-Anhalt</kitodo:metadata>
+          <kitodo:metadata name="CatalogIDPeriodicalDBDigital">3050792-3</kitodo:metadata>
+          <kitodo:metadata name="IssueOrderNumber">188410142</kitodo:metadata>
+          <kitodo:metadata name="titleNewspaper">Hallische Zeitung : Hallischer Courier</kitodo:metadata>
+          <kitodo:metadata name="PICACreationDate">02-11-94</kitodo:metadata>
+          <kitodo:metadata name="shelfmarksource">Fi 5265 R Zt</kitodo:metadata>
+          <kitodo:metadata name="ulb_PlaceOfPublication">Halle (Saale)</kitodo:metadata>
+          <kitodo:metadata name="DocLanguage">ger</kitodo:metadata>
+          <kitodo:metadata name="issueName">No 241.</kitodo:metadata>
+          <kitodo:metadata name="DocSkript">Latf</kitodo:metadata>
+          <kitodo:metadata name="CatalogIDDigital">1744765855</kitodo:metadata>
+          <kitodo:metadata name="CatalogIDSourcePlus">168721678188410142</kitodo:metadata>
+          <kitodo:metadata name="ulb_copyright">Public Domain Mark 1.0</kitodo:metadata>
+          <kitodo:metadata name="ulb_DDC">090</kitodo:metadata>
+          <kitodo:metadata name="ulb_PublisherName">Universitäts- und Landesbibliothek Sachsen-Anhalt</kitodo:metadata>
+          <kitodo:metadata name="InhaltstypText">text</kitodo:metadata>
+          <kitodo:metadata name="PICAChangeDate">17-01-24</kitodo:metadata>
+          <kitodo:metadata name="ulb_urn">urn:nbn:de:gbv:3:1-171133730-168721678188410142-12</kitodo:metadata>
+          <kitodo:metadata name="CatalogIDPeriodicalDB">824605-1</kitodo:metadata>
+          <kitodo:metadata name="issueYearName">1884.</kitodo:metadata>
+          <kitodo:metadata name="dateDigit">2024</kitodo:metadata>
+          <kitodo:metadata name="CatalogIDSourceNewspaper">168721678</kitodo:metadata>
+          <kitodo:metadata name="issueTitle">Zweite Ausgabe.</kitodo:metadata>
+          <kitodo:metadata name="singleDigCollection">1516514412012/246056</kitodo:metadata>
+          <kitodo:metadata name="processTitle">168721678-188410142</kitodo:metadata>
+          <kitodo:metadata name="issueDate">1884-10-14</kitodo:metadata>
+          <kitodo:metadata name="ulb_Kommentar_ex">Text-/Bildverlust durch enge Bindung.</kitodo:metadata>
+          <kitodo:metadata name="PublisherName">Schwetschke</kitodo:metadata>
+          <kitodo:metadata name="ulb_copyright_link">https://creativecommons.org/publicdomain/mark/1.0/</kitodo:metadata>
+          <kitodo:metadata name="PICAType">AZ</kitodo:metadata>
+        </kitodo:kitodo>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="uuid-0342da4c-caac-3a68-9bf9-80cce72c5971">
+    <mets:mdWrap>
+      <mets:xmlData>
+        <kitodo:kitodo>
+          <kitodo:metadata name="additionalName">Beilage</kitodo:metadata>
+        </kitodo:kitodo>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:fileSec>
+    <mets:fileGrp USE="DEFAULT">
+      <mets:file ID="uuid-c1232d58-b64a-4849-84cd-21ea21875167" MIMETYPE="image/jpeg">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/thumbs/00000002.jpg"/>
+      </mets:file>
+      <mets:file ID="uuid-5eb4bec5-56bf-4a81-ad62-417b29f9f531" MIMETYPE="image/jpeg">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/thumbs/00000005.jpg"/>
+      </mets:file>
+      <mets:file ID="uuid-3ff6c41f-89cf-46c0-8996-0ca0896c056d" MIMETYPE="image/jpeg">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/thumbs/00000001.jpg"/>
+      </mets:file>
+      <mets:file ID="uuid-b906984f-291d-42d1-a10f-00e27c3bda4b" MIMETYPE="image/jpeg">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/thumbs/00000006.jpg"/>
+      </mets:file>
+      <mets:file ID="uuid-c37f1dc8-22df-4714-9dab-4c729b3cac4d" MIMETYPE="image/jpeg">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/thumbs/00000003.jpg"/>
+      </mets:file>
+      <mets:file ID="uuid-3a9ceb9c-6abf-49a8-b9cf-365e3fb69ae8" MIMETYPE="image/jpeg">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/thumbs/00000004.jpg"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp USE="MAX">
+      <mets:file ID="uuid-ab0346ba-727f-4ccb-ae9d-d7956f4b2f5c" MIMETYPE="image/tiff">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/max/00000004.tif"/>
+      </mets:file>
+      <mets:file ID="uuid-a274f37e-3578-49ac-b7c9-74954ed9f357" MIMETYPE="image/tiff">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/max/00000003.tif"/>
+      </mets:file>
+      <mets:file ID="uuid-7a04b229-6883-4043-b1e6-0a619c63d3c9" MIMETYPE="image/tiff">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/max/00000001.tif"/>
+      </mets:file>
+      <mets:file ID="uuid-90cf062c-6b3d-4df5-840b-aacd848691b3" MIMETYPE="image/tiff">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/max/00000002.tif"/>
+      </mets:file>
+      <mets:file ID="uuid-986d6939-1229-414a-8bea-1f746fb0d9c5" MIMETYPE="image/tiff">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/max/00000005.tif"/>
+      </mets:file>
+      <mets:file ID="uuid-ac72437d-f78d-4039-929b-900e5c78d366" MIMETYPE="image/tiff">
+        <mets:FLocat LOCTYPE="URL" xlink:href="images/max/00000006.tif"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="PHYSICAL">
+    <mets:div ID="uuid-2fb24bf6-11b6-4097-8231-835b81314fb2">
+      <mets:div ID="uuid-a64ca86a-04ae-4746-a563-c8f584893841" TYPE="page" ORDER="1" ORDERLABEL="[Seite 1]">
+        <mets:fptr FILEID="uuid-7a04b229-6883-4043-b1e6-0a619c63d3c9"/>
+        <mets:fptr FILEID="uuid-3ff6c41f-89cf-46c0-8996-0ca0896c056d"/>
+      </mets:div>
+      <mets:div ID="uuid-5ca81667-367b-44ea-8f8d-76f51ae61f15" TYPE="page" ORDER="2" ORDERLABEL="[Seite 2]">
+        <mets:fptr FILEID="uuid-90cf062c-6b3d-4df5-840b-aacd848691b3"/>
+        <mets:fptr FILEID="uuid-c1232d58-b64a-4849-84cd-21ea21875167"/>
+      </mets:div>
+      <mets:div ID="uuid-9ab2fb2e-91b6-4d37-bdd0-20dc4716cf38" TYPE="page" ORDER="3" ORDERLABEL="[Seite 3]">
+        <mets:fptr FILEID="uuid-a274f37e-3578-49ac-b7c9-74954ed9f357"/>
+        <mets:fptr FILEID="uuid-c37f1dc8-22df-4714-9dab-4c729b3cac4d"/>
+      </mets:div>
+      <mets:div ID="uuid-3eba102b-c1fc-4dd1-a343-46e418d9765c" TYPE="page" ORDER="4" ORDERLABEL="[Seite 4]">
+        <mets:fptr FILEID="uuid-ab0346ba-727f-4ccb-ae9d-d7956f4b2f5c"/>
+        <mets:fptr FILEID="uuid-3a9ceb9c-6abf-49a8-b9cf-365e3fb69ae8"/>
+      </mets:div>
+      <mets:div ID="uuid-b56c64ff-6f52-4990-ab8e-87ba74006049" TYPE="page" ORDER="5" ORDERLABEL="[Seite 5]">
+        <mets:fptr FILEID="uuid-986d6939-1229-414a-8bea-1f746fb0d9c5"/>
+        <mets:fptr FILEID="uuid-5eb4bec5-56bf-4a81-ad62-417b29f9f531"/>
+      </mets:div>
+      <mets:div ID="uuid-9b5043b6-08ee-4341-b594-20679f3192d9" TYPE="page" ORDER="6" ORDERLABEL="[Seite 6]">
+        <mets:fptr FILEID="uuid-ac72437d-f78d-4039-929b-900e5c78d366"/>
+        <mets:fptr FILEID="uuid-b906984f-291d-42d1-a10f-00e27c3bda4b"/>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structMap TYPE="LOGICAL">
+    <mets:div ID="uuid-93f413f0-8dec-4a35-baaa-b61e3a3e9045" ORDER="1">
+      <mets:div ID="uuid-b9e4236f-49a4-425e-9100-79d782a09d97" ORDER="1" ORDERLABEL="1884-10-14">
+        <mets:div ID="uuid-d3f9bf9a-8a89-4c3e-a143-10eef02ee5e7" DMDID="uuid-973051e0-93f1-364c-9ee6-a8338e8e0111" TYPE="PeriodicalIssue" ORDER="1" LABEL="No 241.">
+          <mets:div ID="uuid-e89eaa40-2445-4b94-a28d-d97c839da9b1" DMDID="uuid-0342da4c-caac-3a68-9bf9-80cce72c5971" TYPE="additional" ORDER="5" LABEL="Beilage"/>
+        </mets:div>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+  <mets:structLink>
+    <mets:smLink xlink:to="uuid-a64ca86a-04ae-4746-a563-c8f584893841" xlink:from="uuid-d3f9bf9a-8a89-4c3e-a143-10eef02ee5e7"/>
+    <mets:smLink xlink:to="uuid-5ca81667-367b-44ea-8f8d-76f51ae61f15" xlink:from="uuid-d3f9bf9a-8a89-4c3e-a143-10eef02ee5e7"/>
+    <mets:smLink xlink:to="uuid-9ab2fb2e-91b6-4d37-bdd0-20dc4716cf38" xlink:from="uuid-d3f9bf9a-8a89-4c3e-a143-10eef02ee5e7"/>
+    <mets:smLink xlink:to="uuid-3eba102b-c1fc-4dd1-a343-46e418d9765c" xlink:from="uuid-d3f9bf9a-8a89-4c3e-a143-10eef02ee5e7"/>
+    <mets:smLink xlink:to="uuid-b56c64ff-6f52-4990-ab8e-87ba74006049" xlink:from="uuid-e89eaa40-2445-4b94-a28d-d97c839da9b1"/>
+    <mets:smLink xlink:to="uuid-9b5043b6-08ee-4341-b594-20679f3192d9" xlink:from="uuid-e89eaa40-2445-4b94-a28d-d97c839da9b1"/>
+  </mets:structLink>
+</mets:mets>

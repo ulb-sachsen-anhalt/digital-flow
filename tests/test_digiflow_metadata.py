@@ -844,8 +844,10 @@ def test_metsreader_zd2_issue_18680621():
         (os.path.join(TEST_RES, "k2_mets_vd18_147638674.xml"), "DMDLOG_0000", "monograph"),
         (os.path.join(TEST_RES, "vls/zd/zd1-16359609.mets.xml"), "md16359609", "issue"),
         (os.path.join(TEST_RES, "opendata/123456789_27949.xml"), "md1180329", "monograph"),
-        (TEST_RES / "kitodo3" / "meta" / "meta_2387.xml", "uuid-105708b0-e915-36d5-8167-99ef14d0baf7",
-         "NewspaperYear")
+        (TEST_RES / "kitodo3" / "meta" / "meta_2387.xml",
+         "uuid-105708b0-e915-36d5-8167-99ef14d0baf7", "NewspaperYear"),
+        (TEST_RES / "kitodo3" / "meta" / "meta_79848.xml",
+         "uuid-973051e0-93f1-364c-9ee6-a8338e8e0111", "PeriodicalIssue"),
     ],
 )
 def test_metsreader_identify_prime_dmd_section(mets_path, dmd_id, logical_type):

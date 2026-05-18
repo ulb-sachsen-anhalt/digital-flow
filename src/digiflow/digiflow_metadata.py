@@ -459,17 +459,26 @@ class MetsReader(MetsProcessor):
         if len(dmd_candidates) == 1 and "ID" in dmd_candidates[0].attrib:
             self._prime_mods_id = dmd_candidates[0].attrib["ID"]
         else:
-            # if more MODS present
-            # we are only interested in those with identifiers present
+            # if more than one dmdSec present we are only interested
+            # in the one with some kind of identifiers/catalogid present
             primes = [
                 d.get("ID")
                 for d in dmd_candidates
-                if len([m for m in d.iterdescendants() if "identifier" in m.tag]) > 0
+                if len([m for m in d.iterdescendants() if MetsReader._identifier_tags(m)]) > 0
             ]
             if len(primes) == 1:
                 self._prime_mods_id = primes[0]
             else:
                 self._prime_mods_id = self._determine_prime_dmd_id_by_logical_struct()
+
+    @staticmethod
+    def _identifier_tags(tag: ET._Element) -> bool:
+        """Identifier tags to look for in MODS"""
+        the_tag = tag.name if isinstance(tag, ET.QName) else tag.tag
+        if the_tag.endswith("metadata") and "name" in tag.attrib:
+            return any(n in tag.get("name").lower() for n in ["catalogid"])
+        return any(t in the_tag.lower() for t in ["identifier"])
+
 
     def _determine_prime_dmd_id_by_logical_struct(self) -> str:
         if self.root is None:
@@ -479,17 +488,27 @@ class MetsReader(MetsProcessor):
         log_struct = self.root.find('.//mets:structMap[@TYPE="LOGICAL"]', dfc.XMLNS)
         if log_struct is None:
             raise DigiflowMetadataException(f"No logical struct in {self.root.base}!")
-        first_level = log_struct.getchildren()
-        raw_id = None
-        if len(first_level) == 1:
-            the_type: str = first_level[0].attrib["TYPE"].lower()
+        dmd_id = None
+        child_containers = log_struct.getchildren()
+        # log_type = None
+        # while len(child_containers) > 0:
+        #     for child in child_containers:
+        #         if "DMDID" in child.attrib and "TYPE" in child.attrib:
+        #             dmd_id = child.attrib["DMDID"]
+        #             log_type = child.attrib["TYPE"].lower()
+        #             break
+        #     if dmd_id and log_type:
+        #         break
+        #     child_containers = [gc for c in child_containers for gc in c.getchildren()]
+        if len(child_containers) == 1:
+            the_type: str = child_containers[0].attrib["TYPE"].lower()
             if the_type in DEFAULT_FLAT_STRUCTS:
-                raw_id = first_level[0].attrib["DMDID"]
+                dmd_id = child_containers[0].attrib["DMDID"]
             elif the_type in DEFAULT_PARENT_STRUCTS:
                 # parent structs are considered not to have fileGroup for MAX images
                 # if not self.tree.findall('.//mets:fileGrp[@USE="MAX"]', XMLNS):
                 if not self.contains_group(CONTENT_FILE_GROUPS):
-                    raw_id = first_level[0].attrib["DMDID"]
+                    dmd_id = child_containers[0].attrib["DMDID"]
                 else:
                     # a subsequent digital object (monograph, volume, issue) should have MAX images
                     # and further, it should posses a physical root mapping
@@ -519,13 +538,13 @@ class MetsReader(MetsProcessor):
                     )
                     log_el = self.root.find(xpr_log, dfc.XMLNS)
                     if log_el is not None:
-                        raw_id = log_el.attrib["DMDID"]
+                        dmd_id = log_el.attrib["DMDID"]
         # if still no primary id found, go nuts
-        if not raw_id:
+        if not dmd_id:
             raise DigiflowMetadataException(
                 f"Can't find primary dmd_id in {self.root.base}"
             )
-        return raw_id
+        return dmd_id
 
     def _set_prime_dmd(self):
         """Encapsulated recognition of primary DMD section"""
@@ -603,29 +622,29 @@ class MetsReader(MetsProcessor):
     def inspect_logical_struct(self) -> typing.Tuple:
         """Determine logical type of digital object and optional
         hierarchy level up to farthest logical parent node (=mets:structMap)
-        by inspecting the TYPE attribute of each container.
+        by inspecting the TYPE attribute of each container, if present.
 
         For actual labelling cf.
         https://www.dnb.de/SharedDocs/Downloads/EN/Professionell/Metadatendienste/linkedDataModellierungTiteldaten.pdf
         """
 
         xpath = f'.//*[@DMDID="{self._prime_mods_id}"]'
-        log_el = self.findall(xpath, get_all=False)
-        if isinstance(log_el, ET._Element) and self._prime_mods_id is not None:
-            curr_log_type = log_el.attrib["TYPE"]
+        prime_logical_container = self.findall(xpath, get_all=False)
+        if isinstance(prime_logical_container, ET._Element) and self._prime_mods_id is not None:
+            curr_log_type = prime_logical_container.attrib["TYPE"]
             the_id: str = self._prime_mods_id
             if the_id.startswith("md"):
                 the_id = the_id[(len("md")) :]
-            nxt_prnt = log_el.getparent()
+            the_parent = prime_logical_container.getparent()
             nxt_ntr = []
-            while nxt_prnt.attrib["TYPE"] != "LOGICAL":
+            while the_parent.get("TYPE") != "LOGICAL":
                 # strange issue with menadoc VL-instance
                 # when OAI-URL misses context-path
                 # where DMDID vanishes when stored local
-                log_type = nxt_prnt.attrib["TYPE"]
-                the_id = nxt_prnt.attrib["ID"]
-                if "DMDID" in nxt_prnt.attrib:
-                    the_id = nxt_prnt.attrib["DMDID"]
+                log_type = the_parent.get("TYPE", dfc.UNSET_LABEL)
+                the_id = the_parent.attrib["ID"]
+                if "DMDID" in the_parent.attrib:
+                    the_id = the_parent.attrib["DMDID"]
                     if the_id.startswith("md"):  # strip from VLS dmdid
                         the_id = the_id[(len("md")) :]
                     if the_id.startswith("mdaslog"):  # strip from VLS legacy menadoc
@@ -635,12 +654,12 @@ class MetsReader(MetsProcessor):
                 # ATTENZIONE
                 # take care of Kitodo3 uuid identifiers
                 # therefore this only applies to semantics (VLS)
-                elif log_type in NEWSPAPER_TYPES and not nxt_prnt.attrib[
+                elif log_type in NEWSPAPER_TYPES and not the_parent.attrib[
                     "ID"
                 ].startswith("uuid"):
-                    the_id = nxt_prnt.attrib["ID"].strip("log")
+                    the_id = the_parent.attrib["ID"].strip("log")
                 else:
-                    mptr_curr = nxt_prnt.findall("mets:mptr", dfc.XMLNS)
+                    mptr_curr = the_parent.findall("mets:mptr", dfc.XMLNS)
                     # exported METS from kitodo
                     # using mptr to link parents
                     if len(mptr_curr) == 1:
@@ -649,7 +668,7 @@ class MetsReader(MetsProcessor):
                             if len(raw_link.strip()) > 0:
                                 the_id = raw_link.strip()
                 nxt_ntr.append((the_id, log_type))
-                nxt_prnt = nxt_prnt.getparent()
+                the_parent = the_parent.getparent()
             return (curr_log_type, nxt_ntr)
         return (None, None)
 
