@@ -38,6 +38,9 @@ Homepage = "https://github.com/ulb-sachsen-anhalt/digital-flow"
 dev = ["black"]
 test = ["pytest", "pytest-cov", "tox"]
 
+[tool.setuptools.package-data]
+digiflow = ["resources/*.ini", "resources/xsd/*.xsd", "resources/xsl/*.xsl"]
+
 [tool.setuptools]
 include-package-data = true
 
