@@ -48,6 +48,7 @@ def test_role_for_label(input_string, expected_obj):
 def test_ddb_report_newspaper_headlines(tmp_path):
     """Simple MWE to trigger transformation including
     schematron failures => none in this case, all fine
+    2026-11-17: removed structMapLogical_12 from warnings
     """
 
     # arrange
@@ -61,9 +62,8 @@ def test_ddb_report_newspaper_headlines(tmp_path):
     whats_up: df_vddb.Report = reporter.get()
 
     # assert
-    assert len(whats_up.ddb_meldungen) == 2
-    assert ("error", "amdSec_04") == whats_up.read()[0]
-    assert ("warn", "structMapLogical_12") == whats_up.read()[1]
+    assert len(whats_up.ddb_meldungen) == 1
+    assert whats_up.read()[0] == ("error", "amdSec_04")
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
@@ -88,6 +88,7 @@ def test_ddb_report_newspaper_type_issue(tmp_path):
 def test_ddb_report_newspaper_longform(tmp_path):
     """Simple MWE to trigger transformation including
     schematron failures => none in this case, all fine
+    2026-11-17: DDB removed structMapLogical_12 from warnings
     """
 
     # arrange
@@ -101,9 +102,8 @@ def test_ddb_report_newspaper_longform(tmp_path):
     whats_up: df_vddb.Report = reporter.get()
 
     # assert
-    assert len(whats_up.ddb_meldungen) == 2
-    assert "error(1x):['amdSec_04']" == whats_up.read(map_ddb_roles=True)[0]
-    assert "warn(1x):['structMapLogical_12']" == whats_up.read(map_ddb_roles=True)[1]
+    assert len(whats_up.ddb_meldungen) == 1
+    assert whats_up.read(map_ddb_roles=True)[0] == "error(1x):['amdSec_04']"
 
 
 @pytest.fixture(name="share_it_monography")
@@ -146,7 +146,7 @@ def test_ddb_validate_opendata_44046_defaults(share_it_monography):
     # assert
     assert not whats_up.alert()  # nothing very bad per se
     assert len(whats_up.ddb_meldungen) == 1  # but still one meldung
-    assert ("info", "identifier_01") == whats_up.read()[0]
+    assert whats_up.read()[0] == ("info", "identifier_01")
     assert whats_up.alert("info")  # provoke alert
     assert reporter.input_conform()
 
@@ -187,6 +187,10 @@ def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
 
     changed: 4.3+
     no more exception thrown, but .alert() yields TRUE
+
+    2026-11-17: DDB added amdSec_19 with FATAL
+    2026-11-17: "error", "location_01 => "caution", "amdSec_13"
+    2026-11-17: "error", "dmdSec_04" => "warn", "dmdSec_04"
     """
 
     # arrange
@@ -202,13 +206,13 @@ def test_ddb_validate_kitodo2_legacy_monography_raw(tmp_path):
     # assert
     loads = whats_up.read()
     assert whats_up.alert()
-    assert len(whats_up.ddb_meldungen) == 6
-    assert ("fatal", "fileSec_02") == loads[0]
-    assert ("error", "titleInfo_02") == loads[1]
-    assert ("error", "location_01") == loads[2]
-    assert ("error", "dmdSec_04") == loads[3]
-    assert ("caution", "amdSec_13") == loads[4]
-    assert ("warn", "amdSec_15") == loads[5]
+    assert len(whats_up.ddb_meldungen) == 4
+    assert loads[0] == ("fatal", "amdSec_19")
+    assert loads[1] == ("fatal", "fileSec_02")
+    assert loads[2] == ("caution", "amdSec_13")
+    assert loads[3] == ("warn", "dmdSec_04")
+    # assert loads[4] == ("caution", "amdSec_13")
+    # assert loads[5] == ("warn", "amdSec_15")
     assert reporter.input_conform()
 
 
@@ -220,6 +224,8 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
 
     FATAL for fileSec_02 would remain otherwise,
     since this contains no DEFAULT image section
+
+    2026-11-27: added amdSec_19 with FATAL
     """
 
     # arrange
@@ -234,9 +240,10 @@ def test_ddb_validate_kitodo2_legacy_monography_curated(tmp_path):
     )
 
     # assert
-    assert not result.alert()
+    assert result.alert()
     assert len(result.read()) == 2
-    assert ("caution", "amdSec_13") == result.read()[0]
+    assert result.read()[0] == ("fatal", "amdSec_19")
+    assert result.read()[1] == ("caution", "amdSec_13")
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
@@ -249,6 +256,8 @@ def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
     * assert 'originInfo_06' in result[DDB_ERROR][0]
     * assert 'location_02' in result[DDB_ERROR][1]
     * assert 'dmdSec_04' in result[DDB_ERROR][2]
+
+    2026-11-27: changed from 26 to 22
     """
 
     # arrange
@@ -262,11 +271,11 @@ def test_ddb_validate_kitodo2_menadoc_44080924x(tmp_path):
 
     # assert
     loads = result.read()
-    assert len(loads) == 26
+    assert len(loads) == 22
     loads_mapped = result.read(map_ddb_roles=True)
-    assert len(loads_mapped) == 5  # all five rule roles
+    assert len(loads_mapped) == 4  # all five rule roles
     assert result.alert()
-    assert "fatal(1x):['fileSec_02']" == loads_mapped[0]
+    assert loads_mapped[0] == "fatal(2x):['amdSec_19', 'fileSec_02']"
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
@@ -278,6 +287,8 @@ def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
     * increased errors from 7 to 11
     changed from 06/23 => 04/24
     * increased meldungen from 11 to 15
+    changed from 04/24 => 11/27
+    * increased meldungen from 15 to 13
     """
 
     # arrange
@@ -291,7 +302,7 @@ def test_ddb_validate_kitodo2_vd18_153142537_raw(tmp_path):
 
     # assert
     loads = result.read()
-    assert len(loads) == 15
+    assert len(loads) == 13
     assert result.alert()
 
 
@@ -301,6 +312,7 @@ def test_ddb_validate_kitodo2_vd18_153142537(tmp_path):
     which considers default ignore rules for
     multivolumes like LOCTYPE HREF and alike or
     wants fileGroup@USE='DEFAULT' (which isn't present yet)
+    2026-11-17: added amdSec_19 with FATAL
     """
 
     # arrange
@@ -317,12 +329,14 @@ def test_ddb_validate_kitodo2_vd18_153142537(tmp_path):
 
     # assert
     loads = result.read()
-    assert len(loads) == 4
-    assert not result.alert()
-    assert loads[0] == ("error", "location_01")
-    assert loads[1] == ("error", "dmdSec_04")
-    assert loads[2] == ("warn", "amdSec_15")
-    assert loads[3] == ("info", "identifier_01")
+    assert len(loads) == 3
+    assert result.alert()
+    assert loads[0] == ("fatal", "amdSec_19")
+    assert loads[1] == ("warn", "dmdSec_04")
+    # assert loads[0] == ("error", "location_01")
+    # assert loads[1] == ("error", "dmdSec_04")
+    # assert loads[2] == ("warn", "amdSec_15")
+    assert loads[2] == ("info", "identifier_01")
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
@@ -330,6 +344,8 @@ def test_ddb_validate_kitodo2_vd18_153142537_curated(tmp_path):
     """DDB compliant with curated METS which doesn't contain
     former additional dmdSec anymore and also ignores
     all DDB rules below 'error'
+
+    2026-11-17: DDB added amdSec_19 with FATAL
     """
 
     # arrange
@@ -345,9 +361,10 @@ def test_ddb_validate_kitodo2_vd18_153142537_curated(tmp_path):
 
     # assert
     loads = result.read()
-    assert len(loads) == 2
-    assert loads[0] == ("error", "location_01")
-    assert loads[1] == ("error", "dmdSec_04")
+    assert len(loads) == 1
+    assert loads[0] == ("fatal", "amdSec_19")
+    #assert loads[0] == ("error", "location_01")
+    #assert loads[1] == ("error", "dmdSec_04")
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
@@ -358,6 +375,7 @@ def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
     changed 2024/08
     * due min role level set to warning now having 5 meldungen
       (instead of 3 before)
+    changed 2026/11/17: DDB added amdSec_19 with FATAL
     """
 
     # arrange
@@ -373,16 +391,16 @@ def test_ddb_validate_kitodo2_vd18_153142340_raw(tmp_path):
     loads = result.read()
     assert result.alert()
     assert len(loads) == 5
-    assert loads[0] == ("fatal", "structMapLogical_17")
-    assert loads[1] == ("error", "originInfo_06")
-    assert loads[2] == ("error", "originInfo_06")
+    assert loads[0] == ("fatal", "amdSec_19")
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
 def test_ddb_validate_kitodo2_vd18_153142340(tmp_path):
     """Schematron validation outcome for VD18 C-Stage
     corresponding to k2_mets_153142537.xml
-    considering ULB default ignore rules"""
+    considering ULB default ignore rules
+    2026-11-17: DDB added amdSec_19 with FATAL
+    """
 
     # arrange
     file_name = "k2_mets_vd18_153142340.xml"
@@ -395,11 +413,12 @@ def test_ddb_validate_kitodo2_vd18_153142340(tmp_path):
 
     # assert
     loads = result.read()
-    assert len(loads) == 3
+    assert len(loads) == 4
     assert result.alert()
-    assert loads[0] == ("fatal", "structMapLogical_17")
-    assert loads[1] == ("error", "originInfo_06")
-    assert loads[2] == ("error", "originInfo_06")
+    assert loads[0] == ("fatal", "amdSec_19")
+    assert loads[1] == ("fatal", "structMapLogical_17")
+    # assert loads[1] == ("error", "originInfo_06")
+    # assert loads[2] == ("error", "originInfo_06")
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
@@ -413,6 +432,7 @@ def test_report_about_kitodo2_morbio_1748529021_ddb(tmp_path):
     * some more DDB meldungen poping up
     * combined with XSD schema validation yields
 
+    changed 2026/11/17: DDB added amdSec_19 with FATAL, dropped from 6 => 4 messages
     """
 
     # arrange
@@ -427,11 +447,11 @@ def test_report_about_kitodo2_morbio_1748529021_ddb(tmp_path):
     # assert
     loads = result.read()
     assert result.alert()
-    assert len(loads) == 6  # 4 meldungen total
-    assert loads[0] == ("fatal", "fileSec_02")
-    assert loads[1] == ("error", "titleInfo_02")
-    assert loads[2] == ("error", "location_01")
-    assert loads[3] == ("error", "dmdSec_04")  # suspicious additional dmdSec
+    assert len(loads) == 4  # 4 meldungen total
+    assert loads[0] == ("fatal", "amdSec_19")
+    assert loads[1] == ("fatal", "fileSec_02")
+    assert loads[2] == ("caution", "amdSec_13")
+    assert loads[3] == ("warn", "dmdSec_04")  # suspicious additional dmdSec
 
 
 @pytest.mark.skipif(not SAXON_PY_ENABLED, reason="no saxon binary")
@@ -451,6 +471,7 @@ def test_report_about_kitodo2_morbio_1748529021_xsd(tmp_path):
 
     # assert
     assert result.alert()
+    assert result.xsd_errors
     assert result.xsd_errors[0][0] == "ERROR"
     assert result.xsd_errors[0][1] == "SCHEMASV"
     assert (
