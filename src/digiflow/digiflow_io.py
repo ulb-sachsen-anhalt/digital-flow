@@ -813,28 +813,3 @@ def post_load_store_xml(path_local, the_data):
         the_data = the_data.encode("utf-8")
     xml_root = ET.fromstring(the_data)
     df_md.write_xml_file(xml_root, path_local, preamble="")
-
-
-@dfc.deprecated(
-    "This function has limited use cases and will be removed in future versions"
-)
-def get_enclosed(
-    tokens_str: str, mark_end="}", mark_start="{", func_find="rfind"
-) -> str:
-    """
-    Search dict-like enclosed entry in string
-    from end (rfind) or start (find)
-
-    If no match, return empty string ''
-
-    .. deprecated::
-        This function has limited use cases and will be removed in future versions
-    """
-    if mark_end in tokens_str and mark_start in tokens_str:
-        _offset_right_end = tokens_str.__getattribute__(func_find)(mark_end)
-        _offset_right_start = tokens_str[:_offset_right_end].__getattribute__(
-            func_find
-        )(mark_start)
-        _the_enclosed = tokens_str[_offset_right_start : (_offset_right_end + 1)]
-        return _the_enclosed
-    return ""

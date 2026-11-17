@@ -57,6 +57,7 @@ def test_metsreader_kitodo2_volume():
         "Wahrnehmung der Rechte durch die VG WORT (§ 51 VGG)",
     )
     assert prime_report.related == ("host", "gvk-ppn", "183475631")
+    assert prime_report.title == "Vol. Sechster Theil (n.a.)"
 
 
 def test_metsreader_report_vd18_cstage():
@@ -85,6 +86,8 @@ def test_metsreader_report_vd18_cstage():
     assert prime_report.identifiers
     assert prime_report.identifiers["ulbhalvd18"] == "211999504"
     assert not prime_report.locations
+    assert prime_report.title is not None
+    assert prime_report.title.startswith("Sir James Stewarts, Baronets, Untersuchung")
 
 
 def test_metsreader_report_vd18_fstage():
@@ -234,6 +237,7 @@ def test_metsreader_report_kitodo2_export_monography():
     assert prime_report.identifiers["gvk-ppn"] == "147638674"
     assert len(prime_report.identifiers) == 3
     assert prime_report.locations == "Pon Za 5950, QK"
+    assert prime_report.title.startswith("Daß Juristen gute Christen")
 
 
 def test_metsreader_logical_type_1686755_is_document():
@@ -377,6 +381,9 @@ def test_metsreader_logical_type_is_tome():
     # assert
     outcome = mets_reader.inspect_logical_struct()
     assert outcome == ("tome", [("9427342", "multivolume_work")])
+    assert mets_reader.report is not None
+    assert mets_reader.report.prime_report is not None
+    assert mets_reader.report.prime_report.title.startswith("Untersuchung der Grund-Säze")
 
 
 def test_metsreader_ambigious_recordinfo():
@@ -735,7 +742,8 @@ def test_metsreader_zd1_issue_16767392():
 
     # act
     mets_reader: df.MetsReader = df.MetsReader(mets, "md16767392")
-    mods_reader: df.ModsReader = df.ModsReader(mets_reader.primary_dmd, "md16767392")
+    mods_reader: df.ModsReader = df.ModsReader(mets_reader.primary_dmd,
+                                               "md16767392", "issue")
 
     assert "16767392" in mods_reader.get_identifiers()["local"]
     the_tree = mets_reader.inspect_logical_struct()
@@ -814,7 +822,8 @@ def test_metsreader_zd2_issue_18680621():
     # act
     mets_reader: df.MetsReader = df.MetsReader(mets)
     mods_reader: df.ModsReader = df.ModsReader(
-        mets_reader.primary_dmd, mets_reader.dmd_id
+        mets_reader.primary_dmd, mets_reader.dmd_id,
+        "issue"
     )
 
     the_idents = mods_reader.get_identifiers()
@@ -824,7 +833,7 @@ def test_metsreader_zd2_issue_18680621():
     }
     assert mets_reader.ulb_system_identifier() == {"kitodo3": "4583"}
     log_type, hierarchy = mets_reader.inspect_logical_struct()
-    assert mods_reader.get_type() == "AB"
+    assert mods_reader.get_dmdtype() == "AB"
     assert log_type == "issue"
     assert hierarchy == [
         ("uuid-b1b11d08-e2d6-45bd-84ef-0b4495013cff", "day"),

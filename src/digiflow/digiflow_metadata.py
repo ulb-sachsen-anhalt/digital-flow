@@ -307,6 +307,7 @@ class MetsProcessor(XMLProcessor):
     def contains_group(self, group) -> bool:
         """Test if a certain fileGroup exists"""
 
+        assert self.root is not None, "No root element known!"
         if isinstance(group, list):
             return any(
                 self.root.findall(PATTERN_FILEGROUP_USE.format(g), dfc.XMLNS)
@@ -322,6 +323,7 @@ class MetsProcessor(XMLProcessor):
     def clear_filegroups(self, black_list=None):
         """Clear file Groups by blacklist"""
 
+        assert self.root is not None, "No root element known!"
         cleared = 0
         file_sections = self.root.findall(".//mets:fileSec", dfc.XMLNS)
         if len(file_sections) < 1:
@@ -348,6 +350,7 @@ class MetsProcessor(XMLProcessor):
         not only in physical Sequence Map but also in logical structMap
         """
 
+        assert self.root is not None, "No root element known!"
         files = sub_group.findall("mets:file", dfc.XMLNS)
         for _file in files:
             file_id = _file.attrib["ID"]
@@ -368,6 +371,7 @@ class DmdReport:
 
     is_prime: bool
     dmd_id: str
+    title: str
     dmd_type: typing.Optional[str] = None
     licence: typing.Optional[list] = None
     identifiers: typing.Optional[dict] = None
@@ -376,8 +380,9 @@ class DmdReport:
     locations: typing.Optional[list] = None
     origins: typing.Optional[list] = None
 
-    def __init__(self, dmd_id, is_prime):
+    def __init__(self, dmd_id, title:str, is_prime=True):
         self.dmd_id = dmd_id
+        self.title = title
         self.is_prime = is_prime
         self.identifiers = {}
         self.related = []
@@ -549,6 +554,7 @@ class MetsReader(MetsProcessor):
     def _set_prime_dmd(self):
         """Encapsulated recognition of primary DMD section"""
         the_id = self._prime_mods_id
+        assert self.root is not None, "Missing root element!"
         dmd_secs = self.root.findall(
             f'.//mets:dmdSec[@ID="{the_id}"]/mets:mdWrap/mets:xmlData/*',
             dfc.XMLNS,
@@ -572,7 +578,9 @@ class MetsReader(MetsProcessor):
             )
             self._report.logical_identifier = self._prime_mods_id
             self._report.links = self.get_invalid_physical_structs()
-            prime_reader = ModsReader(self.primary_dmd, self._prime_mods_id)
+            prime_reader = ModsReader(self.primary_dmd,
+                                      self._prime_mods_id,
+                                      self._report.logical_type)
             prime_report: DmdReport = prime_reader.report
             self._report.prime_report = prime_report
             if self._report.dmd_reports is not None:
@@ -677,6 +685,8 @@ class MetsReader(MetsProcessor):
         this will ONLY work with VL METS, when this workflows has processed
         the OAI-response data
         """
+
+        assert self.root is not None, "No root element known!"
         agent_notes = self.root.xpath(
             ".//mets:agent/mets:note/text()", namespaces=dfc.XMLNS
         )
@@ -693,6 +703,8 @@ class MetsReader(MetsProcessor):
             Due migration efforts can be several system ids since the
             digital object wandered from system to system of old
         """
+
+        assert self.root is not None, "No root element known!"
         ident_dict = {}
         repositories = []
         # inspect mets header
@@ -819,6 +831,7 @@ class MetsReader(MetsProcessor):
         * keep track of preceeding valid link for later fix
         """
 
+        assert self.root is not None, "No root element known!"
         xpath_links = ".//mets:smLink"
         xpath_phys_pattern = ".//*[@ID='{}']"
         links = self.root.findall(xpath_links, dfc.XMLNS)
@@ -846,10 +859,11 @@ class MetsReader(MetsProcessor):
 class ModsReader(XMLProcessor):
     """Extract knowledge from METS/MODS section"""
 
-    def __init__(self, dmd_node, dmd_id):
+    def __init__(self, dmd_node, dmd_id, logical_type):
         super().__init__(dmd_node)
         self.root = dmd_node
         self.dmd_id = dmd_id
+        self.logical_type = logical_type
         self._report: typing.Optional[DmdReport] = None
 
     @property
@@ -857,8 +871,8 @@ class ModsReader(XMLProcessor):
         """Access descriptive information of this section"""
 
         if self._report is None:
-            dmd_report: DmdReport = DmdReport(self.dmd_id, is_prime=True)
-            dmd_report.dmd_type = self.get_type()
+            dmd_report: DmdReport = DmdReport(self.dmd_id, title=self.get_title())
+            dmd_report.dmd_type = self.get_dmdtype()
             dmd_report.identifiers = self.get_identifiers()
             dmd_report.languages = self.get_language_information()
             the_shelfs = self.get_location_shelfs()
@@ -874,7 +888,7 @@ class ModsReader(XMLProcessor):
             self._report = dmd_report
         return self._report
 
-    def get_type(self):
+    def get_dmdtype(self):
         """
         Get PICA type if present in mods:extension.
         Please note: Plain .//*[@recordSyntax] will fail for multivolume single volumes because
@@ -882,6 +896,7 @@ class ModsReader(XMLProcessor):
         Inspect further custom goobi:metadata@name=PICAType if present and no match so far.
         """
 
+        assert self.root is not None, "No root element known!"
         xp_vls_ext_type = 'mods:extension/*[@recordSyntax="pica"]'
         record_el = self.root.find(xp_vls_ext_type, dfc.XMLNS)
         if record_el is not None:
@@ -957,6 +972,7 @@ class ModsReader(XMLProcessor):
     def get_relations(self):
         """ "Inspect propably existing mods:relations"""
 
+        assert self.root is not None, "No root element known!"
         related = []
         rels = self.root.findall("mods:relatedItem", dfc.XMLNS)
         for item in rels:
@@ -973,6 +989,7 @@ class ModsReader(XMLProcessor):
     def get_language_information(self):
         """Read language information"""
 
+        assert self.root is not None, "No root element known!"
         xp_lang_term = "mods:language/mods:languageTerm/text()"
         return self.root.xpath(xp_lang_term, namespaces=dfc.XMLNS)
 
@@ -983,6 +1000,7 @@ class ModsReader(XMLProcessor):
         in trees like holdingSimple/copyInformation/shelfLocator
         """
 
+        assert self.root is not None, "No root element known!"
         langs = self.root.xpath(
             "mods:location//mods:shelfLocator/text()", namespaces=dfc.XMLNS
         )
@@ -997,6 +1015,7 @@ class ModsReader(XMLProcessor):
     def get_origins(self):
         """Gather informations about origin places"""
 
+        assert self.root is not None, "No root element known!"
         xp_origins = "mods:originInfo"
         xp_place_term = "mods:place/mods:placeTerm"
         xp_year = "*[local-name()='dateIssued' or local-name()='dateCaptured']"
@@ -1036,6 +1055,7 @@ class ModsReader(XMLProcessor):
     def get_licence(self):
         """licence information if external link exists"""
 
+        assert self.root is not None, "No root element known!"
         xpr_signature = "mods:accessCondition"
         accesses = self.root.findall(xpr_signature, dfc.XMLNS)
         licences = []
@@ -1050,3 +1070,39 @@ class ModsReader(XMLProcessor):
                 the_txt = a.text
                 licences.append((the_type, the_link, the_txt))
         return licences
+
+    def get_title(self):
+        """Get title of this MODS section for plain digital object,
+        or construct title from volume/issue number if present."""
+
+        assert self.root is not None, "No root element known!"
+        the_type = self.logical_type if self.logical_type else dfc.UNSET_LABEL
+        xp_title = "mods:titleInfo/mods:title/text()"
+        main_title = dfc.UNSET_LABEL
+        titles = self.root.xpath(xp_title, namespaces=dfc.XMLNS)
+        if len(titles) > 0:
+            main_title = titles[0]
+        if the_type == "monograph":
+            return main_title
+
+        parts_vol = None
+        if the_type == "volume":
+            mods_vol = self.root.xpath("mods:part/mods:detail[@type='volume']/mods:number/text()",
+                                    namespaces=dfc.XMLNS)
+            if len(mods_vol) > 0:
+                parts_vol = mods_vol[0]
+        # combine further with issue number if present
+        parts_iss = None
+        if the_type == "issue":
+            mods_iss = self.root.xpath("mods:part/mods:detail[@type='issue']/mods:number/text()",
+                                    namespaces=dfc.XMLNS)
+            if len(mods_iss) > 0:
+                parts_iss = mods_iss[0]
+        if parts_vol and parts_iss:
+            return f"Vol. {parts_vol}, Issue {parts_iss} ({main_title})"
+        if parts_vol:
+            return f"Vol. {parts_vol} ({main_title})"
+        if parts_iss:
+            return f"Issue {parts_iss} ({main_title})"
+
+        return main_title

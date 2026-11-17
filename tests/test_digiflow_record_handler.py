@@ -681,146 +681,146 @@ def test_record_handler_set_next_new_state(tmp_path):
     assert next_03.context.total_len == 16
 
 
-def test_record_handler_quotation_fixed_json(tmp_path):
-    """
-    Fix behavior when encountering data which
-    has been fixed manually resulting in a mixture
-    of double and single quotes
+# def test_record_handler_quotation_fixed_json(tmp_path):
+#     """
+#     Fix behavior when encountering data which
+#     has been fixed manually resulting in a mixture
+#     of double and single quotes
 
-    originates from ODEM project csv list
-    """
+#     originates from ODEM project csv list
+#     """
 
-    # arrange
-    path_list_sample = os.path.join(
-        TEST_RES, "oai-records-opendata-vd18-sample-fixed.csv"
-    )
-    path_oai_list1 = tmp_path / "oai-list.csv"
-    shutil.copy(path_list_sample, path_oai_list1)
-    handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
+#     # arrange
+#     path_list_sample = os.path.join(
+#         TEST_RES, "oai-records-opendata-vd18-sample-fixed.csv"
+#     )
+#     path_oai_list1 = tmp_path / "oai-list.csv"
+#     shutil.copy(path_list_sample, path_oai_list1)
+#     handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
 
-    # act
-    _next_rec = handler.next_record(state="ocr_fail")
-    assert _next_rec.info.startswith("141.48.10.202@2023-01-17_15:55:49")
-    _info_token = df.get_enclosed(_next_rec.info)
-    _last_info = json.loads(_info_token)["info"]
-    assert (
-        "processing https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg"
-        in _last_info
-    )
-
-
-def test_record_handler_quotation_fixed_ast(tmp_path):
-    """
-    Fix behavior when encountering data which
-    has been fixed manually resulting in a mixture
-    of double and single quotes
-
-    originates from ODEM project csv list
-    """
-
-    # arrange
-    path_list_sample = os.path.join(
-        TEST_RES, "oai-records-opendata-vd18-sample-fixed.csv"
-    )
-    path_oai_list1 = tmp_path / "oai-list.csv"
-    shutil.copy(path_list_sample, path_oai_list1)
-    handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
-
-    # act
-    _next_rec = handler.next_record(state="ocr_fail")
-    assert _next_rec.info.startswith("141.48.10.202@2023-01-17_15:55:49")
-    _info_token = df.get_enclosed(_next_rec.info)
-    _last_info = ast.literal_eval(_info_token)["info"]
-    assert (
-        "processing https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg"
-        in _last_info
-    )
+#     # act
+#     _next_rec = handler.next_record(state="ocr_fail")
+#     assert _next_rec.info.startswith("141.48.10.202@2023-01-17_15:55:49")
+#     _info_token = df.get_enclosed(_next_rec.info)
+#     _last_info = json.loads(_info_token)["info"]
+#     assert (
+#         "processing https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg"
+#         in _last_info
+#     )
 
 
-def test_record_handler_quotation_mixture_ast(tmp_path):
-    """
-    Fix behavior when encountering data which
-    has been fixed manually resulting in a mixture
-    of double and single quotes that shall be parsed with
-    standard python eval from ast module which should
-    work if the key "info" is double-quotes as well
-    as the total information string which might contain
-    single-quotes
+# def test_record_handler_quotation_fixed_ast(tmp_path):
+#     """
+#     Fix behavior when encountering data which
+#     has been fixed manually resulting in a mixture
+#     of double and single quotes
 
-    originates from ODEM project csv list
-    """
+#     originates from ODEM project csv list
+#     """
 
-    # arrange
-    path_list_sample = os.path.join(
-        TEST_RES, "oai-records-opendata-vd18-sample-mixture.csv"
-    )
-    path_oai_list1 = tmp_path / "oai-list.csv"
-    shutil.copy(path_list_sample, path_oai_list1)
-    handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
+#     # arrange
+#     path_list_sample = os.path.join(
+#         TEST_RES, "oai-records-opendata-vd18-sample-fixed.csv"
+#     )
+#     path_oai_list1 = tmp_path / "oai-list.csv"
+#     shutil.copy(path_list_sample, path_oai_list1)
+#     handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
 
-    # act
-    _next_rec = handler.next_record(state="ocr_fail")
-    assert _next_rec.info.startswith("141.48.10.202@2023-01-17_15:55:49")
-    _info_token = df.get_enclosed(_next_rec.info)
-    _last_info = ast.literal_eval(_info_token)["info"]
-    assert (
-        "processing 'https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg'"
-        in _last_info
-    )
+#     # act
+#     _next_rec = handler.next_record(state="ocr_fail")
+#     assert _next_rec.info.startswith("141.48.10.202@2023-01-17_15:55:49")
+#     _info_token = df.get_enclosed(_next_rec.info)
+#     _last_info = ast.literal_eval(_info_token)["info"]
+#     assert (
+#         "processing https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg"
+#         in _last_info
+#     )
 
 
-@pytest.mark.skipif(sys.version_info >= (3, 10), reason="Specific to Python <3.10")
-def test_record_handler_quotation_mixture_ast_639763(tmp_path):
-    """
-    Behavior when encountering data like this:
+# def test_record_handler_quotation_mixture_ast(tmp_path):
+#     """
+#     Fix behavior when encountering data which
+#     has been fixed manually resulting in a mixture
+#     of double and single quotes that shall be parsed with
+#     standard python eval from ast module which should
+#     work if the key "info" is double-quotes as well
+#     as the total information string which might contain
+#     single-quotes
 
-    originates from ODEM project csv list
+#     originates from ODEM project csv list
+#     """
 
-    Please note: changed from python 3.8 to 3.10
-        therefore another testcase
-    """
+#     # arrange
+#     path_list_sample = os.path.join(
+#         TEST_RES, "oai-records-opendata-vd18-sample-mixture.csv"
+#     )
+#     path_oai_list1 = tmp_path / "oai-list.csv"
+#     shutil.copy(path_list_sample, path_oai_list1)
+#     handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
 
-    # arrange
-    path_list_sample = os.path.join(
-        TEST_RES, "oai-records-opendata-vd18-sample-mixture.csv"
-    )
-    path_oai_list1 = tmp_path / "oai-list.csv"
-    shutil.copy(path_list_sample, path_oai_list1)
-    handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
-
-    # act
-    _next_rec = handler.next_record(state="ocr_busy")
-    _info_token = df.get_enclosed(_next_rec.info)
-    with pytest.raises(SyntaxError) as _decode_err:
-        ast.literal_eval(_info_token)
-    assert "invalid syntax" in _decode_err.value.args[0]
+#     # act
+#     _next_rec = handler.next_record(state="ocr_fail")
+#     assert _next_rec.info.startswith("141.48.10.202@2023-01-17_15:55:49")
+#     _info_token = df.get_enclosed(_next_rec.info)
+#     _last_info = ast.literal_eval(_info_token)["info"]
+#     assert (
+#         "processing 'https://opendata.uni-halle.de/retrieve/b7f7f81d-e65f-4c7d-95c6-7384b184c6a9/00001051.jpg'"
+#         in _last_info
+#     )
 
 
-@pytest.mark.skipif(sys.version_info < (3, 10), reason="Specific to Python >= 3.10")
-def test_record_handler_quotation_mixture_ast_639763_python_310(tmp_path):
-    """
-    Behavior when encountering data like this:
+# @pytest.mark.skipif(sys.version_info >= (3, 10), reason="Specific to Python <3.10")
+# def test_record_handler_quotation_mixture_ast_639763(tmp_path):
+#     """
+#     Behavior when encountering data like this:
 
-    originates from ODEM project csv list
+#     originates from ODEM project csv list
 
-    Please note: changed from python 3.8 to 3.10
-        therefore another testcase
-    """
+#     Please note: changed from python 3.8 to 3.10
+#         therefore another testcase
+#     """
 
-    # arrange
-    path_list_sample = os.path.join(
-        TEST_RES, "oai-records-opendata-vd18-sample-mixture.csv"
-    )
-    path_oai_list1 = tmp_path / "oai-list.csv"
-    shutil.copy(path_list_sample, path_oai_list1)
-    handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
+#     # arrange
+#     path_list_sample = os.path.join(
+#         TEST_RES, "oai-records-opendata-vd18-sample-mixture.csv"
+#     )
+#     path_oai_list1 = tmp_path / "oai-list.csv"
+#     shutil.copy(path_list_sample, path_oai_list1)
+#     handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
 
-    # act
-    _next_rec = handler.next_record(state="ocr_busy")
-    _info_token = df.get_enclosed(_next_rec.info)
-    with pytest.raises(SyntaxError) as _decode_err:
-        ast.literal_eval(_info_token)
-    assert "unmatched '}'" in _decode_err.value.args[0]
+#     # act
+#     _next_rec = handler.next_record(state="ocr_busy")
+#     _info_token = df.get_enclosed(_next_rec.info)
+#     with pytest.raises(SyntaxError) as _decode_err:
+#         ast.literal_eval(_info_token)
+#     assert "invalid syntax" in _decode_err.value.args[0]
+
+
+# @pytest.mark.skipif(sys.version_info < (3, 10), reason="Specific to Python >= 3.10")
+# def test_record_handler_quotation_mixture_ast_639763_python_310(tmp_path):
+#     """
+#     Behavior when encountering data like this:
+
+#     originates from ODEM project csv list
+
+#     Please note: changed from python 3.8 to 3.10
+#         therefore another testcase
+#     """
+
+#     # arrange
+#     path_list_sample = os.path.join(
+#         TEST_RES, "oai-records-opendata-vd18-sample-mixture.csv"
+#     )
+#     path_oai_list1 = tmp_path / "oai-list.csv"
+#     shutil.copy(path_list_sample, path_oai_list1)
+#     handler = df_r.RecordHandler(path_oai_list1, transform_func=df_r.row_to_record)
+
+#     # act
+#     _next_rec = handler.next_record(state="ocr_busy")
+#     _info_token = df.get_enclosed(_next_rec.info)
+#     with pytest.raises(SyntaxError) as _decode_err:
+#         ast.literal_eval(_info_token)
+#     assert "unmatched '}'" in _decode_err.value.args[0]
 
 
 def test_record_handler_with_broken_row(tmp_path):
