@@ -34,8 +34,27 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/ulb-sachsen-anhalt/digital-flow"
 
+[project.optional-dependencies]
+dev = ["black"]
+test = ["pytest", "pytest-cov", "tox"]
+
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.tox]
+requires = ["tox>=4.6"]
+env_list = ["py310", "py312"]
+
+[tool.tox.env_run_base]
+description = "Run tests under {base_python}"
+deps = ["pytest>=8.0"]
+commands = [["pytest", "{posargs}"]]
+
+[tool.tox.env.lint]
+description = "Run code style checks"
+skip_install = true
+deps = ["ruff"]
+commands = [["ruff", "check", "."]]

@@ -1,8 +1,0 @@
-lxml
-Pillow
-numpy
-wheel
-requests
-docker
-saxonche
-openpyxl
